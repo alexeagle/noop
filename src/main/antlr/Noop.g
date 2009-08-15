@@ -5,6 +5,10 @@ options {
   ASTLabelType = CommonTree;
 }
 
+tokens {
+  CLASS;
+}
+
 @header {
   package noop.grammar;
 }
@@ -13,15 +17,49 @@ options {
   package noop.grammar;
 }
 
-program :	
-  COMMENT*;
+file
+	:	classDeclaration
+	;
 
-WS  : (' '|'\r'|'\n')+ {$channel = HIDDEN;} ;
+classDeclaration
+	: 'class' TypeIdentifier paraneterList block
+	-> ^(CLASS TypeIdentifier)
+	;
+
+block
+	: '{'! '}'!
+	;
+
+paraneterList
+	: '('! parameters?  ')'!
+	;
+
+parameters
+	: parameter (',' parameter)*
+	;
+
+parameter
+	: TypeIdentifier VariableIdentifier
+	;
+
+TypeIdentifier
+	: 'A' .. 'Z' ('a' .. 'z' | 'A' .. 'Z' | '0' .. '9')*
+	;
+
+VariableIdentifier
+	: 'a' .. 'z' ('a' .. 'z' | 'A' .. 'Z' | '0' .. '9')*
+	;
+
+WS
+  :	(' '|'\r'|'\n')+ {$channel = HIDDEN;} 
+  ;
 
 COMMENT
-    :   '/*' ( options {greedy=false;} : . )* '*/' {$channel=HIDDEN;}
-    ;
+  :   '/*' ( options {greedy=false;} : . )* '*/' {$channel=HIDDEN;}
+  ;
 
 LINE_COMMENT
-    : '//' ~('\n'|'\r')* '\r'? '\n' {$channel=HIDDEN;}
-    ;
+  : '//' ~('\n'|'\r')* '\r'? '\n' {$channel=HIDDEN;}
+  ;
+
+

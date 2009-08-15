@@ -11,8 +11,8 @@ class OurParser() {
   def parse(source: String): CommonTree = {
     val input = new ANTLRStringStream(source);
     val noopParser = new NoopParser(new CommonTokenStream(new NoopLexer(input)));
-    val prog = noopParser.program();
+    val file = noopParser.file();
 
-    return prog.getTree().asInstanceOf[CommonTree];
+    return file.getTree().asInstanceOf[CommonTree];
   }
 }
