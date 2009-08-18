@@ -47,7 +47,7 @@ propertyDeclarator
 	;
 
 expression
-	: INT
+	: literal
 	;
 
 parameterList
@@ -64,6 +64,12 @@ parameter
 	-> ^(PARAM TypeIdentifier VariableIdentifier)
 	;
 
+literal
+	:	INT | StringLiteral
+	;
+
+/* Lexer rules */
+
 TypeIdentifier
 	: 'A' .. 'Z' ('a' .. 'z' | 'A' .. 'Z' | '0' .. '9')*
 	;
@@ -71,7 +77,11 @@ TypeIdentifier
 VariableIdentifier
 	: 'a' .. 'z' ('a' .. 'z' | 'A' .. 'Z' | '0' .. '9')*
 	;
-
+	
+StringLiteral
+	:	'"' ~('\\'|'"')* '"'
+	;
+	
 WS
   :	(' '|'\r'|'\n')+ {$channel = HIDDEN;} 
   ;
