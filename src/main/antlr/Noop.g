@@ -7,6 +7,8 @@ options {
 
 tokens {
   CLASS;
+  PARAMS;
+  PARAM;
 }
 
 @header {
@@ -17,29 +19,43 @@ tokens {
   package noop.grammar;
 }
 
+@rulecatch {
+  catch (RecognitionException e) { throw e; }
+}
+
 file
 	:	classDeclaration
 	;
 
 classDeclaration
-	: 'class' TypeIdentifier paraneterList block
-	-> ^(CLASS TypeIdentifier)
+	: 'class' TypeIdentifier parameterList block
+	-> ^(CLASS TypeIdentifier parameterList? block?)
 	;
 
 block
-	: '{'! '}'!
+	: '{'!  propertyDeclaration* '}'!
 	;
 
-paraneterList
+propertyDeclaration
+  : TypeIdentifier VariableIdentifier ('='^ expression)?
+  ;
+
+expression
+	: INT
+	;
+
+parameterList
 	: '('! parameters?  ')'!
 	;
 
 parameters
 	: parameter (',' parameter)*
+	-> ^(PARAMS parameter*)
 	;
 
 parameter
 	: TypeIdentifier VariableIdentifier
+	-> ^(PARAM TypeIdentifier VariableIdentifier)
 	;
 
 TypeIdentifier
@@ -62,4 +78,6 @@ LINE_COMMENT
   : '//' ~('\n'|'\r')* '\r'? '\n' {$channel=HIDDEN;}
   ;
 
-
+INT
+	:	'0'..'9'+
+	;
