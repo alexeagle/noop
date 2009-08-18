@@ -9,6 +9,7 @@ tokens {
   CLASS;
   PARAMS;
   PARAM;
+  PROP;
 }
 
 @header {
@@ -37,15 +38,20 @@ block
 	;
 
 propertyDeclaration
-  : TypeIdentifier VariableIdentifier ('='^ expression)?
+  : TypeIdentifier propertyDeclarator ';'
+  -> ^(PROP TypeIdentifier propertyDeclarator)
   ;
+
+propertyDeclarator
+	: VariableIdentifier ('='^ expression)?
+	;
 
 expression
 	: INT
 	;
 
 parameterList
-	: '('! parameters?  ')'!
+	: '('! parameters? ')'!
 	;
 
 parameters
@@ -79,5 +85,5 @@ LINE_COMMENT
   ;
 
 INT
-	:	'0'..'9'+
+	:	'-'? '0'..'9'+
 	;
