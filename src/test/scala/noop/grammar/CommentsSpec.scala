@@ -10,7 +10,7 @@ class CommentsSpec extends Spec with ShouldMatchers {
   describe("parser") {
     it("should be able to parse a single line comment") {
       val source = "// a comment\n class Foo() {}\n";
-      val commonTree = parser.parse(source);
+      val commonTree = parser.parseFile(source);
 
       commonTree.toStringTree() should equal ("(CLASS Foo)");
     }
@@ -21,7 +21,7 @@ class CommentsSpec extends Spec with ShouldMatchers {
         bonjour
         */class Foo() {}
       """;
-      var commonTree = parser.parse(source);
+      var commonTree = parser.parseFile(source);
 
       commonTree.toStringTree() should equal ("(CLASS Foo)");
     }
@@ -33,7 +33,7 @@ class CommentsSpec extends Spec with ShouldMatchers {
          *
         class Foo() {} */class Foo() {}
       """;
-      var commonTree = parser.parse(source);
+      var commonTree = parser.parseFile(source);
 
       commonTree.toStringTree() should equal ("(CLASS Foo)");
     }

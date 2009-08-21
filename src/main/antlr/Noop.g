@@ -10,6 +10,7 @@ tokens {
   PARAMS;
   PARAM;
   PROP;
+  MOD;
 }
 
 @header {
@@ -43,11 +44,19 @@ packageName
 qualifiedType
 	:	 packageName ('.'! TypeIdentifier)
 	;
-	
 
 classDeclaration
 	: 'class' TypeIdentifier parameterList block
 	-> ^(CLASS TypeIdentifier parameterList? block?)
+	;
+
+modifiers
+	: modifier+
+	-> ^(MOD modifier+)
+	;
+
+modifier
+	: 'mutable' | 'delegate'
 	;
 
 block
@@ -77,12 +86,12 @@ parameters
 	;
 
 parameter
-	: TypeIdentifier VariableIdentifier
-	-> ^(PARAM TypeIdentifier VariableIdentifier)
+	: modifiers? TypeIdentifier VariableIdentifier
+	-> ^(PARAM modifiers? TypeIdentifier VariableIdentifier)
 	;
 
 literal
-	:	INT | StringLiteral
+	: INT | StringLiteral
 	;
 
 /* Lexer rules */

@@ -4,7 +4,7 @@ require 'buildr/scala'
 # Version number for this release
 VERSION_NUMBER = "1.0.0"
 # Group identifier for your projects
-GROUP = "com.google.code"
+GROUP = "com.google"
 COPYRIGHT = "Apache 2.0"
 
 repositories.remote << "http://www.ibiblio.org/maven2"

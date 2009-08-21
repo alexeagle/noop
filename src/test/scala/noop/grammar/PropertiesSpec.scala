@@ -14,9 +14,8 @@ class PropertiesSpec extends Spec with ShouldMatchers {
           Int i;
         }
       """;
-      val commonTree = parser.parse(source);
 
-      commonTree.toStringTree() should equal ("(CLASS Foo (PROP Int (= a 4)) (PROP Int i))");
+      parser.parseFile(source).toStringTree() should equal ("(CLASS Foo (PROP Int (= a 4)) (PROP Int i))");
     }
   }
 }

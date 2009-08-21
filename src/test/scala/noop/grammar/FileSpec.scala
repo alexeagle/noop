@@ -10,18 +10,20 @@ class FileSpec extends Spec with ShouldMatchers {
   describe("parser") {
     it("should parse package declaration") {
       val source = "package noop.test; class Foo() {}";
-      parser.parse(source).toStringTree() should equal ("(package noop test) (CLASS Foo)");
+      parser.parseFile(source).toStringTree() should equal (
+        "(package noop test) (CLASS Foo)");
     }
 
     it("should parse import statements") {
       val source = "import noop.test.Test; class Foo() {}";
-      parser.parse(source).toStringTree() should equal ("(import noop test Test) (CLASS Foo)");
+      parser.parseFile(source).toStringTree() should equal (
+        "(import noop test Test) (CLASS Foo)");
     }
 
     it("should not allow import without a type on the end") {
       val source = "import noop.test;";
       intercept[RecognitionException] {
-        parser.parse(source);
+        parser.parseFile(source);
       }
     }
 
@@ -36,7 +38,10 @@ class FileSpec extends Spec with ShouldMatchers {
         class FileSpec() {
         }
       """;
-      parser.parse(source);
+      parser.parseFile(source).toStringTree() should equal (
+        "(package noop grammar) (import org antlr runtime RecognitionException) " +
+        "(import org scalatest Spec) (import org scalatest matchers ShouldMatchers) " +
+        "(CLASS FileSpec)");
     }
   }
 }

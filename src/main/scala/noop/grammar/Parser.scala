@@ -8,11 +8,12 @@ import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.CommonTreeNodeStream;
 
 class OurParser() {
-  def parse(source: String): CommonTree = {
+  def parseFile(source: String): CommonTree = {
     val input = new ANTLRStringStream(source);
     val noopParser = new NoopParser(new CommonTokenStream(new NoopLexer(input)));
     val file = noopParser.file();
 
     return file.getTree().asInstanceOf[CommonTree];
   }
+  
 }
