@@ -25,8 +25,25 @@ tokens {
 }
 
 file
-	:	classDeclaration
+	:	packageDeclaration? importDeclaration* classDeclaration
 	;
+
+packageDeclaration
+	:	'package'^ packageName ';'!
+	;
+	
+importDeclaration
+	:	'import'^ qualifiedType ';'!
+	;
+	
+packageName
+	:	VariableIdentifier ('.'! VariableIdentifier)*
+	;
+
+qualifiedType
+	:	 packageName ('.'! TypeIdentifier)
+	;
+	
 
 classDeclaration
 	: 'class' TypeIdentifier parameterList block
@@ -77,7 +94,7 @@ TypeIdentifier
 VariableIdentifier
 	: 'a' .. 'z' ('a' .. 'z' | 'A' .. 'Z' | '0' .. '9')*
 	;
-	
+
 StringLiteral
 	:	'"' ~('\\'|'"')* '"'
 	;
