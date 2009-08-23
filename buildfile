@@ -9,9 +9,9 @@ COPYRIGHT = "Apache 2.0"
 
 repositories.remote << "http://www.ibiblio.org/maven2"
 
-ANTLR = ["org.antlr:antlr:jar:3.1.1", "org.antlr:stringtemplate:jar:3.2"]
-Buildr::ANTLR::REQUIRES = ANTLR
-Java.classpath.unshift ANTLR
+ANTLR = ["org.antlr:antlr:jar:3.1.1"]
+Buildr::ANTLR::REQUIRES.clear
+Buildr::ANTLR::REQUIRES.concat(ANTLR)
 
 desc "The Noop language"
 define "noop" do
