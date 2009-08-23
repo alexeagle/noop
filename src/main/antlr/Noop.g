@@ -10,6 +10,7 @@ tokens {
   PARAMS;
   PARAM;
   PROP;
+  METHOD;
 }
 
 @header {
@@ -31,11 +32,16 @@ file
 packageDeclaration
 	:	'package'^ packageName ';'!
 	;
-	
+
 importDeclaration
 	:	'import'^ qualifiedType ';'!
 	;
-	
+
+methodDeclaration
+	: TypeIdentifier VariableIdentifier parameterList block
+	-> ^(METHOD TypeIdentifier VariableIdentifier parameterList? block)
+	;
+
 packageName
 	:	VariableIdentifier ('.'! VariableIdentifier)*
 	;
@@ -43,7 +49,6 @@ packageName
 qualifiedType
 	:	 packageName ('.'! TypeIdentifier)
 	;
-	
 
 classDeclaration
 	: 'class' TypeIdentifier parameterList block
@@ -51,7 +56,7 @@ classDeclaration
 	;
 
 block
-	: '{'!  propertyDeclaration* '}'!
+	: '{'!  propertyDeclaration* methodDeclaration* '}'!
 	;
 
 propertyDeclaration
