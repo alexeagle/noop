@@ -26,23 +26,23 @@ tokens {
 }
 
 file
-	:	packageDeclaration? importDeclaration* classDeclaration
+	:	namespaceDeclaration? importDeclaration* classDeclaration
 	;
 
-packageDeclaration
-	:	'package'^ packageName ';'!
+namespaceDeclaration
+	:	'namespace'^ namespace ';'!
 	;
 	
 importDeclaration
 	:	'import'^ qualifiedType ';'!
 	;
 	
-packageName
+namespace
 	:	VariableIdentifier ('.'! VariableIdentifier)*
 	;
 
 qualifiedType
-	:	 packageName ('.'! TypeIdentifier)
+	:	 namespace ('.'! TypeIdentifier)
 	;
 
 classDeclaration

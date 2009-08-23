@@ -8,10 +8,10 @@ class FileSpec extends Spec with ShouldMatchers {
   val parser = new OurParser();
 
   describe("parser") {
-    it("should parse package declaration") {
-      val source = "package noop.test; class Foo() {}";
+    it("should parse namespace declaration") {
+      val source = "namespace noop.test; class Foo() {}";
       parser.parseFile(source).toStringTree() should equal (
-        "(package noop test) (CLASS Foo)");
+        "(namespace noop test) (CLASS Foo)");
     }
 
     it("should parse import statements") {
@@ -29,7 +29,7 @@ class FileSpec extends Spec with ShouldMatchers {
 
     it("should parse a realistic looking file header") {
       val source = """
-        package noop.grammar;
+        namespace noop.grammar;
         // TODO: it should fail when a semicolon is missing, but the test still passes
         import org.antlr.runtime.RecognitionException;
         import org.scalatest.Spec;
@@ -39,9 +39,14 @@ class FileSpec extends Spec with ShouldMatchers {
         }
       """;
       parser.parseFile(source).toStringTree() should equal (
-        "(package noop grammar) (import org antlr runtime RecognitionException) " +
+        "(namespace noop grammar) (import org antlr runtime RecognitionException) " +
         "(import org scalatest Spec) (import org scalatest matchers ShouldMatchers) " +
         "(CLASS FileSpec)");
+      val file = parser.file(source);
+      file.namespace should be ("noop.grammar");
+      file.imports(0) should be ("org.antlr.runtime.RecognitionException");
+      file.imports(1) should be ("org.scalatest.Spec");
+      file.imports(2) should be ("org.scalatest.matchers.ShouldMatchers");
     }
   }
 }
