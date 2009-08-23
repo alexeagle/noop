@@ -10,6 +10,7 @@ tokens {
   PARAMS;
   PARAM;
   PROP;
+  METHOD;
   MOD;
 }
 
@@ -32,11 +33,16 @@ file
 namespaceDeclaration
 	:	'namespace'^ namespace ';'!
 	;
-	
+
 importDeclaration
 	:	'import'^ qualifiedType ';'!
 	;
-	
+
+methodDeclaration
+	: TypeIdentifier VariableIdentifier parameterList block
+	-> ^(METHOD TypeIdentifier VariableIdentifier parameterList? block)
+	;
+
 namespace
 	:	VariableIdentifier ('.'! VariableIdentifier)*
 	;
@@ -60,7 +66,7 @@ modifier
 	;
 
 block
-	: '{'!  propertyDeclaration* '}'!
+	: '{'!  propertyDeclaration* methodDeclaration* '}'!
 	;
 
 propertyDeclaration
@@ -107,6 +113,7 @@ VariableIdentifier
 StringLiteral
 	:	'"' ~('\\'|'"')* '"'
 	;
+
 	
 WS
   :	(' '|'\r'|'\n')+ {$channel = HIDDEN;} 
