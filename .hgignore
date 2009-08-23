@@ -5,3 +5,5 @@ reports
 .*\.ipr
 \.DS_Store
 \.manager
+\.classpath
+\.project
