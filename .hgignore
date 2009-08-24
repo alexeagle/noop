@@ -3,7 +3,5 @@ reports
 .*\.iml
 .*\.iws
 .*\.ipr
-\.DS_Store
-\.manager
-\.classpath
-\.project
+\..*
+pom.xml
