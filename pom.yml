@@ -1,0 +1,23 @@
+groupId: com.google.code
+artifactId: noop-compiler
+version: 1.0.0-SNAPSHOT
+packaging: jar
+name: Noop - Compiler
+description: The Compiler/Parser for the Noop Language
+dependencies:
+  - { groupId: org.antlr, artifactId: antlr, version: 3.0.1 }
+build:
+  sourceDirectory: src/main/scala
+  testSourceDirectory: src/test/scala
+  plugins:
+    - { groupId: org.scala-tools, artifactId: maven-scala-plugin, version: 2.11 }
+    - groupId: org.codehaus.mojo
+      artifactId: antlr3-maven-plugin
+      version: 1.0
+      executions:
+        - goals: [ antlr ]
+pluginRepositories:
+  - { id: twdata-m2-repository, name: twdata.org Maven 2 Repository, url: "http://twdata-m2-repository.googlecode.com/svn/" }
+  - { id: scala-tools.org, name: Scala-tools Maven2 Repository, url: "http://scala-tools.org/repo-releases" }
+repositories:
+  - { id: scala-tools.org, name: Scala-tools Maven2 Repository, url: "http://scala-tools.org/repo-releases" }

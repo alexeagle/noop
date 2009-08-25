@@ -1,0 +1,7 @@
+target
+reports
+.*\.iml
+.*\.iws
+.*\.ipr
+\..*
+pom.xml
