@@ -2,12 +2,12 @@ package noop.grammar;
 
 import noop.model.File
 
-import org.antlr.runtime.ANTLRInputStream;
-import org.antlr.runtime.ANTLRStringStream;
-import org.antlr.runtime.CommonTokenStream;
-import org.antlr.runtime.RecognitionException;
-import org.antlr.runtime.tree.CommonTree;
-import org.antlr.runtime.tree.CommonTreeNodeStream;
+import org.antlr.runtime.ANTLRInputStream
+import org.antlr.runtime.ANTLRStringStream
+import org.antlr.runtime.CommonTokenStream
+import org.antlr.runtime.RecognitionException
+import org.antlr.runtime.tree.CommonTree
+import org.antlr.runtime.tree.CommonTreeNodeStream
 
 class OurParser() {
   def parseFile(source: String): CommonTree = {
@@ -21,6 +21,6 @@ class OurParser() {
   def file(source: String): File = {
     val ast = parseFile(source);
     val treeParser = new NoopAST(new CommonTreeNodeStream(ast));
-    return treeParser.file();
+    return treeParser.file().file;
   }
 }

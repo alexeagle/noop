@@ -11,4 +11,5 @@ import scala.collection.mutable.ArrayBuffer
 class File {
   var namespace:String = "";
   var imports:Buffer[String] = new ArrayBuffer[String];
+  var classDef:ClassDefinition = null;
 }

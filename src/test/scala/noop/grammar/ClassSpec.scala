@@ -24,10 +24,15 @@ class ClassSpec extends Spec with ShouldMatchers {
     }
 
     it("should parse a class with one parameter") {
-      val source = "class Bar(A a) {}";
+      val source = "class Bar(String a) {}";
       val commonTree = parser.parseFile(source);
 
-      commonTree.toStringTree() should equal ("(CLASS Bar (PARAMS (PARAM A a)))");
+      commonTree.toStringTree() should equal ("(CLASS Bar (PARAMS (PARAM String a)))");
+      
+      val file = parser.file(source);
+      file.classDef.name should be ("Bar");
+      file.classDef.parameters(0).name should be ("a");
+      file.classDef.parameters(0).noopType should be ("String");
     }
 
     it("should parse a class with multiple parameters") {

@@ -63,7 +63,51 @@ qualifiedType returns [String text]
 	{ $text = $n.text + "." + $t.text; }
 	;
 
-classDeclaration
-	:	^(CLASS TypeIdentifier)
+classDeclaration returns [ClassDefinition classDef = new ClassDefinition()]
+	:	^(CLASS t=TypeIdentifier p=parameters? block?) 
+	{ 
+	$SourceFile::file.classDef_$eq($classDef);
+	$classDef.name_$eq($t.text);
+	if ($p.parameters != null) {
+  	for (Parameter param : $p.parameters) {
+	    $classDef.parameters().$plus$eq(param);
+	  }
+	}
+	}
+	;
+
+parameters returns [List<Parameter> parameters = new ArrayList<Parameter>() ]
+	:	^(PARAMS parameter[$parameters]*)
 	{ }
+	;
+
+parameter [List<Parameter> parameters]
+	:	^(PARAM modifiers? t=TypeIdentifier v=VariableIdentifier)
+
+	{ Parameter param = new Parameter();
+	  param.noopType_$eq($t.text);
+	  param.name_$eq($v.text);
+	  $parameters.add(param);
+	}
+	;
+
+modifiers
+	: ^(MOD modifier+)
+	;
+	
+modifier
+	: 'mutable' | 'delegate'
+	;
+
+block
+	:	^(PROP TypeIdentifier propertyDeclarator)
+	| ^(METHOD TypeIdentifier VariableIdentifier parameters? block)
+	;
+	
+propertyDeclarator
+	: VariableIdentifier ('='^ expression)?
+	;
+
+expression
+	: INT | StringLiteral
 	;
