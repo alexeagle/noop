@@ -16,6 +16,10 @@ build:
       version: 1.0
       executions:
         - goals: [ antlr ]
+    - artifactId: maven-compiler-plugin
+      configuration:
+        source: 1.5
+        target: 1.5
 pluginRepositories:
   - { id: twdata-m2-repository, name: twdata.org Maven 2 Repository, url: "http://twdata-m2-repository.googlecode.com/svn/" }
   - { id: scala-tools.org, name: Scala-tools Maven2 Repository, url: "http://scala-tools.org/repo-releases" }
