@@ -1,4 +1,7 @@
 <settings>
+  <activeProfiles>
+    <activeProfile>init</activeProfile>
+  </activeProfiles>
   <profiles>
     <profile>
       <id>init</id>
