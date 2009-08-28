@@ -5,7 +5,7 @@ import org.scalatest.matchers.ShouldMatchers
 
 class CommentsSpec extends Spec with ShouldMatchers {
 
-  val parser = new OurParser();
+  val parser = new Parser();
 
   describe("parser") {
     it("should be able to parse a single line comment") {
