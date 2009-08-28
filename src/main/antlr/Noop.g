@@ -28,6 +28,13 @@ tokens {
   catch (RecognitionException e) { throw e; }
 }
 
+// A line of user input in the interactive interpreter
+interpretable
+  :	(importDeclaration 
+     | classDeclaration
+     | statement)+
+	;
+
 file
 	:	namespaceDeclaration? importDeclaration* classDeclaration
 	;
@@ -50,7 +57,7 @@ namespace
 	;
 
 qualifiedType
-	:	 namespace ('.'! TypeIdentifier)
+	:	 (namespace '.'!)? TypeIdentifier
 	;
 
 classDeclaration

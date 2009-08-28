@@ -21,6 +21,10 @@ class MethodsSpec extends Spec with ShouldMatchers {
 
       commonTree.toStringTree() should equal ("(CLASS Bar (METHOD String helloWorld " +
           "(PARAMS (PARAM String s) (PARAM Int n)) (VAR Int (= i 1))))");
+      
+      val file = parser.file(source);
+      file.classDef.methods.size should be (1);
+      file.classDef.methods(0).name should be ("helloWorld");
     }
   
     it("should parse a method invocation on a parameter reference") {
