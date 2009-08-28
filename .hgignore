@@ -1,7 +1,8 @@
 target
 reports
+src/main/antlr/output/.*
 .*\.iml
 .*\.iws
 .*\.ipr
-\..*
+^\..*
 pom.xml
