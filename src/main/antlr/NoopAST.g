@@ -5,10 +5,6 @@ options {
   ASTLabelType = CommonTree;
 }
 
-scope Modifiers {
-  List<String> mods;
-}
-
 scope SourceFile {
   File file;
 }
@@ -63,14 +59,17 @@ qualifiedType returns [String text]
 	{ $text = $n.text + "." + $t.text; }
 	;
 
-classDeclaration returns [ClassDefinition classDef = new ClassDefinition()]
-	:	^(CLASS t=TypeIdentifier p=parameters? block?) 
+classDeclaration
+@init{	
+  ClassDefinition classDef = new ClassDefinition();
+	$SourceFile::file.classDef_$eq(classDef);
+}
+	:	^(CLASS t=TypeIdentifier p=parameters? classBlock?) 
 	{ 
-	$SourceFile::file.classDef_$eq($classDef);
-	$classDef.name_$eq($t.text);
+	classDef.name_$eq($t.text);
 	if ($p.parameters != null) {
   	for (Parameter param : $p.parameters) {
-	    $classDef.parameters().$plus$eq(param);
+	    classDef.parameters().$plus$eq(param);
 	  }
 	}
 	}
@@ -78,7 +77,6 @@ classDeclaration returns [ClassDefinition classDef = new ClassDefinition()]
 
 parameters returns [List<Parameter> parameters = new ArrayList<Parameter>() ]
 	:	^(PARAMS parameter[$parameters]*)
-	{ }
 	;
 
 parameter [List<Parameter> parameters]
@@ -99,13 +97,33 @@ modifier
 	: 'mutable' | 'delegate'
 	;
 
-block
+classBlock
+	:	propertyDeclaration | methodDeclaration
+	;
+	
+methodDeclaration 
+  :	^(METHOD type=TypeIdentifier name=VariableIdentifier parameters? statement*)
+  { Method method = new Method();
+    $SourceFile::file.classDef().methods().$plus$eq(method);
+    method.name_$eq($name.text);
+  }
+  ;
+
+statement
+	:	variableDeclaration
+	;
+
+propertyDeclaration
 	:	^(PROP TypeIdentifier propertyDeclarator)
-	| ^(METHOD TypeIdentifier VariableIdentifier parameters? block)
+	;
+
+variableDeclaration
+	:	^(VAR TypeIdentifier propertyDeclarator)
 	;
 	
 propertyDeclarator
-	: VariableIdentifier ('='^ expression)?
+	: ^('=' VariableIdentifier expression)
+	| VariableIdentifier
 	;
 
 expression

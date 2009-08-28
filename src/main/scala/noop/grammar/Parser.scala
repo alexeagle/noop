@@ -13,17 +13,23 @@ import org.antlr.runtime.tree.CommonTree
 import org.antlr.runtime.tree.CommonTreeNodeStream
 
 class Parser() {
-  def parseFile(source: String): CommonTree = {
+  def buildParser(source:String):NoopParser = {
     val input = new ANTLRStringStream(source);
-    val noopParser = new NoopParser(new CommonTokenStream(new NoopLexer(input)));
-    val file = noopParser.file();
-
+    new NoopParser(new CommonTokenStream(new NoopLexer(input)));
+  }
+  
+  def parseFile(source: String): CommonTree = {
+    val file = buildParser(source).file();
     return file.getTree().asInstanceOf[CommonTree];
   }
   
+  def parseInterpretable(source:String): CommonTree = {
+    val interpretable = buildParser(source).interpretable();
+    return interpretable.getTree().asInstanceOf[CommonTree];
+  }
+  
   def parseBlock(source: String): CommonTree = {
-    val input = new ANTLRStringStream(source);
-    val noopParser = new NoopParser(new CommonTokenStream(new NoopLexer(input)));
+    val noopParser = buildParser(source);
     val block = noopParser.block();
     return block.getTree().asInstanceOf[CommonTree];
   }
@@ -31,6 +37,6 @@ class Parser() {
   def file(source: String): File = {
     val ast = parseFile(source);
     val treeParser = new NoopAST(new CommonTreeNodeStream(ast));
-    return treeParser.file().file;
+    return treeParser.file();
   }
 }

@@ -13,6 +13,12 @@ class FileSpec extends Spec with ShouldMatchers {
       parser.parseFile(source).toStringTree() should equal (
         "(namespace noop test) (CLASS Foo)");
     }
+    
+    it("should allow import in default namespace") {
+      val source = "import Foo; class B(){}";
+      parser.parseFile(source).toStringTree() should equal (
+        "(import Foo) (CLASS B)");
+    }
 
     it("should parse import statements") {
       val source = "import noop.test.Test; class Foo() {}";
