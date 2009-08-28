@@ -17,11 +17,11 @@ tokens {
 }
 
 @header {
-  package noop.grammar;
+  package noop.grammar.antlr;
 }
 
 @lexer::header {
-  package noop.grammar;
+  package noop.grammar.antlr;
 }
 
 @rulecatch {

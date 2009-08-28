@@ -20,7 +20,7 @@ define "noop" do
   project.group = GROUP
   manifest["Implementation-Vendor"] = COPYRIGHT
 
-  antlr = antlr(_('src/main/antlr'), :in_package=>'noop.grammar')
+  antlr = antlr(_('src/main/antlr'), :in_package=>'noop.grammar.antlr')
 
   compile.from antlr
   compile.with ANTLR

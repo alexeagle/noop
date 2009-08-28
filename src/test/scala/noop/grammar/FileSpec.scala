@@ -5,7 +5,7 @@ import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
 
 class FileSpec extends Spec with ShouldMatchers {
-  val parser = new OurParser();
+  val parser = new Parser();
 
   describe("parser") {
     it("should parse namespace declaration") {

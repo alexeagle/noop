@@ -6,7 +6,7 @@ import org.scalatest.matchers.ShouldMatchers
 
 
 class ClassSpec extends Spec with ShouldMatchers {
-  val parser = new OurParser();
+  val parser = new Parser();
 
   describe("parser") {
     it("should fail to parse a class with no parenthesis") {

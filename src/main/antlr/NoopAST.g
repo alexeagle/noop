@@ -14,7 +14,7 @@ scope SourceFile {
 }
 
 @header {
-  package noop.grammar;
+  package noop.grammar.antlr;
 
   import noop.model.*;
 }
