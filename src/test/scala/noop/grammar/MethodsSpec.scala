@@ -12,7 +12,7 @@ class MethodsSpec extends Spec with ShouldMatchers {
       val source = "class Bar() { String helloWorld() { Int i = 1; } }";
       val commonTree = parser.parseFile(source);
 
-      commonTree.toStringTree() should equal ("(CLASS Bar (METHOD String helloWorld (PROP Int (= i 1))))");
+      commonTree.toStringTree() should equal ("(CLASS Bar (METHOD String helloWorld (VAR Int (= i 1))))");
     }
 
   it("should parse a method with parameters") {
@@ -20,6 +20,19 @@ class MethodsSpec extends Spec with ShouldMatchers {
       val commonTree = parser.parseFile(source);
 
       commonTree.toStringTree() should equal ("(CLASS Bar (METHOD String helloWorld " +
-          "(PARAMS (PARAM String s) (PARAM Int n)) (PROP Int (= i 1))))");
+          "(PARAMS (PARAM String s) (PARAM Int n)) (VAR Int (= i 1))))");
     }
+  
+  it("should parse a method invocation on a parameter reference") {
+    val source = """
+      class HelloWorld(Console console) {
+        Int hello(String args) {
+          console.println("Hello, World!");
+          return 5.next;
+        }
+      }
+    """;
+   parser.parseFile(source).toStringTree() should equal(
+     """(CLASS HelloWorld (PARAMS (PARAM Console console)) (METHOD Int hello (PARAMS (PARAM String args)) (. console println (ARGS "Hello, World!")) (return (. 5 next))))""");
+  }
 }

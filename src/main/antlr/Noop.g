@@ -12,6 +12,8 @@ tokens {
   PROP;
   METHOD;
   MOD;
+  ARGS;
+  VAR;
 }
 
 @header {
@@ -52,8 +54,8 @@ qualifiedType
 	;
 
 classDeclaration
-	: 'class' TypeIdentifier parameterList block
-	-> ^(CLASS TypeIdentifier parameterList? block?)
+	: 'class' TypeIdentifier parameterList classBlock
+	-> ^(CLASS TypeIdentifier parameterList? classBlock?)
 	;
 
 modifiers
@@ -65,21 +67,46 @@ modifier
 	: 'mutable' | 'delegate'
 	;
 
-block
-	: '{'!  propertyDeclaration* methodDeclaration* '}'!
+classBlock
+	:	'{'!  propertyDeclaration* methodDeclaration* '}'!
 	;
-
+	
 propertyDeclaration
   : TypeIdentifier propertyDeclarator ';'
   -> ^(PROP TypeIdentifier propertyDeclarator)
   ;
 
+variableDeclaration
+	:	TypeIdentifier propertyDeclarator ';'
+	-> ^(VAR TypeIdentifier propertyDeclarator)
+	;
+
 propertyDeclarator
 	: VariableIdentifier ('='^ expression)?
 	;
 
+block
+	: '{'!  statement* '}'!
+	;
+
+statement
+	:	variableDeclaration
+	| 'return'^ expression ';'!
+	| expression ';'!
+	;
+
 expression
-	: literal
+	: primary ('='^ expression)?
+	;
+	
+primary
+	:	'('! expression ')'!
+	| (VariableIdentifier|TypeIdentifier|literal) ('.'^ (VariableIdentifier|TypeIdentifier))* arguments?
+	;
+	
+arguments
+	:	'(' expression? ')'
+	-> ^(ARGS expression?)
 	;
 
 parameterList
