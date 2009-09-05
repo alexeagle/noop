@@ -1,16 +1,27 @@
 groupId: com.google.code
-artifactId: noop-compiler
+artifactId: noop-interpreter
 version: 1.0.0-SNAPSHOT
 packaging: jar
-name: Noop - Compiler
-description: The Compiler/Parser for the Noop Language
+name: Noop - Interpreter
+description: The Parser/Interpreter for the Noop Language
 dependencies:
   - { groupId: org.antlr, artifactId: antlr, version: 3.0.1 }
+  - { groupId: org.scala-lang, artifactId: scala-library, version: 2.7.5 }
+  - { groupId: org.scala-tools.testing, artifactId: scalatest, version: 0.9.5, scope: test }
 build:
   sourceDirectory: src/main/scala
   testSourceDirectory: src/test/scala
   plugins:
-    - { groupId: org.scala-tools, artifactId: maven-scala-plugin, version: 2.11 }
+    - groupId: org.scala-tools
+      artifactId: maven-scala-plugin
+      version: 2.11
+      executions:
+        - id: scala-compile-first
+          phase: process-resources
+          goals: [ add-source, compile ]
+        - id: scala-test-compile
+          phase: process-test-resources
+          goals: [ testCompile ]
     - groupId: org.codehaus.mojo
       artifactId: antlr3-maven-plugin
       version: 1.0
