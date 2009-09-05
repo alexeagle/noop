@@ -4,5 +4,6 @@ src/main/antlr/output/.*
 .*\.iml
 .*\.iws
 .*\.ipr
+.DS_Store
 ^\..*
 pom.xml
