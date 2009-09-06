@@ -15,6 +15,10 @@ scope SourceFile {
   import noop.model.*;
 }
 
+@rulecatch {
+  catch (RecognitionException e) { throw e; }
+}
+
 @members {
   public String join(String delim, List strings) {
     if (strings.isEmpty()) {

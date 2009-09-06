@@ -90,7 +90,7 @@ classBlock
 	:	'{'!  propertyDeclaration* methodDeclaration* '}'!
 	;
 
-interfaceBlock:
+interfaceBlock
   : '{'! methodDefinition* '}'!
 	;
 
@@ -99,7 +99,7 @@ methodSignature
   ;
 
 methodDefinition
-  : methodSignature ';'!
+  : methodSignature ';'
   -> ^(METHOD methodSignature)
   ;
 
