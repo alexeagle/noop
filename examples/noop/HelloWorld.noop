@@ -1,0 +1,13 @@
+package noop;
+
+class HelloWorld(Console console) implements Application {
+
+  Int main(List<String> args) {
+    Int i = 1;
+    Int j = 2;
+    Int k = i + j;
+
+    console.println("Hello World " + k);
+    return 0;
+  }
+}
