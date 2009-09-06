@@ -55,8 +55,8 @@ namespace returns [String text]
 	;
 
 qualifiedType returns [String text]
-	:	 n=namespace t=TypeIdentifier
-	{ $text = $n.text + "." + $t.text; }
+	:	 n=namespace? t=TypeIdentifier
+	{ $text = ($n.text == null) ? $t.text : $n.text + "." + $t.text; }
 	;
 
 classDeclaration
@@ -64,7 +64,7 @@ classDeclaration
   ClassDefinition classDef = new ClassDefinition();
 	$SourceFile::file.classDef_$eq(classDef);
 }
-	:	^(CLASS t=TypeIdentifier p=parameters? classBlock?) 
+	:	^(CLASS t=TypeIdentifier p=parameters? typeSpecifier* classBlock?) 
 	{ 
 	classDef.name_$eq($t.text);
 	if ($p.parameters != null) {
@@ -86,6 +86,13 @@ parameter [List<Parameter> parameters]
 	  param.noopType_$eq($t.text);
 	  param.name_$eq($v.text);
 	  $parameters.add(param);
+	}
+	;
+
+typeSpecifier
+	:	^(IMPL i=qualifiedType)
+	{
+   $SourceFile::file.classDef().interfaces().$plus$eq($i.text);
 	}
 	;
 

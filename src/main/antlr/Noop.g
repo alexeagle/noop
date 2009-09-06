@@ -14,6 +14,7 @@ tokens {
   MOD;
   ARGS;
   VAR;
+  IMPL;
 }
 
 @header {
@@ -61,8 +62,13 @@ qualifiedType
 	;
 
 classDeclaration
-	: 'class' TypeIdentifier parameterList classBlock
-	-> ^(CLASS TypeIdentifier parameterList? classBlock?)
+	: 'class' TypeIdentifier parameterList typeSpecifiers? classBlock
+	-> ^(CLASS TypeIdentifier parameterList? typeSpecifiers? classBlock?)
+	;
+
+typeSpecifiers
+	: 'implements' qualifiedType (',' qualifiedType)*
+	-> ^(IMPL qualifiedType)*
 	;
 
 modifiers
