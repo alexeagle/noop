@@ -7,6 +7,7 @@ options {
 
 tokens {
   CLASS;
+  INTERFACE;
   PARAMS;
   PARAM;
   PROP;
@@ -36,7 +37,7 @@ interpretable
 	;
 
 file
-	:	namespaceDeclaration? importDeclaration* classDeclaration
+	:	namespaceDeclaration? importDeclaration* (classDeclaration | interfaceDeclaration)
 	;
 
 namespaceDeclaration
@@ -48,8 +49,8 @@ importDeclaration
 	;
 
 methodDeclaration
-	: TypeIdentifier VariableIdentifier parameterList block
-	-> ^(METHOD TypeIdentifier VariableIdentifier parameterList? block)
+	: methodSignature block
+	-> ^(METHOD methodSignature block)
 	;
 
 namespace
@@ -65,6 +66,11 @@ classDeclaration
 	-> ^(CLASS TypeIdentifier parameterList? classBlock?)
 	;
 
+interfaceDeclaration
+  : 'interface' TypeIdentifier interfaceBlock
+  -> ^(INTERFACE TypeIdentifier interfaceBlock?)
+  ;
+
 modifiers
 	: modifier+
 	-> ^(MOD modifier+)
@@ -77,7 +83,21 @@ modifier
 classBlock
 	:	'{'!  propertyDeclaration* methodDeclaration* '}'!
 	;
-	
+
+interfaceBlock:
+  : '{'! methodDefinition* '}'!
+	;
+
+methodSignature
+  : TypeIdentifier VariableIdentifier parameterList
+  ;
+
+methodDefinition
+  : methodSignature ';'!
+  -> ^(METHOD methodSignature)
+  ;
+
+
 propertyDeclaration
   : TypeIdentifier propertyDeclarator ';'
   -> ^(PROP TypeIdentifier propertyDeclarator)
