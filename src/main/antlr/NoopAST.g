@@ -16,10 +16,26 @@ scope SourceFile {
 }
 
 @rulecatch {
-  catch (RecognitionException e) { throw e; }
+  catch (RecognitionException e) {
+  // TODO: print the line, and show a carot underneath the position of the error
+    reportError(e);
+    throw(e);
+  }
 }
 
 @members {
+  Stack paraphrases = new Stack(); 
+
+  @Override
+  public String getErrorMessage(RecognitionException e, String[] tokenNames) { 
+    String msg = super.getErrorMessage(e, tokenNames); 
+    if ( paraphrases.size()>0 ) { 
+      String paraphrase = (String)paraphrases.peek(); 
+      msg = msg+" "+paraphrase; 
+    } 
+    return msg; 
+  }
+
   public String join(String delim, List strings) {
     if (strings.isEmpty()) {
       return "";
@@ -39,7 +55,9 @@ scope SourceFile {
 
 file returns [File file = new File()]
   scope SourceFile;
-  @init { $SourceFile::file = $file; }
+  @init { $SourceFile::file = $file;
+          paraphrases.push("at top-level in file"); }
+  @after { paraphrases.pop(); }
   :	 namespaceDeclaration? importDeclaration* classDeclaration
   ;
 
@@ -64,9 +82,13 @@ qualifiedType returns [String text]
 	;
 
 classDeclaration
-@init{	
+@init {	
   ClassDefinition classDef = new ClassDefinition();
 	$SourceFile::file.classDef_$eq(classDef);
+	paraphrases.push("in class definition");
+}
+@after {
+  paraphrases.pop();
 }
 	:	^(CLASS t=TypeIdentifier p=parameters? typeSpecifier* classBlock?) 
 	{ 
@@ -113,6 +135,8 @@ classBlock
 	;
 	
 methodDeclaration 
+@init { paraphrases.push("in method declaration"); }
+@after { paraphrases.pop(); }
   :	^(METHOD type=TypeIdentifier name=VariableIdentifier parameters? statement*)
   { Method method = new Method();
     $SourceFile::file.classDef().methods().$plus$eq(method);
@@ -121,6 +145,8 @@ methodDeclaration
   ;
 
 statement
+@init { paraphrases.push("in statement"); }
+@after { paraphrases.pop(); }
 	:	variableDeclaration
 	;
 

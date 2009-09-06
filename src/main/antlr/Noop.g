@@ -27,7 +27,10 @@ tokens {
 }
 
 @rulecatch {
-  catch (RecognitionException e) { throw e; }
+  catch (RecognitionException e) { 
+    reportError(e);
+    throw e;
+  }
 }
 
 // A line of user input in the interactive interpreter
