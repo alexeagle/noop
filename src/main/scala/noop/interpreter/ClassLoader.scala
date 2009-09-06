@@ -3,11 +3,18 @@ package noop.interpreter
 import java.io.{FileInputStream, File}
 import noop.grammar.Parser
 import noop.model.ClassDefinition
+import org.antlr.runtime.RecognitionException
 
 class ClassLoader(parser: Parser, srcPaths: List[String]) {
 
   def getClassDefinition(file: File): ClassDefinition = {
-    return parser.file(new FileInputStream(file)).classDef;
+    try {
+      return parser.file(new FileInputStream(file)).classDef;
+    } catch {
+      // ANTLR will print a message about what failed to parse.
+      case ex: RecognitionException =>
+          throw new RuntimeException("Failed to parse " + file.getAbsolutePath());
+    }
   }
 
   def findClass(className: String): ClassDefinition = {
