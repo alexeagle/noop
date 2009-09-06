@@ -1,13 +1,11 @@
-package noop;
+import noop.Application;
+import noop.Console;
 
 class HelloWorld(Console console) implements Application {
 
-  Int main(List<String> args) {
-    Int i = 1;
-    Int j = 2;
-    Int k = i + j;
+  Int main(List args) {
 
-    console.println("Hello World " + k);
+    console.println("Hello World!");
     return 0;
   }
 }

@@ -7,10 +7,9 @@ dependencies:
   - { groupId: org.antlr, artifactId: antlr, version: 3.1.1 }
   - { groupId: org.scala-lang, artifactId: scala-library, version: 2.7.5 }
   - { groupId: org.scala-lang, artifactId: scala-compiler, version: 2.7.5 }
-  - { groupId: org.scala-tools.testing, artifactId: scalatest, version: 0.9.5, scope: test }
+  - { groupId: org.scalatest, artifactId: scalatest, version: 1.0-SNAPSHOT, scope: test }
+  - { groupId: com.jteigen.scalatest, artifactId: junit4runner, version: 1.0-SNAPSHOT, scope: test }
 build:
-  sourceDirectory: src/main/scala
-  testSourceDirectory: src/test/scala
   plugins:
     - groupId: org.scala-tools
       artifactId: maven-scala-plugin
@@ -28,10 +27,18 @@ build:
       executions:
         - goals: [ antlr ]
     - artifactId: maven-compiler-plugin
+      executions:
+        - phase: compile
+          goals: [ compile ]
       configuration:
         source: 1.5
         target: 1.5
+    - artifactId: maven-surefire-plugin
+      configuration:
+        failIfNoTests: true
 pluginRepositories:
   - { id: scala-tools.org, name: Scala-tools Maven2 Repository, url: "http://scala-tools.org/repo-releases" }
+  - { id: twdata-m2-repository, name: twdata.org Maven 2 Repository, url: "http://twdata-m2-repository.googlecode.com/svn/" }
 repositories:
   - { id: scala-tools.org, name: Scala-tools Maven2 Repository, url: "http://scala-tools.org/repo-releases" }
+  - { id: scala-tools.org-snap, name: Scala-tools Snapshots, url: "http://www.scala-tools.org/repo-snapshots" }
