@@ -1,5 +1,6 @@
 package noop.grammar
 
+import model.AssignmentExpression
 import org.antlr.runtime.RecognitionException
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
@@ -25,13 +26,16 @@ class MethodsSpec extends Spec with ShouldMatchers {
 
       val file = parser.file(source);
       file.classDef.methods.size should be (1);
-      file.classDef.methods(0).name should be ("helloWorld");
-      file.classDef.methods(0).returnType should be ("String");
-      file.classDef.methods(0).parameters.size should be (2);
-      file.classDef.methods(0).parameters(0).name should be ("s");
-      file.classDef.methods(0).parameters(0).noopType should be ("String");
-      file.classDef.methods(0).parameters(1).name should be ("n");
-      file.classDef.methods(0).parameters(1).noopType should be ("Int");
+      val firstMethod = file.classDef.methods(0)
+      firstMethod.name should be ("helloWorld");
+      firstMethod.returnType should be ("String");
+      firstMethod.parameters.size should be (2);
+      firstMethod.parameters(0).name should be ("s");
+      firstMethod.parameters(0).noopType should be ("String");
+      firstMethod.parameters(1).name should be ("n");
+      firstMethod.parameters(1).noopType should be ("Int");
+      firstMethod.block.statements.size should be (1);
+      firstMethod.block.statements(0).getClass() should be (classOf[AssignmentExpression]);
 
     }
 

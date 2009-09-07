@@ -9,6 +9,10 @@ scope SourceFile {
   File file;
 }
 
+scope Block {
+  Block block;
+}
+
 @header {
   package noop.grammar.antlr;
 
@@ -135,10 +139,13 @@ classBlock
 	;
 	
 methodDeclaration 
-@init { paraphrases.push("in method declaration"); }
+  scope Block;
+@init { paraphrases.push("in method declaration");
+        $Block::block = new Block();
+}
 @after { paraphrases.pop(); }
   :	^(METHOD type=TypeIdentifier name=VariableIdentifier p=parameters? statement*)
-  { Method method = new Method($name.text, $type.text);
+  { Method method = new Method($name.text, $type.text, $Block::block);
     $SourceFile::file.classDef().methods().$plus$eq(method);
     if ($p.parameters != null) {
   	  for (Parameter param : $p.parameters) {
@@ -155,16 +162,16 @@ statement
 	;
 
 propertyDeclaration
-	:	^(PROP TypeIdentifier propertyDeclarator)
+	:	^(PROP TypeIdentifier (assignment | VariableIdentifier))
 	;
 
 variableDeclaration
-	:	^(VAR TypeIdentifier propertyDeclarator)
+	:	^(VAR TypeIdentifier (assignment | VariableIdentifier))
 	;
 	
-propertyDeclarator
+assignment
 	: ^('=' VariableIdentifier expression)
-	| VariableIdentifier
+	{ $Block::block.statements().$plus$eq(new AssignmentExpression()); }
 	;
 
 expression
