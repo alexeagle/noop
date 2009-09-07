@@ -135,7 +135,7 @@ modifier
 	;
 
 classBlock
-	:	propertyDeclaration | methodDeclaration
+	:	identifierDeclaration | methodDeclaration
 	;
 	
 methodDeclaration 
@@ -158,22 +158,25 @@ methodDeclaration
 statement
 @init { paraphrases.push("in statement"); }
 @after { paraphrases.pop(); }
-	:	variableDeclaration
+	:	identifierDeclaration
 	;
 
-propertyDeclaration
-	:	^(PROP TypeIdentifier (assignment | VariableIdentifier))
-	;
-
-variableDeclaration
-	:	^(VAR TypeIdentifier (assignment | VariableIdentifier))
+identifierDeclaration
+	:	^(VAR t=TypeIdentifier (^('=' v=VariableIdentifier exp=expression) | v=VariableIdentifier))
+	{ IdentifierDeclaration identifierDeclaration = new IdentifierDeclaration($t.text, $v.text);
+		$Block::block.statements().$plus$eq(identifierDeclaration);
+	  if ($exp.text != null) {
+	    identifierDeclaration.initialValue_$eq(new scala.Some($exp.text));
+	  }
+  }
 	;
 	
 assignment
-	: ^('=' VariableIdentifier expression)
-	{ $Block::block.statements().$plus$eq(new AssignmentExpression()); }
+	: ^('=' lhs=expression rhs=expression)
+	{ $Block::block.statements().$plus$eq(new AssignmentExpression($lhs.text, $rhs.text)); }
 	;
 
-expression
-	: INT | StringLiteral
+expression returns [String text]
+	: l=(INT | StringLiteral)
+	{ $text = $l.text; }
 	;

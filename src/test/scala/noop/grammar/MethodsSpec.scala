@@ -1,6 +1,6 @@
 package noop.grammar
 
-import model.AssignmentExpression
+import model.{IdentifierDeclaration, AssignmentExpression}
 import org.antlr.runtime.RecognitionException
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
@@ -35,8 +35,11 @@ class MethodsSpec extends Spec with ShouldMatchers {
       firstMethod.parameters(1).name should be ("n");
       firstMethod.parameters(1).noopType should be ("Int");
       firstMethod.block.statements.size should be (1);
-      firstMethod.block.statements(0).getClass() should be (classOf[AssignmentExpression]);
-
+      firstMethod.block.statements(0).getClass() should be (classOf[IdentifierDeclaration]);
+      val firstStatement = firstMethod.block.statements(0).asInstanceOf[IdentifierDeclaration];
+      firstStatement.noopType should be ("Int");
+      firstStatement.name should be ("i");
+      firstStatement.initialValue should be (Some("1"));
     }
 
     it("should parse a method invocation on a parameter reference") {

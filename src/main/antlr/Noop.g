@@ -10,7 +10,6 @@ tokens {
   INTERFACE;
   PARAMS;
   PARAM;
-  PROP;
   METHOD;
   MOD;
   ARGS;
@@ -90,7 +89,7 @@ modifier
 	;
 
 classBlock
-	:	'{'!  propertyDeclaration* methodDeclaration* '}'!
+	:	'{'!  identifierDeclaration* methodDeclaration* '}'!
 	;
 
 interfaceBlock
@@ -107,17 +106,12 @@ methodDefinition
   ;
 
 
-propertyDeclaration
-  : TypeIdentifier propertyDeclarator ';'
-  -> ^(PROP TypeIdentifier propertyDeclarator)
-  ;
-
-variableDeclaration
-	:	TypeIdentifier propertyDeclarator ';'
-	-> ^(VAR TypeIdentifier propertyDeclarator)
+identifierDeclaration
+	:	TypeIdentifier identifierDeclarator ';'
+	-> ^(VAR TypeIdentifier identifierDeclarator)
 	;
 
-propertyDeclarator
+identifierDeclarator
 	: VariableIdentifier ('='^ expression)?
 	;
 
@@ -126,7 +120,7 @@ block
 	;
 
 statement
-	:	variableDeclaration
+	:	identifierDeclaration
 	| 'return'^ expression ';'!
 	| expression ';'!
 	;
