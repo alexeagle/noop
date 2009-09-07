@@ -42,6 +42,23 @@ class MethodsSpec extends Spec with ShouldMatchers {
       firstStatement.initialValue should be (Some("1"));
     }
 
+    it("should allow variable declaration without an initial value") {
+      val source = "class Bar() { String helloWorld() { Int i; } }";
+      val commonTree = parser.parseFile(source);
+
+      commonTree.toStringTree() should equal ("(CLASS Bar (METHOD String helloWorld " +
+          "(VAR Int i)))");
+
+      val file = parser.file(source);
+      file.classDef.methods.size should be (1);
+      val firstMethod = file.classDef.methods(0)
+      val firstStatement = firstMethod.block.statements(0).asInstanceOf[IdentifierDeclaration];
+
+      firstStatement.noopType should be ("Int");
+      firstStatement.name should be ("i");
+      firstStatement.initialValue should be (None);
+    }
+    
     it("should parse a method invocation on a parameter reference") {
       val source = """class HelloWorld() { Int hello() { console.println("Hello, World!"); }}""";
       parser.parseFile(source).toStringTree() should equal(
