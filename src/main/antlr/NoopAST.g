@@ -137,10 +137,14 @@ classBlock
 methodDeclaration 
 @init { paraphrases.push("in method declaration"); }
 @after { paraphrases.pop(); }
-  :	^(METHOD type=TypeIdentifier name=VariableIdentifier parameters? statement*)
-  { Method method = new Method();
+  :	^(METHOD type=TypeIdentifier name=VariableIdentifier p=parameters? statement*)
+  { Method method = new Method($name.text, $type.text);
     $SourceFile::file.classDef().methods().$plus$eq(method);
-    method.name_$eq($name.text);
+    if ($p.parameters != null) {
+  	  for (Parameter param : $p.parameters) {
+	      method.parameters().$plus$eq(param);
+	    }
+	  }
   }
   ;
 
