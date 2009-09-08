@@ -139,13 +139,10 @@ classBlock
 	;
 	
 methodDeclaration 
-  scope Block;
-@init { paraphrases.push("in method declaration");
-        $Block::block = new Block();
-}
+@init { paraphrases.push("in method declaration"); }
 @after { paraphrases.pop(); }
-  :	^(METHOD type=TypeIdentifier name=VariableIdentifier p=parameters? statement*)
-  { Method method = new Method($name.text, $type.text, $Block::block);
+  :	^(METHOD type=TypeIdentifier name=VariableIdentifier p=parameters? b=block)
+  { Method method = new Method($name.text, $type.text, $b.block);
     $SourceFile::file.classDef().methods().$plus$eq(method);
     if ($p.parameters != null) {
   	  for (Parameter param : $p.parameters) {
@@ -154,19 +151,32 @@ methodDeclaration
 	  }
   }
   ;
+  
+block returns [Block block]
+  scope Block;
+  @init { $block = new Block();
+          $Block::block = $block; }
+  :	statement*
+  ;
 
 statement
 @init { paraphrases.push("in statement"); }
 @after { paraphrases.pop(); }
-	:	identifierDeclaration
+	:	returnStatement
+	| identifierDeclaration
+	;
+
+returnStatement
+	: ^('return' ex=expression)
+	{ $Block::block.statements().$plus$eq(new ReturnExpression($ex.exp)); }
 	;
 
 identifierDeclaration
 	:	^(VAR t=TypeIdentifier (^('=' v=VariableIdentifier exp=expression) | v=VariableIdentifier))
 	{ IdentifierDeclaration identifierDeclaration = new IdentifierDeclaration($t.text, $v.text);
 		$Block::block.statements().$plus$eq(identifierDeclaration);
-	  if ($exp.text != null) {
-	    identifierDeclaration.initialValue_$eq(new scala.Some($exp.text));
+	  if ($exp.exp != null) {
+	    identifierDeclaration.initialValue_$eq(new scala.Some($exp.exp));
 	  }
   }
 	;
@@ -176,7 +186,9 @@ assignment
 	{ $Block::block.statements().$plus$eq(new AssignmentExpression($lhs.text, $rhs.text)); }
 	;
 
-expression returns [String text]
-	: l=(INT | StringLiteral)
-	{ $text = $l.text; }
+expression returns [LiteralExpression exp]
+	: i=INT
+	{ $exp = new LiteralExpression<Integer>(Integer.valueOf($i.text)); }
+	| s=StringLiteral
+	{ $exp = new LiteralExpression<String>($s.text); }
 	;
