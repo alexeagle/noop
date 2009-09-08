@@ -164,6 +164,8 @@ statement
 @after { paraphrases.pop(); }
 	:	returnStatement
 	| identifierDeclaration
+	| exp=expression
+	{ $Block::block.statements().$plus$eq($exp.exp); }
 	;
 
 returnStatement
@@ -186,7 +188,34 @@ assignment
 	{ $Block::block.statements().$plus$eq(new AssignmentExpression($lhs.text, $rhs.text)); }
 	;
 
-expression returns [LiteralExpression exp]
+expression returns [Expression exp]
+  :	p=primary
+  { $exp = $p.exp; }
+  | d=dereference
+  { $exp = $d.exp; }
+  | v=VariableIdentifier 
+  { $exp = new IdentifierExpression($v.text); }
+  ;
+
+dereference returns [DereferenceExpression exp]
+	: ^('.' left=expression right=VariableIdentifier a=arguments?)
+	{ 
+	  if ($a.args != null) {
+	    $exp = new DereferenceExpression($left.exp, new MethodInvocationExpression($right.text, $a.args));
+	  } else {
+	    $exp = new DereferenceExpression($left.exp, new IdentifierExpression($right.text));
+	  }
+	}
+	;
+
+arguments returns [scala.collection.mutable.ArrayBuffer<Expression> args]
+	: ^(ARGS (exp=expression)*)
+	{ $args = new scala.collection.mutable.ArrayBuffer<Expression>();
+	// TODO: add exp* to $args
+	}
+	;
+  
+primary returns [LiteralExpression exp]
 	: i=INT
 	{ $exp = new LiteralExpression<Integer>(Integer.valueOf($i.text)); }
 	| s=StringLiteral
