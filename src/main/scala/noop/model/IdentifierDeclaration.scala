@@ -10,7 +10,7 @@ import interpreter.Context
 class IdentifierDeclaration(t: String, n: String) extends Expression {
   val noopType = t;
   val name = n;
-  var initialValue: Option[String] = None;
+  var initialValue: Option[Expression] = None;
 
   def evaluate(c: Context) = {
 

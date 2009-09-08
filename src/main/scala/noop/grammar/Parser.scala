@@ -1,7 +1,7 @@
 package noop.grammar
 
 import java.io.InputStream
-import noop.model.File
+import model.{Block, File}
 import noop.grammar.antlr.NoopAST
 import noop.grammar.antlr.NoopParser
 import noop.grammar.antlr.NoopLexer

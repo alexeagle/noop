@@ -17,7 +17,7 @@ class LiteralsSpec extends Spec with ShouldMatchers {
       val commonTree = parser.parseFile(source);
 
       commonTree.toStringTree() should equal (
-          "(CLASS Foo (PROP Int (= a 123)) (PROP Int (= b -123)))");
+          "(CLASS Foo (VAR Int (= a 123)) (VAR Int (= b -123)))");
     }
 
     it("should parse a string literal") {
@@ -28,7 +28,7 @@ class LiteralsSpec extends Spec with ShouldMatchers {
       """;
       val commonTree = parser.parseFile(source);
       commonTree.toStringTree() should equal (
-          "(CLASS Foo (PROP String (= a \"hello, world!\")))");
+          "(CLASS Foo (VAR String (= a \"hello, world!\")))");
     }
   }
 }

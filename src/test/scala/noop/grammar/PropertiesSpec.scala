@@ -15,7 +15,7 @@ class PropertiesSpec extends Spec with ShouldMatchers {
         }
       """;
 
-      parser.parseFile(source).toStringTree() should equal ("(CLASS Foo (PROP Int (= a 4)) (PROP Int i))");
+      parser.parseFile(source).toStringTree() should equal ("(CLASS Foo (VAR Int (= a 4)) (VAR Int i))");
     }
   }
 }
