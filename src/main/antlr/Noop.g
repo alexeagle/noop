@@ -131,7 +131,7 @@ expression
 	
 primary
 	:	'('! expression ')'!
-	| (VariableIdentifier|TypeIdentifier|literal) ('.'^ (VariableIdentifier|TypeIdentifier))* arguments?
+	| (VariableIdentifier|TypeIdentifier|literal) ('.'^ (VariableIdentifier|TypeIdentifier) arguments?)*
 	;
 	
 arguments
