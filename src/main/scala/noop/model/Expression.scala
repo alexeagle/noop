@@ -1,12 +1,12 @@
-package noop.model
+package noop.model;
 
+import interpreter.Context;
 
-import interpreter.Context
+import types.NoopObject;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-
 trait Expression {
-  def evaluate(c: Context): Unit;
+  def evaluate(c: Context): Option[NoopObject];
 }

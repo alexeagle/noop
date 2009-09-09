@@ -220,10 +220,10 @@ arguments returns [scala.collection.mutable.ArrayBuffer<Expression> args]
 	}
 	;
   
-primary returns [LiteralExpression exp]
+primary returns [Expression exp]
 	: i=INT
-	{ $exp = new LiteralExpression<Integer>(Integer.valueOf($i.text)); }
+	{ $exp = new IntegerLiteralExpression(Integer.valueOf($i.text)); }
 	| s=StringLiteral
 	{ String valueWithQuotes = $s.text;
-	  $exp = new LiteralExpression<String>(valueWithQuotes.substring(1, valueWithQuotes.length() - 1)); }
+	  $exp = new StringLiteralExpression(valueWithQuotes.substring(1, valueWithQuotes.length() - 1)); }
 	;

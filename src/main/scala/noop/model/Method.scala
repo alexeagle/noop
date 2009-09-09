@@ -1,7 +1,6 @@
-package noop.model
+package noop.model;
 
-
-import collection.mutable.{ArrayBuffer, Buffer}
+import collection.mutable.{ArrayBuffer, Buffer};
 
 /**
  * Represents the declaration of a method in source code.

@@ -24,8 +24,8 @@ class BlockSpec extends Spec with ShouldMatchers {
       block.statements(0).getClass() should be(classOf[ReturnExpression]);
       val returnExpression = block.statements(0).asInstanceOf[ReturnExpression];
 
-      returnExpression.expr.getClass() should be(classOf[LiteralExpression[Int]]);
-      returnExpression.expr.asInstanceOf[LiteralExpression[Int]].value should be(0);
+      returnExpression.expr.getClass() should be(classOf[IntegerLiteralExpression]);
+      returnExpression.expr.asInstanceOf[IntegerLiteralExpression].value should be(0);
     }
 
     it("should allow chained property access on properties") {
@@ -132,8 +132,8 @@ class BlockSpec extends Spec with ShouldMatchers {
       methodInvocation.arguments should have length(2);
       methodInvocation.arguments(0).getClass() should be(classOf[IdentifierExpression]);
       methodInvocation.arguments(0).asInstanceOf[IdentifierExpression].identifier should be("c");
-      methodInvocation.arguments(1).getClass() should be(classOf[LiteralExpression[String]]);
-      methodInvocation.arguments(1).asInstanceOf[LiteralExpression[String]].value should be ("d");
+      methodInvocation.arguments(1).getClass() should be(classOf[StringLiteralExpression]);
+      methodInvocation.arguments(1).asInstanceOf[StringLiteralExpression].value should be ("d");
     }
   }
 }

@@ -1,6 +1,6 @@
 package noop.grammar
 
-import model.{LiteralExpression, IdentifierDeclaration, AssignmentExpression}
+import model.{AssignmentExpression, IdentifierDeclaration, IntegerLiteralExpression}
 import org.antlr.runtime.RecognitionException
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
@@ -39,7 +39,7 @@ class MethodsSpec extends Spec with ShouldMatchers {
       val firstStatement = firstMethod.block.statements(0).asInstanceOf[IdentifierDeclaration];
       firstStatement.noopType should be ("Int");
       firstStatement.name should be ("i");
-      // firstStatement.initialValue should be (Some(new LiteralExpression[Integer](1)));
+      // firstStatement.initialValue should be (Some(new IntegerLiteralExpression(1)));
     }
 
     it("should allow variable declaration without an initial value") {
