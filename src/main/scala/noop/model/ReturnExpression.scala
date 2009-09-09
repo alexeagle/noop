@@ -7,10 +7,7 @@ import interpreter.Context
  * @author alexeagle@google.com (Alex Eagle)
  */
 
-class ReturnExpression(e: Expression) extends Expression {
-  val expr = e;
+class ReturnExpression(val expr: Expression) extends Expression {
 
-  def evaluate(c: Context) {
-
-  }
+  def evaluate(c: Context) { }
 }

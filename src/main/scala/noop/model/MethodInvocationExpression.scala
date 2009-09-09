@@ -7,9 +7,7 @@ import interpreter.Context
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-class MethodInvocationExpression(n: String, a: Buffer[Expression]) extends Expression {
-  val name = n;
-  val arguments = a;
+class MethodInvocationExpression(val name: String, val arguments: Buffer[Expression]) extends Expression {
 
   def evaluate(c: Context) = {}
 }

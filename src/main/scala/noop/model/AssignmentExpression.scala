@@ -7,9 +7,8 @@ import interpreter.Context
  * @author alexeagle@google.com (Alex Eagle)
  */
 
-class AssignmentExpression(left: String, right: String) extends Expression {
-  val lhs: String = left;
-  val rhs: String = right;
+class AssignmentExpression(val lhs: String, val rhs: String) extends Expression {
+
   def evaluate(c: Context): Unit = {
 
   }
