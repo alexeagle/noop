@@ -31,7 +31,6 @@ define "noop" do
 
   compile.dependencies.each do |c|
     if c.to_s.index("antlr-runtime") or c.to_s.index("scala-library")
-      puts "Merging jar " + c.to_s
       package(:jar).merge(c).include('*.class')
     end
   end

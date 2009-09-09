@@ -209,9 +209,14 @@ dereference returns [DereferenceExpression exp]
 	;
 
 arguments returns [scala.collection.mutable.ArrayBuffer<Expression> args]
-	: ^(ARGS (exp=expression)*)
+	: ^(ARGS (exp+=expression)*)
 	{ $args = new scala.collection.mutable.ArrayBuffer<Expression>();
-	// TODO: add exp* to $args
+	  if ($exp != null) {
+  	  for (Object item : $exp) {
+	      Expression expression = ((expression_return)item).exp;
+	      $args.$plus$eq(expression);
+	    }
+	  }
 	}
 	;
   
@@ -219,5 +224,6 @@ primary returns [LiteralExpression exp]
 	: i=INT
 	{ $exp = new LiteralExpression<Integer>(Integer.valueOf($i.text)); }
 	| s=StringLiteral
-	{ $exp = new LiteralExpression<String>($s.text); }
+	{ String valueWithQuotes = $s.text;
+	  $exp = new LiteralExpression<String>(valueWithQuotes.substring(1, valueWithQuotes.length() - 1)); }
 	;

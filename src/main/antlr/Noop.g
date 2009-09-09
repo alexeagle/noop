@@ -135,8 +135,12 @@ primary
 	;
 	
 arguments
-	:	'(' expression? ')'
-	-> ^(ARGS expression?)
+	:	'(' expressionList? ')'
+	-> ^(ARGS expressionList?)
+	;
+
+expressionList
+	:	expression (','! expression)*
 	;
 
 parameterList

@@ -117,5 +117,27 @@ class BlockSpec extends Spec with ShouldMatchers {
       deref1.right.asInstanceOf[MethodInvocationExpression].arguments should be(new ArrayBuffer[Expression]);
       deref1.right.asInstanceOf[MethodInvocationExpression].arguments.isEmpty should be(true);
     }
+
+    it("should allow a method call with arguments") {
+      val source = "{ a.b(c, \"d\"); }";
+      val blockAst = parser.parseBlock(source);
+
+      blockAst.toStringTree() should be ("(. a b (ARGS c \"d\"))");
+
+      val block = parser.buildTreeParser(blockAst).block();
+      block.statements.size should be(1);
+
+      val deref1 = block.statements(0).asInstanceOf[DereferenceExpression];
+      deref1.left.getClass() should be(classOf[IdentifierExpression]);
+      deref1.left.asInstanceOf[IdentifierExpression].identifier should be("a");
+      deref1.right.getClass() should be(classOf[MethodInvocationExpression]);
+      val methodInvocation = deref1.right.asInstanceOf[MethodInvocationExpression];
+      methodInvocation.name should be("b");
+      methodInvocation.arguments should have length(2);
+      methodInvocation.arguments(0).getClass() should be(classOf[IdentifierExpression]);
+      methodInvocation.arguments(0).asInstanceOf[IdentifierExpression].identifier should be("c");
+      methodInvocation.arguments(1).getClass() should be(classOf[LiteralExpression[String]]);
+      methodInvocation.arguments(1).asInstanceOf[LiteralExpression[String]].value should be ("d");
+    }
   }
 }
