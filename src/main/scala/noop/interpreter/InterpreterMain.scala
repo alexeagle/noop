@@ -1,7 +1,9 @@
 package noop.interpreter
 
 
+import scala.collection.mutable
 import grammar.Parser
+import model.Method
 import org.antlr.runtime.MismatchedTokenException
 
 /**
@@ -20,8 +22,13 @@ object InterpreterMain {
     //TODO: guice? other injector?
     val classLoader = new ClassLoader(new Parser(), List(args(1)));
     val mainClass = classLoader.findClass(args(0));
-    //TODO: actually interpret it!
-    println("Interpreting: " + mainClass.name);
+
+    val evaluator = new Evaluator(classLoader, new mutable.Stack[Frame]);
+    val context = new Context();
+    mainClass.methods.find(m => m.name == "main") match {
+      case Some(mainMethod) => evaluator.evaluateSomeStuffBitch(null, context);
+      case None => println("Main method not found in class " + mainClass.name);
+    }
 
     System.exit(0);
   }
