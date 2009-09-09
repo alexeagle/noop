@@ -7,6 +7,9 @@ import noop.grammar.Parser;
 import noop.model.ClassDefinition;
 import org.antlr.runtime.RecognitionException;
 
+/**
+ * @author jeremiele@google.com (Jeremie Lenfant-Engelmann)
+ */
 class ClassLoader(parser: Parser, srcPaths: List[String]) {
 
   val cache = Map.empty[String, ClassDefinition];

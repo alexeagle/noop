@@ -112,9 +112,7 @@ parameters returns [List<Parameter> parameters = new ArrayList<Parameter>() ]
 parameter [List<Parameter> parameters]
 	:	^(PARAM modifiers? t=TypeIdentifier v=VariableIdentifier)
 
-	{ Parameter param = new Parameter();
-	  param.noopType_$eq($t.text);
-	  param.name_$eq($v.text);
+	{ Parameter param = new Parameter($v.text, $t.text);
 	  $parameters.add(param);
 	}
 	;

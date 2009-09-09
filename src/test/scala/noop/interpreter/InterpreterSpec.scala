@@ -8,17 +8,12 @@ import java.io.ByteArrayOutputStream
 
 class InterpreterSpec extends Spec with ShouldMatchers {
   
-  describe("the interactive interpreter") {
-    it("should read a class declaration and echo the class name") {
-      val out = new ByteArrayOutputStream();
-      Console.setOut(out);
-      val interpreter:Interpreter = new Interpreter(new Parser());
-      interpreter.evaluate("class Foo() {}");
-      out.toString() should be ("Foo\n");
-    }
-    
-    it("should parse an interpretable") {
-      
+  describe("the interpreter") {
+    it("should register Console as a native type") {
+      val classLoader = new MockClassLoader(new Parser(), List());
+      val interpreter = new Interpreter(classLoader);
+      interpreter.registerNativeTypes;
+      classLoader.cache should contain key("Console");
     }
   }
 }
