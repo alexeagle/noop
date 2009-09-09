@@ -1,14 +1,13 @@
-package noop.grammar
+package noop.grammar;
 
-import collection.mutable.ArrayBuffer
-import model._
-import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.Spec
+import collection.mutable.ArrayBuffer;
+import model._;
+import org.scalatest.matchers.ShouldMatchers;
+import org.scalatest.Spec;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-
 class BlockSpec extends Spec with ShouldMatchers {
 
   val parser = new Parser();
