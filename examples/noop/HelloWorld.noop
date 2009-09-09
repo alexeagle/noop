@@ -1,12 +1,9 @@
 import noop.Application;
 import noop.Console;
 
-import noop.Console;
-
 class HelloWorld(Console console) implements Application {
 
   Int main(List args) {
-
     console.println("Hello World!");
     return 0;
   }
