@@ -8,9 +8,7 @@ import interpreter.Context
  * @author alexeagle@google.com (Alex Eagle)
  */
 
-class DereferenceExpression(l: Expression, r: Expression) extends Expression {
-  val left = l;
-  val right = r;
+class DereferenceExpression(val left: Expression, val right: Expression) extends Expression {
 
   def evaluate(c: Context) = {}
 }

@@ -7,8 +7,7 @@ import interpreter.Context
  * @author alexeagle@google.com (Alex Eagle)
  */
 
-class LiteralExpression[T](v: T) extends Expression {
-  val value = v;
+class LiteralExpression[T](val value: T) extends Expression {
 
   def evaluate(c: Context) = {
 
