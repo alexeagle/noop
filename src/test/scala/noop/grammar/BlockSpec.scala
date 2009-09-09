@@ -1,14 +1,13 @@
-package noop.grammar
+package noop.grammar;
 
-import collection.mutable.ArrayBuffer
-import model._
-import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.Spec
+import collection.mutable.ArrayBuffer;
+import model._;
+import org.scalatest.matchers.ShouldMatchers;
+import org.scalatest.Spec;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-
 class BlockSpec extends Spec with ShouldMatchers {
 
   val parser = new Parser();
@@ -76,7 +75,7 @@ class BlockSpec extends Spec with ShouldMatchers {
 
       blockAst.toStringTree() should be("(. (. a b ARGS) c ARGS)");
       val block = parser.buildTreeParser(blockAst).block();
-      block.statements.size should be(1);
+      block.statements should have length (1);
 
       val deref1 = block.statements(0).asInstanceOf[DereferenceExpression];
       deref1.left.getClass() should be(classOf[DereferenceExpression]);
@@ -86,13 +85,11 @@ class BlockSpec extends Spec with ShouldMatchers {
       deref2.left.asInstanceOf[IdentifierExpression].identifier should be("a");
       deref2.right.getClass() should be(classOf[MethodInvocationExpression]);
       deref2.right.asInstanceOf[MethodInvocationExpression].name should be("b");
-      deref2.right.asInstanceOf[MethodInvocationExpression].arguments should be(new ArrayBuffer[Expression]);
-      deref2.right.asInstanceOf[MethodInvocationExpression].arguments.isEmpty should be(true);
+      deref2.right.asInstanceOf[MethodInvocationExpression].arguments should be ('empty);
 
       deref1.right.getClass() should be(classOf[MethodInvocationExpression]);
       deref1.right.asInstanceOf[MethodInvocationExpression].name should be("c");
-      deref1.right.asInstanceOf[MethodInvocationExpression].arguments should be(new ArrayBuffer[Expression]);
-      deref1.right.asInstanceOf[MethodInvocationExpression].arguments.isEmpty should be(true);
+      deref1.right.asInstanceOf[MethodInvocationExpression].arguments should be('empty);
     }
 
     it("should allow a method call on a property") {
@@ -101,7 +98,7 @@ class BlockSpec extends Spec with ShouldMatchers {
 
       blockAst.toStringTree() should be("(. (. a b) c ARGS)");
       val block = parser.buildTreeParser(blockAst).block();
-      block.statements.size should be(1);
+      block.statements should have length (1);
 
       val deref1 = block.statements(0).asInstanceOf[DereferenceExpression];
       deref1.left.getClass() should be(classOf[DereferenceExpression]);
@@ -114,8 +111,7 @@ class BlockSpec extends Spec with ShouldMatchers {
 
       deref1.right.getClass() should be(classOf[MethodInvocationExpression]);
       deref1.right.asInstanceOf[MethodInvocationExpression].name should be("c");
-      deref1.right.asInstanceOf[MethodInvocationExpression].arguments should be(new ArrayBuffer[Expression]);
-      deref1.right.asInstanceOf[MethodInvocationExpression].arguments.isEmpty should be(true);
+      deref1.right.asInstanceOf[MethodInvocationExpression].arguments should be('empty);
     }
 
     it("should allow a method call with arguments") {
