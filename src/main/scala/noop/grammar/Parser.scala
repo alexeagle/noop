@@ -1,17 +1,17 @@
-package noop.grammar
+package noop.grammar;
 
-import java.io.InputStream
-import model.{Block, File}
-import noop.grammar.antlr.NoopAST
-import noop.grammar.antlr.NoopParser
-import noop.grammar.antlr.NoopLexer
+import java.io.InputStream;
+import noop.model.{Block, File};
+import noop.grammar.antlr.NoopAST;
+import noop.grammar.antlr.NoopParser;
+import noop.grammar.antlr.NoopLexer;
 
-import org.antlr.runtime.ANTLRInputStream
-import org.antlr.runtime.ANTLRStringStream
-import org.antlr.runtime.CommonTokenStream
-import org.antlr.runtime.RecognitionException
-import org.antlr.runtime.tree.CommonTree
-import org.antlr.runtime.tree.CommonTreeNodeStream
+import org.antlr.runtime.ANTLRInputStream;
+import org.antlr.runtime.ANTLRStringStream;
+import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.RecognitionException;
+import org.antlr.runtime.tree.CommonTree;
+import org.antlr.runtime.tree.CommonTreeNodeStream;
 
 class Parser() {
   def buildParser(input: ANTLRStringStream): NoopParser = {

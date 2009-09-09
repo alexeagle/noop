@@ -1,11 +1,15 @@
-package noop.interpreter
+package noop.interpreter;
 
-import java.io.{FileInputStream, File}
-import noop.grammar.Parser
-import noop.model.ClassDefinition
-import org.antlr.runtime.RecognitionException
+import scala.collection.mutable.Map;
+
+import java.io.{FileInputStream, File};
+import noop.grammar.Parser;
+import noop.model.ClassDefinition;
+import org.antlr.runtime.RecognitionException;
 
 class ClassLoader(parser: Parser, srcPaths: List[String]) {
+
+  val cache = Map.empty[String, ClassDefinition];
 
   def getClassDefinition(file: File): ClassDefinition = {
     try {
@@ -22,6 +26,9 @@ class ClassLoader(parser: Parser, srcPaths: List[String]) {
     val expectedFile = parts.last + ".noop";
     val relativePath = parts.take(parts.size - 1).mkString(File.separator);
 
+    if (cache.contains(className)) {
+      return cache(className);
+    }
     for (path <- srcPaths) {
       val dir = new File(path, relativePath);
       if (!dir.isDirectory()) {
@@ -35,5 +42,9 @@ class ClassLoader(parser: Parser, srcPaths: List[String]) {
       }
     }
     throw new ClassNotFoundException("Could not find class: " + className);
+  }
+
+  def addNativeClass(name: String, classDef: ClassDefinition) = {
+    cache += Pair(name, classDef);
   }
 }

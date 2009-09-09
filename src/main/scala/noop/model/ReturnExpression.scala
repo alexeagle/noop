@@ -9,5 +9,5 @@ import interpreter.Context
 
 class ReturnExpression(val expr: Expression) extends Expression {
 
-  def evaluate(c: Context) { }
+  def evaluate(c: Context) = None
 }
