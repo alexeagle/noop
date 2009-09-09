@@ -1,9 +1,9 @@
-package noop.interpreter
+package noop.interpreter;
 
-import grammar.Parser
-import java.io.{PrintWriter, BufferedWriter, FileWriter, File}
-import org.scalatest.Spec
-import org.scalatest.matchers.ShouldMatchers
+import grammar.Parser;
+import java.io.{PrintWriter, BufferedWriter, FileWriter, File};
+import org.scalatest.Spec;
+import org.scalatest.matchers.ShouldMatchers;
 
 class ClassLoaderSpec extends Spec with ShouldMatchers {
   val tmpDir = new File(System.getProperty("java.io.tmpdir"));
