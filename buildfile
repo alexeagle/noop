@@ -2,7 +2,7 @@ require 'buildr/antlr'
 require 'buildr/scala'
 
 # Version number for this release
-VERSION_NUMBER = "1.0.0-SNAPSHOT"
+VERSION_NUMBER = "0.1.0-SNAPSHOT"
 # Group identifier for your projects
 GROUP = "com.google"
 COPYRIGHT = "Apache 2.0"

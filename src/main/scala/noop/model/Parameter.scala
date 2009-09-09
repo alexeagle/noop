@@ -1,6 +1,4 @@
 package noop.model
 
-class Parameter {
-  var name:String = "";
-  var noopType:String = "";
+class Parameter(val name:String, val noopType: String) {
 }
