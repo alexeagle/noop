@@ -1,0 +1,13 @@
+//
+// Demonstration class that implements an interface and will be used as a
+// delegate
+//
+namespace delegation;
+
+class Delegate(Console console) implements Interface {
+
+  public void aMethod() {
+    console.println("Delegate executed aMethod()");
+  }
+  
+}
