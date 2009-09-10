@@ -1,12 +1,10 @@
-package noop.interpreter
+package noop.interpreter;
 
-import collection.mutable.{Map, Stack, ArrayBuffer}
+import collection.mutable.{Map, Stack, ArrayBuffer};
 import model.{Expression, MethodInvocationExpression, StringLiteralExpression, ClassDefinition, 
-    Block, NativeExpression, Parameter}
-import reflect.Method
-import types.{NoopConsole, NoopObject}
-
-import noop.grammar.Parser
+    Block, NativeExpression, Parameter, Method};
+import types.{NoopConsole, NoopObject};
+import noop.grammar.Parser;
 
 /**
  * This class bootstraps the interpretation process, by setting up the ClassLoader with
