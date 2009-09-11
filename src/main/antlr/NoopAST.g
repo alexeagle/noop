@@ -70,12 +70,12 @@ file returns [File file = new File()]
 
 namespaceDeclaration
 	:	^('namespace' name=namespace)
-	{ $SourceFile::file.namespace_$eq($name.text); }
+	{ $SourceFile::file.namespace_\$eq($name.text); }
 	;
 
 importDeclaration
 	: ^('import' name=qualifiedType)
-	{ $SourceFile::file.imports().$plus$eq($name.text); }
+	{ $SourceFile::file.imports().\$plus\$eq($name.text); }
 	;
 
 namespace returns [String text]
@@ -91,7 +91,7 @@ qualifiedType returns [String text]
 classDeclaration
 @init {	
   ClassDefinition classDef = new ClassDefinition();
-	$SourceFile::file.classDef_$eq(classDef);
+	$SourceFile::file.classDef_\$eq(classDef);
 	paraphrases.push("in class definition");
 }
 @after {
@@ -99,12 +99,12 @@ classDeclaration
 }
 	:	^(CLASS m=modifiers? t=TypeIdentifier p=parameters? typeSpecifier* classBlock?) 
 	{ 
-	classDef.name_$eq($t.text);
+	classDef.name_\$eq($t.text);
 	if ($p.parameters != null) {
-	  classDef.parameters().$plus$plus$eq($p.parameters);
+	  classDef.parameters().\$plus\$plus\$eq($p.parameters);
 	}
 	if ($m.modifiers != null) {
-	  classDef.modifiers().$plus$plus$eq($m.modifiers);
+	  classDef.modifiers().\$plus\$plus\$eq($m.modifiers);
 	}
 	}
 	;
@@ -117,14 +117,14 @@ parameter [Buffer<Parameter> parameters]
 	:	^(PARAM modifiers? t=TypeIdentifier v=VariableIdentifier)
 
 	{ Parameter param = new Parameter($v.text, $t.text);
-	  $parameters.$plus$eq(param);
+	  $parameters.\$plus\$eq(param);
 	}
 	;
 
 typeSpecifier
 	:	^(IMPL i=qualifiedType)
 	{
-   $SourceFile::file.classDef().interfaces().$plus$eq($i.text);
+   $SourceFile::file.classDef().interfaces().\$plus\$eq($i.text);
 	}
 	;
 
@@ -135,7 +135,7 @@ modifiers returns [Buffer<Enumeration.Value> modifiers ]
 	
 modifier [Buffer<Enumeration.Value> mods]
 	: m=('mutable' | 'delegate' | 'native')
-	{ mods.$plus$eq(Modifier.valueOf($m.text).get()); }
+	{ mods.\$plus\$eq(Modifier.valueOf($m.text).get()); }
 	;
 
 classBlock
@@ -147,12 +147,12 @@ methodDeclaration
 @after { paraphrases.pop(); }
   :	^(METHOD m=modifiers? type=TypeIdentifier name=VariableIdentifier p=parameters? b=block)
   { Method method = new Method($name.text, $type.text, $b.block);
-    $SourceFile::file.classDef().methods().$plus$eq(method);
+    $SourceFile::file.classDef().methods().\$plus\$eq(method);
     if ($p.parameters != null) {
-  	  method.parameters().$plus$plus$eq($p.parameters);
+  	  method.parameters().\$plus\$plus\$eq($p.parameters);
 	  }
 	  if ($m.modifiers != null) {
-  	  method.modifiers().$plus$plus$eq($m.modifiers);
+  	  method.modifiers().\$plus\$plus\$eq($m.modifiers);
   	}
   }
   ;
@@ -170,27 +170,27 @@ statement
 	:	returnStatement
 	| identifierDeclaration
 	| exp=expression
-	{ $Block::block.statements().$plus$eq($exp.exp); }
+	{ $Block::block.statements().\$plus\$eq($exp.exp); }
 	;
 
 returnStatement
 	: ^('return' ex=expression)
-	{ $Block::block.statements().$plus$eq(new ReturnExpression($ex.exp)); }
+	{ $Block::block.statements().\$plus\$eq(new ReturnExpression($ex.exp)); }
 	;
 
 identifierDeclaration
 	:	^(VAR t=TypeIdentifier (^('=' v=VariableIdentifier exp=expression) | v=VariableIdentifier))
 	{ IdentifierDeclaration identifierDeclaration = new IdentifierDeclaration($t.text, $v.text);
-		$Block::block.statements().$plus$eq(identifierDeclaration);
+		$Block::block.statements().\$plus\$eq(identifierDeclaration);
 	  if ($exp.exp != null) {
-	    identifierDeclaration.initialValue_$eq(new scala.Some($exp.exp));
+	    identifierDeclaration.initialValue_\$eq(new scala.Some($exp.exp));
 	  }
   }
 	;
 	
 assignment
 	: ^('=' lhs=expression rhs=expression)
-	{ $Block::block.statements().$plus$eq(new AssignmentExpression($lhs.text, $rhs.text)); }
+	{ $Block::block.statements().\$plus\$eq(new AssignmentExpression($lhs.text, $rhs.text)); }
 	;
 
 expression returns [Expression exp]
@@ -219,7 +219,7 @@ arguments returns [Buffer<Expression> args]
 	  if ($exp != null) {
   	  for (Object item : $exp) {
 	      Expression expression = ((expression_return)item).exp;
-	      $args.$plus$eq(expression);
+	      $args.\$plus\$eq(expression);
 	    }
 	  }
 	}
