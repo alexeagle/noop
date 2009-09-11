@@ -8,9 +8,10 @@ import types.NoopObject;
 
 class ClassDefinition {
   var name:String = "";
-  var parameters:Buffer[Parameter] = new ArrayBuffer[Parameter];
-  var interfaces:Buffer[String] = new ArrayBuffer[String];
-  var methods:Buffer[Method] = new ArrayBuffer[Method];
+  val parameters:Buffer[Parameter] = new ArrayBuffer[Parameter];
+  val interfaces:Buffer[String] = new ArrayBuffer[String];
+  val methods:Buffer[Method] = new ArrayBuffer[Method];
+  val modifiers:Buffer[Modifier.Value] = new ArrayBuffer[Modifier.Value];
 
   def findMethod(methodName: String): Method = {
     methods.find(method => method.name == methodName) match {

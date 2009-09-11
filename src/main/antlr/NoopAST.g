@@ -17,6 +17,9 @@ scope Block {
   package noop.grammar.antlr;
 
   import noop.model.*;
+  import scala.Enumeration;
+  import scala.collection.mutable.Buffer;
+  import scala.collection.mutable.ArrayBuffer;
 }
 
 @rulecatch {
@@ -94,26 +97,27 @@ classDeclaration
 @after {
   paraphrases.pop();
 }
-	:	^(CLASS t=TypeIdentifier p=parameters? typeSpecifier* classBlock?) 
+	:	^(CLASS m=modifiers? t=TypeIdentifier p=parameters? typeSpecifier* classBlock?) 
 	{ 
 	classDef.name_$eq($t.text);
 	if ($p.parameters != null) {
-  	for (Parameter param : $p.parameters) {
-	    classDef.parameters().$plus$eq(param);
-	  }
+	  classDef.parameters().$plus$plus$eq($p.parameters);
+	}
+	if ($m.modifiers != null) {
+	  classDef.modifiers().$plus$plus$eq($m.modifiers);
 	}
 	}
 	;
 
-parameters returns [List<Parameter> parameters = new ArrayList<Parameter>() ]
+parameters returns [Buffer<Parameter> parameters = new ArrayBuffer<Parameter>() ]
 	:	^(PARAMS parameter[$parameters]*)
 	;
 
-parameter [List<Parameter> parameters]
+parameter [Buffer<Parameter> parameters]
 	:	^(PARAM modifiers? t=TypeIdentifier v=VariableIdentifier)
 
 	{ Parameter param = new Parameter($v.text, $t.text);
-	  $parameters.add(param);
+	  $parameters.$plus$eq(param);
 	}
 	;
 
@@ -124,12 +128,14 @@ typeSpecifier
 	}
 	;
 
-modifiers
-	: ^(MOD modifier+)
+modifiers returns [Buffer<Enumeration.Value> modifiers ]
+@init { modifiers = new ArrayBuffer<Enumeration.Value>(); }
+	: ^(MOD modifier[modifiers]+)
 	;
 	
-modifier
-	: 'mutable' | 'delegate'
+modifier [Buffer<Enumeration.Value> mods]
+	: m=('mutable' | 'delegate' | 'native')
+	{ mods.$plus$eq(Modifier.valueOf($m.text).get()); }
 	;
 
 classBlock
@@ -139,14 +145,15 @@ classBlock
 methodDeclaration 
 @init { paraphrases.push("in method declaration"); }
 @after { paraphrases.pop(); }
-  :	^(METHOD type=TypeIdentifier name=VariableIdentifier p=parameters? b=block)
+  :	^(METHOD m=modifiers? type=TypeIdentifier name=VariableIdentifier p=parameters? b=block)
   { Method method = new Method($name.text, $type.text, $b.block);
     $SourceFile::file.classDef().methods().$plus$eq(method);
     if ($p.parameters != null) {
-  	  for (Parameter param : $p.parameters) {
-	      method.parameters().$plus$eq(param);
-	    }
+  	  method.parameters().$plus$plus$eq($p.parameters);
 	  }
+	  if ($m.modifiers != null) {
+  	  method.modifiers().$plus$plus$eq($m.modifiers);
+  	}
   }
   ;
   
@@ -206,9 +213,9 @@ dereference returns [DereferenceExpression exp]
 	}
 	;
 
-arguments returns [scala.collection.mutable.ArrayBuffer<Expression> args]
+arguments returns [Buffer<Expression> args]
 	: ^(ARGS (exp+=expression)*)
-	{ $args = new scala.collection.mutable.ArrayBuffer<Expression>();
+	{ $args = new ArrayBuffer<Expression>();
 	  if ($exp != null) {
   	  for (Object item : $exp) {
 	      Expression expression = ((expression_return)item).exp;

@@ -65,8 +65,8 @@ qualifiedType
 	;
 
 classDeclaration
-	: 'class' TypeIdentifier parameterList typeSpecifiers? classBlock
-	-> ^(CLASS TypeIdentifier parameterList? typeSpecifiers? classBlock?)
+	: modifiers? 'class' TypeIdentifier parameterList typeSpecifiers? classBlock
+	-> ^(CLASS modifiers? TypeIdentifier parameterList? typeSpecifiers? classBlock?)
 	;
 
 typeSpecifiers
@@ -85,7 +85,7 @@ modifiers
 	;
 
 modifier
-	: 'mutable' | 'delegate'
+	: 'mutable' | 'delegate' | 'native'
 	;
 
 classBlock
@@ -97,7 +97,7 @@ interfaceBlock
 	;
 
 methodSignature
-  : TypeIdentifier VariableIdentifier parameterList
+  : modifiers? TypeIdentifier VariableIdentifier parameterList
   ;
 
 methodDefinition

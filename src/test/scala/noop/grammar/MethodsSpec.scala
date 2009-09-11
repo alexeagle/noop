@@ -1,6 +1,6 @@
 package noop.grammar
 
-import model.{AssignmentExpression, IdentifierDeclaration, IntegerLiteralExpression}
+import model.{AssignmentExpression, IdentifierDeclaration, IntegerLiteralExpression, Modifier}
 import org.antlr.runtime.RecognitionException
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
@@ -69,6 +69,14 @@ class MethodsSpec extends Spec with ShouldMatchers {
       val source = "class Foo() { Void do() { return 4; } }";
       parser.parseFile(source).toStringTree() should equal (
           "(CLASS Foo (METHOD Void do (return 4)))");
+    }
+
+    it("should allow the native modifier on a method") {
+      val source = "class Foo() { native Void do() { Int i; }}";
+      parser.parseFile(source).toStringTree() should equal (
+          "(CLASS Foo (METHOD (MOD native) Void do (VAR Int i)))");
+      val file = parser.file(source);
+      file.classDef.methods(0).modifiers should contain(Modifier.native);
     }
   }
 }
