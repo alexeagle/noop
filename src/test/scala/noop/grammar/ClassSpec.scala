@@ -3,7 +3,7 @@ package noop.grammar
 import org.antlr.runtime.RecognitionException
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
-
+import noop.model.Modifier
 
 class ClassSpec extends Spec with ShouldMatchers {
   val parser = new Parser();
@@ -67,6 +67,14 @@ class ClassSpec extends Spec with ShouldMatchers {
       file.classDef.interfaces(1) should be ("a.b.C");
       file.classDef.interfaces(2) should be ("d.E");
 
+    }
+
+    it("should allow the native modifier on a class") {
+      val source = "native class Foo() {}";
+      parser.parseFile(source).toStringTree() should equal (
+          "(CLASS (MOD native) Foo)");
+      val file = parser.file(source);
+      file.classDef.modifiers should contain(Modifier.native);
     }
   }
 }
