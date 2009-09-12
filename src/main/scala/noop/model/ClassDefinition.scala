@@ -16,7 +16,8 @@ class ClassDefinition {
   def findMethod(methodName: String): Method = {
     methods.find(method => method.name == methodName) match {
       case Some(method) => return method;
-      case None => throw new RuntimeException("Method " + methodName + " is not defined.");
+      case None => throw new NoSuchMethodException(
+          "Method " + methodName + " is not defined on class " + name);
     }
   }
 

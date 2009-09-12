@@ -9,10 +9,11 @@ import types.NoopObject;
 class IdentifierExpression(val identifier: String) extends Expression {
 
   def evaluate(c: Context): Option[NoopObject] = {
-    if (c.stack.top.identifiers.contains(identifier)) {
-      return Some(c.stack.top.identifiers(identifier)._2);
-    } else if (c.thisRef.parameterInstances.contains(identifier)) {
-      return Some(c.thisRef.parameterInstances(identifier));
+    val currentFrame = c.stack.top;
+    if (currentFrame.identifiers.contains(identifier)) {
+      return Some(currentFrame.identifiers(identifier)._2);
+    } else if (currentFrame.thisRef.parameterInstances.contains(identifier)) {
+      return Some(currentFrame.thisRef.parameterInstances(identifier));
     }
     return None;
   }
