@@ -57,13 +57,10 @@ class BlockSpec extends Spec with ShouldMatchers {
       val block = parser.buildTreeParser(blockAst).block();
       block.statements.size should be(1);
 
-      block.statements(0).getClass() should be(classOf[DereferenceExpression]);
-      val deref1 = block.statements(0).asInstanceOf[DereferenceExpression];
-      deref1.left.getClass() should be(classOf[IdentifierExpression]);
-      deref1.left.asInstanceOf[IdentifierExpression].identifier should be("a");
-
-      deref1.right.getClass() should be(classOf[MethodInvocationExpression]);
-      val methodInvocation = deref1.right.asInstanceOf[MethodInvocationExpression]
+      block.statements(0).getClass() should be(classOf[MethodInvocationExpression]);
+      val methodInvocation = block.statements(0).asInstanceOf[MethodInvocationExpression];
+      methodInvocation.left.getClass() should be(classOf[IdentifierExpression]);
+      methodInvocation.left.asInstanceOf[IdentifierExpression].identifier should be("a");
       methodInvocation.name should be("b");
       methodInvocation.arguments should be(new ArrayBuffer[Expression]);
       methodInvocation.arguments.isEmpty should be (true);
@@ -77,19 +74,17 @@ class BlockSpec extends Spec with ShouldMatchers {
       val block = parser.buildTreeParser(blockAst).block();
       block.statements should have length (1);
 
-      val deref1 = block.statements(0).asInstanceOf[DereferenceExpression];
-      deref1.left.getClass() should be(classOf[DereferenceExpression]);
-      val deref2 = deref1.left.asInstanceOf[DereferenceExpression];
+      val method1 = block.statements(0).asInstanceOf[MethodInvocationExpression];
+      method1.left.getClass() should be(classOf[MethodInvocationExpression]);
+      val method2 = method1.left.asInstanceOf[MethodInvocationExpression];
 
-      deref2.left.getClass() should be(classOf[IdentifierExpression]);
-      deref2.left.asInstanceOf[IdentifierExpression].identifier should be("a");
-      deref2.right.getClass() should be(classOf[MethodInvocationExpression]);
-      deref2.right.asInstanceOf[MethodInvocationExpression].name should be("b");
-      deref2.right.asInstanceOf[MethodInvocationExpression].arguments should be ('empty);
+      method2.left.getClass() should be(classOf[IdentifierExpression]);
+      method2.left.asInstanceOf[IdentifierExpression].identifier should be("a");
+      method2.name should be("b");
+      method2.arguments should be ('empty);
 
-      deref1.right.getClass() should be(classOf[MethodInvocationExpression]);
-      deref1.right.asInstanceOf[MethodInvocationExpression].name should be("c");
-      deref1.right.asInstanceOf[MethodInvocationExpression].arguments should be('empty);
+      method1.name should be("c");
+      method1.arguments should be('empty);
     }
 
     it("should allow a method call on a property") {
@@ -100,18 +95,17 @@ class BlockSpec extends Spec with ShouldMatchers {
       val block = parser.buildTreeParser(blockAst).block();
       block.statements should have length (1);
 
-      val deref1 = block.statements(0).asInstanceOf[DereferenceExpression];
-      deref1.left.getClass() should be(classOf[DereferenceExpression]);
-      val deref2 = deref1.left.asInstanceOf[DereferenceExpression];
+      val method = block.statements(0).asInstanceOf[MethodInvocationExpression];
+      method.left.getClass() should be(classOf[DereferenceExpression]);
+      val deref = method.left.asInstanceOf[DereferenceExpression];
 
-      deref2.left.getClass() should be(classOf[IdentifierExpression]);
-      deref2.left.asInstanceOf[IdentifierExpression].identifier should be("a");
-      deref2.right.getClass() should be(classOf[IdentifierExpression]);
-      deref2.right.asInstanceOf[IdentifierExpression].identifier should be("b");
+      deref.left.getClass() should be(classOf[IdentifierExpression]);
+      deref.left.asInstanceOf[IdentifierExpression].identifier should be("a");
+      deref.right.getClass() should be(classOf[IdentifierExpression]);
+      deref.right.asInstanceOf[IdentifierExpression].identifier should be("b");
 
-      deref1.right.getClass() should be(classOf[MethodInvocationExpression]);
-      deref1.right.asInstanceOf[MethodInvocationExpression].name should be("c");
-      deref1.right.asInstanceOf[MethodInvocationExpression].arguments should be('empty);
+      method.name should be("c");
+      method.arguments should be('empty);
     }
 
     it("should allow a method call with arguments") {
@@ -123,11 +117,9 @@ class BlockSpec extends Spec with ShouldMatchers {
       val block = parser.buildTreeParser(blockAst).block();
       block.statements.size should be(1);
 
-      val deref1 = block.statements(0).asInstanceOf[DereferenceExpression];
-      deref1.left.getClass() should be(classOf[IdentifierExpression]);
-      deref1.left.asInstanceOf[IdentifierExpression].identifier should be("a");
-      deref1.right.getClass() should be(classOf[MethodInvocationExpression]);
-      val methodInvocation = deref1.right.asInstanceOf[MethodInvocationExpression];
+      val methodInvocation = block.statements(0).asInstanceOf[MethodInvocationExpression];
+      methodInvocation.left.getClass() should be(classOf[IdentifierExpression]);
+      methodInvocation.left.asInstanceOf[IdentifierExpression].identifier should be("a");
       methodInvocation.name should be("b");
       methodInvocation.arguments should have length(2);
       methodInvocation.arguments(0).getClass() should be(classOf[IdentifierExpression]);

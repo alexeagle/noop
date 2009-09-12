@@ -1,3 +1,17 @@
+// Copyright 2009 Google Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 tree grammar NoopAST;
 
 options {
@@ -31,16 +45,16 @@ scope Block {
 }
 
 @members {
-  Stack paraphrases = new Stack(); 
+  Stack paraphrases = new Stack();
 
   @Override
-  public String getErrorMessage(RecognitionException e, String[] tokenNames) { 
-    String msg = super.getErrorMessage(e, tokenNames); 
-    if ( paraphrases.size()>0 ) { 
-      String paraphrase = (String)paraphrases.peek(); 
-      msg = msg+" "+paraphrase; 
-    } 
-    return msg; 
+  public String getErrorMessage(RecognitionException e, String[] tokenNames) {
+    String msg = super.getErrorMessage(e, tokenNames);
+    if ( paraphrases.size()>0 ) {
+      String paraphrase = (String)paraphrases.peek();
+      msg = msg+" "+paraphrase;
+    }
+    return msg;
   }
 
   public String join(String delim, List strings) {
@@ -89,7 +103,7 @@ qualifiedType returns [String text]
 	;
 
 classDeclaration
-@init {	
+@init {
   ClassDefinition classDef = new ClassDefinition();
 	$SourceFile::file.classDef_\$eq(classDef);
 	paraphrases.push("in class definition");
@@ -97,8 +111,8 @@ classDeclaration
 @after {
   paraphrases.pop();
 }
-	:	^(CLASS m=modifiers? t=TypeIdentifier p=parameters? typeSpecifier* classBlock?) 
-	{ 
+	:	^(CLASS m=modifiers? t=TypeIdentifier p=parameters? typeSpecifier* classBlock?)
+	{
 	classDef.name_\$eq($t.text);
 	if ($p.parameters != null) {
 	  classDef.parameters().\$plus\$plus\$eq($p.parameters);
@@ -132,7 +146,7 @@ modifiers returns [Buffer<Enumeration.Value> modifiers ]
 @init { modifiers = new ArrayBuffer<Enumeration.Value>(); }
 	: ^(MOD modifier[modifiers]+)
 	;
-	
+
 modifier [Buffer<Enumeration.Value> mods]
 	: m=('mutable' | 'delegate' | 'native')
 	{ mods.\$plus\$eq(Modifier.valueOf($m.text).get()); }
@@ -141,8 +155,8 @@ modifier [Buffer<Enumeration.Value> mods]
 classBlock
 	:	identifierDeclaration | methodDeclaration
 	;
-	
-methodDeclaration 
+
+methodDeclaration
 @init { paraphrases.push("in method declaration"); }
 @after { paraphrases.pop(); }
   :	^(METHOD m=modifiers? type=TypeIdentifier name=VariableIdentifier p=parameters? b=block)
@@ -156,7 +170,7 @@ methodDeclaration
   	}
   }
   ;
-  
+
 block returns [Block block]
   scope Block;
   @init { $block = new Block();
@@ -187,7 +201,7 @@ identifierDeclaration
 	  }
   }
 	;
-	
+
 assignment
 	: ^('=' lhs=expression rhs=expression)
 	{ $Block::block.statements().\$plus\$eq(new AssignmentExpression($lhs.text, $rhs.text)); }
@@ -198,15 +212,15 @@ expression returns [Expression exp]
   { $exp = $p.exp; }
   | d=dereference
   { $exp = $d.exp; }
-  | v=VariableIdentifier 
+  | v=VariableIdentifier
   { $exp = new IdentifierExpression($v.text); }
   ;
 
-dereference returns [DereferenceExpression exp]
+dereference returns [Expression exp]
 	: ^('.' left=expression right=VariableIdentifier a=arguments?)
-	{ 
+	{
 	  if ($a.args != null) {
-	    $exp = new DereferenceExpression($left.exp, new MethodInvocationExpression($right.text, $a.args));
+	    $exp = new MethodInvocationExpression($left.exp, $right.text, $a.args);
 	  } else {
 	    $exp = new DereferenceExpression($left.exp, new IdentifierExpression($right.text));
 	  }
@@ -224,7 +238,7 @@ arguments returns [Buffer<Expression> args]
 	  }
 	}
 	;
-  
+
 primary returns [Expression exp]
 	: i=INT
 	{ $exp = new IntegerLiteralExpression(Integer.valueOf($i.text)); }

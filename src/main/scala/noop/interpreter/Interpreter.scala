@@ -1,8 +1,8 @@
 package noop.interpreter;
 
-import collection.mutable.{Map, Stack, ArrayBuffer};
-import model.{Expression, MethodInvocationExpression, StringLiteralExpression, ClassDefinition, 
-    Block, NativeExpression, Parameter, Method};
+import collection.mutable.{Map, Stack, ArrayBuffer}
+import model.{IdentifierExpression, Expression, MethodInvocationExpression, StringLiteralExpression, ClassDefinition, Block, NativeExpression, Parameter, Method};
+
 import types.{NoopConsole, NoopObject};
 import noop.grammar.Parser;
 
@@ -21,12 +21,13 @@ class Interpreter(classLoader: ClassLoader) {
     val evaluator = new Evaluator(classLoader);
     val context = new Context(new Stack[Frame], classLoader);
 
-    context.thisRef = mainClass.getInstance(classLoader);
     var args = new ArrayBuffer[Expression];
 
     //TODO: pass the list of command line arguments to main() instead
     args += (new StringLiteralExpression("something"));
-    evaluator.evaluateSomeStuffBitch(new MethodInvocationExpression("main", args), context);
+    val mainInstance = new IdentifierExpression(mainClass.name);
+    evaluator.evaluateSomeStuffBitch(
+        new MethodInvocationExpression(mainInstance, "main", args), context);
   }
 
   def registerNativeTypes = {

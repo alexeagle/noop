@@ -2,22 +2,26 @@ package noop.model;
 
 import interpreter.{Context,Frame};
 import types.{NoopObject,NoopType};
-import scala.collection.mutable.Buffer;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class MethodInvocationExpression(val name: String, 
-    val arguments: Buffer[Expression]) extends Expression {
+class MethodInvocationExpression(val left: Expression, val name: String,
+    val arguments: Seq[Expression]) extends Expression {
 
   def evaluate(context: Context): Option[NoopObject] = {
     val stack = context.stack;
-    val method = context.thisRef.classDef.findMethod(name);
-    val frame = new Frame(context.thisRef, method.block); 
+    val thisRef = left.evaluate(context) match {
+      case Some(r) => r;
+      case None => throw new RuntimeException(
+          "Expression has no value, cannot dispatch method to it: " + left);
+    }
+    val method = thisRef.classDef.findMethod(name);
+    val frame = new Frame(thisRef, method.block);
 
     stack.push(frame);
-    
+
     try {
       if (method.parameters.size != arguments.size) {
         throw new RuntimeException("Method " + method.name + " takes " + method.parameters.size +
@@ -32,9 +36,7 @@ class MethodInvocationExpression(val name: String,
 
         frame.addIdentifier(identifier, new Tuple2[NoopType, NoopObject](null, value));
       }
-      for (statement <- method.block.statements) {
-        statement.evaluate(context);
-      }
+      method.block.evaluate(context);
     } finally {
       stack.pop();
     }

@@ -9,17 +9,5 @@ import types.NoopObject;
  */
 class DereferenceExpression(val left: Expression, val right: Expression) extends Expression {
 
-  def evaluate(c: Context): Option[NoopObject] = {
-    val saveThisRef = c.thisRef;
-
-    try {
-      c.thisRef = left.evaluate(c) match {
-        case Some(r) => r;
-        case None => throw new RuntimeException("What the hell just happened?");
-      }
-      right.evaluate(c);
-    } finally {
-      c.thisRef = saveThisRef;
-    }
-  }
+  def evaluate(c: Context): Option[NoopObject] = None;
 }
