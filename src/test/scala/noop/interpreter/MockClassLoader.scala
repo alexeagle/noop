@@ -11,6 +11,8 @@ import model.ClassDefinition;
 class MockClassLoader(p: Parser, s: List[String]) extends ClassLoader(p, s) {
   val classes = mutable.Map.empty[String, ClassDefinition];
 
+  def this() = this(null, List());
+
   override def findClass(className: String): ClassDefinition = {
     return classes(className);
   }
