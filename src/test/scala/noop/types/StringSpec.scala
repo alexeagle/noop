@@ -47,13 +47,13 @@ class StringSpec extends Spec with ShouldMatchers {
       val aString = new NoopString(stringClass, Map.empty[String, NoopObject], "hello");
       val method = stringClass.findMethod("length");
       method.modifiers should contain(Modifier.native);
-      // method.block.getClass() should be(classOf[NativeExpression]);
       val stack = new Stack[Frame]();
+      stack.push(new Frame(aString, null));
       val context = new Context(stack, classLoader);
 
-      method.block.evaluate(context) match {
+      method.execute(context) match {
         case Some(i) => i.asInstanceOf[NoopInteger].value should be(5);
-        case None => //fail();
+        case None => fail();
       }
     }
   }

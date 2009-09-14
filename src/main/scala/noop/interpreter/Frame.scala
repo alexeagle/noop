@@ -16,7 +16,7 @@
 
 package noop.interpreter;
 
-import model.Block;
+import model.Method
 import types.{NoopType, NoopObject};
 import scala.collection.mutable;
 
@@ -24,7 +24,7 @@ import scala.collection.mutable;
   * @author alexeagle@google.com (Alex Eagle)
   * @author jeremiele@google.com (Jeremie Lenfant-Engelmann)
   */
-class Frame(val thisRef: NoopObject, val block: Block) {
+class Frame(val thisRef: NoopObject, val method: Method) {
   val identifiers = mutable.Map.empty[String, Tuple2[NoopType, NoopObject]];
   var returnValue: Option[Int] = None;
 

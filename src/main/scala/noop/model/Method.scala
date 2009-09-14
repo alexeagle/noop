@@ -1,5 +1,5 @@
 /**
- * Copyright 2009 Google Inc.
+ *  Copyright 2009 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,26 @@
 
 package noop.model;
 
-import collection.mutable.{ArrayBuffer, Buffer};
-
+import collection.mutable.{ArrayBuffer, Buffer}
+import interpreter.Context
+import types.{NoopString, NoopObject}
 /**
  * Represents the declaration of a method in source code.
  */
 class Method(val name: String, val returnType: String, val block: Block) {
   val parameters: Buffer[Parameter] = new ArrayBuffer[Parameter]();
   val modifiers: Buffer[Modifier.Value] = new ArrayBuffer[Modifier.Value]();
+
+  def execute(c: Context): Option[NoopObject] = {
+    if (modifiers.contains(Modifier.native)) {
+      val obj = c.stack.top.thisRef
+      //TODO(alexeagle): need a proper lookup mechanism
+      if (obj.classDef.name == "String") {
+        return obj.asInstanceOf[NoopString].executeNativeMethod(c, name);
+      }
+      return None;
+    } else {
+      return block.evaluate(c);
+    }
+  }
 }
