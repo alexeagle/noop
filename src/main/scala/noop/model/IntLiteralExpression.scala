@@ -14,26 +14,20 @@
  * limitations under the License.
  */
 
-package noop.types;
+package noop.model;
 
-import interpreter.Context
-import model.ClassDefinition;
+import interpreter.Context;
+import types.{NoopInteger,NoopObject};
 
-import scala.collection.Map;
+import scala.collection.mutable.Map;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
- * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class NoopObject(val classDef: ClassDefinition, val parameterInstances: Map[String, NoopObject]) {
+class IntLiteralExpression(val value: Int) extends Expression {
 
-  def nativeMethod(name: String): (Context => Option[NoopObject]) = {
-    throw new NoSuchMethodException("Native method implemention for '"
-        + name + "' missing in " + classDef.name);
+  def evaluate(c: Context): Option[NoopInteger] = {
+    val noopIntegerClassDef = c.classLoader.findClass("Int");
+    return Some(new NoopInteger(noopIntegerClassDef, Map.empty[String, NoopObject], value));
   }
-
-   def executeNativeMethod(c: Context, name: String): Option[NoopObject] = {
-    return nativeMethod(name).apply(c);
-  }
-
 }

@@ -24,8 +24,8 @@ class BlockSpec extends Spec with ShouldMatchers {
       block.statements(0).getClass() should be(classOf[ReturnExpression]);
       val returnExpression = block.statements(0).asInstanceOf[ReturnExpression];
 
-      returnExpression.expr.getClass() should be(classOf[IntegerLiteralExpression]);
-      returnExpression.expr.asInstanceOf[IntegerLiteralExpression].value should be(0);
+      returnExpression.expr.getClass() should be(classOf[IntLiteralExpression]);
+      returnExpression.expr.asInstanceOf[IntLiteralExpression].value should be(0);
     }
 
     it("should allow chained property access on properties") {
