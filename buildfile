@@ -37,7 +37,7 @@ define "noop" do
 
   antlr = antlr([_('src/main/antlr/Noop.g'), _('src/main/antlr/NoopAST.g')], :in_package=>'noop.grammar.antlr')
 
-  resources.from _('src/main/noop')
+  resources.from [_('src/main/noop'), _('examples/noop')]
 
   compile.from antlr
   compile.with [ANTLR, ANTLR_RUNTIME]

@@ -10,5 +10,10 @@ import types.NoopObject
 class Block extends Expression {
   var statements: Buffer[Expression] = new ArrayBuffer[Expression]();
 
-  def evaluate(c: Context): Option[NoopObject] = None;
+  def evaluate(c: Context): Option[NoopObject] = {
+    for (s <- statements) {
+      s.evaluate(c);
+    }
+    return None;
+  };
 }

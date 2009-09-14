@@ -1,7 +1,8 @@
 package noop.interpreter;
 
 import collection.mutable.{Map, Stack, ArrayBuffer}
-import model.{IdentifierExpression, Expression, MethodInvocationExpression, StringLiteralExpression, ClassDefinition, Block, NativeExpression, Parameter, Method};
+import model.{EvaluatedExpression, IdentifierExpression, Expression, MethodInvocationExpression, StringLiteralExpression, ClassDefinition, Block, NativeExpression, Parameter, Method}
+
 
 import types.{NoopConsole, NoopObject};
 import noop.grammar.Parser;
@@ -25,7 +26,7 @@ class Interpreter(classLoader: ClassLoader) {
 
     //TODO: pass the list of command line arguments to main() instead
     args += (new StringLiteralExpression("something"));
-    val mainInstance = new IdentifierExpression(mainClass.name);
+    val mainInstance = new EvaluatedExpression(mainClass.getInstance(classLoader));
     evaluator.evaluateSomeStuffBitch(
         new MethodInvocationExpression(mainInstance, "main", args), context);
   }

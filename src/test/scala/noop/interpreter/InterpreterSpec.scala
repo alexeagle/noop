@@ -16,12 +16,32 @@
 
 package noop.interpreter
 
+import grammar.Parser
+import java.io.{ByteArrayOutputStream, File}
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
 
 class InterpreterSpec extends Spec with ShouldMatchers {
+  def createFixture = {
+    val exampleSourcePath = new File(getClass().getResource("/helloworld").toURI).getAbsolutePath();
+    new ClassLoader(new Parser(), List(exampleSourcePath));
+  }
 
   describe("the interpreter") {
+    it("should run a HelloWorld program") {
+      val classLoader = createFixture;
+      val output = new ByteArrayOutputStream();
+      val originalOut = Console.out;
+      try {
+        Console.setOut(output);
+        val mainClass = classLoader.findClass("HelloWorld");
+        new Interpreter(classLoader).runApplication(mainClass);
+        output.toString() should include("Hello World!");
+      } finally {
+        Console.setOut(originalOut);
+      }
+    }
+
     it("should register Console as a native type") {
       val classLoader = new MockClassLoader();
       val interpreter = new Interpreter(classLoader);

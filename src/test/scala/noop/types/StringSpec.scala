@@ -16,9 +16,11 @@
 
 package noop.types
 
+import collection.mutable.Stack
 import grammar.Parser
-import interpreter.ClassLoader
+import interpreter.{Frame, Context, ClassLoader}
 import java.io.File
+import model.{NativeExpression, Modifier}
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.Spec
 
@@ -28,8 +30,8 @@ import org.scalatest.Spec
 
 class StringSpec extends Spec with ShouldMatchers {
   def createFixture = {
-    val stringSourcePath = new File(getClass().getResource("/stdlib").toURI).getAbsolutePath();
-    new ClassLoader(new Parser(), List(stringSourcePath))
+    val stdlibSourcePath = new File(getClass().getResource("/stdlib").toURI).getAbsolutePath();
+    new ClassLoader(new Parser(), List(stdlibSourcePath))
   }
 
   describe("a Noop String") {
@@ -41,7 +43,18 @@ class StringSpec extends Spec with ShouldMatchers {
 
     it("should have a native implementation of the length method") {
       val classLoader = createFixture;
+      val stringClass = classLoader.findClass("String");
+      val aString = new NoopString(stringClass, Map.empty[String, NoopObject], "hello");
+      val method = stringClass.findMethod("length");
+      method.modifiers should contain(Modifier.native);
+      // method.block.getClass() should be(classOf[NativeExpression]);
+      val stack = new Stack[Frame]();
+      val context = new Context(stack, classLoader);
 
+      method.block.evaluate(context) match {
+        case Some(i) => i.asInstanceOf[NoopInteger].value should be(5);
+        case None => //fail();
+      }
     }
   }
 }
