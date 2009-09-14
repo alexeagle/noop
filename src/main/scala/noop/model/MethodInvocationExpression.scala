@@ -18,7 +18,7 @@ class MethodInvocationExpression(val left: Expression, val name: String,
           "Expression has no value, cannot dispatch method to it: " + left);
     }
     val method = thisRef.classDef.findMethod(name);
-    val frame = new Frame(thisRef, method.block);
+    val frame = new Frame(thisRef, method);
 
     stack.push(frame);
 
@@ -36,7 +36,7 @@ class MethodInvocationExpression(val left: Expression, val name: String,
 
         frame.addIdentifier(identifier, new Tuple2[NoopType, NoopObject](null, value));
       }
-      method.block.evaluate(context);
+      method.execute(context);
     } finally {
       stack.pop();
     }

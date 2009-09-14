@@ -27,6 +27,7 @@ import scala.collection.mutable.Map;
 class IntegerLiteralExpression(val value: Int) extends Expression {
 
   def evaluate(c: Context): Option[NoopInteger] = {
+    //TODO(alexeagle): not the right class definition!
     val noopIntegerClassDef = new ClassDefinition();
 
     noopIntegerClassDef.name = "Int";
