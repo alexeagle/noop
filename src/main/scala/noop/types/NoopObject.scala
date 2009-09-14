@@ -18,7 +18,7 @@ package noop.types;
 
 import model.ClassDefinition;
 
-import scala.collection.mutable.Map;
+import scala.collection.Map;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)

@@ -11,10 +11,10 @@ import types.NoopString
  */
 
 class NativeBlockSpec extends Spec with ShouldMatchers {
-  val context = new Context(new Stack[Frame], new MockClassLoader());
 
   describe("a native block") {
     it("should execute the provided function when evaluating") {
+      val context = new Context(new Stack[Frame], new MockClassLoader());
       val aString = new NoopString(null, null, "hello");
       val evaluator = (c: Context) => aString;
       val block = new NativeBlock(evaluator);
