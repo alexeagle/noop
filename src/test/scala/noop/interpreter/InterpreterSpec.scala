@@ -24,7 +24,8 @@ import org.scalatest.matchers.ShouldMatchers
 class InterpreterSpec extends Spec with ShouldMatchers {
   def createFixture = {
     val exampleSourcePath = new File(getClass().getResource("/helloworld").toURI).getAbsolutePath();
-    new ClassLoader(new Parser(), List(exampleSourcePath));
+    val stdLibSourcePath = new File(getClass().getResource("/stdlib").toURI).getAbsolutePath();
+    new ClassLoader(new Parser(), List(exampleSourcePath, stdLibSourcePath));
   }
 
   describe("the interpreter") {
@@ -40,13 +41,6 @@ class InterpreterSpec extends Spec with ShouldMatchers {
       } finally {
         Console.setOut(originalOut);
       }
-    }
-
-    it("should register Console as a native type") {
-      val classLoader = new MockClassLoader();
-      val interpreter = new Interpreter(classLoader);
-      interpreter.registerNativeTypes;
-      classLoader.cache should contain key("Console");
     }
   }
 }

@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-native class Console() {
-  Void println(String s);
+class Console() {
+  native Void println(String s) {}
 }

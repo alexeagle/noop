@@ -16,11 +16,10 @@
 
 package noop.model;
 
-import scala.collection.mutable.{ArrayBuffer,Buffer,Map};
+import scala.collection.mutable.{ArrayBuffer,Buffer,Map}
+import types.{NoopConsole, NoopObject}
 
 import interpreter.ClassLoader;
-import interpreter.Context;
-import types.NoopObject;
 
 class ClassDefinition {
   var name:String = "";
@@ -45,6 +44,11 @@ class ClassDefinition {
 
       parameterInstances += Pair(param.name, classDef.getInstance(classLoader));
     }
-    return new NoopObject(this, parameterInstances);
+
+    //TODO(alexeagle): Injectables really needs work
+    name match {
+      case "Console" => new NoopConsole(this, parameterInstances);
+      case _ => new NoopObject(this, parameterInstances);
+    }
   }
 }

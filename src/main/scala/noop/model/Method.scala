@@ -29,11 +29,7 @@ class Method(val name: String, val returnType: String, val block: Block) {
   def execute(c: Context): Option[NoopObject] = {
     if (modifiers.contains(Modifier.native)) {
       val obj = c.stack.top.thisRef
-      //TODO(alexeagle): need a proper lookup mechanism
-      if (obj.classDef.name == "String") {
-        return obj.asInstanceOf[NoopString].executeNativeMethod(c, name);
-      }
-      return None;
+      return obj.executeNativeMethod(c, name);
     } else {
       return block.evaluate(c);
     }

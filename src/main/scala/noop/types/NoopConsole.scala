@@ -16,13 +16,24 @@
 
 package noop.types;
 
-import model.ClassDefinition;
+
+import interpreter.Context
+import model.ClassDefinition
 import scala.collection.mutable.Map;
 
 class NoopConsole(classDef: ClassDefinition, parameterInstances: Map[String, NoopObject])
     extends NoopObject(classDef, parameterInstances) {
 
-  def println(s: String) = {
-    Console.println(s);
+  def println(c: Context): Option[NoopObject] = {
+    Console.println(c.stack.top.identifiers("s")._2.asInstanceOf[NoopString].value);
+    return None;
+  }
+
+  def nativeMethodMap = Map[String, Context => Option[NoopObject]](
+    "println" -> println
+  );
+
+  override def nativeMethod(name: String): (Context => Option[NoopObject]) = {
+    return nativeMethodMap(name);
   }
 }

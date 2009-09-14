@@ -241,7 +241,7 @@ arguments returns [Buffer<Expression> args]
 
 primary returns [Expression exp]
 	: i=INT
-	{ $exp = new IntegerLiteralExpression(Integer.valueOf($i.text)); }
+	{ $exp = new IntLiteralExpression(Integer.valueOf($i.text)); }
 	| s=StringLiteral
 	{ String valueWithQuotes = $s.text;
 	  $exp = new StringLiteralExpression(valueWithQuotes.substring(1, valueWithQuotes.length() - 1)); }

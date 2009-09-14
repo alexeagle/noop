@@ -20,7 +20,7 @@ import collection.mutable.Stack
 import grammar.Parser
 import interpreter.{Frame, Context, ClassLoader}
 import java.io.File
-import model.{NativeExpression, Modifier}
+import model.Modifier
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.Spec
 
