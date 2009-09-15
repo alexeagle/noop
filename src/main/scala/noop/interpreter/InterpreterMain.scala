@@ -26,12 +26,12 @@ import grammar.Parser;
 object InterpreterMain {
   def main(args: Array[String]) {
     //TODO: a proper command line parser, like scalax.io.CommandLineParser
-    if (args.size != 2) {
-      println("Usage: InterpreterMain main-class path/to/sources");
+    if (args.size < 2) {
+      println("Usage: InterpreterMain main-class paths/to/sources ...");
       System.exit(1);
     }
     //TODO: guice? other injector?
-    val classLoader = new ClassLoader(new Parser(), List(args(1)));
+    val classLoader = new ClassLoader(new Parser(), args.toList.tail);
     val mainClass = classLoader.findClass(args(0));
 
     new Interpreter(classLoader).runApplication(mainClass);
