@@ -16,7 +16,7 @@
 
 package noop.grammar
 
-import model.{AssignmentExpression, IdentifierDeclaration, IntLiteralExpression, Modifier}
+import model.{AssignmentExpression, IdentifierDeclarationExpression, IntLiteralExpression, Modifier}
 import org.antlr.runtime.RecognitionException
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
@@ -51,8 +51,8 @@ class MethodsSpec extends Spec with ShouldMatchers {
       firstMethod.parameters(1).name should be ("n");
       firstMethod.parameters(1).noopType should be ("Int");
       firstMethod.block.statements.size should be (1);
-      firstMethod.block.statements(0).getClass() should be (classOf[IdentifierDeclaration]);
-      val firstStatement = firstMethod.block.statements(0).asInstanceOf[IdentifierDeclaration];
+      firstMethod.block.statements(0).getClass() should be (classOf[IdentifierDeclarationExpression]);
+      val firstStatement = firstMethod.block.statements(0).asInstanceOf[IdentifierDeclarationExpression];
       firstStatement.noopType should be ("Int");
       firstStatement.name should be ("i");
       // firstStatement.initialValue should be (Some(new IntLiteralExpression(1)));
@@ -68,7 +68,7 @@ class MethodsSpec extends Spec with ShouldMatchers {
       val file = parser.file(source);
       file.classDef.methods.size should be (1);
       val firstMethod = file.classDef.methods(0)
-      val firstStatement = firstMethod.block.statements(0).asInstanceOf[IdentifierDeclaration];
+      val firstStatement = firstMethod.block.statements(0).asInstanceOf[IdentifierDeclarationExpression];
 
       firstStatement.noopType should be ("Int");
       firstStatement.name should be ("i");

@@ -1,7 +1,7 @@
 package noop.model
 
 import collection.mutable.Stack
-import interpreter.{MockClassLoader, Frame, Context}
+import interpreter.{MockContext, MockClassLoader, Frame, Context}
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.Spec
 
@@ -9,21 +9,7 @@ import org.scalatest.Spec
  * @author alexeagle@google.com (Alex Eagle)
  */
 
-class MethodInvocationExpressionSpec extends Spec with ShouldMatchers {
-  def fixture = {
-    val stack = new Stack[Frame];
-    val classLoader = new MockClassLoader();
-    val classDefinition = new ClassDefinition();
-    classDefinition.name = "String";
-    val method = new Method("length", "Int", null);
-    method.modifiers += Modifier.native;
-    classDefinition.methods += method;
-
-    classLoader.classes += Pair("String", classDefinition);
-    classLoader.classes += Pair("Int", new ClassDefinition());
-    val context = new Context(stack, classLoader);
-    context;
-  }
+class MethodInvocationExpressionSpec extends Spec with ShouldMatchers with MockContext {
 
   describe("a method invocation") {
     it("should throw an exception if the method doesn't exist on the type") {

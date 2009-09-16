@@ -194,7 +194,7 @@ returnStatement
 
 identifierDeclaration
 	:	^(VAR t=TypeIdentifier (^('=' v=VariableIdentifier exp=expression) | v=VariableIdentifier))
-	{ IdentifierDeclaration identifierDeclaration = new IdentifierDeclaration($t.text, $v.text);
+	{ IdentifierDeclarationExpression identifierDeclaration = new IdentifierDeclarationExpression($t.text, $v.text);
 		$Block::block.statements().\$plus\$eq(identifierDeclaration);
 	  if ($exp.exp != null) {
 	    identifierDeclaration.initialValue_\$eq(new scala.Some($exp.exp));
@@ -204,7 +204,7 @@ identifierDeclaration
 
 assignment
 	: ^('=' lhs=expression rhs=expression)
-	{ $Block::block.statements().\$plus\$eq(new AssignmentExpression($lhs.text, $rhs.text)); }
+	{ $Block::block.statements().\$plus\$eq(new AssignmentExpression($lhs.exp, $rhs.exp)); }
 	;
 
 expression returns [Expression exp]
@@ -228,15 +228,15 @@ dereference returns [Expression exp]
 	;
 
 arguments returns [Buffer<Expression> args]
-	: ^(ARGS (exp+=expression)*)
-	{ $args = new ArrayBuffer<Expression>();
-	  if ($exp != null) {
-  	  for (Object item : $exp) {
-	      Expression expression = ((expression_return)item).exp;
-	      $args.\$plus\$eq(expression);
-	    }
-	  }
-	}
+@init { $args = new ArrayBuffer<Expression>(); }
+	: ^(ARGS argument[args]*)
+	;
+
+argument[Buffer<Expression> args]
+  : exp=expression
+  {
+    $args.\$plus\$eq($exp.exp);
+  }
 	;
 
 primary returns [Expression exp]

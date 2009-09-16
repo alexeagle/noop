@@ -17,12 +17,13 @@
 package noop.model
 
 import interpreter.Context
+import types.NoopObject
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
 
-class AssignmentExpression(val lhs: String, val rhs: String) extends Expression {
+class AssignmentExpression(val lhs: Expression, val rhs: Expression) extends Expression {
 
   def evaluate(c: Context) = None
 }

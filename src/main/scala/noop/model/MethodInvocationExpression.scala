@@ -30,7 +30,7 @@ class MethodInvocationExpression(val left: Expression, val name: String,
       for (i <- 0 until arguments.size) {
         var value = arguments(i).evaluate(context) match {
           case Some(v) => v;
-          case None => throw new RuntimeException("Something's really wrong");
+          case None => throw new RuntimeException("Argument " + i + " to method " + name + " evaluated to Void");
         }
         val identifier = method.parameters(i).name;
 

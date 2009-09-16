@@ -16,13 +16,27 @@
 
 package noop.model;
 
-import interpreter.Context;
+import interpreter.Context
+import types.{NoopObject, NoopType}
+
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-class IdentifierDeclaration(val noopType: String, val name: String) extends Expression {
+class IdentifierDeclarationExpression(val noopType: String, val name: String) extends Expression {
   var initialValue: Option[Expression] = None;
 
-  def evaluate(c: Context) = None
+  def evaluate(c: Context): Option[NoopObject] = {
+    val frame = c.stack.top;
+
+    val obj = initialValue match {
+      case Some(v) => v.evaluate(c) match {
+        case Some(e) => e;
+        case None => throw new RuntimeException("The right handside didn't evaluate to a proper value");
+      }
+      case None => null;
+    }
+    frame.addIdentifier(name,  new Tuple2[NoopType, NoopObject](null, obj));
+    return None;
+  }
 }
