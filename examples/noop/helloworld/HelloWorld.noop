@@ -4,7 +4,9 @@ import noop.Console;
 class HelloWorld(Console console) implements Application {
 
   Int main(List args) {
-    console.println("Hello World!");
+    String s = "Hello World!";
+
+    console.println(s);
     return 0;
   }
 }
