@@ -16,6 +16,7 @@
 
 package noop.grammar
 
+import model.{OperatorExpression, IntLiteralExpression, IdentifierDeclarationExpression}
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
 
@@ -26,6 +27,22 @@ class ExpressionsSpec extends Spec with ShouldMatchers {
     it("should parse a variable assignment") {
       val source = "{ Int a = 3; }";
       parser.parseBlock(source).toStringTree() should equal ("(VAR Int (= a 3))");
+    }
+
+    it("should parse arithmetic") {
+      val source = "{ Float a = 3 + 4 / (5 * (6 + 7)) % 8; }";
+      parser.parseBlock(source).toStringTree() should equal (
+          "(VAR Float (= a (+ 3 (% (/ 4 (* 5 (+ 6 7))) 8))))");
+      val block = parser.buildTreeParser(parser.parseBlock(source)).block();
+      block.statements should have length(1);
+      block.statements(0).getClass should be(classOf[IdentifierDeclarationExpression]);
+      val declaration = block.statements(0).asInstanceOf[IdentifierDeclarationExpression];
+      declaration.initialValue should be ('defined);
+      val expression1 = declaration.initialValue.get().asInstanceOf[OperatorExpression];
+      expression1.operator should be ("+");
+      expression1.left.asInstanceOf[IntLiteralExpression].value should be (3);
+      val expression2 = expression1.asInstanceOf[OperatorExpression].right;
+      expression2.asInstanceOf[OperatorExpression].operator should be ("%");
     }
   }
 }

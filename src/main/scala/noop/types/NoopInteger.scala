@@ -16,9 +16,29 @@
 
 package noop.types;
 
-import model.ClassDefinition;
+
+import interpreter.Context
+import model.{IntLiteralExpression, ClassDefinition}
 import scala.collection.Map;
+import scala.collection.immutable;
 
 class NoopInteger(classDef: ClassDefinition, parameterInstances: Map[String, NoopObject],
     val value: Int) extends NoopObject(classDef, parameterInstances) {
+
+  def other(c: Context): Int = {
+    c.stack.top.identifiers("other")._2.asInstanceOf[NoopInteger].value;
+  }
+
+  def nativeMethodMap = immutable.Map[String, Context => Option[NoopObject]](
+  // TODO: this is an ugly way to make a new NoopInteger
+    "plus" -> ((c: Context) => new IntLiteralExpression(value + other(c)).evaluate(c)),
+    "minus" -> ((c: Context) => new IntLiteralExpression(value - other(c)).evaluate(c)),
+    "multiply" -> ((c: Context) => new IntLiteralExpression(value * other(c)).evaluate(c)),
+    "divide" -> ((c: Context) => new IntLiteralExpression(value / other(c)).evaluate(c)),
+    "modulo" -> ((c: Context) => new IntLiteralExpression(value % other(c)).evaluate(c))
+  );
+
+  override def nativeMethod(name: String): (Context => Option[NoopObject]) = {
+    return nativeMethodMap(name);
+  }
 }

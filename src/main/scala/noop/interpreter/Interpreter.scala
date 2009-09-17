@@ -16,12 +16,8 @@
 
 package noop.interpreter;
 
-import collection.mutable.{Map, Stack, ArrayBuffer}
-import model.{EvaluatedExpression, IdentifierExpression, Expression, MethodInvocationExpression, StringLiteralExpression, ClassDefinition, Block, Parameter, Method}
-
-
-import types.{NoopConsole, NoopObject};
-import noop.grammar.Parser;
+import collection.mutable.{Stack, ArrayBuffer}
+import model.{EvaluatedExpression, Expression, MethodInvocationExpression, StringLiteralExpression, ClassDefinition}
 
 /**
  * This class bootstraps the interpretation process, by setting up the ClassLoader with
@@ -33,7 +29,6 @@ import noop.grammar.Parser;
 class Interpreter(classLoader: ClassLoader) {
 
   def runApplication(mainClass: ClassDefinition) = {
-    val evaluator = new Evaluator(classLoader);
     val context = new Context(new Stack[Frame], classLoader);
 
     var args = new ArrayBuffer[Expression];
@@ -41,7 +36,6 @@ class Interpreter(classLoader: ClassLoader) {
     //TODO: pass the list of command line arguments to main() instead
     args += (new StringLiteralExpression("something"));
     val mainInstance = new EvaluatedExpression(mainClass.getInstance(classLoader));
-    evaluator.evaluateSomeStuffBitch(
-        new MethodInvocationExpression(mainInstance, "main", args), context);
+    new MethodInvocationExpression(mainInstance, "main", args).evaluate(context);
   }
 }
