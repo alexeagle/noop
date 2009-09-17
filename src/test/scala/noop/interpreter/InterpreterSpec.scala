@@ -16,10 +16,13 @@
 
 package noop.interpreter
 
+import collection.mutable.Stack
 import grammar.Parser
 import java.io.{ByteArrayOutputStream, File}
+import model.{IntLiteralExpression, OperatorExpression}
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
+import types.NoopInteger
 
 class InterpreterSpec extends Spec with ShouldMatchers {
   def createFixture = {
@@ -41,6 +44,26 @@ class InterpreterSpec extends Spec with ShouldMatchers {
       } finally {
         Console.setOut(originalOut);
       }
+    }
+
+    it("should evaluate simple arithmetic") {
+      val classLoader = createFixture;
+      val context = new Context(new Stack[Frame], classLoader);
+      val expr = new OperatorExpression(new IntLiteralExpression(2), "+", new IntLiteralExpression(3));
+      val result = expr.evaluate(context);
+      result should be('defined);
+      result.get().asInstanceOf[NoopInteger].value should be (5);
+    }
+
+    it("should evaluate more complex arithmetic") {
+      val source = "{ (1 + 2) * 3 - 10 / 2 % 4; }";
+      val classLoader = createFixture;
+      val context = new Context(new Stack[Frame], classLoader);
+      val parser = new Parser();
+      val block = parser.buildTreeParser(parser.parseBlock(source)).block();
+      val result = block.statements(0).evaluate(context);
+      result should be('defined);
+      result.get().asInstanceOf[NoopInteger].value should be (8);
     }
   }
 }

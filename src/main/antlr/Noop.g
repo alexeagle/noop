@@ -140,8 +140,16 @@ statement
 	;
 
 expression
-	: primary ('='^ expression)?
+	: additiveExpression ('='^ expression)?
 	;
+	
+additiveExpression
+	:	multiplicativeExpression ( ('+' | '-')^ multiplicativeExpression )*
+	;
+
+multiplicativeExpression
+	:	primary ( ( '*' | '/' | '%' )^ primary )*
+	;	
 
 primary
 	:	'('! expression ')'!

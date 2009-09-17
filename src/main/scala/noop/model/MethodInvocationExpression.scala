@@ -36,10 +36,9 @@ class MethodInvocationExpression(val left: Expression, val name: String,
 
     stack.push(frame);
     try {
-      method.execute(context);
+      return method.execute(context);
     } finally {
       stack.pop();
     }
-    return None;
   }
 }

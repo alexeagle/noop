@@ -153,7 +153,7 @@ modifier [Buffer<Enumeration.Value> mods]
 	;
 
 classBlock
-	:	identifierDeclaration | methodDeclaration
+	:	(identifierDeclaration | methodDeclaration)+
 	;
 
 methodDeclaration
@@ -210,11 +210,18 @@ assignment
 expression returns [Expression exp]
   :	p=primary
   { $exp = $p.exp; }
-  | d=dereference
+  |	d=dereference
   { $exp = $d.exp; }
+  | a=operatorExpression
+  { $exp = $a.exp; }
   | v=VariableIdentifier
   { $exp = new IdentifierExpression($v.text); }
   ;
+  
+operatorExpression returns [Expression exp]
+	: ^(op=('+'|'-'|'*'|'/'|'%') left=expression right=expression)
+	{ $exp = new OperatorExpression($left.exp, $op.text, $right.exp); }
+	;
 
 dereference returns [Expression exp]
 	: ^('.' left=expression right=VariableIdentifier a=arguments?)

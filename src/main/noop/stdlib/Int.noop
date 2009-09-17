@@ -15,5 +15,9 @@
  */
 
 class Int() {
-  native Int next() {}
+  native Int plus(Int other) {}
+  native Int minus(Int other) {}
+  native Int multiply(Int other) {}
+  native Int divide(Int other) {}
+  native Int modulo(Int other) {}
 }
