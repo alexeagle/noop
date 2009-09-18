@@ -31,6 +31,8 @@ tokens {
   VAR;
   IMPL;
   IF;
+  EQ;
+  NEQ;
 }
 
 @header {
@@ -81,11 +83,17 @@ conditionalOrExpression
   ;
 
 conditionalAndExpression
-  : equalityExpression ('&&' equalityExpression)*
+  : (equalityExpression | inequalityExpression) ('&&' (equalityExpression | inequalityExpression))*
   ;
 
 equalityExpression
-  : primary ('==' | '!=') primary
+  : primary '==' primary
+  -> ^(EQ primary primary)
+  ;
+
+inequalityExpression
+  : primary '!=' primary
+  -> ^(NEQ primary primary)
   ;
 
 methodDeclaration
