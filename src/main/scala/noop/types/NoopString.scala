@@ -17,7 +17,7 @@
 package noop.types;
 
 import interpreter.Context
-import model.{IntLiteralExpression, ClassDefinition}
+import model.{StringLiteralExpression, IntLiteralExpression, ClassDefinition}
 import scala.collection.Map
 import scala.collection.immutable
 
@@ -25,7 +25,8 @@ class NoopString(classDef: ClassDefinition, parameterInstances: Map[String, Noop
     val value: String) extends NoopObject(classDef, parameterInstances) {
 
   def nativeMethodMap = immutable.Map[String, Context => Option[NoopObject]](
-  // TODO: not the right way to make an integer
+    "toString" -> ((c: Context) => new StringLiteralExpression(value).evaluate(c)),
+    // TODO: not the right way to make an integer
     "length" -> ((c: Context) => new IntLiteralExpression(value.length).evaluate(c))
   );
 

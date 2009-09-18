@@ -18,14 +18,19 @@ package noop.types;
 
 
 import interpreter.Context
-import model.ClassDefinition
+import model.{EvaluatedExpression, MethodInvocationExpression, ClassDefinition}
 import scala.collection.mutable.Map;
 
 class NoopConsole(classDef: ClassDefinition, parameterInstances: Map[String, NoopObject])
     extends NoopObject(classDef, parameterInstances) {
 
   def println(c: Context): Option[NoopObject] = {
-    Console.println(c.stack.top.identifiers("s")._2.asInstanceOf[NoopString].value);
+    val toPrint = c.stack.top.identifiers("s")._2;
+    val toString = new MethodInvocationExpression(new EvaluatedExpression(toPrint), "toString", Nil).evaluate(c) match {
+      case Some(str) => str.asInstanceOf[NoopString]
+      case None => throw new RuntimeException("Internal error: toString of " + toPrint + " returned Void");
+    }
+    Console.println(toString.value);
     return None;
   }
 

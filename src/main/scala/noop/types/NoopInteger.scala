@@ -18,7 +18,7 @@ package noop.types;
 
 
 import interpreter.Context
-import model.{IntLiteralExpression, ClassDefinition}
+import model.{StringLiteralExpression, IntLiteralExpression, ClassDefinition}
 import scala.collection.Map;
 import scala.collection.immutable;
 
@@ -35,7 +35,8 @@ class NoopInteger(classDef: ClassDefinition, parameterInstances: Map[String, Noo
     "minus" -> ((c: Context) => new IntLiteralExpression(value - other(c)).evaluate(c)),
     "multiply" -> ((c: Context) => new IntLiteralExpression(value * other(c)).evaluate(c)),
     "divide" -> ((c: Context) => new IntLiteralExpression(value / other(c)).evaluate(c)),
-    "modulo" -> ((c: Context) => new IntLiteralExpression(value % other(c)).evaluate(c))
+    "modulo" -> ((c: Context) => new IntLiteralExpression(value % other(c)).evaluate(c)),
+    "toString" -> ((c: Context) => new StringLiteralExpression(value.toString).evaluate(c))
   );
 
   override def nativeMethod(name: String): (Context => Option[NoopObject]) = {

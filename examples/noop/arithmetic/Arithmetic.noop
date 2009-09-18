@@ -5,7 +5,7 @@ import noop.Console;
 
 class Arithmetic(Console console) implements Application {
 
-  Int main(List<String> args) {
+  Int main(List args) {
     Int i = 1;
     Int j = 2;
     Int k = i + j;

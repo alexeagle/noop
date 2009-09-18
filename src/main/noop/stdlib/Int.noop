@@ -20,4 +20,5 @@ class Int() {
   native Int multiply(Int other) {}
   native Int divide(Int other) {}
   native Int modulo(Int other) {}
+  native String toString() {}
 }
