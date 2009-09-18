@@ -15,6 +15,7 @@
 grammar Noop;
 
 options {
+  backtrack = true;
   output = AST;
   ASTLabelType = CommonTree;
 }
@@ -29,6 +30,7 @@ tokens {
   ARGS;
   VAR;
   IMPL;
+  IF;
 }
 
 @header {
@@ -64,6 +66,27 @@ namespaceDeclaration
 importDeclaration
 	:	'import'^ qualifiedType ';'!
 	;
+
+ifExpression
+  : 'if' '(' conditionalExpression ')' block* ('else' block*)?
+  -> ^(IF conditionalExpression* block*)
+  ;
+
+conditionalExpression
+  : (conditionalOrExpression | conditionalAndExpression)+
+  ;
+
+conditionalOrExpression
+  : conditionalAndExpression ('||' conditionalAndExpression)*
+  ;
+
+conditionalAndExpression
+  : equalityExpression ('&&' equalityExpression)*
+  ;
+
+equalityExpression
+  : primary ('==' | '!=') primary
+  ;
 
 methodDeclaration
 	: methodSignature block
@@ -137,6 +160,7 @@ statement
 	:	identifierDeclaration
 	| 'return'^ expression ';'!
 	| expression ';'!
+	| ifExpression
 	;
 
 expression
