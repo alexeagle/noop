@@ -26,29 +26,15 @@ import types.NoopInteger
 
 class InterpreterSpec extends Spec with ShouldMatchers {
   def createFixture = {
-    val exampleSourcePath = new File(getClass().getResource("/helloworld").toURI).getAbsolutePath();
     val stdLibSourcePath = new File(getClass().getResource("/stdlib").toURI).getAbsolutePath();
-    new ClassLoader(new Parser(), List(exampleSourcePath, stdLibSourcePath));
+    val classLoader = new ClassLoader(new Parser(), List(stdLibSourcePath));
+    val context = new Context(new Stack[Frame], classLoader);
+    (classLoader, context);
   }
 
   describe("the interpreter") {
-    it("should run a HelloWorld program") {
-      val classLoader = createFixture;
-      val output = new ByteArrayOutputStream();
-      val originalOut = Console.out;
-      try {
-        Console.setOut(output);
-        val mainClass = classLoader.findClass("HelloWorld");
-        new Interpreter(classLoader).runApplication(mainClass);
-        output.toString() should include("Hello World!");
-      } finally {
-        Console.setOut(originalOut);
-      }
-    }
-
     it("should evaluate simple arithmetic") {
-      val classLoader = createFixture;
-      val context = new Context(new Stack[Frame], classLoader);
+      val (classLoader, context) = createFixture;
       val expr = new OperatorExpression(new IntLiteralExpression(2), "+", new IntLiteralExpression(3));
       val result = expr.evaluate(context);
       result should be('defined);
@@ -57,8 +43,7 @@ class InterpreterSpec extends Spec with ShouldMatchers {
 
     it("should evaluate more complex arithmetic") {
       val source = "{ (1 + 2) * 3 - 10 / 2 % 4; }";
-      val classLoader = createFixture;
-      val context = new Context(new Stack[Frame], classLoader);
+      val (classLoader, context) = createFixture;
       val parser = new Parser();
       val block = parser.buildTreeParser(parser.parseBlock(source)).block();
       val result = block.statements(0).evaluate(context);

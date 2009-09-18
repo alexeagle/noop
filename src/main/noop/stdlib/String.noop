@@ -16,4 +16,6 @@
 
 class String() {
   native Int length() {}
+  // TODO(alexeagle): this shouldn't need to be native, just return this
+  native String toString() {}
 }
