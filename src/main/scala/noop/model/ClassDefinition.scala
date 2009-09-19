@@ -21,8 +21,7 @@ import types.{NoopConsole, NoopObject}
 
 import interpreter.ClassLoader;
 
-class ClassDefinition {
-  var name:String = "";
+class ClassDefinition (val name:String, val documentation: String) {
   val parameters:Buffer[Parameter] = new ArrayBuffer[Parameter];
   val interfaces:Buffer[String] = new ArrayBuffer[String];
   val methods:Buffer[Method] = new ArrayBuffer[Method];

@@ -110,8 +110,12 @@ qualifiedType
 	;
 
 classDeclaration
-	: modifiers? 'class' TypeIdentifier parameterList typeSpecifiers? classBlock
-	-> ^(CLASS modifiers? TypeIdentifier parameterList? typeSpecifiers? classBlock?)
+	: doc? modifiers? 'class' TypeIdentifier parameterList typeSpecifiers? classBlock
+	-> ^(CLASS modifiers? TypeIdentifier parameterList? typeSpecifiers? classBlock? doc?)
+	;
+
+doc
+	:	'doc'^ StringLiteral
 	;
 
 typeSpecifiers
@@ -142,7 +146,7 @@ interfaceBlock
 	;
 
 methodSignature
-  : modifiers? TypeIdentifier VariableIdentifier parameterList
+  : doc? modifiers? TypeIdentifier VariableIdentifier parameterList
   ;
 
 methodDefinition
@@ -225,6 +229,8 @@ VariableIdentifier
 	: 'a' .. 'z' ('a' .. 'z' | 'A' .. 'Z' | '0' .. '9')*
 	;
 
+// TODO(alexeagle): this allows multi-line single-double-quote strings - is that cool?
+// TODO(alexeagle): triple-quote strings?
 StringLiteral
 	:	'"' ~('\\'|'"')* '"'
 	;

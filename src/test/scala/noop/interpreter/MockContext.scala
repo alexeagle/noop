@@ -12,14 +12,13 @@ trait MockContext {
   def fixture = {
     val stack = new Stack[Frame];
     val classLoader = new MockClassLoader();
-    val classDefinition = new ClassDefinition();
-    classDefinition.name = "String";
-    val method = new Method("length", "Int", null);
+    val classDefinition = new ClassDefinition("String", "");
+    val method = new Method("length", "Int", null, "");
     method.modifiers += Modifier.native;
     classDefinition.methods += method;
 
     classLoader.classes += Pair("String", classDefinition);
-    classLoader.classes += Pair("Int", new ClassDefinition());
+    classLoader.classes += Pair("Int", new ClassDefinition("Int", ""));
     val context = new Context(stack, classLoader);
     context;
   }
