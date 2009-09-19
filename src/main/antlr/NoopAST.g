@@ -104,22 +104,25 @@ qualifiedType returns [String text]
 
 classDeclaration
 @init {
-  ClassDefinition classDef = new ClassDefinition();
-	$SourceFile::file.classDef_\$eq(classDef);
 	paraphrases.push("in class definition");
+	Buffer<Method> methodCollector = new ArrayBuffer<Method>();
+	Buffer<String> interfaceCollector = new ArrayBuffer<String>();
 }
 @after {
   paraphrases.pop();
 }
-	:	^(CLASS m=modifiers? t=TypeIdentifier p=parameters? typeSpecifier* classBlock?)
+	:	^(CLASS m=modifiers? t=TypeIdentifier p=parameters? typeSpecifier[interfaceCollector]* classBlock[methodCollector]? d=doc?)
 	{
-	classDef.name_\$eq($t.text);
+	ClassDefinition classDef = new ClassDefinition($t.text, $d.doc);
+	classDef.methods().\$plus\$plus\$eq(methodCollector);
+	classDef.interfaces().\$plus\$plus\$eq(interfaceCollector);
 	if ($p.parameters != null) {
 	  classDef.parameters().\$plus\$plus\$eq($p.parameters);
 	}
 	if ($m.modifiers != null) {
 	  classDef.modifiers().\$plus\$plus\$eq($m.modifiers);
 	}
+	$SourceFile::file.classDef_\$eq(classDef);
 	}
 	;
 
@@ -135,10 +138,10 @@ parameter [Buffer<Parameter> parameters]
 	}
 	;
 
-typeSpecifier
+typeSpecifier [Buffer<String> interfaces]
 	:	^(IMPL i=qualifiedType)
 	{
-   $SourceFile::file.classDef().interfaces().\$plus\$eq($i.text);
+   $interfaces.\$plus\$eq($i.text);
 	}
 	;
 
@@ -152,22 +155,22 @@ modifier [Buffer<Enumeration.Value> mods]
 	{ mods.\$plus\$eq(Modifier.valueOf($m.text).get()); }
 	;
 
-classBlock
-	:	(identifierDeclaration | methodDeclaration)+
+classBlock [Buffer<Method> methods]
+	:	(identifierDeclaration | methodDeclaration[methods])+
 	;
 
-methodDeclaration
+methodDeclaration [Buffer<Method> methods]
 @init { paraphrases.push("in method declaration"); }
 @after { paraphrases.pop(); }
-  :	^(METHOD m=modifiers? type=TypeIdentifier name=VariableIdentifier p=parameters? b=block)
-  { Method method = new Method($name.text, $type.text, $b.block);
-    $SourceFile::file.classDef().methods().\$plus\$eq(method);
+  :	^(METHOD d=doc? m=modifiers? type=TypeIdentifier name=VariableIdentifier p=parameters? b=block)
+  { Method method = new Method($name.text, $type.text, $b.block, $d.doc);
     if ($p.parameters != null) {
   	  method.parameters().\$plus\$plus\$eq($p.parameters);
 	  }
 	  if ($m.modifiers != null) {
   	  method.modifiers().\$plus\$plus\$eq($m.modifiers);
   	}
+  	$methods.\$plus\$eq(method);
   }
   ;
 
@@ -252,4 +255,10 @@ primary returns [Expression exp]
 	| s=StringLiteral
 	{ String valueWithQuotes = $s.text;
 	  $exp = new StringLiteralExpression(valueWithQuotes.substring(1, valueWithQuotes.length() - 1)); }
+	;
+
+doc returns [String doc]
+	:	^('doc' s=StringLiteral)
+	{ String valueWithQuotes = $s.text; 
+    $doc = valueWithQuotes.substring(1, valueWithQuotes.length() - 1); }
 	;
