@@ -72,6 +72,15 @@ scope Block {
     }
     return builder.toString();
   }
+  
+  //TODO(alexeagle): when we have escape sequences, we need to do more work here
+  // Probably anything acceping raw strings should take a RawString type which 
+  // knows how to propertly un-escape things.
+  String stripQuotes(String withQuotes) {
+    return (withQuotes.startsWith("\"\"\"") ?
+        withQuotes.substring(3, withQuotes.length() - 3) :
+        withQuotes.substring(1, withQuotes.length() - 1));
+  }
 }
 
 file returns [File file = new File()]
@@ -253,12 +262,10 @@ primary returns [Expression exp]
 	: i=INT
 	{ $exp = new IntLiteralExpression(Integer.valueOf($i.text)); }
 	| s=StringLiteral
-	{ String valueWithQuotes = $s.text;
-	  $exp = new StringLiteralExpression(valueWithQuotes.substring(1, valueWithQuotes.length() - 1)); }
+	{ $exp = new StringLiteralExpression(stripQuotes($s.text)); }
 	;
 
 doc returns [String doc]
 	:	^('doc' s=StringLiteral)
-	{ String valueWithQuotes = $s.text; 
-    $doc = valueWithQuotes.substring(1, valueWithQuotes.length() - 1); }
+	{ $doc = stripQuotes($s.text); }
 	;

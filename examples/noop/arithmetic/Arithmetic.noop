@@ -3,13 +3,13 @@ namespace arithmetic;
 import noop.Application;
 import noop.Console;
 
-doc "
+doc """
 Two things about Arithmetic:
  * This class demonstrates some basic arithmetic operations
  * It converts an Int to a String automatically
 
  @author Alex Eagle (alexeagle@google.com)
-"
+"""
 class Arithmetic(Console console) implements Application {
   Int main(List args) {
     Int i = 1;

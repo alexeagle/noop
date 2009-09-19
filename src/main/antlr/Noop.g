@@ -229,10 +229,9 @@ VariableIdentifier
 	: 'a' .. 'z' ('a' .. 'z' | 'A' .. 'Z' | '0' .. '9')*
 	;
 
-// TODO(alexeagle): this allows multi-line single-double-quote strings - is that cool?
-// TODO(alexeagle): triple-quote strings?
 StringLiteral
-	:	'"' ~('\\'|'"')* '"'
+	:	'"' ~('"'|'\\'|'\n'|'\r')* '"'
+	| '"""' (options {greedy=false;}:.)* '"""'
 	;
 
 
