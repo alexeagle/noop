@@ -16,35 +16,36 @@
 
 package noop.grammar
 
+import org.antlr.runtime.RecognitionException
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
 
 class LiteralsSpec extends Spec with ShouldMatchers {
   val parser = new Parser();
 
-  describe("parser") {
+  describe("the parser") {
     it("should parse integer literals") {
-      val source = """
-        class Foo() {
-          Int a = 123;
-          Int b = -123;
-        }
-      """;
-      val commonTree = parser.parseFile(source);
-
-      commonTree.toStringTree() should equal (
-          "(CLASS Foo (VAR Int (= a 123)) (VAR Int (= b -123)))");
+      val source = "{ Int a = 123; Int b = -123; } ";
+      parser.parseBlock(source).toStringTree() should equal (
+          "(VAR Int (= a 123)) (VAR Int (= b -123))");
     }
 
     it("should parse a string literal") {
-      val source = """
-        class Foo() {
-          String a = "hello, world!";
-        }
-      """;
-      val commonTree = parser.parseFile(source);
-      commonTree.toStringTree() should equal (
-          "(CLASS Foo (VAR String (= a \"hello, world!\")))");
+      val source = " { a = \"hello, world!\"; } ";
+      parser.parseBlock(source).toStringTree() should equal (
+          "(= a \"hello, world!\")");
+    }
+
+    it("should parse a multi-line string literal") {
+      val source = "{ String a = \"\"\"Line1\n\"Line2\"\n\"\"\"; }";
+      parser.parseBlock(source).toStringTree() should equal(
+          "(VAR String (= a \"\"\"Line1\n\"Line2\"\n\"\"\"))");
+    }
+
+    it("should not allow a single-double-quoted string to span lines") {
+      val source = """{ a = "Line 1
+      "; }""";
+      intercept[RecognitionException] (parser.parseBlock(source));
     }
   }
 }
