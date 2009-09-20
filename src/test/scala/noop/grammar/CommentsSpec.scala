@@ -53,5 +53,11 @@ class CommentsSpec extends Spec with ShouldMatchers {
 
       commonTree.toStringTree() should equal ("(CLASS Foo)");
     }
+
+    // Note: this makes Alex sad.
+    it("should allow tab characters to appear in the source") {
+      val source = "\tclass\tFoo() {\t}";
+      parser.parseFile(source).toStringTree() should equal ("(CLASS Foo)");
+    }
   }
 }
