@@ -43,6 +43,13 @@ tokens {
   package noop.grammar.antlr;
 }
 
+@lexer::rulecatch {
+  catch (RecognitionException e) {
+    reportError(e);
+    throw new RuntimeException(e);
+  }
+}
+
 @rulecatch {
   catch (RecognitionException e) {
     reportError(e);
@@ -236,7 +243,7 @@ StringLiteral
 
 
 WS
-  :	(' '|'\r'|'\n')+ {$channel = HIDDEN;}
+  :	(' '|'\r'|'\n'|'\t')+ {$channel = HIDDEN;}
   ;
 
 COMMENT
