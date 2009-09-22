@@ -21,6 +21,8 @@ import noop.model.{File};
 import noop.grammar.antlr.NoopAST;
 import noop.grammar.antlr.NoopParser;
 import noop.grammar.antlr.NoopLexer;
+import noop.grammar.antlr.DocParser;
+import noop.grammar.antlr.DocLexer;
 
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.ANTLRStringStream;
@@ -32,6 +34,10 @@ import org.antlr.runtime.tree.CommonTreeNodeStream;
 class Parser() {
   def buildParser(input: ANTLRStringStream): NoopParser = {
     return new NoopParser(new CommonTokenStream(new NoopLexer(input)));
+  }
+
+  def buildDocParser(input: ANTLRStringStream): DocParser = {
+    return new DocParser(new CommonTokenStream(new DocLexer(input)));
   }
 
   def parseFile(source: InputStream): CommonTree = {
@@ -52,6 +58,11 @@ class Parser() {
   def parseBlock(source: String): CommonTree = {
     val block = buildParser(new ANTLRStringStream(source)).block();
     return block.getTree().asInstanceOf[CommonTree];
+  }
+
+  def parseDoc(source: String): CommonTree = {
+    val doc = buildDocParser(new ANTLRStringStream(source)).doc();
+    return doc.getTree().asInstanceOf[CommonTree];
   }
 
   def buildTreeParser(ast: CommonTree): NoopAST = {

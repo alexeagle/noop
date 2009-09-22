@@ -35,7 +35,7 @@ define "noop" do
   project.group = GROUP
   manifest["Implementation-Vendor"] = COPYRIGHT
 
-  antlr = antlr([_('src/main/antlr/Noop.g'), _('src/main/antlr/NoopAST.g')], :in_package=>'noop.grammar.antlr')
+  antlr = antlr([_('src/main/antlr/Doc.g'), _('src/main/antlr/Noop.g'), _('src/main/antlr/NoopAST.g')], :in_package=>'noop.grammar.antlr')
 
   resources.from [_('src/main/noop'), _('examples/noop')]
 
