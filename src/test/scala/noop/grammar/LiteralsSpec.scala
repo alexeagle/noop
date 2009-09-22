@@ -16,6 +16,7 @@
 
 package noop.grammar
 
+import model.{BooleanLiteralExpression, IdentifierDeclarationExpression}
 import org.antlr.runtime.RecognitionException
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
@@ -46,6 +47,20 @@ class LiteralsSpec extends Spec with ShouldMatchers {
       val source = """{ a = "Line 1
       "; }""";
       intercept[RecognitionException] (parser.parseBlock(source));
+    }
+
+    it("should parse boolean literals") {
+      val source = "{ Boolean a = true; }";
+      parser.parseBlock(source).toStringTree() should equal ("(VAR Boolean (= a true))");
+      val statement = parser.buildTreeParser(parser.parseBlock(source)).block().statements(0)
+          .asInstanceOf[IdentifierDeclarationExpression];
+      statement.initialValue match {
+        case Some(b) => {
+          b.getClass() should be (classOf[BooleanLiteralExpression]);
+          b.asInstanceOf[BooleanLiteralExpression].value should be (true);
+        }
+        case None => fail();
+      }
     }
   }
 }
