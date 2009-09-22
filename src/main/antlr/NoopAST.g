@@ -263,6 +263,8 @@ primary returns [Expression exp]
 	{ $exp = new IntLiteralExpression(Integer.valueOf($i.text)); }
 	| s=StringLiteral
 	{ $exp = new StringLiteralExpression(stripQuotes($s.text)); }
+	| b=('true' | 'false')
+	{ $exp = new BooleanLiteralExpression(Boolean.valueOf($b.text)); }
 	;
 
 doc returns [String doc]

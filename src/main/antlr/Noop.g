@@ -223,7 +223,7 @@ parameter
 	;
 
 literal
-	: INT | StringLiteral
+	: INT | StringLiteral | 'true' | 'false'
 	;
 
 /* Lexer rules */
@@ -240,7 +240,6 @@ StringLiteral
 	:	'"' ~('"'|'\\'|'\n'|'\r')* '"'
 	| '"""' (options {greedy=false;}:.)* '"""'
 	;
-
 
 WS
   :	(' '|'\r'|'\n'|'\t')+ {$channel = HIDDEN;}
