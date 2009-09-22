@@ -1,0 +1,37 @@
+/**
+ *  Copyright 2009 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package noop.model;
+
+import collection.mutable.{ArrayBuffer, Buffer}
+import interpreter.Context
+import types.{NoopString, NoopObject}
+/**
+ * Represents the declaration of a method in source code.
+ */
+class Method(val name: String, val returnType: String, val block: Block, val documentation:String) {
+  val parameters: Buffer[Parameter] = new ArrayBuffer[Parameter]();
+  val modifiers: Buffer[Modifier.Value] = new ArrayBuffer[Modifier.Value]();
+
+  def execute(c: Context): Option[NoopObject] = {
+    if (modifiers.contains(Modifier.native)) {
+      val obj = c.stack.top.thisRef
+      return obj.executeNativeMethod(c, name);
+    } else {
+      return block.evaluate(c);
+    }
+  }
+}
