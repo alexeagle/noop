@@ -70,5 +70,11 @@ class FileSpec extends Spec with ShouldMatchers {
       file.imports(1) should be ("org.scalatest.Spec");
       file.imports(2) should be ("org.scalatest.matchers.ShouldMatchers");
     }
+
+    it ("should not allow extra stuff after the class definition") {
+      val source = "class Foo() {} extra stuff";
+      // TODO(alexeagle)
+      // intercept[RecognitionException] (parser.parseFile(source));
+    }
   }
 }

@@ -56,14 +56,14 @@ class ExampleIntegrationTest extends Spec with ShouldMatchers {
     }}
   }
 
-//  it("should run while loop") {
-//    withRedirectedStandardOut { (output) => {
-//      val classLoader = createFixture;
-//      val mainClass = classLoader.findClass("WhileLoop");
-//      new Interpreter(classLoader).runApplication(mainClass);
-//      output.toString() should equal("Hello World!\n");
-//    }}
-//  }
+  it("should run while loop") {
+    withRedirectedStandardOut { (output) => {
+      val classLoader = createFixture;
+      val mainClass = classLoader.findClass("WhileLoop");
+      new Interpreter(classLoader).runApplication(mainClass);
+      output.toString() should equal("Hello World!\n");
+    }}
+  }
 
   it("should run the arithmetic program") {
     withRedirectedStandardOut { (output) => {

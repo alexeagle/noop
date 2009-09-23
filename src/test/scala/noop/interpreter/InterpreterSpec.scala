@@ -59,8 +59,8 @@ class InterpreterSpec extends Spec with ShouldMatchers {
       context.stack.push(new Frame(null, null));
       block.evaluate(context);
       context.stack.top.identifiers should contain key("a");
-//      context.stack.top.identifiers("a")._2 should not be (null);
-//      context.stack.top.identifiers("a")._2.asInstanceOf[NoopInteger].value should equal (1);
+      context.stack.top.identifiers("a")._2 should not be (null);
+      context.stack.top.identifiers("a")._2.asInstanceOf[NoopInteger].value should equal (1);
     }
   }
 }
