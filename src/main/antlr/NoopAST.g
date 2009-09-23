@@ -194,9 +194,16 @@ statement
 @init { paraphrases.push("in statement"); }
 @after { paraphrases.pop(); }
 	:	returnStatement
+	| w=whileStatement
+	{ $Block::block.statements().\$plus\$eq($w.exp); }
 	| identifierDeclaration
 	| exp=expression
 	{ $Block::block.statements().\$plus\$eq($exp.exp); }
+	;
+
+whileStatement returns [Expression exp]
+	: ^(WHILE term=expression b=block)
+	{ $exp = new WhileLoop($term.exp, $b.block); }
 	;
 
 returnStatement
@@ -214,9 +221,9 @@ identifierDeclaration
   }
 	;
 
-assignment
+assignment returns [Expression exp]
 	: ^('=' lhs=expression rhs=expression)
-	{ $Block::block.statements().\$plus\$eq(new AssignmentExpression($lhs.exp, $rhs.exp)); }
+	{ $exp = new AssignmentExpression($lhs.exp, $rhs.exp); }
 	;
 
 expression returns [Expression exp]
@@ -224,7 +231,9 @@ expression returns [Expression exp]
   { $exp = $p.exp; }
   |	d=dereference
   { $exp = $d.exp; }
-  | a=operatorExpression
+  | o=operatorExpression
+  { $exp = $o.exp; }
+  | a=assignment
   { $exp = $a.exp; }
   | v=VariableIdentifier
   { $exp = new IdentifierExpression($v.text); }

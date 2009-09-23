@@ -31,6 +31,7 @@ tokens {
   VAR;
   IMPL;
   IF;
+  WHILE;
   EQ;
   NEQ;
 }
@@ -177,9 +178,15 @@ block
 
 statement
 	:	identifierDeclaration
+	| whileLoop
 	| 'return'^ expression ';'!
 	| expression ';'!
 	| ifExpression
+	;
+
+whileLoop
+	: 'while' '(' expression ')' block
+	-> ^(WHILE expression block?)
 	;
 
 expression

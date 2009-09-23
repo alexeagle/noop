@@ -30,6 +30,7 @@ class ExampleIntegrationTest extends Spec with ShouldMatchers {
   def createFixture = {
     val sourcePaths = List(
         new File(getClass().getResource("/helloworld").toURI).getAbsolutePath(),
+        new File(getClass().getResource("/controlFlow").toURI).getAbsolutePath(),
         new File(getClass().getResource("/arithmetic").toURI).getAbsolutePath(),
         new File(getClass().getResource("/stdlib").toURI).getAbsolutePath());
     new ClassLoader(new Parser(), sourcePaths);
@@ -54,6 +55,15 @@ class ExampleIntegrationTest extends Spec with ShouldMatchers {
       output.toString() should include("Hello World!");
     }}
   }
+
+//  it("should run while loop") {
+//    withRedirectedStandardOut { (output) => {
+//      val classLoader = createFixture;
+//      val mainClass = classLoader.findClass("WhileLoop");
+//      new Interpreter(classLoader).runApplication(mainClass);
+//      output.toString() should equal("Hello World!\n");
+//    }}
+//  }
 
   it("should run the arithmetic program") {
     withRedirectedStandardOut { (output) => {

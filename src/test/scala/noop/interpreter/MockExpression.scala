@@ -16,26 +16,18 @@
 
 package noop.interpreter
 
-import collection.mutable.Stack
-import model.{Method, Modifier, ClassDefinition}
+import model.Expression
+import types.NoopObject
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
 
-trait MockContext {
-  def fixture = {
-    val stack = new Stack[Frame];
-    val classLoader = new MockClassLoader();
-    val classDefinition = new ClassDefinition("String", "");
-    val method = new Method("length", "Int", null, "");
-    method.modifiers += Modifier.native;
-    classDefinition.methods += method;
+class MockExpression extends Expression {
+  var timesCalled: Int = 0;
 
-    classLoader.classes += Pair("String", classDefinition);
-    classLoader.classes += Pair("Int", new ClassDefinition("Int", ""));
-    classLoader.classes += Pair("Boolean", new ClassDefinition("Boolean", ""));
-    val context = new Context(stack, classLoader);
-    context;
+  def evaluate(c: Context): Option[NoopObject] = {
+    timesCalled += 1;
+    return None;
   }
 }
