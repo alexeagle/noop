@@ -25,5 +25,25 @@ import types.NoopObject
 
 class AssignmentExpression(val lhs: Expression, val rhs: Expression) extends Expression {
 
-  def evaluate(c: Context) = None
+  def evaluate(c: Context): Option[NoopObject] = {
+    if (!lhs.isInstanceOf[IdentifierExpression]) {
+      throw new RuntimeException("Oops, I only know how to assign to identifiers");
+    }
+    val identifier = lhs.asInstanceOf[IdentifierExpression].identifier;
+
+    val newValue = rhs.evaluate(c);
+    newValue match {
+      case Some(newObj) => {
+        val currentFrame = c.stack.top;
+        if (currentFrame.identifiers.contains(identifier)) {
+          currentFrame.identifiers(identifier) = Tuple(null, newObj);
+        } else {
+          throw new IllegalStateException("No identifier " + identifier);
+        }
+      }
+      case None => throw new RuntimeException("cannot assign Void");
+    }
+
+    return newValue;
+  }
 }
