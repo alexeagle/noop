@@ -50,5 +50,17 @@ class InterpreterSpec extends Spec with ShouldMatchers {
       result should be('defined);
       result.get().asInstanceOf[NoopInteger].value should be (8);
     }
+
+    it("should assign variables") {
+      val source = "{ Int a; a = 1; }";
+      val (classLoader, context) = createFixture;
+      val parser = new Parser();
+      val block = parser.buildTreeParser(parser.parseBlock(source)).block();
+      context.stack.push(new Frame(null, null));
+      block.evaluate(context);
+      context.stack.top.identifiers should contain key("a");
+//      context.stack.top.identifiers("a")._2 should not be (null);
+//      context.stack.top.identifiers("a")._2.asInstanceOf[NoopInteger].value should equal (1);
+    }
   }
 }
