@@ -32,8 +32,6 @@ tokens {
   IMPL;
   IF;
   WHILE;
-  EQ;
-  NEQ;
 }
 
 @header {
@@ -87,22 +85,46 @@ conditionalExpression
   ;
 
 conditionalOrExpression
-  : conditionalAndExpression ('||' conditionalAndExpression)*
+  : conditionalAndExpression ('||'^ conditionalAndExpression)*
   ;
 
 conditionalAndExpression
-  : (equalityExpression | inequalityExpression) ('&&' (equalityExpression | inequalityExpression))*
+  : finalConditionalExpression ('&&'^ finalConditionalExpression)*
+  ;
+
+finalConditionalExpression
+  : equalityExpression
+  | inequalityExpression
+  | greaterThanExpression
+  | lesserThanExpression
+  | greaterOrEqualExpression
+  | lesserOrEqualExpression
   ;
 
 equalityExpression
-  : primary '==' primary
-  -> ^(EQ primary primary)
+  : expression '=='^ expression
   ;
 
 inequalityExpression
-  : primary '!=' primary
-  -> ^(NEQ primary primary)
+  : expression '!='^ expression
   ;
+
+greaterThanExpression
+  : expression '>'^ expression
+  ;
+
+lesserThanExpression
+  : expression '<'^ expression
+  ;
+
+greaterOrEqualExpression
+  : expression '>='^ expression
+  ;
+
+lesserOrEqualExpression
+  : expression '<='^ expression
+  ;
+
 
 methodDeclaration
 	: methodSignature block
