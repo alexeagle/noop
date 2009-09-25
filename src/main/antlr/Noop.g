@@ -95,38 +95,8 @@ conditionalAndExpression
   ;
 
 finalConditionalExpression
-  : equalityExpression
-  | inequalityExpression
-  | greaterThanExpression
-  | lesserThanExpression
-  | greaterOrEqualExpression
-  | lesserOrEqualExpression
+  : expression ('==' | '!=' | '>' | '<' | '>=' | '<=')^ expression
   ;
-
-equalityExpression
-  : expression '=='^ expression
-  ;
-
-inequalityExpression
-  : expression '!='^ expression
-  ;
-
-greaterThanExpression
-  : expression '>'^ expression
-  ;
-
-lesserThanExpression
-  : expression '<'^ expression
-  ;
-
-greaterOrEqualExpression
-  : expression '>='^ expression
-  ;
-
-lesserOrEqualExpression
-  : expression '<='^ expression
-  ;
-
 
 methodDeclaration
 	: methodSignature block
