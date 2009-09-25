@@ -32,6 +32,8 @@ tokens {
   IMPL;
   IF;
   WHILE;
+  FOREACH;
+  FOR;
 }
 
 @header {
@@ -168,7 +170,7 @@ modifier
 	;
 
 classBlock
-	:	'{'!  identifierDeclaration* methodDeclaration* '}'!
+	:	'{'!  (identifierDeclaration ';'!)* methodDeclaration* '}'!
 	;
 
 interfaceBlock
@@ -186,7 +188,7 @@ methodDefinition
 
 
 identifierDeclaration
-	:	TypeIdentifier identifierDeclarator ';'
+	:	TypeIdentifier identifierDeclarator
 	-> ^(VAR TypeIdentifier identifierDeclarator)
 	;
 
@@ -199,11 +201,19 @@ block
 	;
 
 statement
-	:	identifierDeclaration
+	:	identifierDeclaration ';'!
 	| whileLoop
+	| forLoop
 	| 'return'^ expression ';'!
 	| expression ';'!
 	| ifExpression
+	;
+
+forLoop
+	: 'for' '(' (identifierDeclaration|VariableIdentifier) 'in' expression ')' block
+	-> ^(FOREACH identifierDeclaration? VariableIdentifier? expression block?)
+	| 'for' '(' identifierDeclaration ';' conditionalExpression ';' expression ')' block
+	-> ^(FOR identifierDeclaration conditionalExpression expression block?)
 	;
 
 whileLoop
