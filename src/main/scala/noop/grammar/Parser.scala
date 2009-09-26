@@ -88,6 +88,6 @@ class Parser() {
     return new NoopAST(new CommonTreeNodeStream(ast));
   }
 
-  def file(source: String) = buildTreeParser(parseFile(source)).file();
-  def file(source: InputStream) = buildTreeParser(parseFile(source)).file();
+  def file(source: String): File = buildTreeParser(parseFile(source)).file();
+  def file(source: InputStream): File = buildTreeParser(parseFile(source)).file();
 }

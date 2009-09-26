@@ -156,13 +156,13 @@ interfaceBlock
 	;
 
 test
-	: 'test' StringLiteral '{' (statement* | block | test | unittest) '}'
-	-> ^(TEST StringLiteral statement* block? test? unittest?)
+	: 'test' StringLiteral '{' (statement* | test | unittest) '}'
+	-> ^(TEST StringLiteral statement* test? unittest?)
 	;
 
 unittest
-	: 'unittest' StringLiteral '{' (statement* | block) '}'
-	-> ^(UNITTEST StringLiteral statement* block?)
+	: 'unittest' StringLiteral block
+	-> ^(UNITTEST StringLiteral block?)
 	;
 
 methodSignature
