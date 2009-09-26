@@ -22,9 +22,10 @@ import types.{NoopConsole, NoopObject}
 import interpreter.ClassLoader;
 
 class ClassDefinition (val name:String, val documentation: String) {
-  val parameters:Buffer[Parameter] = new ArrayBuffer[Parameter];
-  val interfaces:Buffer[String] = new ArrayBuffer[String];
-  val methods:Buffer[Method] = new ArrayBuffer[Method];
+  val parameters: Buffer[Parameter] = new ArrayBuffer[Parameter];
+  val interfaces: Buffer[String] = new ArrayBuffer[String];
+  val methods: Buffer[Method] = new ArrayBuffer[Method];
+  val unittests: Buffer[Method] = new ArrayBuffer[Method];
   val modifiers:Buffer[Modifier.Value] = new ArrayBuffer[Modifier.Value];
 
   def findMethod(methodName: String): Method = {

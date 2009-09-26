@@ -36,19 +36,13 @@ scope Block {
   import scala.collection.mutable.ArrayBuffer;
 }
 
-@rulecatch {
-  catch (RecognitionException e) {
-  // TODO: print the line, and show a carot underneath the position of the error
-    reportError(e);
-    throw(e);
-  }
-}
-
 @members {
   Stack paraphrases = new Stack();
-
+  public boolean hadErrors = false;
+  
   @Override
   public String getErrorMessage(RecognitionException e, String[] tokenNames) {
+    hadErrors = true;
     String msg = super.getErrorMessage(e, tokenNames);
     if ( paraphrases.size()>0 ) {
       String paraphrase = (String)paraphrases.peek();
@@ -88,7 +82,7 @@ file returns [File file = new File()]
   @init { $SourceFile::file = $file;
           paraphrases.push("at top-level in file"); }
   @after { paraphrases.pop(); }
-  :	 namespaceDeclaration? importDeclaration* classDeclaration
+  :	 namespaceDeclaration? importDeclaration* (classDeclaration | test)
   ;
 
 namespaceDeclaration
@@ -115,15 +109,20 @@ classDeclaration
 @init {
 	paraphrases.push("in class definition");
 	Buffer<Method> methodCollector = new ArrayBuffer<Method>();
+	Buffer<Method> unittestCollector = new ArrayBuffer<Method>();
 	Buffer<String> interfaceCollector = new ArrayBuffer<String>();
 }
 @after {
   paraphrases.pop();
 }
-	:	^(CLASS m=modifiers? t=TypeIdentifier p=parameters? typeSpecifier[interfaceCollector]* classBlock[methodCollector]? d=doc?)
+	:	^(CLASS m=modifiers? t=TypeIdentifier p=parameters? 
+	          typeSpecifier[interfaceCollector]* 
+	          classBlock[methodCollector, unittestCollector]? 
+	          d=doc?)
 	{
 	ClassDefinition classDef = new ClassDefinition($t.text, $d.doc);
 	classDef.methods().\$plus\$plus\$eq(methodCollector);
+	classDef.unittests().\$plus\$plus\$eq(unittestCollector);
 	classDef.interfaces().\$plus\$plus\$eq(interfaceCollector);
 	if ($p.parameters != null) {
 	  classDef.parameters().\$plus\$plus\$eq($p.parameters);
@@ -164,8 +163,23 @@ modifier [Buffer<Enumeration.Value> mods]
 	{ mods.\$plus\$eq(Modifier.valueOf($m.text).get()); }
 	;
 
-classBlock [Buffer<Method> methods]
-	:	(identifierDeclaration | methodDeclaration[methods])+
+test
+@init {
+  Buffer<Method> unittestCollector = new ArrayBuffer<Method>();
+}
+	:	^(TEST StringLiteral statement* test? unittest[unittestCollector]?)
+	{}
+	;
+	
+unittest [Buffer<Method> unittests]
+	:	^(UNITTEST name=StringLiteral b=block)
+	{ Method method = new Method(stripQuotes($name.text), "Void", $b.block, stripQuotes($name.text));
+	  $unittests.\$plus\$eq(method);
+	}
+	;
+
+classBlock [Buffer<Method> methods, Buffer<Method> unittests]
+	:	(identifierDeclaration | methodDeclaration[methods] | unittest[unittests])+
 	;
 
 methodDeclaration [Buffer<Method> methods]
