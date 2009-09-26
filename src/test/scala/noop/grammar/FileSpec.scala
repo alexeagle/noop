@@ -16,7 +16,6 @@
 
 package noop.grammar
 
-import org.antlr.runtime.RecognitionException
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
 
@@ -24,10 +23,14 @@ class FileSpec extends Spec with ShouldMatchers {
   val parser = new Parser();
 
   describe("parser") {
+    it("should allow the word 'test' as a package name") {
+      // TODO(alexeagle)
+    }
+
     it("should parse namespace declaration") {
-      val source = "namespace noop.test; class Foo() {}";
+      val source = "namespace noop.demo; class Foo() {}";
       parser.parseFile(source).toStringTree() should equal (
-        "(namespace noop test) (CLASS Foo)");
+        "(namespace noop demo) (CLASS Foo)");
     }
 
     it("should allow import in default namespace") {
@@ -37,14 +40,14 @@ class FileSpec extends Spec with ShouldMatchers {
     }
 
     it("should parse import statements") {
-      val source = "import noop.test.Test; class Foo() {}";
+      val source = "import noop.demo.Test; class Foo() {}";
       parser.parseFile(source).toStringTree() should equal (
-        "(import noop test Test) (CLASS Foo)");
+        "(import noop demo Test) (CLASS Foo)");
     }
 
     it("should not allow import without a type on the end") {
-      val source = "import noop.test;";
-      intercept[RecognitionException] {
+      val source = "import noop.demo;";
+      intercept[ParseException] {
         parser.parseFile(source);
       }
     }
@@ -73,8 +76,9 @@ class FileSpec extends Spec with ShouldMatchers {
 
     it ("should not allow extra stuff after the class definition") {
       val source = "class Foo() {} extra stuff";
-      // TODO(alexeagle)
-      // intercept[RecognitionException] (parser.parseFile(source));
+      //intercept[ParseException] {
+      //  parser.parseFile(source);
+      //}
     }
   }
 }

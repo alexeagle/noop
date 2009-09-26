@@ -32,36 +32,55 @@ import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.CommonTreeNodeStream;
 
 class Parser() {
-  def buildParser(input: ANTLRStringStream): NoopParser = {
-    return new NoopParser(new CommonTokenStream(new NoopLexer(input)));
+  def buildParser(input: ANTLRStringStream): (NoopLexer, NoopParser) = {
+    val lexer = new NoopLexer(input);
+    return (lexer, new NoopParser(new CommonTokenStream(lexer)));
   }
 
-  def buildDocParser(input: ANTLRStringStream): DocParser = {
-    return new DocParser(new CommonTokenStream(new DocLexer(input)));
+  def buildDocParser(input: ANTLRStringStream): (DocLexer, DocParser) = {
+    val lexer = new DocLexer(input);
+    return (lexer, new DocParser(new CommonTokenStream(lexer)));
   }
 
   def parseFile(source: InputStream): CommonTree = {
-    val file = buildParser(new ANTLRInputStream(source)).file();
-    return file.getTree().asInstanceOf[CommonTree];
+    val (lexer, parser) = buildParser(new ANTLRInputStream(source));
+    return parseFile(lexer, parser);
   }
 
   def parseFile(source: String): CommonTree = {
-    val file = buildParser(new ANTLRStringStream(source)).file();
+    val (lexer, parser) = buildParser(new ANTLRStringStream(source));
+    return parseFile(lexer, parser);
+  }
+
+  def parseFile(lexer: NoopLexer, parser: NoopParser): CommonTree = {
+    val file = parser.file();
+    if (parser.hadErrors || lexer.hadErrors) {
+      throw new ParseException("Source failed to parse");
+    }
     return file.getTree().asInstanceOf[CommonTree];
   }
 
   def parseInterpretable(source: String): CommonTree = {
-    val interpretable = buildParser(new ANTLRStringStream(source)).interpretable();
+    val (lexer, parser) = buildParser(new ANTLRStringStream(source));
+    val interpretable = parser.interpretable();
+    if (parser.hadErrors || lexer.hadErrors) {
+      throw new ParseException("Source failed to parse");
+    }
     return interpretable.getTree().asInstanceOf[CommonTree];
   }
 
   def parseBlock(source: String): CommonTree = {
-    val block = buildParser(new ANTLRStringStream(source)).block();
+    val (lexer, parser) = buildParser(new ANTLRStringStream(source));
+    val block = parser.block();
+    if (parser.hadErrors || lexer.hadErrors) {
+      throw new ParseException("Source failed to parse");
+    }
     return block.getTree().asInstanceOf[CommonTree];
   }
 
   def parseDoc(source: String): CommonTree = {
-    val doc = buildDocParser(new ANTLRStringStream(source)).doc();
+    val (lexer, parser) = buildDocParser(new ANTLRStringStream(source));
+    val doc = parser.doc();
     return doc.getTree().asInstanceOf[CommonTree];
   }
 
@@ -69,11 +88,6 @@ class Parser() {
     return new NoopAST(new CommonTreeNodeStream(ast));
   }
 
-  def file(source: String): File = {
-    return buildTreeParser(parseFile(source)).file();
-  }
-
-  def file(source: InputStream): File = {
-    return buildTreeParser(parseFile(source)).file();
-  }
+  def file(source: String) = buildTreeParser(parseFile(source)).file();
+  def file(source: InputStream) = buildTreeParser(parseFile(source)).file();
 }

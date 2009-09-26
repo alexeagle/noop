@@ -16,8 +16,7 @@
 
 package noop.grammar
 
-import model.{AssignmentExpression, IdentifierDeclarationExpression, IntLiteralExpression, Modifier}
-import org.antlr.runtime.RecognitionException
+import model.{IdentifierDeclarationExpression, Modifier}
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
 

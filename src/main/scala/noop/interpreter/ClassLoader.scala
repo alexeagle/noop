@@ -16,12 +16,12 @@
 
 package noop.interpreter;
 
+import grammar.{ParseException, Parser}
 import scala.collection.mutable.Map;
 
 import java.io.{FileInputStream, File};
-import noop.grammar.Parser;
+
 import noop.model.ClassDefinition;
-import org.antlr.runtime.RecognitionException;
 
 /**
  * @author jeremiele@google.com (Jeremie Lenfant-Engelmann)
@@ -34,9 +34,8 @@ class ClassLoader(parser: Parser, srcPaths: List[String]) {
     try {
       return parser.file(new FileInputStream(file)).classDef;
     } catch {
-      // ANTLR will print a message about what failed to parse.
-      case ex: RecognitionException =>
-          throw new RuntimeException("Failed to parse " + file.getAbsolutePath());
+      case ex: ParseException =>
+          throw new ParseException("Failed to parse " + file.getAbsolutePath());
     }
   }
 
