@@ -210,8 +210,12 @@ whileLoop
 	;
 
 expression
-	: additiveExpression ('='^ expression)?
+	: assertionExpression ('='^ expression)?
 	;
+	
+assertionExpression
+	:	additiveExpression 'should'^ additiveExpression
+	;	
 	
 additiveExpression
 	:	multiplicativeExpression ( ('+' | '-')^ multiplicativeExpression )*
