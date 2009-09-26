@@ -16,7 +16,6 @@
 
 package noop.grammar
 
-import org.antlr.runtime.RecognitionException
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
 
@@ -42,7 +41,7 @@ class InterfaceSpec extends Spec with ShouldMatchers {
 
     it("should not parse an interface with a method having a body") {
       val source = "interface MyInterface { Int helloWorld() { Int i = 0; }  }";
-      intercept[RecognitionException] {
+      intercept[ParseException] {
     	  parser.parseFile(source);
       }
     }

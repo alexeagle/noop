@@ -34,6 +34,8 @@ tokens {
   WHILE;
   FOREACH;
   FOR;
+  TEST;
+  UNITTEST;
 }
 
 @header {
@@ -44,17 +46,23 @@ tokens {
   package noop.grammar.antlr;
 }
 
-@lexer::rulecatch {
-  catch (RecognitionException e) {
-    reportError(e);
-    throw new RuntimeException(e);
+@members { 
+  public boolean hadErrors = false;
+  
+  @Override
+  public String getErrorMessage(RecognitionException e, String[] tokenNames) {
+    hadErrors = true;
+    return super.getErrorMessage(e, tokenNames);
   }
 }
 
-@rulecatch {
-  catch (RecognitionException e) {
-    reportError(e);
-    throw e;
+@lexer::members {
+  public boolean hadErrors = false;
+  
+  @Override
+  public String getErrorMessage(RecognitionException e, String[] tokenNames) {
+    hadErrors = true;
+    return super.getErrorMessage(e, tokenNames);
   }
 }
 
@@ -66,7 +74,7 @@ interpretable
 	;
 
 file
-	:	namespaceDeclaration? importDeclaration* (classDeclaration | interfaceDeclaration)
+	:	namespaceDeclaration? importDeclaration* (classDeclaration | interfaceDeclaration | test)
 	;
 
 namespaceDeclaration
@@ -140,11 +148,21 @@ modifier
 	;
 
 classBlock
-	:	'{'!  (identifierDeclaration ';'!)* methodDeclaration* '}'!
+	:	'{'!  (identifierDeclaration ';'!)* methodDeclaration* unittest* '}'!
 	;
 
 interfaceBlock
   : '{'! methodDefinition* '}'!
+	;
+
+test
+	: 'test' StringLiteral '{' (statement* | block | test | unittest) '}'
+	-> ^(TEST StringLiteral statement* block? test? unittest?)
+	;
+
+unittest
+	: 'unittest' StringLiteral '{' (statement* | block) '}'
+	-> ^(UNITTEST StringLiteral statement* block?)
 	;
 
 methodSignature

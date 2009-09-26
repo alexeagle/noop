@@ -17,7 +17,6 @@
 package noop.grammar
 
 import model.{BooleanLiteralExpression, IdentifierDeclarationExpression}
-import org.antlr.runtime.RecognitionException
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
 
@@ -46,7 +45,7 @@ class LiteralsSpec extends Spec with ShouldMatchers {
     it("should not allow a single-double-quoted string to span lines") {
       val source = """{ a = "Line 1
       "; }""";
-      intercept[RecognitionException] (parser.parseBlock(source));
+      intercept[ParseException] (parser.parseBlock(source));
     }
 
     it("should parse boolean literals") {

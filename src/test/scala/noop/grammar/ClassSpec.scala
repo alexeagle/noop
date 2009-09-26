@@ -16,7 +16,6 @@
 
 package noop.grammar
 
-import org.antlr.runtime.RecognitionException
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
 import noop.model.Modifier
@@ -27,7 +26,7 @@ class ClassSpec extends Spec with ShouldMatchers {
   describe("parser") {
     it("should fail to parse a class with no parenthesis") {
       val source = "class Bar {}";
-      intercept[RecognitionException] {
+      intercept[ParseException] {
         parser.parseFile(source);
       }
     }
