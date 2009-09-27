@@ -16,7 +16,8 @@
 
 package noop.interpreter;
 
-import grammar.Parser;
+
+import grammar.{ParseException, Parser}
 import java.io.{PrintWriter, BufferedWriter, FileWriter, File};
 import org.scalatest.Spec;
 import org.scalatest.matchers.ShouldMatchers;
@@ -87,6 +88,7 @@ class ClassLoaderSpec extends Spec with ShouldMatchers {
 
     // Actually, it might be annoying that changes to the source aren't seen?
     // it("should not parse the source file more than once") {
+    // TODO(jeremie)
     // }
 
   }

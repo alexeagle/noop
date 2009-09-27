@@ -88,6 +88,15 @@ class Parser() {
     return new NoopAST(new CommonTreeNodeStream(ast));
   }
 
-  def file(source: String): File = buildTreeParser(parseFile(source)).file();
-  def file(source: InputStream): File = buildTreeParser(parseFile(source)).file();
+  def file(ast: CommonTree): File = {
+    val treeParser = buildTreeParser(ast);
+    val file = treeParser.file();
+    if (treeParser.hadErrors) {
+      throw new ParseException("Syntax errors");
+    }
+    return file;
+  }
+
+  def file(source: String): File = file(parseFile(source));
+  def file(source: InputStream): File = file(parseFile(source));
 }
