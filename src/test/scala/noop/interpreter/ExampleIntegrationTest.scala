@@ -51,6 +51,7 @@ class ExampleIntegrationTest extends Spec with ShouldMatchers {
     withRedirectedStandardOut { (output) => {
       val classLoader = createFixture;
       val mainClass = classLoader.findClass("HelloWorld");
+      mainClass should not be(null);
       new Interpreter(classLoader).runApplication(mainClass);
       output.toString() should include("Hello World!");
     }}
