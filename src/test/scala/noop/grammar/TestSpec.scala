@@ -63,8 +63,10 @@ class TestSpec extends Spec with ShouldMatchers {
 
   describe("the testing DSL") {
     it("should have a 'should' operator") {
-      val source = "{ 1 should 1; }";
-      parser.parseBlock(source).toStringTree() should be("(should 1 1)");
+      val source = "{ 1 should equal(1); }";
+      parser.parseBlock(source).toStringTree() should be("(should 1 equal (ARGS 1))");
+      val statement = parser.buildTreeParser(parser.parseBlock(source)).block().statements(0);
+      
     }
   }
 }

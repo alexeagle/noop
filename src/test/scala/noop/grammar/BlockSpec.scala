@@ -65,7 +65,22 @@ class BlockSpec extends Spec with ShouldMatchers {
       deref2.right.asInstanceOf[IdentifierExpression].identifier should be("c");
     }
 
-    it("should allow calling a method") {
+    it("should allow a method call on implicit 'this'") {
+      val source = "{ a(); }";
+      val blockAst = parser.parseBlock(source);
+
+      blockAst.toStringTree() should be ("a ARGS");
+      val block = parser.buildTreeParser(blockAst).block();
+      block.statements.size should be(1);
+      block.statements(0).getClass() should be(classOf[MethodInvocationExpression]);
+      val methodInvocation = block.statements(0).asInstanceOf[MethodInvocationExpression];      
+      methodInvocation.left.getClass() should be(classOf[IdentifierExpression]);
+      methodInvocation.left.asInstanceOf[IdentifierExpression].identifier should be("this");
+      methodInvocation.name should be("a");
+      methodInvocation.arguments should be ('empty);
+    }
+
+    it("should allow calling a method on an identifier") {
       val source = "{ a.b(); }";
       val blockAst = parser.parseBlock(source);
 

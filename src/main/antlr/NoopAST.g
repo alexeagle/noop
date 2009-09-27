@@ -241,20 +241,26 @@ assignment returns [Expression exp]
 	;
 
 expression returns [Expression exp]
-  :	p=primary
-  { $exp = $p.exp; }
+  :	l=literal
+  { $exp = $l.exp; }
   |	d=dereference
   { $exp = $d.exp; }
   | o=operatorExpression
   { $exp = $o.exp; }
-  | a=assignment
-  { $exp = $a.exp; }
-  | v=VariableIdentifier
-  { $exp = new IdentifierExpression($v.text); }
+  | ass=assignment
+  { $exp = $ass.exp; }
+  | right=VariableIdentifier a=arguments?
+  { Expression left = new IdentifierExpression("this");
+    if ($a.args != null) {
+	    $exp = new MethodInvocationExpression(left, $right.text, $a.args);
+	  } else {
+	    $exp = new IdentifierExpression($right.text);
+	  }
+  }
   ;
   
 operatorExpression returns [Expression exp]
-	: ^(op=('+'|'-'|'*'|'/'|'%') left=expression right=expression)
+	: ^(op=('+'|'-'|'*'|'/'|'%'|'should') left=expression right=expression)
 	{ $exp = new OperatorExpression($left.exp, $op.text, $right.exp); }
 	;
 
@@ -281,7 +287,7 @@ argument[Buffer<Expression> args]
   }
 	;
 
-primary returns [Expression exp]
+literal returns [Expression exp]
 	: i=INT
 	{ $exp = new IntLiteralExpression(Integer.valueOf($i.text)); }
 	| s=StringLiteral
