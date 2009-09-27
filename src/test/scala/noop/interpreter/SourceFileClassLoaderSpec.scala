@@ -17,8 +17,10 @@
 package noop.interpreter;
 
 
+import collection.mutable.ArrayBuffer
 import grammar.{ParseException, Parser}
-import java.io.{PrintWriter, BufferedWriter, FileWriter, File};
+import java.io.{PrintWriter, BufferedWriter, FileWriter, File}
+import model.ClassDefinition;
 import org.scalatest.Spec;
 import org.scalatest.matchers.ShouldMatchers;
 
@@ -91,5 +93,22 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
     // TODO(jeremie)
     // }
 
+    it("should find all classes in the srcPaths when asked to search") {
+      val srcPath = new File(tmpDir, "search");
+      val dir = new File(srcPath, "package");
+      dir.mkdirs();
+      val source = new File(dir, "Foo.noop");
+      source.deleteOnExit();
+      val printWriter = new PrintWriter(new FileWriter(source))
+      printWriter.println("class Foo() {}");
+      printWriter.close();
+
+      val classLoader = new SourceFileClassLoader(new Parser(), List(srcPath.getAbsolutePath));
+
+      val classesFound = new ArrayBuffer[ClassDefinition];
+      classLoader.eachClass((c:ClassDefinition) => classesFound += c);
+      classesFound should have length(1);
+      classesFound(0).name should be("Foo");
+    }
   }
 }

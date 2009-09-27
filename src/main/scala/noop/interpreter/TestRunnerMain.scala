@@ -11,6 +11,6 @@ object TestRunnerMain {
   def main(args: Array[String]) {
     val classLoader = new SourceFileClassLoader(new Parser(), args.toList);
 
-    new TestRunner(classLoader).runTests();
+    new TestRunner(classLoader, classLoader).runTests();
   }
 }

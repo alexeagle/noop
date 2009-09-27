@@ -16,9 +16,10 @@
 
 package noop.model
 
-import interpreter.MockContext
+import interpreter.{Frame, MockContext}
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.Spec
+import types.NoopObject
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -64,6 +65,19 @@ class MethodInvocationExpressionSpec extends Spec with ShouldMatchers with MockC
 
     it("should throw an exception if an argument expression returns no value") {
 
+    }
+
+    it("should be aware of the 'this' identifier and dispatch the method on thisRef") {
+      val context = fixture;
+      val thisRef: NoopObject = new StringLiteralExpression("hello").evaluate(context) match {
+        case Some(ref) => ref;
+        case _ => throw new RuntimeException();
+      }
+      context.stack.push(new Frame(thisRef, null));
+      val target = new IdentifierExpression("this");
+      val expr = new MethodInvocationExpression(target, "length", List());
+
+      expr.evaluate(context);
     }
   }
 }

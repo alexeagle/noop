@@ -26,11 +26,16 @@ class IdentifierExpression(val identifier: String) extends Expression {
 
   def evaluate(c: Context): Option[NoopObject] = {
     val currentFrame = c.stack.top;
-    if (currentFrame.identifiers.contains(identifier)) {
+    if (identifier == "this") {
+      return Some(currentFrame.thisRef);
+    } else if (currentFrame.identifiers.contains(identifier)) {
       return Some(currentFrame.identifiers(identifier)._2);
     } else if (currentFrame.thisRef.parameterInstances.contains(identifier)) {
       return Some(currentFrame.thisRef.parameterInstances(identifier));
     }
     return None;
   }
+
+  override def toString() = identifier;
+
 }
