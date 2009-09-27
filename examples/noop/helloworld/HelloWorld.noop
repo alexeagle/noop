@@ -9,7 +9,7 @@ class HelloWorld(Console console) implements Application {
   }
 
   unittest "Should print Hello World!" {
-    // Int result = main(List());
+    Int result = main(List());
     result should equal(0);
   }
 }

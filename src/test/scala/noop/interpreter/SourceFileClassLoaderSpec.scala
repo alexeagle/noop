@@ -22,13 +22,13 @@ import java.io.{PrintWriter, BufferedWriter, FileWriter, File};
 import org.scalatest.Spec;
 import org.scalatest.matchers.ShouldMatchers;
 
-class ClassLoaderSpec extends Spec with ShouldMatchers {
+class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
   val tmpDir = new File(System.getProperty("java.io.tmpdir"));
 
   describe("classloader") {
     it("should throw an exception if given a non-existent directory") {
       val srcPaths = List("doesNotExist");
-      val classLoader = new ClassLoader(new Parser(), srcPaths);
+      val classLoader = new SourceFileClassLoader(new Parser(), srcPaths);
       intercept[RuntimeException] {
         classLoader.findClass("Foo");
       }
@@ -41,7 +41,7 @@ class ClassLoaderSpec extends Spec with ShouldMatchers {
       printWriter.close();
 
       val srcPaths = List(tmpDir.getAbsolutePath());
-      val classLoader = new ClassLoader(new Parser(), srcPaths);
+      val classLoader = new SourceFileClassLoader(new Parser(), srcPaths);
       val classDef = classLoader.findClass("MyClass")
 
       classDef.name should equal("MyClass")
@@ -56,7 +56,7 @@ class ClassLoaderSpec extends Spec with ShouldMatchers {
       printWriter.close();
 
       val srcPaths = List(tmpDir.getAbsolutePath());
-      val classLoader = new ClassLoader(new Parser(), srcPaths);
+      val classLoader = new SourceFileClassLoader(new Parser(), srcPaths);
       val classDef = classLoader.findClass("noop.Foo")
 
       classDef.name should equal("Foo")
@@ -72,7 +72,7 @@ class ClassLoaderSpec extends Spec with ShouldMatchers {
       printWriter.close();
 
       val srcPaths = List(tmpDir.getAbsolutePath());
-      val classLoader = new ClassLoader(new Parser(), srcPaths);
+      val classLoader = new SourceFileClassLoader(new Parser(), srcPaths);
       val classDef = classLoader.findClass("noop.package.Foo")
 
       classDef.name should equal("Foo")
@@ -80,7 +80,7 @@ class ClassLoaderSpec extends Spec with ShouldMatchers {
 
     it("should throw ClassNotFound if the class doesn't exist") {
       val srcPaths = List(tmpDir.getAbsolutePath());
-      val classLoader = new ClassLoader(new Parser(), srcPaths);
+      val classLoader = new SourceFileClassLoader(new Parser(), srcPaths);
       intercept[ClassNotFoundException] {
         classLoader.findClass("Foo");
       }

@@ -17,10 +17,11 @@
 package noop.types
 
 import grammar.Parser
+import interpreter.SourceFileClassLoader
 import java.io.File
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.Spec
-import interpreter.ClassLoader
+import interpreter.SourceFileClassLoader
 
 /**
  * @author gabrielh@gmail.com (Gabriel Handford)
@@ -29,7 +30,7 @@ import interpreter.ClassLoader
 class NoopObjectSpec extends Spec with ShouldMatchers {
   def createFixture = {
     val stdlibSourcePath = new File(getClass().getResource("/stdlib").toURI).getAbsolutePath();
-    new ClassLoader(new Parser(), List(stdlibSourcePath))
+    new SourceFileClassLoader(new Parser(), List(stdlibSourcePath))
   }
 
   describe("a Noop Object") {

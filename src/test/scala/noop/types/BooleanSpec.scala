@@ -18,7 +18,7 @@ package noop.types
 
 import collection.mutable.Stack
 import grammar.Parser
-import interpreter.{Frame, Context, ClassLoader}
+import interpreter.{Frame, Context, SourceFileClassLoader}
 import java.io.File
 import model.Modifier
 import org.scalatest.matchers.ShouldMatchers
@@ -30,7 +30,7 @@ import org.scalatest.Spec
 class BooleanSpec extends Spec with ShouldMatchers {
   def createFixture = {
     val stdlibSourcePath = new File(getClass().getResource("/stdlib").toURI).getAbsolutePath();
-    new ClassLoader(new Parser(), List(stdlibSourcePath))
+    new SourceFileClassLoader(new Parser(), List(stdlibSourcePath))
   }
 
   describe("a Noop Boolean") {

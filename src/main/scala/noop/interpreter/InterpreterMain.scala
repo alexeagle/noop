@@ -31,7 +31,7 @@ object InterpreterMain {
       System.exit(1);
     }
     //TODO: guice? other injector?
-    val classLoader = new ClassLoader(new Parser(), args.toList.tail);
+    val classLoader = new SourceFileClassLoader(new Parser(), args.toList.tail);
     val mainClass = classLoader.findClass(args(0));
 
     new Interpreter(classLoader).runApplication(mainClass);

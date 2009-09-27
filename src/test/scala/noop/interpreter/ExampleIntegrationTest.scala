@@ -33,7 +33,7 @@ class ExampleIntegrationTest extends Spec with ShouldMatchers {
         new File(getClass().getResource("/controlFlow").toURI).getAbsolutePath(),
         new File(getClass().getResource("/arithmetic").toURI).getAbsolutePath(),
         new File(getClass().getResource("/stdlib").toURI).getAbsolutePath());
-    new ClassLoader(new Parser(), sourcePaths);
+    new SourceFileClassLoader(new Parser(), sourcePaths);
   }
 
   def withRedirectedStandardOut(testFunction: ByteArrayOutputStream => Unit) {
