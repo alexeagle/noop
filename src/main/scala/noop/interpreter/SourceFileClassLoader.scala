@@ -77,7 +77,7 @@ class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends Clas
     for(file <- dir.listFiles()) {
       if (file.isDirectory()) {
         eachClassInPath(file, f);
-      } else {
+      } else if (file.getName().endsWith(".noop")) {
         f.apply(getClassDefinition(file));
       }
     }
