@@ -249,7 +249,7 @@ expression returns [Expression exp]
   { $exp = $o.exp; }
   | ass=assignment
   { $exp = $ass.exp; }
-  | right=VariableIdentifier a=arguments?
+  | right=(VariableIdentifier|TypeIdentifier) a=arguments?
   { Expression left = new IdentifierExpression("this");
     if ($a.args != null) {
 	    $exp = new MethodInvocationExpression(left, $right.text, $a.args);

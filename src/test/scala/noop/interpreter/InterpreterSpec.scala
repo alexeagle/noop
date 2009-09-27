@@ -27,7 +27,7 @@ import types.NoopInteger
 class InterpreterSpec extends Spec with ShouldMatchers {
   def createFixture = {
     val stdLibSourcePath = new File(getClass().getResource("/stdlib").toURI).getAbsolutePath();
-    val classLoader = new ClassLoader(new Parser(), List(stdLibSourcePath));
+    val classLoader = new SourceFileClassLoader(new Parser(), List(stdLibSourcePath));
     val context = new Context(new Stack[Frame], classLoader);
     (classLoader, context);
   }
