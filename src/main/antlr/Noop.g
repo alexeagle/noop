@@ -86,24 +86,8 @@ importDeclaration
 	;
 
 ifExpression
-  : 'if' '(' conditionalExpression ')' block* ('else' block*)?
-  -> ^(IF conditionalExpression* block*)
-  ;
-
-conditionalExpression
-  : (conditionalOrExpression | conditionalAndExpression)+
-  ;
-
-conditionalOrExpression
-  : conditionalAndExpression ('||'^ conditionalAndExpression)*
-  ;
-
-conditionalAndExpression
-  : finalConditionalExpression ('&&'^ finalConditionalExpression)*
-  ;
-
-finalConditionalExpression
-  : expression ('==' | '!=' | '>' | '<' | '>=' | '<=')^ expression
+  : 'if' '(' expression ')' block* ('else' block*)?
+  -> ^(IF expression* block*)
   ;
 
 methodDeclaration
@@ -223,8 +207,24 @@ additiveExpression
 	;
 
 multiplicativeExpression
-	:	primary ( ( '*' | '/' | '%' )^ primary )*
+	:	conditionalExpression ( ( '*' | '/' | '%' )^ conditionalExpression )*
 	;	
+
+conditionalExpression
+  : (conditionalOrExpression | conditionalAndExpression)+
+  ;
+
+conditionalOrExpression
+  : conditionalAndExpression ('||'^ conditionalAndExpression)*
+  ;
+
+conditionalAndExpression
+  : finalConditionalExpression ('&&'^ finalConditionalExpression)*
+  ;
+
+finalConditionalExpression
+  : primary (('==' | '!=' | '>' | '<' | '>=' | '<=')^ primary)*
+  ;
 
 primary
 	:	'('! expression ')'!

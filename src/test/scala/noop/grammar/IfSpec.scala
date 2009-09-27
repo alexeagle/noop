@@ -86,5 +86,12 @@ class IfSpec extends Spec with ShouldMatchers {
 
       ifBlock.toStringTree() should be("(IF (<= 1 3))");
     }
+
+    it("should parse regular expression") {
+      val source = "{ boolean b = false; if (b = true) {} }";
+      val ifBlock = parser.parseBlock(source);
+
+      ifBlock.toStringTree() should be("(= boolean b false) (IF (= b true))");
+    }
   }
 }
