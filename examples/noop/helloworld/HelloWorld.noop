@@ -7,4 +7,8 @@ class HelloWorld(Console console) implements Application {
     console.println("Hello World!");
     return 0;
   }
+
+  unittest "Should print Hello World!" {
+    1 should equal(1);
+  }
 }

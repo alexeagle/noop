@@ -195,6 +195,11 @@ statement
 	| 'return'^ expression ';'!
 	| expression ';'!
 	| ifExpression
+	| shouldStatement ';'!
+	;
+	
+shouldStatement
+	:	expression 'should'^ expression
 	;
 
 forLoop
@@ -210,12 +215,8 @@ whileLoop
 	;
 
 expression
-	: assertionExpression ('='^ expression)?
+	: additiveExpression ('='^ expression)?
 	;
-	
-assertionExpression
-	:	additiveExpression 'should'^ additiveExpression
-	;	
 	
 additiveExpression
 	:	multiplicativeExpression ( ('+' | '-')^ multiplicativeExpression )*
@@ -227,7 +228,7 @@ multiplicativeExpression
 
 primary
 	:	'('! expression ')'!
-	| (VariableIdentifier|TypeIdentifier|literal) ('.'^ (VariableIdentifier|TypeIdentifier) arguments?)*
+	| (VariableIdentifier|TypeIdentifier|literal) (arguments | ('.'^ (VariableIdentifier|TypeIdentifier) arguments?)*)
 	;
 
 arguments
