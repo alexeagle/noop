@@ -41,8 +41,8 @@ build:
       configuration:
         failIfNoTests: true
 pluginRepositories:
-  - { id: scala-tools.org, name: Scala-tools Maven2 Repository, url: "http:#scala-tools.org/repo-releases" }
-  - { id: twdata-m2-repository, name: twdata.org Maven 2 Repository, url: "http:#twdata-m2-repository.googlecode.com/svn/" }
+  - { id: scala-tools.org, name: Scala-tools Maven2 Repository, url: "http://scala-tools.org/repo-releases" }
+  - { id: twdata-m2-repository, name: twdata.org Maven 2 Repository, url: "http://twdata-m2-repository.googlecode.com/svn/" }
 repositories:
-  - { id: scala-tools.org, name: Scala-tools Maven2 Repository, url: "http:#scala-tools.org/repo-releases" }
-  - { id: scala-tools.org-snap, name: Scala-tools Snapshots, url: "http:#www.scala-tools.org/repo-snapshots" }
+  - { id: scala-tools.org, name: Scala-tools Maven2 Repository, url: "http://scala-tools.org/repo-releases" }
+  - { id: scala-tools.org-snap, name: Scala-tools Snapshots, url: "http://www.scala-tools.org/repo-snapshots" }
