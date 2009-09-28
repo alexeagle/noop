@@ -211,8 +211,15 @@ statement
 	| w=whileStatement
 	{ $Block::block.statements().\$plus\$eq($w.exp); }
 	| identifierDeclaration
+	| should=shouldStatement
+	{ $Block::block.statements().\$plus\$eq($should.exp); }
 	| exp=expression
 	{ $Block::block.statements().\$plus\$eq($exp.exp); }
+	;
+
+shouldStatement returns [Expression exp]
+	:	^('should' left=expression right=expression)
+	{ $exp = new ShouldExpression($left.exp, $right.exp); }
 	;
 
 whileStatement returns [Expression exp]
@@ -260,7 +267,7 @@ expression returns [Expression exp]
   ;
   
 operatorExpression returns [Expression exp]
-	: ^(op=('+'|'-'|'*'|'/'|'%'|'should') left=expression right=expression)
+	: ^(op=('+'|'-'|'*'|'/'|'%') left=expression right=expression)
 	{ $exp = new OperatorExpression($left.exp, $op.text, $right.exp); }
 	;
 

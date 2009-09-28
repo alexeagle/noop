@@ -1,6 +1,7 @@
 package noop.grammar
 
 
+import model.ShouldExpression
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.Spec
 
@@ -52,7 +53,7 @@ class TestSpec extends Spec with ShouldMatchers {
       parser.parseFile(source).toStringTree() should equal(
           "(TEST \"testing 123\" (TEST \"it should work\"))");
     }
-    
+
     it("should not allow a unittest block in a unittest block") {
       val source = "unittest \"testing 123\" { unittest \"it should work\" {} }";
       intercept[ParseException] (
@@ -66,7 +67,7 @@ class TestSpec extends Spec with ShouldMatchers {
       val source = "{ 1 should equal(1); }";
       parser.parseBlock(source).toStringTree() should be("(should 1 equal (ARGS 1))");
       val statement = parser.buildTreeParser(parser.parseBlock(source)).block().statements(0);
-      
+      statement.getClass() should be(classOf[ShouldExpression]);
     }
   }
 }
