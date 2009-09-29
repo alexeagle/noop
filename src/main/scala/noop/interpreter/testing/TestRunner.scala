@@ -1,8 +1,8 @@
-package noop.interpreter
-
+package noop.interpreter.testing
 
 import collection.mutable.{Stack, ArrayBuffer, Buffer}
 import model.{MethodInvocationExpression, EvaluatedExpression, StringLiteralExpression, Method, ClassDefinition}
+
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
