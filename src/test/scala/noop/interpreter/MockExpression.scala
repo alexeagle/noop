@@ -23,10 +23,15 @@ import types.NoopObject
  * @author alexeagle@google.com (Alex Eagle)
  */
 
-class MockExpression extends Expression {
+class MockExpression(evalCallback: Context => Unit) extends Expression {
   var timesCalled: Int = 0;
 
+  def this() = this(null);
+
   def evaluate(c: Context): Option[NoopObject] = {
+    if (evalCallback != null) {
+      evalCallback.apply(c);
+    }
     timesCalled += 1;
     return None;
   }

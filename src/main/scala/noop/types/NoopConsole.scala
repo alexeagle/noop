@@ -26,7 +26,7 @@ class NoopConsole(classDef: ClassDefinition, parameterInstances: Map[String, Noo
 
   def println(c: Context): Option[NoopObject] = {
     val toPrint = c.stack.top.identifiers("s")._2;
-    val toString = new MethodInvocationExpression(new EvaluatedExpression(toPrint), "toString", Nil).evaluate(c) match {
+    val toString = new MethodInvocationExpression(new EvaluatedExpression(Some(toPrint)), "toString", Nil).evaluate(c) match {
       case Some(str) => str.asInstanceOf[NoopString]
       case None => throw new RuntimeException("Internal error: toString of " + toPrint + " returned Void");
     }
