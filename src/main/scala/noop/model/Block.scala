@@ -28,7 +28,10 @@ class Block extends Expression {
 
   def evaluate(c: Context): Option[NoopObject] = {
     for (s <- statements) {
-      s.evaluate(c);
+      val result = s.evaluate(c);
+      if (s.isInstanceOf[ReturnExpression]) {
+        return result;
+      }
     }
     return None;
   };

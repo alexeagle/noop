@@ -25,5 +25,5 @@ import interpreter.Context
 
 class ReturnExpression(val expr: Expression) extends Expression {
 
-  def evaluate(c: Context) = None
+  def evaluate(c: Context) = expr.evaluate(c);
 }
