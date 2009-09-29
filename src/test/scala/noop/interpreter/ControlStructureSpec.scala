@@ -16,11 +16,10 @@
 
 package noop.interpreter
 
-import model.{Expression, Block, BooleanLiteralExpression, WhileLoop}
+import model.{StringLiteralExpression, ReturnExpression, Expression, Block, BooleanLiteralExpression, WhileLoop}
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.Spec
-import types.NoopObject
-
+import types.{NoopString, NoopObject}
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
@@ -66,6 +65,23 @@ class ControlStructureSpec extends Spec with ShouldMatchers with MockContext {
       val whileLoop = new WhileLoop(new TrueThenFalseExpression(3), block);
       whileLoop.evaluate(context);
       expression.timesCalled should be(3);
+    }
+  }
+
+  describe("the return statement") {
+    it("should exit the current block and return the supplied value") {
+      val context = fixture;
+      val block:Block = new Block();
+      val returnMe = new ReturnExpression(new StringLiteralExpression("to return"));
+      block.statements += returnMe;
+      val dontRunMe = new MockExpression((c: Context) => fail());
+      block.statements += dontRunMe;
+      val result: NoopObject = block.evaluate(context) match {
+        case Some(p) => p;
+        case None => fail();
+      };
+      result.getClass() should be(classOf[NoopString]);
+      result.asInstanceOf[NoopString].value should be("to return");
     }
   }
 }
