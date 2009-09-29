@@ -28,9 +28,9 @@ trait MockContext {
     val stack = new Stack[Frame];
     val classLoader = new MockClassLoader();
     val classDefinition = new ClassDefinition("String", "");
-    val method = new Method("length", "Int", null, "");
-    method.modifiers += Modifier.native;
-    classDefinition.methods += method;
+    val length = new Method("length", "Int", null, "");
+    length.modifiers += Modifier.native;
+    classDefinition.methods += length;
 
     classLoader.classes += Pair("String", classDefinition);
     classLoader.classes += Pair("Int", new ClassDefinition("Int", ""));

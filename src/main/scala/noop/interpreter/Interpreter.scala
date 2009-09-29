@@ -35,7 +35,7 @@ class Interpreter(classLoader: ClassLoader) {
 
     //TODO: pass the list of command line arguments to main() instead
     args += new StringLiteralExpression("something");
-    val mainInstance = new EvaluatedExpression(mainClass.getInstance(classLoader));
+    val mainInstance = new EvaluatedExpression(Some(mainClass.getInstance(classLoader)));
     new MethodInvocationExpression(mainInstance, "main", args).evaluate(context);
   }
 }

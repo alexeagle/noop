@@ -23,6 +23,6 @@ import types.NoopObject
  * @author alexeagle@google.com (Alex Eagle)
  */
 
-class EvaluatedExpression(value: NoopObject) extends Expression {
-  def evaluate(c: Context): Option[NoopObject] = Some(value);
+class EvaluatedExpression(value: Option[NoopObject]) extends Expression {
+  def evaluate(c: Context): Option[NoopObject] = value;
 }
