@@ -13,21 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package noop.grammar;
 
-package noop.grammar
+import org.scalatest.matchers.ShouldMatchers;
+import org.scalatest.Spec;
 
-import model.{BooleanLiteralExpression, WhileLoop}
-import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.Spec
+import model.{BooleanLiteralExpression, WhileLoop};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-
 class LoopSpec extends Spec with ShouldMatchers {
+
   val parser = new Parser();
 
   describe("a while loop") {
+
     it("should be formed with a while statement") {
       val source = "{ while(true) {} }";
       parser.parseBlock(source).toStringTree() should be ("(WHILE true)");
@@ -35,23 +36,24 @@ class LoopSpec extends Spec with ShouldMatchers {
       block.statements(0).getClass() should be (classOf[WhileLoop]);
       val whileLoop = block.statements(0).asInstanceOf[WhileLoop];
       whileLoop.continueCondition.asInstanceOf[BooleanLiteralExpression].value should be(true);
-    }
-  }
+    };
+  };
 
   describe("a for loop") {
+
     it("should be formed with a for-in statement") {
       val source = "{ for (Int i in 1.to(10)) {} }";
       parser.parseBlock(source).toStringTree() should be("(FOREACH (VAR Int i) (. 1 to (ARGS 10)))");
-    }
+    };
 
     it("should allow an existing identifier to be the loop variable") {
       val source = "{ Int i; for (i in 1.to(10)) {} }";
       parser.parseBlock(source).toStringTree() should be("(VAR Int i) (FOREACH i (. 1 to (ARGS 10)))");
-    }
+    };
 
     it("should allow a c-style loop with explicit initialization, termination, and iteration expressions") {
       val source = "{ for (Int i = 1; i < 3; i = i + 1) {} }";
       parser.parseBlock(source).toStringTree() should be("(FOR (VAR Int (= i 1)) (< i 3) (= i (+ i 1)))");
-    }
-  }
+    };
+  };
 }

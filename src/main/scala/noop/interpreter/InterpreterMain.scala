@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.interpreter;
 
 import grammar.Parser;
@@ -22,14 +21,18 @@ import grammar.Parser;
  * The static entry point into the Noop interpreter, for use from the command-line.
  *
  * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 object InterpreterMain {
+
   def main(args: Array[String]) {
+
     //TODO: a proper command line parser, like scalax.io.CommandLineParser
     if (args.size < 2) {
       println("Usage: InterpreterMain main-class paths/to/sources ...");
       System.exit(1);
     }
+
     //TODO: guice? other injector?
     val classLoader = new SourceFileClassLoader(new Parser(), args.toList.tail);
     val mainClass = classLoader.findClass(args(0));
@@ -37,5 +40,5 @@ object InterpreterMain {
     new Interpreter(classLoader).runApplication(mainClass);
 
     System.exit(0);
-  }
+  };
 }

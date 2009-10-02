@@ -13,17 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package noop.model
-
-
-import interpreter.Context
+package noop.model;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-
 class ReturnExpression(val expr: Expression) extends Expression {
 
-  def evaluate(c: Context) = None
+  def accept(visitor: Visitor) = {
+    expr.accept(visitor);
+    visitor.visit(this);
+  };
 }

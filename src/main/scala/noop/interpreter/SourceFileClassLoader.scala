@@ -13,20 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.interpreter;
-
-import grammar.{ParseException, Parser}
-import scala.collection.mutable.Map;
 
 import java.io.{FileInputStream, File};
 
-import noop.model.ClassDefinition;
+import collection.mutable.Map;
+
+import grammar.{ParseException, Parser};
+import model.ClassDefinition;
 
 /**
- * @author jeremiele@google.com (Jeremie Lenfant-Engelmann)
+ * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends ClassLoader with ClassSearch {
+class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends ClassLoader with
+    ClassSearch {
 
   val cache = Map.empty[String, ClassDefinition];
 
@@ -37,7 +38,7 @@ class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends Clas
       case ex: ParseException =>
           throw new ParseException("Failed to parse " + file.getAbsolutePath());
     }
-  }
+  };
 
   def findClass(className: String): ClassDefinition = {
     val parts = className.split("\\.");
@@ -60,18 +61,18 @@ class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends Clas
       }
     }
     throw new ClassNotFoundException("Could not find class: " + className);
-  }
+  };
 
   def addNativeClass(name: String, classDef: ClassDefinition) = {
     cache += Pair(name, classDef);
-  }
+  };
 
   def eachClass(f: ClassDefinition => Unit) = {
     for (path <- srcPaths) {
       var srcRoot = new File(path);
       eachClassInPath(srcRoot, f);
     }
-  }
+  };
 
   def eachClassInPath(dir: File, f: ClassDefinition => Unit): Unit = {
     for(file <- dir.listFiles()) {
@@ -81,5 +82,5 @@ class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends Clas
         f.apply(getClassDefinition(file));
       }
     }
-  }
+  };
 }

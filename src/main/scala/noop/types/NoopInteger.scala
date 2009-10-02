@@ -13,15 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.types;
 
+import collection.immutable;
 
-import interpreter.Context
-import model.{StringLiteralExpression, IntLiteralExpression, ClassDefinition}
-import scala.collection.Map;
-import scala.collection.immutable;
+import interpreter.Context;
+import model.ClassDefinition;
 
+/**
+ * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
+ */
 class NoopInteger(classDef: ClassDefinition, parameterInstances: Map[String, NoopObject],
     val value: Int) extends NoopObject(classDef, parameterInstances) {
 
@@ -30,13 +32,25 @@ class NoopInteger(classDef: ClassDefinition, parameterInstances: Map[String, Noo
   }
 
   def nativeMethodMap = immutable.Map[String, Context => Option[NoopObject]](
-  // TODO: this is an ugly way to make a new NoopInteger
-    "plus" -> ((c: Context) => new IntLiteralExpression(value + other(c)).evaluate(c)),
-    "minus" -> ((c: Context) => new IntLiteralExpression(value - other(c)).evaluate(c)),
-    "multiply" -> ((c: Context) => new IntLiteralExpression(value * other(c)).evaluate(c)),
-    "divide" -> ((c: Context) => new IntLiteralExpression(value / other(c)).evaluate(c)),
-    "modulo" -> ((c: Context) => new IntLiteralExpression(value % other(c)).evaluate(c)),
-    "toString" -> ((c: Context) => new StringLiteralExpression(value.toString).evaluate(c))
+
+    // TODO: this is an ugly way to make a new NoopInteger
+    "plus" -> ((c: Context) => Some(new NoopInteger(classDef,
+        Map.empty[String, NoopObject], value + other(c)))),
+    "minus" -> ((c: Context) => Some(new NoopInteger(classDef,
+        Map.empty[String, NoopObject], value - other(c)))),
+    "multiply" -> ((c: Context) => Some(new NoopInteger(classDef,
+        Map.empty[String, NoopObject], value * other(c)))),
+    "divide" -> ((c: Context) => Some(new NoopInteger(classDef,
+        Map.empty[String, NoopObject], value / other(c)))),
+    "modulo" -> ((c: Context) => Some(new NoopInteger(classDef,
+        Map.empty[String, NoopObject], value % other(c)))),
+    "toString" -> ((c: Context) => {
+      val classLoader = c.classLoader;
+      val classDef = classLoader.findClass("String");
+
+      Some(new NoopString(classDef, Map.empty[String, NoopObject],
+          value.toString));
+    })
   );
 
   override def nativeMethod(name: String): (Context => Option[NoopObject]) = {

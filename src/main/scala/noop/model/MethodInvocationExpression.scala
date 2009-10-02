@@ -13,11 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.model;
-
-import interpreter.{Context,Frame};
-import types.{NoopObject,NoopType};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -26,35 +22,9 @@ import types.{NoopObject,NoopType};
 class MethodInvocationExpression(val left: Expression, val name: String,
     val arguments: Seq[Expression]) extends Expression {
 
-  def evaluate(context: Context): Option[NoopObject] = {
-    val stack = context.stack;
-    val thisRef = left.evaluate(context) match {
-      case Some(r) => r;
-      case None => throw new RuntimeException(
-          "Expression has no value, cannot dispatch method to it: " + left);
-    }
-    val method = thisRef.classDef.findMethod(name);
-    val frame = new Frame(thisRef, method);
-
-    if (method.parameters.size != arguments.size) {
-      throw new RuntimeException("Method " + method.name + " takes " + method.parameters.size +
-          " arguments but " + arguments.size + " were provided");
-    }
-    for (i <- 0 until arguments.size) {
-      var value = arguments(i).evaluate(context) match {
-        case Some(v) => v;
-        case None => throw new RuntimeException("Argument " + i + " to method " + name + " evaluated to Void");
-      }
-      val identifier = method.parameters(i).name;
-
-      frame.addIdentifier(identifier, new Tuple2[NoopType, NoopObject](null, value));
-    }
-
-    stack.push(frame);
-    try {
-      return method.execute(context);
-    } finally {
-      stack.pop();
-    }
-  }
+  def accept(visitor: Visitor) = {
+    left.accept(visitor);
+    arguments.foreach(arg => arg.accept(visitor));
+    visitor.visit(this);
+  };
 }

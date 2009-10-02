@@ -13,21 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.model;
-
-import interpreter.Context;
-import types.{NoopBoolean,NoopObject};
-
-import scala.collection.mutable.Map;
 
 /**
  * @author Erik Soe Sorensen (eriksoe@gmail.com)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class BooleanLiteralExpression(val value: Boolean) extends Expression {
 
-  def evaluate(c: Context): Option[NoopBoolean] = {
-    val noopBooleanClassDef = c.classLoader.findClass("Boolean");
-    return Some(new NoopBoolean(noopBooleanClassDef, Map.empty[String, NoopObject], value));
-  }
+  def accept(visitor: Visitor) = {
+    visitor.visit(this);
+  };
 }

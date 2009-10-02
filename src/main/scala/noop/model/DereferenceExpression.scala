@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.model;
-
-import interpreter.Context;
-import types.NoopObject;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class DereferenceExpression(val left: Expression, val right: Expression) extends Expression {
 
-  def evaluate(c: Context): Option[NoopObject] = None;
+  def accept(visitor: Visitor) = {
+    visitor.visit(this);
+  };
 }

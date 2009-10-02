@@ -13,21 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package noop.interpreter;
 
-package noop.interpreter
-
-import model.Expression
-import types.NoopObject
+import model.{Expression, Visitor};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-
 class MockExpression extends Expression {
   var timesCalled: Int = 0;
 
-  def evaluate(c: Context): Option[NoopObject] = {
-    timesCalled += 1;
-    return None;
-  }
+  def accept(visitor: Visitor) = {
+     timesCalled += 1;
+  };
 }

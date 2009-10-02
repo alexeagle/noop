@@ -13,27 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package noop.model;
 
-package noop.model
-
-import interpreter.Context
-import types.{NoopBoolean, NoopObject}
 /**
  * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-
 class WhileLoop(val continueCondition: Expression, val body: Block) extends Expression {
-  def evaluate(c: Context): Option[NoopObject] = {
-    while (shouldContinue(c)) {
-      body.evaluate(c);
-    }
-    return None;
-  }
 
-  def shouldContinue(c: Context): Boolean = {
-    continueCondition.evaluate(c) match {
-      case Some(result) => result.asInstanceOf[NoopBoolean].value;
-      case None => false;
-    };
-  }
+  def accept(visitor: Visitor) = {
+	continueCondition.accept(visitor);
+	visitor.visit(this);
+  };
 }

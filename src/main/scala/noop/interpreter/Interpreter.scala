@@ -13,29 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.interpreter;
 
-import collection.mutable.{Stack, ArrayBuffer}
-import model.{EvaluatedExpression, Expression, MethodInvocationExpression, StringLiteralExpression, ClassDefinition}
+import collection.mutable.{Stack, ArrayBuffer};
+import model.{EvaluatedExpression, Expression, MethodInvocationExpression, StringLiteralExpression,
+    ClassDefinition};
 
 /**
  * This class bootstraps the interpretation process, by setting up the ClassLoader with
  * native Scala-implemented Noop types, and starting off the first method invocation.
  *
  * @author alexeagle@google.com (Alex Eagle)
- * @author jeremiele@google.com (Jeremie Lenfant-Engelmann)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class Interpreter(classLoader: ClassLoader) {
 
   def runApplication(mainClass: ClassDefinition) = {
     val context = new Context(new Stack[Frame], classLoader);
 
+    context.addRootFrame();
+    val visitor = new InterpreterVisitor(context);
     var args = new ArrayBuffer[Expression];
 
     //TODO: pass the list of command line arguments to main() instead
     args += new StringLiteralExpression("something");
     val mainInstance = new EvaluatedExpression(mainClass.getInstance(classLoader));
-    new MethodInvocationExpression(mainInstance, "main", args).evaluate(context);
-  }
+
+    new MethodInvocationExpression(mainInstance, "main", args).accept(visitor);
+  };
 }

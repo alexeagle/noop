@@ -13,14 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.interpreter;
 
-import scala.collection.mutable.Stack;
+import collection.mutable.Stack;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author jeremiele@google.com (Jeremie Lenfant-Engelmann)
  */
 class Context(val stack: Stack[Frame], val classLoader: ClassLoader) {
+
+  def addRootFrame() = {
+    stack.push(new Frame(null, null));
+  };
 }

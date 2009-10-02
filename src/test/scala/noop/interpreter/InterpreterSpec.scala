@@ -13,54 +13,73 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package noop.interpreter;
 
-package noop.interpreter
+import java.io.{ByteArrayOutputStream, File};
 
-import collection.mutable.Stack
-import grammar.Parser
-import java.io.{ByteArrayOutputStream, File}
-import model.{IntLiteralExpression, OperatorExpression}
-import org.scalatest.Spec
-import org.scalatest.matchers.ShouldMatchers
-import types.NoopInteger
+import collection.mutable.Stack;
 
+import org.scalatest.matchers.ShouldMatchers;
+import org.scalatest.Spec;
+
+import grammar.Parser;
+import model.{IntLiteralExpression, OperatorExpression};
+import types.NoopInteger;
+
+/**
+ * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
+ */
 class InterpreterSpec extends Spec with ShouldMatchers {
+
   def createFixture = {
     val stdLibSourcePath = new File(getClass().getResource("/stdlib").toURI).getAbsolutePath();
     val classLoader = new SourceFileClassLoader(new Parser(), List(stdLibSourcePath));
     val context = new Context(new Stack[Frame], classLoader);
+
+    context.addRootFrame();
     (classLoader, context);
-  }
+  };
 
   describe("the interpreter") {
+
     it("should evaluate simple arithmetic") {
       val (classLoader, context) = createFixture;
       val expr = new OperatorExpression(new IntLiteralExpression(2), "+", new IntLiteralExpression(3));
-      val result = expr.evaluate(context);
-      result should be('defined);
-      result.get().asInstanceOf[NoopInteger].value should be (5);
-    }
+      val visitor = new InterpreterVisitor(context);
+
+      expr.accept(visitor);
+      val result = context.stack.top.lastEvaluated(0);
+
+      result should not be (null);
+      result.asInstanceOf[NoopInteger].value should be (5);
+    };
 
     it("should evaluate more complex arithmetic") {
       val source = "{ (1 + 2) * 3 - 10 / 2 % 4; }";
       val (classLoader, context) = createFixture;
       val parser = new Parser();
       val block = parser.buildTreeParser(parser.parseBlock(source)).block();
-      val result = block.statements(0).evaluate(context);
-      result should be('defined);
-      result.get().asInstanceOf[NoopInteger].value should be (8);
-    }
+      val visitor = new InterpreterVisitor(context);
+
+      block.statements(0).accept(visitor);
+      val result = context.stack.top.lastEvaluated(0);
+
+      result should not be (null);
+      result.asInstanceOf[NoopInteger].value should be (8);
+    };
 
     it("should assign variables") {
       val source = "{ Int a; a = 1; }";
       val (classLoader, context) = createFixture;
       val parser = new Parser();
       val block = parser.buildTreeParser(parser.parseBlock(source)).block();
-      context.stack.push(new Frame(null, null));
-      block.evaluate(context);
+      val visitor = new InterpreterVisitor(context);
+
+      block.accept(visitor);
       context.stack.top.identifiers should contain key("a");
       context.stack.top.identifiers("a")._2 should not be (null);
       context.stack.top.identifiers("a")._2.asInstanceOf[NoopInteger].value should equal (1);
-    }
-  }
+    };
+  };
 }

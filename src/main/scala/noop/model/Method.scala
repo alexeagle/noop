@@ -13,25 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.model;
 
-import collection.mutable.{ArrayBuffer, Buffer}
-import interpreter.Context
-import types.{NoopString, NoopObject}
+import collection.mutable.{ArrayBuffer, Buffer};
+
+import interpreter.Context;
+
 /**
  * Represents the declaration of a method in source code.
+ * 
+ * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class Method(val name: String, val returnType: String, val block: Block, val documentation:String) {
+
   val parameters: Buffer[Parameter] = new ArrayBuffer[Parameter]();
   val modifiers: Buffer[Modifier.Value] = new ArrayBuffer[Modifier.Value]();
 
-  def execute(c: Context): Option[NoopObject] = {
+  def execute(context: Context, visitor: Visitor) = {
     if (modifiers.contains(Modifier.native)) {
-      val obj = c.stack.top.thisRef
-      return obj.executeNativeMethod(c, name);
+      val obj = context.stack.top.thisRef;
+
+      val returnValue = obj.executeNativeMethod(context, name) match {
+        case Some(rv) => rv;
+        case None => null;
+      };
+      context.stack.top.lastEvaluated += returnValue;
     } else {
-      return block.evaluate(c);
+      block.accept(visitor);
     }
-  }
+  };
 }

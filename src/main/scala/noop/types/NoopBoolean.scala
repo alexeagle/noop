@@ -13,32 +13,45 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.types;
 
+import collection.immutable;
 
-import interpreter.Context
-import model.{StringLiteralExpression, BooleanLiteralExpression, ClassDefinition}
-import scala.collection.Map;
-import scala.collection.immutable;
+import interpreter.Context;
+import model.ClassDefinition;
 
+/**
+ * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
+ */
 class NoopBoolean(classDef: ClassDefinition, parameterInstances: Map[String, NoopObject],
     val value: Boolean) extends NoopObject(classDef, parameterInstances) {
 
   def other(c: Context): Boolean = {
     c.stack.top.identifiers("other")._2.asInstanceOf[NoopBoolean].value;
-  }
+  };
 
   def nativeMethodMap = immutable.Map[String, Context => Option[NoopObject]](
-  // TODO: this is an ugly way to make a new NoopBoolean
-    "and" -> ((c: Context) => new BooleanLiteralExpression(value && other(c)).evaluate(c)),
-    "or" -> ((c: Context) => new BooleanLiteralExpression(value || other(c)).evaluate(c)),
-    "xor" -> ((c: Context) => new BooleanLiteralExpression(value ^ other(c)).evaluate(c)),
-    "not" -> ((c: Context) => new BooleanLiteralExpression(! value).evaluate(c)),
-    "toString" -> ((c: Context) => new StringLiteralExpression(value.toString).evaluate(c))
+
+    // TODO: this is an ugly way to make a new NoopBoolean
+    "and" -> ((c: Context) => Some(new NoopBoolean(classDef,
+        Map.empty[String, NoopObject], value && other(c)))),
+    "or" -> ((c: Context) => Some(new NoopBoolean(classDef,
+        Map.empty[String, NoopObject], value || other(c)))),
+    "xor" -> ((c: Context) => Some(new NoopBoolean(classDef,
+        Map.empty[String, NoopObject], value ^ other(c)))),
+    "not" -> ((c: Context) => Some(new NoopBoolean(classDef,
+        Map.empty[String, NoopObject], !value))),
+    "toString" -> ((c: Context) => {
+      val classLoader = c.classLoader;
+      val classDef = classLoader.findClass("String");
+
+      Some(new NoopString(classDef, Map.empty[String, NoopObject],
+          value.toString));
+    })
   );
 
   override def nativeMethod(name: String): (Context => Option[NoopObject]) = {
     return nativeMethodMap(name);
-  }
+  };
 }

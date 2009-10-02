@@ -13,25 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.interpreter;
 
-import model.Method
+import collection.mutable.{Map, Stack};
+
+import model.Method;
 import types.{NoopType, NoopObject};
-import scala.collection.mutable;
 
  /**
   * @author alexeagle@google.com (Alex Eagle)
-  * @author jeremiele@google.com (Jeremie Lenfant-Engelmann)
+  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
   */
 class Frame(val thisRef: NoopObject, val method: Method) {
-  val identifiers = mutable.Map.empty[String, Tuple2[NoopType, NoopObject]];
-  var returnValue: Option[Int] = None;
+
+  val identifiers = Map.empty[String, Tuple2[NoopType, NoopObject]];
+  val lastEvaluated: Stack[NoopObject] = new Stack[NoopObject]();
 
   def addIdentifier(name: String, arg: Tuple2[NoopType, NoopObject]) = {
     if (identifiers.contains(name)) {
       throw new RuntimeException("Identifier " + name + " shadowing existing identifier.");
     }
     identifiers += Pair(name, arg);
-  }
+  };
 }

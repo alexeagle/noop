@@ -13,19 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package noop.model
-
-import interpreter.Context
-import types.NoopObject
+package noop.model;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
+class OperatorExpression(val left: Expression, val operator: String, val right: Expression)
+    extends Expression {
 
-class OperatorExpression(val left: Expression, val operator: String, val right: Expression) extends Expression {
-
-  def evaluate(context: Context): Option[NoopObject] = {
+  def accept(visitor: Visitor) = {
     val methodName = operator match {
       case "+" => "plus";
       case "-" => "minus";
@@ -33,6 +30,8 @@ class OperatorExpression(val left: Expression, val operator: String, val right: 
       case "/" => "divide";
       case "%" => "modulo";
     }
-    return new MethodInvocationExpression(left, methodName, List(right)).evaluate(context);
-  }
+
+    new MethodInvocationExpression(left, methodName, List(right)).accept(visitor);
+    visitor.visit(this);
+  };
 }

@@ -13,22 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.model;
-
-import interpreter.Context
-import types.{NoopObject, NoopString};
-
-
-import scala.collection.mutable.Map;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class StringLiteralExpression(val value: String) extends Expression {
 
-  def evaluate(c: Context): Option[NoopString] = {
-    val noopStringClassDef = c.classLoader.findClass("String");
-    return Some(new NoopString(noopStringClassDef, Map.empty[String, NoopObject], value));
-  }
+  def accept(visitor: Visitor) = {
+    visitor.visit(this);
+  };
 }

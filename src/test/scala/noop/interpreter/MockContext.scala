@@ -13,17 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package noop.interpreter;
 
-package noop.interpreter
-
-import collection.mutable.Stack
-import model.{Method, Modifier, ClassDefinition}
+import collection.mutable.Stack;
+import model.{Method, Modifier, ClassDefinition};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-
 trait MockContext {
+
   def fixture = {
     val stack = new Stack[Frame];
     val classLoader = new MockClassLoader();
@@ -36,6 +35,8 @@ trait MockContext {
     classLoader.classes += Pair("Int", new ClassDefinition("Int", ""));
     classLoader.classes += Pair("Boolean", new ClassDefinition("Boolean", ""));
     val context = new Context(stack, classLoader);
+
+    context.addRootFrame();
     context;
-  }
+  };
 }

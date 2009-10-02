@@ -13,59 +13,65 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package noop.interpreter;
 
-package noop.interpreter
+import org.scalatest.matchers.ShouldMatchers;
+import org.scalatest.Spec;
 
-import model.{Expression, Block, BooleanLiteralExpression, WhileLoop}
-import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.Spec
-import types.NoopObject
+import model.{Expression, Block, BooleanLiteralExpression, WhileLoop, Visitor};
+import types.NoopObject;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-
 class ControlStructureSpec extends Spec with ShouldMatchers with MockContext {
+
   class TrueThenFalseExpression(timesToReturnTrue: Int) extends Expression {
     var called = 0;
-    def evaluate(c: Context): Option[NoopObject] = {
+
+    def accept(visitor: Visitor) = {
       called += 1;
-      return new BooleanLiteralExpression(called <= timesToReturnTrue).evaluate(c);
-    }
+      new BooleanLiteralExpression(called <= timesToReturnTrue).accept(visitor);
+    };
   }
 
   describe("the while loop") {
+
     it("should execute the body when the condition is true") {
       val context = fixture;
       val block: Block = new Block();
       val expression: MockExpression = new MockExpression();
+      val visitor = new InterpreterVisitor(context);
       block.statements += expression;
 
       val whileLoop = new WhileLoop(new TrueThenFalseExpression(1), block);
-      whileLoop.evaluate(context);
+      whileLoop.accept(visitor);
       expression.timesCalled should be(1);
-    }
+    };
 
     it("should not execute the body when the condition is false") {
       val context = fixture;
       val block: Block = new Block();
       val expression: MockExpression = new MockExpression();
+      val visitor = new InterpreterVisitor(context);
       block.statements += expression;
 
       val whileLoop = new WhileLoop(new BooleanLiteralExpression(false), block);
-      whileLoop.evaluate(context);
+      whileLoop.accept(visitor);
       expression.timesCalled should be(0);
-    }
+    };
 
     it("should execute the body repeatedly as long as the condition is true") {
       val context = fixture;
       val block: Block = new Block();
       val expression: MockExpression = new MockExpression();
+      val visitor = new InterpreterVisitor(context);
       block.statements += expression;
 
       val whileLoop = new WhileLoop(new TrueThenFalseExpression(3), block);
-      whileLoop.evaluate(context);
+      whileLoop.accept(visitor);
       expression.timesCalled should be(3);
-    }
-  }
+    };
+  };
 }

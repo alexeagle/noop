@@ -13,40 +13,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package noop.grammar;
 
-package noop.grammar
+import org.scalatest.matchers.ShouldMatchers;
+import org.scalatest.Spec;
 
-import model.{BooleanLiteralExpression, IdentifierDeclarationExpression}
-import org.scalatest.Spec
-import org.scalatest.matchers.ShouldMatchers
+import model.{BooleanLiteralExpression, IdentifierDeclarationExpression};
 
+/**
+ * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
+ */
 class LiteralsSpec extends Spec with ShouldMatchers {
+
   val parser = new Parser();
 
   describe("the parser") {
+
     it("should parse integer literals") {
       val source = "{ Int a = 123; Int b = -123; } ";
       parser.parseBlock(source).toStringTree() should equal (
           "(VAR Int (= a 123)) (VAR Int (= b -123))");
-    }
+    };
 
     it("should parse a string literal") {
       val source = " { a = \"hello, world!\"; } ";
       parser.parseBlock(source).toStringTree() should equal (
           "(= a \"hello, world!\")");
-    }
+    };
 
     it("should parse a multi-line string literal") {
       val source = "{ String a = \"\"\"Line1\n\"Line2\"\n\"\"\"; }";
       parser.parseBlock(source).toStringTree() should equal(
           "(VAR String (= a \"\"\"Line1\n\"Line2\"\n\"\"\"))");
-    }
+    };
 
     it("should not allow a single-double-quoted string to span lines") {
       val source = """{ a = "Line 1
       "; }""";
       intercept[ParseException] (parser.parseBlock(source));
-    }
+    };
 
     it("should parse boolean literals") {
       val source = "{ Boolean a = true; }";
@@ -60,6 +66,6 @@ class LiteralsSpec extends Spec with ShouldMatchers {
         }
         case None => fail();
       }
-    }
-  }
+    };
+  };
 }

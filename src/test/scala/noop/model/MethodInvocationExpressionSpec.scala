@@ -13,71 +13,74 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package noop.model;
 
-package noop.model
+import org.scalatest.matchers.ShouldMatchers;
+import org.scalatest.Spec;
 
-import interpreter.{Frame, MockContext}
-import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.Spec
-import types.NoopObject
+import interpreter.{Frame, MockContext, InterpreterVisitor};
+import types.NoopObject;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-
 class MethodInvocationExpressionSpec extends Spec with ShouldMatchers with MockContext {
 
   describe("a method invocation") {
+
     it("should throw an exception if the method doesn't exist on the type") {
       val context = fixture;
+      val visitor = new InterpreterVisitor(context);
       val target = new StringLiteralExpression("aString");
       val expr = new MethodInvocationExpression(target, "noSuchMethodSorry", List());
       val exception = intercept[NoSuchMethodException] (
-        expr.evaluate(context)
+        expr.accept(visitor)
       );
       exception.getMessage() should include("noSuchMethodSorry");
       exception.getMessage() should include("String");
-    }
+    };
 
     it("should evaluate the method body in a new stack frame") {
       val context = fixture;
+      val visitor = new InterpreterVisitor(context);
       val target = new StringLiteralExpression("aString");
       val expr = new MethodInvocationExpression(target, "length", List());
 
-      expr.evaluate(context);
-    }
+      expr.accept(visitor);
+    };
 
     it("should evaluate arguments and assign them to local variables indicated by the parameters") {
 
-    }
+    };
 
     it("should throw an exception if the evaluated argument does not match the type of the parameter") {
 
-    }
+    };
 
     it("should restore the original stack frame when finished") {
 
-    }
+    };
 
     it("should evaluate native methods by invoking the native scala implementation") {
 
-    }
+    };
 
     it("should throw an exception if an argument expression returns no value") {
 
-    }
+    };
 
     it("should be aware of the 'this' identifier and dispatch the method on thisRef") {
       val context = fixture;
-      val thisRef: NoopObject = new StringLiteralExpression("hello").evaluate(context) match {
-        case Some(ref) => ref;
-        case _ => throw new RuntimeException();
-      }
+      val visitor = new InterpreterVisitor(context);
+      new StringLiteralExpression("hello").accept(visitor);
+      val thisRef: NoopObject = context.stack.top.lastEvaluated(0);
+
+      thisRef should not be (null);
       context.stack.push(new Frame(thisRef, null));
       val target = new IdentifierExpression("this");
       val expr = new MethodInvocationExpression(target, "length", List());
 
-      expr.evaluate(context);
-    }
-  }
+      expr.accept(visitor);
+    };
+  };
 }

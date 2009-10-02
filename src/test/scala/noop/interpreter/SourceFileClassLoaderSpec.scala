@@ -13,28 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.interpreter;
 
+import java.io.{PrintWriter, BufferedWriter, FileWriter, File};
 
-import collection.mutable.ArrayBuffer
-import grammar.{ParseException, Parser}
-import java.io.{PrintWriter, BufferedWriter, FileWriter, File}
-import model.ClassDefinition;
-import org.scalatest.Spec;
+import collection.mutable.ArrayBuffer;
+
 import org.scalatest.matchers.ShouldMatchers;
+import org.scalatest.Spec;
 
+import grammar.{ParseException, Parser};
+import model.ClassDefinition;
+
+/**
+ * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
+ */
 class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
+
   val tmpDir = new File(System.getProperty("java.io.tmpdir"));
 
   describe("classloader") {
+
     it("should throw an exception if given a non-existent directory") {
       val srcPaths = List("doesNotExist");
       val classLoader = new SourceFileClassLoader(new Parser(), srcPaths);
       intercept[RuntimeException] {
         classLoader.findClass("Foo");
       }
-    }
+    };
+
     it("should load a class from a source path") {
       val source = new File(tmpDir, "MyClass.noop");
       source.deleteOnExit();
@@ -47,7 +55,7 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       val classDef = classLoader.findClass("MyClass")
 
       classDef.name should equal("MyClass")
-	  }
+	};
 
     it("should load a class in a namespace") {
       new File(tmpDir, "noop").mkdir();
@@ -62,7 +70,7 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       val classDef = classLoader.findClass("noop.Foo")
 
       classDef.name should equal("Foo")
-    }
+    };
 
     it("should load a class in a nested namespace") {
       val dir = new File(new File(tmpDir, "noop"), "package");
@@ -78,7 +86,7 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       val classDef = classLoader.findClass("noop.package.Foo")
 
       classDef.name should equal("Foo")
-    }
+    };
 
     it("should throw ClassNotFound if the class doesn't exist") {
       val srcPaths = List(tmpDir.getAbsolutePath());
@@ -86,7 +94,7 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       intercept[ClassNotFoundException] {
         classLoader.findClass("Foo");
       }
-    }
+    };
 
     // Actually, it might be annoying that changes to the source aren't seen?
     // it("should not parse the source file more than once") {
@@ -109,6 +117,6 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       classLoader.eachClass((c:ClassDefinition) => classesFound += c);
       classesFound should have length(1);
       classesFound(0).name should be("Foo");
-    }
-  }
+    };
+  };
 }

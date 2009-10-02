@@ -13,29 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.model;
-
-import interpreter.Context;
-import types.NoopObject;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class IdentifierExpression(val identifier: String) extends Expression {
 
-  def evaluate(c: Context): Option[NoopObject] = {
-    val currentFrame = c.stack.top;
-    if (identifier == "this") {
-      return Some(currentFrame.thisRef);
-    } else if (currentFrame.identifiers.contains(identifier)) {
-      return Some(currentFrame.identifiers(identifier)._2);
-    } else if (currentFrame.thisRef.parameterInstances.contains(identifier)) {
-      return Some(currentFrame.thisRef.parameterInstances(identifier));
-    }
-    return None;
-  }
+  def accept(visitor: Visitor) = {
+    visitor.visit(this);
+  };
 
   override def toString() = identifier;
-
 }

@@ -13,21 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.model;
-
-import interpreter.Context;
-import types.{NoopInteger,NoopObject};
-
-import scala.collection.mutable.Map;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class IntLiteralExpression(val value: Int) extends Expression {
 
-  def evaluate(c: Context): Option[NoopInteger] = {
-    val noopIntegerClassDef = c.classLoader.findClass("Int");
-    return Some(new NoopInteger(noopIntegerClassDef, Map.empty[String, NoopObject], value));
-  }
+  def accept(visitor: Visitor) = {
+    visitor.visit(this);
+  };
 }

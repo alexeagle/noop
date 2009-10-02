@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.types;
+
+import collection.Map;
 
 import interpreter.Context
 import model.ClassDefinition;
-
-import scala.collection.Map;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -30,10 +29,9 @@ class NoopObject(val classDef: ClassDefinition, val parameterInstances: Map[Stri
   def nativeMethod(name: String): (Context => Option[NoopObject]) = {
     throw new NoSuchMethodException("Native method implemention for '"
         + name + "' missing in " + classDef.name);
-  }
+  };
 
    def executeNativeMethod(c: Context, name: String): Option[NoopObject] = {
     return nativeMethod(name).apply(c);
-  }
-
+  };
 }

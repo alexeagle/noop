@@ -13,26 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.types;
 
+import collection.mutable.Map;
 
-import interpreter.Context
-import model.{EvaluatedExpression, MethodInvocationExpression, ClassDefinition}
-import scala.collection.mutable.Map;
+import interpreter.{Context, InterpreterVisitor};
+import model.{ClassDefinition, EvaluatedExpression, MethodInvocationExpression};
 
+/**
+ * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
+ */
 class NoopConsole(classDef: ClassDefinition, parameterInstances: Map[String, NoopObject])
     extends NoopObject(classDef, parameterInstances) {
 
-  def println(c: Context): Option[NoopObject] = {
-    val toPrint = c.stack.top.identifiers("s")._2;
-    val toString = new MethodInvocationExpression(new EvaluatedExpression(toPrint), "toString", Nil).evaluate(c) match {
-      case Some(str) => str.asInstanceOf[NoopString]
-      case None => throw new RuntimeException("Internal error: toString of " + toPrint + " returned Void");
-    }
-    Console.println(toString.value);
+  def println(context: Context): Option[NoopObject] = {
+    val toPrint = context.stack.top.identifiers("s")._2;
+
+    new MethodInvocationExpression(
+        new EvaluatedExpression(toPrint), "toString", Nil).accept(
+          new InterpreterVisitor(context));
+    val toString = context.stack.top.lastEvaluated(0);
+
+    context.stack.top.lastEvaluated.clear();
+    Console.println(toString.asInstanceOf[NoopString].value);
     return None;
-  }
+  };
 
   def nativeMethodMap = Map[String, Context => Option[NoopObject]](
     "println" -> println
@@ -40,5 +46,5 @@ class NoopConsole(classDef: ClassDefinition, parameterInstances: Map[String, Noo
 
   override def nativeMethod(name: String): (Context => Option[NoopObject]) = {
     return nativeMethodMap(name);
-  }
+  };
 }

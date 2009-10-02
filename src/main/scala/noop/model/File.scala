@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package noop.model;
 
-package noop.model
-
-import scala.collection.mutable.Buffer
-import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.{ArrayBuffer, Buffer};
 
 /**
  * A Noop source file.
@@ -25,7 +23,8 @@ import scala.collection.mutable.ArrayBuffer
  * @author alexeagle@google.com (Alex Eagle)
  */
 class File {
-  var namespace:String = "";
-  var imports:Buffer[String] = new ArrayBuffer[String];
-  var classDef:ClassDefinition = null;
+
+  var namespace: String = "";
+  var imports: Buffer[String] = new ArrayBuffer[String];
+  var classDef: ClassDefinition = null;
 }

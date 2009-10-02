@@ -13,30 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.model;
-
-import interpreter.Context
-import types.{NoopObject, NoopType}
-
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class IdentifierDeclarationExpression(val noopType: String, val name: String) extends Expression {
   var initialValue: Option[Expression] = None;
 
-  def evaluate(c: Context): Option[NoopObject] = {
-    val frame = c.stack.top;
-
-    val obj = initialValue match {
-      case Some(v) => v.evaluate(c) match {
-        case Some(e) => e;
-        case None => throw new RuntimeException("The right handside didn't evaluate to a proper value");
-      }
-      case None => null;
-    }
-    frame.addIdentifier(name,  new Tuple2[NoopType, NoopObject](null, obj));
-    return None;
-  }
+  def accept(visitor: Visitor) = {
+    val value = initialValue match {
+      case Some(v) => v;
+      case None => new EvaluatedExpression(null);
+    };
+    value.accept(visitor);
+    visitor.visit(this);
+  };  
 }

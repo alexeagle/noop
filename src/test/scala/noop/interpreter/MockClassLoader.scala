@@ -13,26 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.interpreter;
 
-import grammar.Parser
 import java.io.File;
-import scala.collection.mutable;
+
+import collection.mutable;
+
+import grammar.Parser
 import model.ClassDefinition;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
- * @author jeremiele@google.com (Jeremie Lenfant-Engelmann)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class MockClassLoader() extends ClassLoader {
+
   val classes = mutable.Map.empty[String, ClassDefinition];
 
   def findClass(className: String): ClassDefinition = {
     return classes(className);
-  }
+  };
 
   def getClassDefinition(file: File): ClassDefinition = {
     return classes.values.next;
-  }
+  };
 }

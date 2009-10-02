@@ -13,15 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.model;
 
-import scala.collection.mutable.{ArrayBuffer,Buffer,Map}
-import types.{NoopConsole, NoopObject}
+import collection.mutable.{ArrayBuffer, Buffer, Map};
 
 import interpreter.ClassLoader;
+import types.{NoopConsole, NoopObject};
 
-class ClassDefinition (val name:String, val documentation: String) {
+/**
+ * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
+ */
+class ClassDefinition (val name: String, val documentation: String) {
+
   val parameters: Buffer[Parameter] = new ArrayBuffer[Parameter];
   val interfaces: Buffer[String] = new ArrayBuffer[String];
   val methods: Buffer[Method] = new ArrayBuffer[Method];

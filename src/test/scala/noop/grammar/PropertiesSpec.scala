@@ -13,16 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package noop.grammar;
 
-package noop.grammar
+import org.scalatest.matchers.ShouldMatchers;
+import org.scalatest.Spec;
 
-import org.scalatest.Spec
-import org.scalatest.matchers.ShouldMatchers
-
+/**
+ * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
+ */
 class PropertiesSpec extends Spec with ShouldMatchers {
+
   val parser = new Parser();
 
   describe("parser") {
+
     it("should parse a single property declaration") {
       val source = """
         class Foo() {
@@ -32,6 +37,6 @@ class PropertiesSpec extends Spec with ShouldMatchers {
       """;
 
       parser.parseFile(source).toStringTree() should equal ("(CLASS Foo (VAR Int (= a 4)) (VAR Int i))");
-    }
-  }
+    };
+  };
 }

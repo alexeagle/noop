@@ -1,13 +1,30 @@
-package noop.interpreter
+/**
+ * Copyright 2009 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package noop.interpreter;
 
+import collection.mutable.{ArrayBuffer, Buffer, Stack};
 
-import collection.mutable.{Stack, ArrayBuffer, Buffer}
-import model.{MethodInvocationExpression, EvaluatedExpression, StringLiteralExpression, Method, ClassDefinition}
+import model.{ClassDefinition, EvaluatedExpression, Method, MethodInvocationExpression,
+    StringLiteralExpression};
+
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-
 class TestRunner(classSearch: ClassSearch, classLoader: ClassLoader) {
+
   def gatherTests(): Buffer[TestHolder] = {
     var tests = new ArrayBuffer[TestHolder];
     classSearch.eachClass((c:ClassDefinition) => {
@@ -16,7 +33,7 @@ class TestRunner(classSearch: ClassSearch, classLoader: ClassLoader) {
       }
     });
     return tests;
-  }
+  };
 
   def runTests() = {
     val startTime = System.currentTimeMillis;
@@ -26,7 +43,7 @@ class TestRunner(classSearch: ClassSearch, classLoader: ClassLoader) {
     }
     val elapsed = (System.currentTimeMillis - startTime) / 1000;
     println("Ran " + tests.size + " test(s) in " + elapsed + " seconds.");
-  }
+  };
 
   /**
    * Run a single test
@@ -35,11 +52,12 @@ class TestRunner(classSearch: ClassSearch, classLoader: ClassLoader) {
     val instance = test.classDef.getInstance(classLoader);
     val stack = new Stack[Frame];
     val context = new Context(stack, classLoader);
+
     stack.push(new Frame(instance, test.testMethod));
     try {
-      test.testMethod.execute(context);
+      test.testMethod.execute(context, new InterpreterVisitor(context));
     } finally {
       stack.pop();
     }
-  }
+  };
 }

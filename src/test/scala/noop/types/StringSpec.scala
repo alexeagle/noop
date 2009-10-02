@@ -13,48 +13,54 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package noop.types;
 
-package noop.types
+import collection.mutable.Stack;
 
-import collection.mutable.Stack
-import grammar.Parser
-import interpreter.{Frame, Context, SourceFileClassLoader}
-import java.io.File
-import model.Modifier
-import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.Spec
+import java.io.File;
+
+import org.scalatest.matchers.ShouldMatchers;
+import org.scalatest.Spec;
+
+import grammar.Parser;
+import interpreter.{Frame, Context, SourceFileClassLoader};
+import model.Modifier;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-
 class StringSpec extends Spec with ShouldMatchers {
+
   def createFixture = {
     val stdlibSourcePath = new File(getClass().getResource("/stdlib").toURI).getAbsolutePath();
     new SourceFileClassLoader(new Parser(), List(stdlibSourcePath))
-  }
+  };
 
   describe("a Noop String") {
+
     it("should have a valid class definition parsed from Noop source") {
       val classLoader = createFixture;
       val classDef = classLoader.findClass("String");
       classDef.name should be("String");
-    }
+    };
 
     it("should have a native implementation of the length method") {
       val classLoader = createFixture;
       val stringClass = classLoader.findClass("String");
       val aString = new NoopString(stringClass, Map.empty[String, NoopObject], "hello");
       val method = stringClass.findMethod("length");
-      method.modifiers should contain(Modifier.native);
       val stack = new Stack[Frame]();
-      stack.push(new Frame(aString, null));
       val context = new Context(stack, classLoader);
 
-      method.execute(context) match {
-        case Some(i) => i.asInstanceOf[NoopInteger].value should be(5);
-        case None => fail();
-      }
-    }
-  }
+      context.addRootFrame();
+      method.modifiers should contain(Modifier.native);
+
+      stack.push(new Frame(aString, null));
+      method.execute(context, null);
+      val theString = context.stack.top.lastEvaluated(0);
+
+      theString should not be (null);
+      theString.asInstanceOf[NoopInteger].value should be(5);
+    };
+  };
 }

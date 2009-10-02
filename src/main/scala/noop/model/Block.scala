@@ -13,23 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package noop.model;
 
-package noop.model
-
-import collection.mutable.{Buffer, ArrayBuffer}
-import interpreter.Context
-import types.NoopObject
+import collection.mutable.{ArrayBuffer, Buffer};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class Block extends Expression {
   var statements: Buffer[Expression] = new ArrayBuffer[Expression]();
 
-  def evaluate(c: Context): Option[NoopObject] = {
-    for (s <- statements) {
-      s.evaluate(c);
-    }
-    return None;
+  def accept(visitor: Visitor) = {
+    statements.foreach(statement => { 
+      statement.accept(visitor);
+      visitor.visit(this);
+    }); 
   };
 }

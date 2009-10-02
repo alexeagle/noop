@@ -13,18 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package noop.model;
 
-package noop.model
+import org.scalatest.matchers.ShouldMatchers;
+import org.scalatest.Spec;
 
-import interpreter.{MockContext, Frame}
-import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.Spec
-import types.NoopString
+import interpreter.{MockContext, InterpreterVisitor};
+import types.NoopString;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-
 class IdentifierDeclarationExpressionSpec extends Spec with ShouldMatchers with MockContext {
 
   describe("an assignment expression") {
@@ -35,12 +34,12 @@ class IdentifierDeclarationExpressionSpec extends Spec with ShouldMatchers with 
       identifierDeclaration.initialValue = Some(new StringLiteralExpression("hello world"));
 
       val context = fixture;
-      context.stack.push(new Frame(null, null));
+      val visitor = new InterpreterVisitor(context);
 
-      identifierDeclaration.evaluate(context);
+      identifierDeclaration.accept(visitor);
       context.stack.top.identifiers should have size (1);
-      context.stack.top.identifiers("myString")._2.asInstanceOf[NoopString].value should equal ("hello world");
-    }
-
-  }
+      context.stack.top.identifiers("myString")._2.asInstanceOf[NoopString].value should
+          equal ("hello world");
+    };
+  };
 }

@@ -13,16 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package noop.model;
 
-package noop.model
-
-import interpreter.Context
-import types.NoopObject
+import types.NoopObject;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
+class EvaluatedExpression(val value: NoopObject) extends Expression {
 
-class EvaluatedExpression(value: NoopObject) extends Expression {
-  def evaluate(c: Context): Option[NoopObject] = Some(value);
+  def accept(visitor: Visitor) = {
+    visitor.visit(this);
+  };
 }

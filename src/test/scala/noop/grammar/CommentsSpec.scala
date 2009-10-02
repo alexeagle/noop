@@ -13,23 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package noop.grammar;
 
-package noop.grammar
+import org.scalatest.matchers.ShouldMatchers;
+import org.scalatest.Spec;
 
-import org.scalatest.Spec
-import org.scalatest.matchers.ShouldMatchers
-
+/**
+ * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
+ */
 class CommentsSpec extends Spec with ShouldMatchers {
 
   val parser = new Parser();
 
   describe("parser") {
+
     it("should be able to parse a single line comment") {
       val source = "// a comment\n class Foo() {}\n";
       val commonTree = parser.parseFile(source);
 
       commonTree.toStringTree() should equal ("(CLASS Foo)");
-    }
+    };
 
     it("should be able to parse a multi-line comment") {
       val source = """
@@ -40,7 +44,7 @@ class CommentsSpec extends Spec with ShouldMatchers {
       var commonTree = parser.parseFile(source);
 
       commonTree.toStringTree() should equal ("(CLASS Foo)");
-    }
+    };
 
     it("should be able to parse nested comments") {
       val source = """
@@ -52,12 +56,12 @@ class CommentsSpec extends Spec with ShouldMatchers {
       var commonTree = parser.parseFile(source);
 
       commonTree.toStringTree() should equal ("(CLASS Foo)");
-    }
+    };
 
     // Note: this makes Alex sad.
     it("should allow tab characters to appear in the source") {
       val source = "\tclass\tFoo() {\t}";
       parser.parseFile(source).toStringTree() should equal ("(CLASS Foo)");
-    }
-  }
+    };
+  };
 }

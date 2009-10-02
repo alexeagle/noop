@@ -13,24 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package noop.grammar;
 
-package noop.grammar
+import org.scalatest.matchers.ShouldMatchers;
+import org.scalatest.Spec;
 
-import model.{IdentifierDeclarationExpression, Modifier}
-import org.scalatest.Spec
-import org.scalatest.matchers.ShouldMatchers
+import model.{IdentifierDeclarationExpression, Modifier};
 
+/**
+ * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
+ */
 class MethodsSpec extends Spec with ShouldMatchers {
 
   val parser = new Parser();
+
   describe("the parser") {
+
     it("should parse a method with no parameters") {
       val source = "class Bar() { String helloWorld() { Int i = 1; } }";
       val commonTree = parser.parseFile(source);
 
       commonTree.toStringTree() should equal ("(CLASS Bar (METHOD String helloWorld " +
           "(VAR Int (= i 1))))");
-    }
+    };
 
     it("should parse a method with parameters") {
       val source = "class Bar() { String helloWorld(String s, Int n) { Int i = 1; } }";
@@ -55,7 +61,7 @@ class MethodsSpec extends Spec with ShouldMatchers {
       firstStatement.noopType should be ("Int");
       firstStatement.name should be ("i");
       // firstStatement.initialValue should be (Some(new IntLiteralExpression(1)));
-    }
+    };
 
     it("should allow variable declaration without an initial value") {
       val source = "class Bar() { String helloWorld() { Int i; } }";
@@ -72,19 +78,19 @@ class MethodsSpec extends Spec with ShouldMatchers {
       firstStatement.noopType should be ("Int");
       firstStatement.name should be ("i");
       firstStatement.initialValue should be (None);
-    }
+    };
 
     it("should parse a method invocation on a parameter reference") {
       val source = """class HelloWorld() { Int hello() { console.println("Hello, World!"); }}""";
       parser.parseFile(source).toStringTree() should equal(
           """(CLASS HelloWorld (METHOD Int hello (. console println (ARGS "Hello, World!"))))""");
-    }
+    };
 
     it("should parse a method with a return statement") {
       val source = "class Foo() { Void do() { return 4; } }";
       parser.parseFile(source).toStringTree() should equal (
           "(CLASS Foo (METHOD Void do (return 4)))");
-    }
+    };
 
     it("should allow the native modifier on a method") {
       val source = "class Foo() { native Void do() { Int i; }}";
@@ -92,6 +98,6 @@ class MethodsSpec extends Spec with ShouldMatchers {
           "(CLASS Foo (METHOD (MOD native) Void do (VAR Int i)))");
       val file = parser.file(source);
       file.classDef.methods(0).modifiers should contain(Modifier.native);
-    }
-  }
+    };
+  };
 }

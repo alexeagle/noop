@@ -13,21 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package noop.types;
 
-import interpreter.Context
-import model.{StringLiteralExpression, IntLiteralExpression, ClassDefinition}
-import scala.collection.Map
-import scala.collection.immutable
+import collection.immutable;
 
+import interpreter.Context;
+import model.ClassDefinition;
+
+/**
+ * @author alexeagle@google.com (Alex Eagle)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
+ */
 class NoopString(classDef: ClassDefinition, parameterInstances: Map[String, NoopObject],
     val value: String) extends NoopObject(classDef, parameterInstances) {
 
   def nativeMethodMap = immutable.Map[String, Context => Option[NoopObject]](
-    "toString" -> ((c: Context) => new StringLiteralExpression(value).evaluate(c)),
+    "toString" -> ((c: Context) => Some(new NoopString(classDef,
+        Map.empty[String, NoopObject], value))),
+
     // TODO: not the right way to make an integer
-    "length" -> ((c: Context) => new IntLiteralExpression(value.length).evaluate(c))
+    "length" -> ((c: Context) => Some({
+      val classLoader = c.classLoader;
+      val classDef = classLoader.findClass("Int");
+
+      new NoopInteger(classDef, Map.empty[String, NoopObject], value.length);
+    }))
   );
 
   override def nativeMethod(name: String): (Context => Option[NoopObject]) = {
