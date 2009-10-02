@@ -21,7 +21,6 @@ import org.scalatest.Spec;
 import model.{Block, ClassDefinition, Method, MethodInvocationExpression, ShouldExpression,
               StringLiteralExpression};
 import interpreter.testing.{TestFailedException, TestHolder, TestRunner};
-import interpreter.InterpreterVisitor;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -68,20 +67,18 @@ class TestRunnerSpec extends Spec with ShouldMatchers with MockContext {
       val matcher = new MethodInvocationExpression(null, "equal", List(new StringLiteralExpression("hello")));
       val shouldExpr = new ShouldExpression(new StringLiteralExpression("hello"), matcher);
       val context = fixture;
-
-      context.addRootFrame();
       val visitor = new InterpreterVisitor(context);
 
       shouldExpr.accept(visitor);
-      context.stack.top.lastEvaluated(0) should be (null);
+
+      // TODO(jeremiele): no idea if it is the correct behavior
+      context.stack.top.lastEvaluated.size should be (0);
     };
 
     it("should throw a test failed exception if an equals matcher is not satisfied") {
       val matcher = new MethodInvocationExpression(null, "equal", List(new StringLiteralExpression("goodbye")));
       val shouldExpr = new ShouldExpression(new StringLiteralExpression("hello"), matcher);
       val context = fixture;
-
-      context.addRootFrame();
       val visitor = new InterpreterVisitor(context);
 
       intercept[TestFailedException] {

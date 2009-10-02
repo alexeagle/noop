@@ -125,23 +125,23 @@ class MethodInvocationExpressionSpec extends Spec with ShouldMatchers with MockC
       currentFrame should be theSameInstanceAs(context.stack.top);
     };
 
-//    it("should throw an exception if an argument expression returns no value") {
-//      val context = fixture;
-//      val visitor = new InterpreterVisitor(context);
-//      val paramName = "other";
-//      val block = new Block();
-//      val myMethod = new Method("plus", "Void", block, null);
-//
-//      myMethod.parameters += new Parameter(paramName, "String");
-//      context.classLoader.findClass("String").methods += myMethod;
-//
-//      val target = new StringLiteralExpression("string1");
-//      val expr = new MethodInvocationExpression(target, "plus", List(new EvaluatedExpression(null)));
-//
-//      intercept[RuntimeException] {
-//        expr.accept(visitor);
-//      }
-//    };
+    it("should throw an exception if an argument expression returns no value") {
+      val context = fixture;
+      val visitor = new InterpreterVisitor(context);
+      val paramName = "other";
+      val block = new Block();
+      val myMethod = new Method("plus", "Void", block, null);
+
+      myMethod.parameters += new Parameter(paramName, "String");
+      context.classLoader.findClass("String").methods += myMethod;
+
+      val target = new StringLiteralExpression("string1");
+      val expr = new MethodInvocationExpression(target, "plus", List(new MockExpression()));
+
+      intercept[RuntimeException] {
+        expr.accept(visitor);
+      }
+    };
 
     it("should be aware of the 'this' identifier and dispatch the method on thisRef") {
       val context = fixture;

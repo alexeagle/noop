@@ -24,7 +24,11 @@ class MethodInvocationExpression(val left: Expression, val name: String,
 
   def accept(visitor: Visitor) = {
     left.accept(visitor);
-    arguments.foreach(arg => arg.accept(visitor));
+    visitor.enter(this);
+    arguments.foreach(arg => {
+      arg.accept(visitor);
+      visitor.afterArgumentVisit(this);
+    });
     visitor.visit(this);
   };
 }
