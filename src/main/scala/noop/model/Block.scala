@@ -22,6 +22,7 @@ import collection.mutable.{ArrayBuffer, Buffer};
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class Block extends Expression {
+
   var statements: Buffer[Expression] = new ArrayBuffer[Expression]();
 
   def accept(visitor: Visitor) = {

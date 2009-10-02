@@ -18,8 +18,9 @@ package noop.interpreter;
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import model.{Expression, Block, BooleanLiteralExpression, WhileLoop, Visitor};
-import types.NoopObject;
+import model.{Block, BooleanLiteralExpression, Expression, ReturnExpression,
+    StringLiteralExpression, Visitor, WhileLoop};
+import types.{NoopObject, NoopString};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -46,6 +47,7 @@ class ControlStructureSpec extends Spec with ShouldMatchers with MockContext {
       block.statements += expression;
 
       val whileLoop = new WhileLoop(new TrueThenFalseExpression(1), block);
+
       whileLoop.accept(visitor);
       expression.timesCalled should be(1);
     };
@@ -58,6 +60,7 @@ class ControlStructureSpec extends Spec with ShouldMatchers with MockContext {
       block.statements += expression;
 
       val whileLoop = new WhileLoop(new BooleanLiteralExpression(false), block);
+
       whileLoop.accept(visitor);
       expression.timesCalled should be(0);
     };
@@ -70,8 +73,30 @@ class ControlStructureSpec extends Spec with ShouldMatchers with MockContext {
       block.statements += expression;
 
       val whileLoop = new WhileLoop(new TrueThenFalseExpression(3), block);
+
       whileLoop.accept(visitor);
       expression.timesCalled should be(3);
+    };
+  };
+
+  describe("the return statement") {
+
+    it("should exit the current block and return the supplied value") {
+      val context = fixture;
+      val block:Block = new Block();
+      val returnMe = new ReturnExpression(new StringLiteralExpression("to return"));
+      val visitor = new InterpreterVisitor(context);
+
+      block.statements += returnMe;
+      val dontRunMe = new MockExpression((c: Context) => fail());
+
+      block.statements += dontRunMe;
+      block.accept(visitor);
+      val result = context.stack.top.lastEvaluated(0);
+
+      result should not be (null);
+      result.getClass() should be(classOf[NoopString]);
+      result.asInstanceOf[NoopString].value should be("to return");
     };
   };
 }

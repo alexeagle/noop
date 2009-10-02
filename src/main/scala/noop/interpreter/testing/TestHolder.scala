@@ -13,23 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.interpreter;
+package noop.interpreter.testing;
 
-import model.{Expression, Visitor};
+import model.{ClassDefinition, Method};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-class MockExpression(evalCallback: Context => Unit) extends Expression {
-
-  var timesCalled: Int = 0;
-
-  def this() = this(null);
-
-  def accept(visitor: Visitor) = {
-    if (evalCallback != null) {
-      evalCallback.apply(visitor.asInstanceOf[InterpreterVisitor].context);
-    }
-    timesCalled += 1;
-  };
+class TestHolder(val classDef: ClassDefinition, val testMethod: Method) {
 }
