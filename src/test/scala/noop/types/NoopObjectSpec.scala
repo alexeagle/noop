@@ -1,0 +1,51 @@
+/**
+ * Copyright 2009 Google Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package noop.types;
+
+import java.io.File;
+
+import org.scalatest.matchers.ShouldMatchers;
+import org.scalatest.Spec;
+
+import grammar.Parser;
+import interpreter.SourceFileClassLoader;
+
+/**
+ * @author gabrielh@gmail.com (Gabriel Handford)
+ */
+class NoopObjectSpec extends Spec with ShouldMatchers {
+
+  def createFixture = {
+    val stdlibSourcePath = new File(getClass().getResource("/stdlib").toURI).getAbsolutePath();
+    new SourceFileClassLoader(new Parser(), List(stdlibSourcePath))
+  };
+
+  describe("a Noop Object") {
+
+    it ("should throw NoSuchMethodException on missing native method") {
+      val classLoader = createFixture;
+      val objectClass = classLoader.findClass("Object");
+      val obj = new NoopObject(objectClass, null);
+      val exception = intercept[NoSuchMethodException] (
+        obj.executeNativeMethod(null, "testMissingNativeMethod")
+      );
+
+      exception.getMessage() should include(
+          "Native method implemention for 'testMissingNativeMethod' missing in Object");
+
+    };
+  };
+}

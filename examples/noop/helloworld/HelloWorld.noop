@@ -1,0 +1,15 @@
+import noop.Application;
+import noop.Console;
+
+class HelloWorld(Console console) implements Application {
+
+  Int main(List args) {
+    console.println("Hello World!");
+    return 0;
+  }
+
+  unittest "Should print Hello World!" {
+    Int result = main(List());
+    result should equal(0);
+  }
+}
