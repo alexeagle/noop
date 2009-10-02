@@ -25,10 +25,13 @@ class Block extends Expression {
 
   var statements: Buffer[Expression] = new ArrayBuffer[Expression]();
 
-  def accept(visitor: Visitor) = {
-    statements.foreach(statement => { 
+  def accept(visitor: Visitor): Unit = {
+    for (statement <- statements) {
       statement.accept(visitor);
+      if (statement.isInstanceOf[ReturnExpression]) {
+        return; // break is not in scala 2.7 !
+      }
       visitor.visit(this);
-    }); 
+    }
   };
 }

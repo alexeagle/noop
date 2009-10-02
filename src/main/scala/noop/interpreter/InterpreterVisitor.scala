@@ -98,10 +98,26 @@ class InterpreterVisitor(val context: Context) extends Visitor {
         Map.empty[String, NoopObject], intLiteralExpression.value);
   };
 
+  var evaluationStackSize = -1;
+
+  def enter(methodInvocationExpression: MethodInvocationExpression) = {
+    evaluationStackSize = context.stack.top.lastEvaluated.size;
+  };
+  
+  def afterArgumentVisit(methodInvocationExpression: MethodInvocationExpression) = {
+    if (context.stack.top.lastEvaluated.size > evaluationStackSize) {
+      evaluationStackSize = context.stack.top.lastEvaluated.size;
+    } else {
+      throw new RuntimeException("Argument to method " + methodInvocationExpression.name +
+          " evaluated to Void");
+    }
+  };
+
   def visit(methodInvocationExpression: MethodInvocationExpression) = {
     val methodInvocationEvaluator = new MethodInvocationEvaluator(methodInvocationExpression);
 
     methodInvocationEvaluator.execute(context, this);
+    evaluationStackSize = -1;
   };
 
   def visit(operatorExpression: OperatorExpression) = {
@@ -118,6 +134,7 @@ class InterpreterVisitor(val context: Context) extends Visitor {
     if (actual != expected) {
       throw new TestFailedException("expected " + actual + " to equal " + expected);
     }
+    context.stack.top.lastEvaluated.clear();
   };
 
   def visit(stringLiteralExpression: StringLiteralExpression) = {
