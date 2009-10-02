@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.interpreter;
 
-import model.{ClassDefinition, Method};
+package noop.interpreter.testing
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-class TestHolder(val classDef: ClassDefinition, val testMethod: Method) {
-}
+
+class TestFailedException(msg: String) extends RuntimeException(msg);

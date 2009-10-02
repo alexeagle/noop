@@ -15,6 +15,7 @@
  */
 package noop.interpreter;
 
+import interpreter.testing.TestFailedException;
 import model.{AssignmentExpression, Block, BooleanLiteralExpression, DereferenceExpression,
     EvaluatedExpression, Expression, IdentifierDeclarationExpression, IdentifierExpression,
     IntLiteralExpression, MethodInvocationExpression, OperatorExpression, ReturnExpression,
@@ -25,7 +26,7 @@ import types.{NoopBoolean, NoopInteger, NoopObject, NoopString, NoopType};
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class InterpreterVisitor(context: Context) extends Visitor {
+class InterpreterVisitor(val context: Context) extends Visitor {
 
   def visit(assignmentExpression: AssignmentExpression) = {
     val currentFrame = context.stack.top;
@@ -109,7 +110,14 @@ class InterpreterVisitor(context: Context) extends Visitor {
   def visit(returnExpression: ReturnExpression) = {
   };
 
-  def visit(shouldExpression: ShouldExpression) = {    
+  def visit(shouldExpression: ShouldExpression) = {
+    val lastEvaluated = context.stack.top.lastEvaluated;
+    val actual = lastEvaluated(0);
+    val expected = lastEvaluated(1);
+
+    if (actual != expected) {
+      throw new TestFailedException("expected " + actual + " to equal " + expected);
+    }
   };
 
   def visit(stringLiteralExpression: StringLiteralExpression) = {

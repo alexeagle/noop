@@ -43,4 +43,13 @@ class NoopString(classDef: ClassDefinition, parameterInstances: Map[String, Noop
   override def nativeMethod(name: String): (Context => Option[NoopObject]) = {
     return nativeMethodMap(name);
   }
+
+  def isComparable(obj: Any) = obj.isInstanceOf[NoopString];
+  override def equals(obj: Any) = obj match {
+    case that: NoopString => (that isComparable this) &&
+            that.value == this.value;
+    case _ => false;
+  }
+  override def hashCode = super.hashCode * 41 + value.hashCode;
+  override def toString() = value;
 }
