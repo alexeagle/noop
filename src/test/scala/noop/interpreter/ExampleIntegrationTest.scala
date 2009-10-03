@@ -15,7 +15,7 @@
  */
 package noop.interpreter;
 
-import java.io.{File, ByteArrayOutputStream}
+import java.io.{File, ByteArrayOutputStream};
 
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;

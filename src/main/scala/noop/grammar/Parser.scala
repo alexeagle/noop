@@ -17,11 +17,11 @@ package noop.grammar;
 
 import java.io.InputStream;
 
-import org.antlr.runtime.{ANTLRInputStream, ANTLRStringStream, CommonTokenStream}
-import org.antlr.runtime.tree.{CommonTree, CommonTreeNodeStream}
+import org.antlr.runtime.{ANTLRInputStream, ANTLRStringStream, CommonTokenStream};
+import org.antlr.runtime.tree.{CommonTree, CommonTreeNodeStream};
 
 import model.File;
-import grammar.antlr.{DocLexer, DocParser, NoopAST, NoopParser, NoopLexer}
+import grammar.antlr.{DocLexer, DocParser, NoopAST, NoopParser, NoopLexer};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)

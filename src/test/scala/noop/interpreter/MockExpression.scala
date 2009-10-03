@@ -15,7 +15,7 @@
  */
 package noop.interpreter;
 
-import model.{Expression, Visitor}
+import model.{Expression, Visitor};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)

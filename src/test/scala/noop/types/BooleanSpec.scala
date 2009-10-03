@@ -23,7 +23,7 @@ import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
 import grammar.Parser;
-import interpreter.{Frame, Context, SourceFileClassLoader}
+import interpreter.{Frame, Context, SourceFileClassLoader};
 import model.Modifier;
 
 /**

@@ -20,7 +20,7 @@ import org.scalatest.Spec;
 
 import model.{Block, ClassDefinition, Method, MethodInvocationExpression, ShouldExpression,
               StringLiteralExpression}
-import interpreter.testing.{TestFailedException, TestHolder, TestRunner}
+import interpreter.testing.{TestFailedException, TestHolder, TestRunner};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)

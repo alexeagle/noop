@@ -15,11 +15,11 @@
  */
 package noop.interpreter;
 
-import java.io.{FileInputStream, File}
+import java.io.{FileInputStream, File};
 
 import collection.mutable.Map;
 
-import grammar.{ParseException, Parser}
+import grammar.{ParseException, Parser};
 import model.ClassDefinition;
 
 /**

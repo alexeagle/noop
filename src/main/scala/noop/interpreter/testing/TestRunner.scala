@@ -15,7 +15,7 @@
  */
 package noop.interpreter.testing;
 
-import collection.mutable.{ArrayBuffer, Buffer, Stack}
+import collection.mutable.{ArrayBuffer, Buffer, Stack};
 
 import model.{ClassDefinition, EvaluatedExpression, Method, MethodInvocationExpression,
     StringLiteralExpression}

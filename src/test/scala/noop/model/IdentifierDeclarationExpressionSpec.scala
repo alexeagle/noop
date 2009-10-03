@@ -18,7 +18,7 @@ package noop.model;
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import interpreter.{MockContext, InterpreterVisitor}
+import interpreter.{MockContext, InterpreterVisitor};
 import types.NoopString;
 
 /**
