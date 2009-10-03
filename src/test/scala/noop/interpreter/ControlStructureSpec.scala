@@ -20,7 +20,7 @@ import org.scalatest.Spec;
 
 import model.{Block, BooleanLiteralExpression, Expression, ReturnExpression,
     StringLiteralExpression, Visitor, WhileLoop}
-import types.{NoopObject, NoopString}
+import types.{NoopObject, NoopString};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)

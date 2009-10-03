@@ -15,14 +15,14 @@
  */
 package noop.interpreter;
 
-import java.io.{PrintWriter, BufferedWriter, FileWriter, File}
+import java.io.{PrintWriter, BufferedWriter, FileWriter, File};
 
 import collection.mutable.ArrayBuffer;
 
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import grammar.{ParseException, Parser}
+import grammar.{ParseException, Parser};
 import model.ClassDefinition;
 
 /**

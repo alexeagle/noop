@@ -17,8 +17,8 @@ package noop.types;
 
 import collection.mutable.Map;
 
-import interpreter.{Context, InterpreterVisitor}
-import model.{ClassDefinition, EvaluatedExpression, MethodInvocationExpression}
+import interpreter.{Context, InterpreterVisitor};
+import model.{ClassDefinition, EvaluatedExpression, MethodInvocationExpression};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)

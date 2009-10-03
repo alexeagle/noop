@@ -15,7 +15,7 @@
  */
 package noop.interpreter;
 
-import java.io.{ByteArrayOutputStream, File}
+import java.io.{ByteArrayOutputStream, File};
 
 import collection.mutable.Stack;
 
@@ -23,7 +23,7 @@ import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
 import grammar.Parser;
-import model.{IntLiteralExpression, OperatorExpression}
+import model.{IntLiteralExpression, OperatorExpression};
 import types.NoopInteger;
 
 /**

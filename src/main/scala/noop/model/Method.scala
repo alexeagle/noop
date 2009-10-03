@@ -15,7 +15,7 @@
  */
 package noop.model;
 
-import collection.mutable.{ArrayBuffer, Buffer}
+import collection.mutable.{ArrayBuffer, Buffer};
 
 import interpreter.Context;
 

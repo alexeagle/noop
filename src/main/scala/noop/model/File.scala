@@ -15,7 +15,7 @@
  */
 package noop.model;
 
-import scala.collection.mutable.{ArrayBuffer, Buffer}
+import scala.collection.mutable.{ArrayBuffer, Buffer};
 
 /**
  * A Noop source file.

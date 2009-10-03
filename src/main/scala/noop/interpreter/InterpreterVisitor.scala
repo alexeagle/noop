@@ -20,7 +20,7 @@ import model.{AssignmentExpression, Block, BooleanLiteralExpression, Dereference
     EvaluatedExpression, Expression, IdentifierDeclarationExpression, IdentifierExpression,
     IntLiteralExpression, MethodInvocationExpression, OperatorExpression, ReturnExpression,
     ShouldExpression, StringLiteralExpression, Visitor, WhileLoop}
-import types.{NoopBoolean, NoopInteger, NoopObject, NoopString, NoopType}
+import types.{NoopBoolean, NoopInteger, NoopObject, NoopString, NoopType};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)

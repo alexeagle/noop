@@ -18,8 +18,8 @@ package noop.model;
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import interpreter.{Context, Frame, InterpreterVisitor, MockExpression, MockContext}
-import types.{NoopString, NoopObject}
+import interpreter.{Context, Frame, InterpreterVisitor, MockExpression, MockContext};
+import types.{NoopString, NoopObject};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)

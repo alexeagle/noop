@@ -18,7 +18,7 @@ package noop.grammar;
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import model.{OperatorExpression, IntLiteralExpression, IdentifierDeclarationExpression}
+import model.{OperatorExpression, IntLiteralExpression, IdentifierDeclarationExpression};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)

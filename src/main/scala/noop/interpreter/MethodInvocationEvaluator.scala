@@ -17,8 +17,8 @@ package noop.interpreter;
 
 import collection.mutable.Stack;
 
-import model.{MethodInvocationExpression, Visitor}
-import types.{NoopObject, NoopType}
+import model.{MethodInvocationExpression, Visitor};
+import types.{NoopObject, NoopType};
 
 /**
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)

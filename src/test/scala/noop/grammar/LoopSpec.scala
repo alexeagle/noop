@@ -18,7 +18,7 @@ package noop.grammar;
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import model.{BooleanLiteralExpression, WhileLoop}
+import model.{BooleanLiteralExpression, WhileLoop};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)

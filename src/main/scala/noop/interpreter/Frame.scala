@@ -15,10 +15,10 @@
  */
 package noop.interpreter;
 
-import collection.mutable.{Map, Stack}
+import collection.mutable.{Map, Stack};
 
 import model.Method;
-import types.{NoopType, NoopObject}
+import types.{NoopType, NoopObject};
 
  /**
   * @author alexeagle@google.com (Alex Eagle)
