@@ -31,7 +31,7 @@ class NoopObjectSpec extends Spec with ShouldMatchers {
   def createFixture = {
     val stdlibSourcePath = new File(getClass().getResource("/stdlib").toURI).getAbsolutePath();
     new SourceFileClassLoader(new Parser(), List(stdlibSourcePath))
-  };
+  }
 
   describe("a Noop Object") {
 
@@ -46,6 +46,6 @@ class NoopObjectSpec extends Spec with ShouldMatchers {
       exception.getMessage() should include(
           "Native method implemention for 'testMissingNativeMethod' missing in Object");
 
-    };
-  };
+    }
+  }
 }

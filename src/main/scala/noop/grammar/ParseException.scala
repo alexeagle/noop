@@ -21,5 +21,4 @@ package noop.grammar;
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class ParseException(val message: String) extends RuntimeException(message) {
-}
+class ParseException(val message: String) extends RuntimeException(message)

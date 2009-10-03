@@ -15,7 +15,7 @@
  */
 package noop.model;
 
-import collection.mutable.{ArrayBuffer, Buffer};
+import collection.mutable.{ArrayBuffer, Buffer}
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -33,5 +33,5 @@ class Block extends Expression {
       }
       visitor.visit(this);
     }
-  };
+  }
 }

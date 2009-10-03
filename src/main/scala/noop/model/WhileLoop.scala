@@ -22,7 +22,7 @@ package noop.model;
 class WhileLoop(val continueCondition: Expression, val body: Block) extends Expression {
 
   def accept(visitor: Visitor) = {
-	continueCondition.accept(visitor);
-	visitor.visit(this);
-  };
+	  continueCondition.accept(visitor);
+	  visitor.visit(this);
+  }
 }

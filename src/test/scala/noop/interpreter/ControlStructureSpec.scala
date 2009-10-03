@@ -19,8 +19,8 @@ import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
 import model.{Block, BooleanLiteralExpression, Expression, ReturnExpression,
-    StringLiteralExpression, Visitor, WhileLoop};
-import types.{NoopObject, NoopString};
+    StringLiteralExpression, Visitor, WhileLoop}
+import types.{NoopObject, NoopString}
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -34,7 +34,7 @@ class ControlStructureSpec extends Spec with ShouldMatchers with MockContext {
     def accept(visitor: Visitor) = {
       called += 1;
       new BooleanLiteralExpression(called <= timesToReturnTrue).accept(visitor);
-    };
+    }
   }
 
   describe("the while loop") {
@@ -50,7 +50,7 @@ class ControlStructureSpec extends Spec with ShouldMatchers with MockContext {
 
       whileLoop.accept(visitor);
       expression.timesCalled should be(1);
-    };
+    }
 
     it("should not execute the body when the condition is false") {
       val context = fixture;
@@ -63,7 +63,7 @@ class ControlStructureSpec extends Spec with ShouldMatchers with MockContext {
 
       whileLoop.accept(visitor);
       expression.timesCalled should be(0);
-    };
+    }
 
     it("should execute the body repeatedly as long as the condition is true") {
       val context = fixture;
@@ -76,8 +76,8 @@ class ControlStructureSpec extends Spec with ShouldMatchers with MockContext {
 
       whileLoop.accept(visitor);
       expression.timesCalled should be(3);
-    };
-  };
+    }
+  }
 
   describe("the return statement") {
 
@@ -97,6 +97,6 @@ class ControlStructureSpec extends Spec with ShouldMatchers with MockContext {
       result should not be (null);
       result.getClass() should be(classOf[NoopString]);
       result.asInstanceOf[NoopString].value should be("to return");
-    };
-  };
+    }
+  }
 }

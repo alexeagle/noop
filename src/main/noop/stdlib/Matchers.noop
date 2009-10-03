@@ -1,3 +1,0 @@
-class Matchers() {
-  native Void equal(Object expected, Object actual) {}
-}

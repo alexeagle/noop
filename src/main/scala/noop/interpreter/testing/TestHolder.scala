@@ -20,5 +20,4 @@ import model.{ClassDefinition, Method};
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-class TestHolder(val classDef: ClassDefinition, val testMethod: Method) {
-}
+class TestHolder(val classDef: ClassDefinition, val testMethod: Method)

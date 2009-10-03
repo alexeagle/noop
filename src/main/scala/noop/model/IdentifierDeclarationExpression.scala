@@ -26,8 +26,8 @@ class IdentifierDeclarationExpression(val noopType: String, val name: String) ex
     val value = initialValue match {
       case Some(v) => v;
       case None => new EvaluatedExpression(null);
-    };
+    }
     value.accept(visitor);
     visitor.visit(this);
-  };  
+  }
 }

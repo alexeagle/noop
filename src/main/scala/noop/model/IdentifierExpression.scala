@@ -23,7 +23,7 @@ class IdentifierExpression(val identifier: String) extends Expression {
 
   def accept(visitor: Visitor) = {
     visitor.visit(this);
-  };
+  }
 
   override def toString() = identifier;
 }

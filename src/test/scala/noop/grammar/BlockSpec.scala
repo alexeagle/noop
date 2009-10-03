@@ -44,7 +44,7 @@ class BlockSpec extends Spec with ShouldMatchers {
 
       returnExpression.expr.getClass() should be(classOf[IntLiteralExpression]);
       returnExpression.expr.asInstanceOf[IntLiteralExpression].value should be(0);
-    };
+    }
 
     it("should allow chained property access on properties") {
       val source = "{ b.c.d; }";
@@ -65,7 +65,7 @@ class BlockSpec extends Spec with ShouldMatchers {
       deref2.right.getClass() should be(classOf[IdentifierExpression]);
       deref2.left.asInstanceOf[IdentifierExpression].identifier should be("b");
       deref2.right.asInstanceOf[IdentifierExpression].identifier should be("c");
-    };
+    }
 
     it("should allow a method call on implicit 'this'") {
       val source = "{ a(); }";
@@ -80,7 +80,7 @@ class BlockSpec extends Spec with ShouldMatchers {
       methodInvocation.left.asInstanceOf[IdentifierExpression].identifier should be("this");
       methodInvocation.name should be("a");
       methodInvocation.arguments should be ('empty);
-    };
+    }
 
     it("should allow calling a method on an identifier") {
       val source = "{ a.b(); }";
@@ -97,7 +97,7 @@ class BlockSpec extends Spec with ShouldMatchers {
       methodInvocation.name should be("b");
       methodInvocation.arguments should be(new ArrayBuffer[Expression]);
       methodInvocation.arguments.isEmpty should be (true);
-    };
+    }
 
     it("should allow method chaining") {
       val source = "{ a.b().c(); }";
@@ -118,7 +118,7 @@ class BlockSpec extends Spec with ShouldMatchers {
 
       method1.name should be("c");
       method1.arguments should be('empty);
-    };
+    }
 
     it("should allow a method call on a property") {
       val source = "{ a.b.c(); }";
@@ -139,7 +139,7 @@ class BlockSpec extends Spec with ShouldMatchers {
 
       method.name should be("c");
       method.arguments should be('empty);
-    };
+    }
 
     it("should allow a method call with arguments") {
       val source = "{ a.b(c, \"d\"); }";
@@ -159,6 +159,6 @@ class BlockSpec extends Spec with ShouldMatchers {
       methodInvocation.arguments(0).asInstanceOf[IdentifierExpression].identifier should be("c");
       methodInvocation.arguments(1).getClass() should be(classOf[StringLiteralExpression]);
       methodInvocation.arguments(1).asInstanceOf[StringLiteralExpression].value should be ("d");
-    };
-  };
+    }
+  }
 }

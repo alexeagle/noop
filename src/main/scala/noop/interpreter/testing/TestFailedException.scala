@@ -19,5 +19,4 @@ package noop.interpreter.testing
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-
-class TestFailedException(msg: String) extends RuntimeException(msg);
+class TestFailedException(msg: String) extends RuntimeException(msg)

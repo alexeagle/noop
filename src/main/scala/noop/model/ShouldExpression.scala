@@ -36,5 +36,5 @@ class ShouldExpression(left: Expression, right: Expression) extends Expression {
       }
     }
     visitor.visit(this);
-  };
+  }
 }

@@ -23,7 +23,7 @@ import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
 import grammar.Parser;
-import interpreter.{Frame, Context, SourceFileClassLoader};
+import interpreter.{Frame, Context, SourceFileClassLoader}
 import model.Modifier;
 
 /**
@@ -34,7 +34,7 @@ class StringSpec extends Spec with ShouldMatchers {
   def createFixture = {
     val stdlibSourcePath = new File(getClass().getResource("/stdlib").toURI).getAbsolutePath();
     new SourceFileClassLoader(new Parser(), List(stdlibSourcePath))
-  };
+  }
 
   describe("a Noop String") {
 
@@ -42,7 +42,7 @@ class StringSpec extends Spec with ShouldMatchers {
       val classLoader = createFixture;
       val classDef = classLoader.findClass("String");
       classDef.name should be("String");
-    };
+    }
 
     it("should have a native implementation of the length method") {
       val classLoader = createFixture;
@@ -61,6 +61,6 @@ class StringSpec extends Spec with ShouldMatchers {
 
       theString should not be (null);
       theString.asInstanceOf[NoopInteger].value should be(5);
-    };
-  };
+    }
+  }
 }

@@ -28,5 +28,5 @@ class AssignmentExpression(val lhs: Expression, val rhs: Expression) extends Exp
     lhs.accept(visitor);
     rhs.accept(visitor);
     visitor.visit(this);
-  };
+  }
 }

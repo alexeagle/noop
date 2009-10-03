@@ -26,12 +26,12 @@ import model.ClassDefinition;
  */
 class NoopObject(val classDef: ClassDefinition, val parameterInstances: Map[String, NoopObject]) {
 
-  def nativeMethod(name: String): (Context => Option[NoopObject]) = {
+  def nativeMethod(name: String): (Context => NoopObject) = {
     throw new NoSuchMethodException("Native method implemention for '"
         + name + "' missing in " + classDef.name);
-  };
+  }
 
-   def executeNativeMethod(c: Context, name: String): Option[NoopObject] = {
+   def executeNativeMethod(c: Context, name: String): NoopObject = {
     return nativeMethod(name).apply(c);
-  };
+  }
 }

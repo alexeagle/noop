@@ -23,5 +23,5 @@ class BooleanLiteralExpression(val value: Boolean) extends Expression {
 
   def accept(visitor: Visitor) = {
     visitor.visit(this);
-  };
+  }
 }

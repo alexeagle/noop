@@ -16,7 +16,7 @@
 package noop.interpreter;
 
 import collection.mutable.Stack;
-import model.{Method, Modifier, ClassDefinition};
+import model.{Method, Modifier, ClassDefinition}
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -38,5 +38,5 @@ trait MockContext {
 
     context.addRootFrame();
     context;
-  };
+  }
 }

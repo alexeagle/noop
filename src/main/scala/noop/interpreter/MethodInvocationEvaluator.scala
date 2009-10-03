@@ -17,8 +17,8 @@ package noop.interpreter;
 
 import collection.mutable.Stack;
 
-import model.{MethodInvocationExpression, Visitor};
-import types.{NoopObject, NoopType};
+import model.{MethodInvocationExpression, Visitor}
+import types.{NoopObject, NoopType}
 
 /**
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
@@ -29,7 +29,7 @@ class MethodInvocationEvaluator(methodInvocationExpression: MethodInvocationExpr
     val method = thisRef.classDef.findMethod(methodInvocationExpression.name);
 
     return new Frame(thisRef, method);
-  };
+  }
 
   def execute(context: Context, visitor: Visitor) = {
     val currentFrame = context.stack.top;
@@ -58,11 +58,11 @@ class MethodInvocationEvaluator(methodInvocationExpression: MethodInvocationExpr
     } finally {
       removeStackFrame(context);
     }
-  };
+  }
 
   def removeStackFrame(context: Context) = {
     val oldFrame = context.stack.pop();
 
     context.stack.top.lastEvaluated ++= oldFrame.lastEvaluated;
-  };
+  }
 }

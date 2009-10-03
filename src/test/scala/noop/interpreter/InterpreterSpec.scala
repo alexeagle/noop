@@ -15,7 +15,7 @@
  */
 package noop.interpreter;
 
-import java.io.{ByteArrayOutputStream, File};
+import java.io.{ByteArrayOutputStream, File}
 
 import collection.mutable.Stack;
 
@@ -23,7 +23,7 @@ import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
 import grammar.Parser;
-import model.{IntLiteralExpression, OperatorExpression};
+import model.{IntLiteralExpression, OperatorExpression}
 import types.NoopInteger;
 
 /**
@@ -39,7 +39,7 @@ class InterpreterSpec extends Spec with ShouldMatchers {
 
     context.addRootFrame();
     (classLoader, context);
-  };
+  }
 
   describe("the interpreter") {
 
@@ -53,7 +53,7 @@ class InterpreterSpec extends Spec with ShouldMatchers {
 
       result should not be (null);
       result.asInstanceOf[NoopInteger].value should be (5);
-    };
+    }
 
     it("should evaluate more complex arithmetic") {
       val source = "{ (1 + 2) * 3 - 10 / 2 % 4; }";
@@ -67,7 +67,7 @@ class InterpreterSpec extends Spec with ShouldMatchers {
 
       result should not be (null);
       result.asInstanceOf[NoopInteger].value should be (8);
-    };
+    }
 
     it("should assign variables") {
       val source = "{ Int a; a = 1; }";
@@ -80,6 +80,6 @@ class InterpreterSpec extends Spec with ShouldMatchers {
       context.stack.top.identifiers should contain key("a");
       context.stack.top.identifiers("a")._2 should not be (null);
       context.stack.top.identifiers("a")._2.asInstanceOf[NoopInteger].value should equal (1);
-    };
-  };
+    }
+  }
 }

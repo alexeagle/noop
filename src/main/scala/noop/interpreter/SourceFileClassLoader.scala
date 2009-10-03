@@ -15,11 +15,11 @@
  */
 package noop.interpreter;
 
-import java.io.{FileInputStream, File};
+import java.io.{FileInputStream, File}
 
 import collection.mutable.Map;
 
-import grammar.{ParseException, Parser};
+import grammar.{ParseException, Parser}
 import model.ClassDefinition;
 
 /**
@@ -38,7 +38,7 @@ class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends Clas
       case ex: ParseException =>
           throw new ParseException("Failed to parse " + file.getAbsolutePath());
     }
-  };
+  }
 
   def findClass(className: String): ClassDefinition = {
     val parts = className.split("\\.");
@@ -61,18 +61,18 @@ class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends Clas
       }
     }
     throw new ClassNotFoundException("Could not find class: " + className);
-  };
+  }
 
   def addNativeClass(name: String, classDef: ClassDefinition) = {
     cache += Pair(name, classDef);
-  };
+  }
 
   def eachClass(f: ClassDefinition => Unit) = {
     for (path <- srcPaths) {
       var srcRoot = new File(path);
       eachClassInPath(srcRoot, f);
     }
-  };
+  }
 
   def eachClassInPath(dir: File, f: ClassDefinition => Unit): Unit = {
     for(file <- dir.listFiles()) {
@@ -82,5 +82,5 @@ class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends Clas
         f.apply(getClassDefinition(file));
       }
     }
-  };
+  }
 }

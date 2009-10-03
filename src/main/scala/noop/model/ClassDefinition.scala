@@ -15,10 +15,10 @@
  */
 package noop.model;
 
-import collection.mutable.{ArrayBuffer, Buffer, Map};
+import collection.mutable.{ArrayBuffer, Buffer, Map}
 
 import interpreter.ClassLoader;
-import types.{NoopConsole, NoopObject};
+import types.{NoopConsole, NoopObject}
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
