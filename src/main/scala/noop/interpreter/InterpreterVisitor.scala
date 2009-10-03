@@ -19,8 +19,8 @@ import interpreter.testing.TestFailedException;
 import model.{AssignmentExpression, Block, BooleanLiteralExpression, DereferenceExpression,
     EvaluatedExpression, Expression, IdentifierDeclarationExpression, IdentifierExpression,
     IntLiteralExpression, MethodInvocationExpression, OperatorExpression, ReturnExpression,
-    ShouldExpression, StringLiteralExpression, Visitor, WhileLoop};
-import types.{NoopBoolean, NoopInteger, NoopObject, NoopString, NoopType};
+    ShouldExpression, StringLiteralExpression, Visitor, WhileLoop}
+import types.{NoopBoolean, NoopInteger, NoopObject, NoopString, NoopType}
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -42,25 +42,25 @@ class InterpreterVisitor(val context: Context) extends Visitor {
     } else {
       throw new IllegalStateException("No identifier " + identifier);
     }
-  };
+  }
 
   def visit(block: Block) = {
     context.stack.top.lastEvaluated.clear();
-  };
+  }
 
   def visit(booleanLiteralExpression: BooleanLiteralExpression) = {
     val noopBooleanClassDef = context.classLoader.findClass("Boolean");
 
     context.stack.top.lastEvaluated += new NoopBoolean(noopBooleanClassDef,
         Map.empty[String, NoopObject], booleanLiteralExpression.value);
-  };
+  }
 
   def visit(dereferenceExpression: DereferenceExpression) = {
-  };
+  }
 
   def visit(evaluatedExpression: EvaluatedExpression) = {
     context.stack.top.lastEvaluated += evaluatedExpression.value;
-  };
+  }
 
   def visit(identifierDeclarationExpression: IdentifierDeclarationExpression) = {
     val currentFrame = context.stack.top;
@@ -73,7 +73,7 @@ class InterpreterVisitor(val context: Context) extends Visitor {
     currentFrame.lastEvaluated.clear();
     currentFrame.addIdentifier(identifierDeclarationExpression.name,
         new Tuple2[NoopType, NoopObject](null, obj)); 
-  };
+  }
 
   def visit(identifierExpression: IdentifierExpression) = {
     val currentFrame = context.stack.top;
@@ -89,20 +89,20 @@ class InterpreterVisitor(val context: Context) extends Visitor {
       throw new RuntimeException(
           "Not an IdentifierExpression: " + identifier);
     }
-  };
+  }
 
   def visit(intLiteralExpression: IntLiteralExpression) = {
     val noopIntegerClassDef = context.classLoader.findClass("Int");
 
     context.stack.top.lastEvaluated += new NoopInteger(noopIntegerClassDef,
         Map.empty[String, NoopObject], intLiteralExpression.value);
-  };
+  }
 
   var evaluationStackSize = -1;
 
   def enter(methodInvocationExpression: MethodInvocationExpression) = {
     evaluationStackSize = context.stack.top.lastEvaluated.size;
-  };
+  }
   
   def afterArgumentVisit(methodInvocationExpression: MethodInvocationExpression) = {
     if (context.stack.top.lastEvaluated.size > evaluationStackSize) {
@@ -111,20 +111,20 @@ class InterpreterVisitor(val context: Context) extends Visitor {
       throw new RuntimeException("Argument to method " + methodInvocationExpression.name +
           " evaluated to Void");
     }
-  };
+  }
 
   def visit(methodInvocationExpression: MethodInvocationExpression) = {
     val methodInvocationEvaluator = new MethodInvocationEvaluator(methodInvocationExpression);
 
     methodInvocationEvaluator.execute(context, this);
     evaluationStackSize = -1;
-  };
+  }
 
   def visit(operatorExpression: OperatorExpression) = {
-  };
+  }
 
   def visit(returnExpression: ReturnExpression) = {
-  };
+  }
 
   def visit(shouldExpression: ShouldExpression) = {
     val lastEvaluated = context.stack.top.lastEvaluated;
@@ -135,14 +135,14 @@ class InterpreterVisitor(val context: Context) extends Visitor {
       throw new TestFailedException("expected " + actual + " to equal " + expected);
     }
     context.stack.top.lastEvaluated.clear();
-  };
+  }
 
   def visit(stringLiteralExpression: StringLiteralExpression) = {
     val noopStringClassDef = context.classLoader.findClass("String");
 
     context.stack.top.lastEvaluated += new NoopString(noopStringClassDef,
         Map.empty[String, NoopObject], stringLiteralExpression.value);
-  };
+  }
 
   def visit(whileLoop: WhileLoop) = {
     if (context.stack.top.lastEvaluated(0).asInstanceOf[NoopBoolean].value) {
@@ -150,5 +150,5 @@ class InterpreterVisitor(val context: Context) extends Visitor {
       whileLoop.accept(this);
     }
     context.stack.top.lastEvaluated.clear();
-  };
+  }
 }

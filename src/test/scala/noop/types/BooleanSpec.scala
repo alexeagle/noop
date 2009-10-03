@@ -23,7 +23,7 @@ import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
 import grammar.Parser;
-import interpreter.{Frame, Context, SourceFileClassLoader};
+import interpreter.{Frame, Context, SourceFileClassLoader}
 import model.Modifier;
 
 /**
@@ -34,7 +34,7 @@ class BooleanSpec extends Spec with ShouldMatchers {
   def createFixture = {
     val stdlibSourcePath = new File(getClass().getResource("/stdlib").toURI).getAbsolutePath();
     new SourceFileClassLoader(new Parser(), List(stdlibSourcePath))
-  };
+  }
 
   describe("a Noop Boolean") {
 
@@ -42,7 +42,7 @@ class BooleanSpec extends Spec with ShouldMatchers {
       val classLoader = createFixture;
       val classDef = classLoader.findClass("Boolean");
       classDef.name should be("Boolean");
-    };
+    }
 
     it("should have a native implementation of the xor method") {
       val classLoader = createFixture;
@@ -65,6 +65,6 @@ class BooleanSpec extends Spec with ShouldMatchers {
 
       theBool should not be (null);
       theBool.asInstanceOf[NoopBoolean].value should be(true);
-    };
-  };
+    }
+  }
 }

@@ -33,6 +33,6 @@ class ParserSpec extends Spec with ShouldMatchers {
       intercept[ParseException] {
         val classDef = parser.file(source);
       }
-    };
-  };
+    }
+  }
 }

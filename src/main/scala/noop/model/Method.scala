@@ -15,7 +15,7 @@
  */
 package noop.model;
 
-import collection.mutable.{ArrayBuffer, Buffer};
+import collection.mutable.{ArrayBuffer, Buffer}
 
 import interpreter.Context;
 
@@ -25,7 +25,7 @@ import interpreter.Context;
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class Method(val name: String, val returnType: String, val block: Block, val documentation:String) {
+class Method(val name: String, val returnType: String, val block: Block, val documentation:String)  {
 
   val parameters: Buffer[Parameter] = new ArrayBuffer[Parameter]();
   val modifiers: Buffer[Modifier.Value] = new ArrayBuffer[Modifier.Value]();
@@ -34,13 +34,10 @@ class Method(val name: String, val returnType: String, val block: Block, val doc
     if (modifiers.contains(Modifier.native)) {
       val obj = context.stack.top.thisRef;
 
-      val returnValue = obj.executeNativeMethod(context, name) match {
-        case Some(rv) => rv;
-        case None => null;
-      };
+      val returnValue = obj.executeNativeMethod(context, name);
       context.stack.top.lastEvaluated += returnValue;
     } else {
       block.accept(visitor);
     }
-  };
+  }
 }

@@ -29,29 +29,24 @@ class NoopBoolean(classDef: ClassDefinition, parameterInstances: Map[String, Noo
 
   def other(c: Context): Boolean = {
     c.stack.top.identifiers("other")._2.asInstanceOf[NoopBoolean].value;
-  };
+  }
 
-  def nativeMethodMap = immutable.Map[String, Context => Option[NoopObject]](
+  def emptyParams = Map.empty[String, NoopObject];
+  def nativeMethodMap = immutable.Map[String, Context => NoopObject](
 
-    // TODO: this is an ugly way to make a new NoopBoolean
-    "and" -> ((c: Context) => Some(new NoopBoolean(classDef,
-        Map.empty[String, NoopObject], value && other(c)))),
-    "or" -> ((c: Context) => Some(new NoopBoolean(classDef,
-        Map.empty[String, NoopObject], value || other(c)))),
-    "xor" -> ((c: Context) => Some(new NoopBoolean(classDef,
-        Map.empty[String, NoopObject], value ^ other(c)))),
-    "not" -> ((c: Context) => Some(new NoopBoolean(classDef,
-        Map.empty[String, NoopObject], !value))),
+    "and" -> ((c: Context) => new NoopBoolean(classDef, emptyParams, value && other(c))),
+    "or" -> ((c: Context) => new NoopBoolean(classDef, emptyParams, value || other(c))),
+    "xor" -> ((c: Context) => new NoopBoolean(classDef, emptyParams, value ^ other(c))),
+    "not" -> ((c: Context) => new NoopBoolean(classDef, emptyParams, !value)),
     "toString" -> ((c: Context) => {
       val classLoader = c.classLoader;
       val classDef = classLoader.findClass("String");
 
-      Some(new NoopString(classDef, Map.empty[String, NoopObject],
-          value.toString));
+      new NoopString(classDef, emptyParams, value.toString);
     })
   );
 
-  override def nativeMethod(name: String): (Context => Option[NoopObject]) = {
+  override def nativeMethod(name: String): (Context => NoopObject) = {
     return nativeMethodMap(name);
-  };
+  }
 }

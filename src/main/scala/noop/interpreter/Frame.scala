@@ -15,10 +15,10 @@
  */
 package noop.interpreter;
 
-import collection.mutable.{Map, Stack};
+import collection.mutable.{Map, Stack}
 
 import model.Method;
-import types.{NoopType, NoopObject};
+import types.{NoopType, NoopObject}
 
  /**
   * @author alexeagle@google.com (Alex Eagle)
@@ -34,5 +34,5 @@ class Frame(val thisRef: NoopObject, val method: Method) {
       throw new RuntimeException("Identifier " + name + " shadowing existing identifier.");
     }
     identifiers += Pair(name, arg);
-  };
+  }
 }

@@ -23,5 +23,5 @@ class DereferenceExpression(val left: Expression, val right: Expression) extends
 
   def accept(visitor: Visitor) = {
     visitor.visit(this);
-  };
+  }
 }

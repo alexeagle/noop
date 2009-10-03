@@ -33,5 +33,5 @@ class OperatorExpression(val left: Expression, val operator: String, val right: 
 
     new MethodInvocationExpression(left, methodName, List(right)).accept(visitor);
     visitor.visit(this);
-  };
+  }
 }

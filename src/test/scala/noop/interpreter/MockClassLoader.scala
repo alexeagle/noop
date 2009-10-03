@@ -32,9 +32,9 @@ class MockClassLoader() extends ClassLoader {
 
   def findClass(className: String): ClassDefinition = {
     return classes(className);
-  };
+  }
 
   def getClassDefinition(file: File): ClassDefinition = {
     return classes.values.next;
-  };
+  }
 }

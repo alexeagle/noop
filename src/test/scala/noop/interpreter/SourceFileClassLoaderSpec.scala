@@ -15,14 +15,14 @@
  */
 package noop.interpreter;
 
-import java.io.{PrintWriter, BufferedWriter, FileWriter, File};
+import java.io.{PrintWriter, BufferedWriter, FileWriter, File}
 
 import collection.mutable.ArrayBuffer;
 
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import grammar.{ParseException, Parser};
+import grammar.{ParseException, Parser}
 import model.ClassDefinition;
 
 /**
@@ -41,7 +41,7 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       intercept[RuntimeException] {
         classLoader.findClass("Foo");
       }
-    };
+    }
 
     it("should load a class from a source path") {
       val source = new File(tmpDir, "MyClass.noop");
@@ -55,7 +55,7 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       val classDef = classLoader.findClass("MyClass")
 
       classDef.name should equal("MyClass")
-	};
+	}
 
     it("should load a class in a namespace") {
       new File(tmpDir, "noop").mkdir();
@@ -70,7 +70,7 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       val classDef = classLoader.findClass("noop.Foo")
 
       classDef.name should equal("Foo")
-    };
+    }
 
     it("should load a class in a nested namespace") {
       val dir = new File(new File(tmpDir, "noop"), "package");
@@ -86,7 +86,7 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       val classDef = classLoader.findClass("noop.package.Foo")
 
       classDef.name should equal("Foo")
-    };
+    }
 
     it("should throw ClassNotFound if the class doesn't exist") {
       val srcPaths = List(tmpDir.getAbsolutePath());
@@ -94,7 +94,7 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       intercept[ClassNotFoundException] {
         classLoader.findClass("Foo");
       }
-    };
+    }
 
     // Actually, it might be annoying that changes to the source aren't seen?
     // it("should not parse the source file more than once") {
@@ -117,6 +117,6 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       classLoader.eachClass((c:ClassDefinition) => classesFound += c);
       classesFound should have length(1);
       classesFound(0).name should be("Foo");
-    };
-  };
+    }
+  }
 }

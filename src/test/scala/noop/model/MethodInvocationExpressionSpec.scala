@@ -18,8 +18,8 @@ package noop.model;
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import interpreter.{Context, Frame, InterpreterVisitor, MockExpression, MockContext};
-import types.{NoopString, NoopObject};
+import interpreter.{Context, Frame, InterpreterVisitor, MockExpression, MockContext}
+import types.{NoopString, NoopObject}
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -38,7 +38,7 @@ class MethodInvocationExpressionSpec extends Spec with ShouldMatchers with MockC
       );
       exception.getMessage() should include("noSuchMethodSorry");
       exception.getMessage() should include("String");
-    };
+    }
 
     it("should evaluate the method body in a new stack frame") {
       val context = fixture;
@@ -53,7 +53,7 @@ class MethodInvocationExpressionSpec extends Spec with ShouldMatchers with MockC
       val target = new StringLiteralExpression("aString");
       val expr = new MethodInvocationExpression(target, "length", List());
       expr.accept(visitor);
-    };
+    }
 
     it("should evaluate arguments and assign them to local variables indicated by the parameters") {
       val context = fixture;
@@ -76,7 +76,7 @@ class MethodInvocationExpressionSpec extends Spec with ShouldMatchers with MockC
       val expr = new MethodInvocationExpression(target, "plus", List(new StringLiteralExpression(arg)));
 
       expr.accept(visitor);
-    };
+    }
 
     it("should throw an exception if the number of arguments don't match the parameter count") {
       val context = fixture;
@@ -91,7 +91,7 @@ class MethodInvocationExpressionSpec extends Spec with ShouldMatchers with MockC
       intercept[RuntimeException] {
         expr.accept(visitor);
       }
-    };
+    }
 
     it("should throw an exception if the evaluated argument does not match the type of the parameter") {
       val context = fixture;
@@ -106,7 +106,7 @@ class MethodInvocationExpressionSpec extends Spec with ShouldMatchers with MockC
       intercept[RuntimeException] {
         expr.accept(visitor);
       }
-    };
+    }
 
     it("should restore the original stack frame when finished even if exception") {
       val context = fixture;
@@ -123,7 +123,7 @@ class MethodInvocationExpressionSpec extends Spec with ShouldMatchers with MockC
         expr.accept(visitor);
       }
       currentFrame should be theSameInstanceAs(context.stack.top);
-    };
+    }
 
     it("should throw an exception if an argument expression returns no value") {
       val context = fixture;
@@ -141,7 +141,7 @@ class MethodInvocationExpressionSpec extends Spec with ShouldMatchers with MockC
       intercept[RuntimeException] {
         expr.accept(visitor);
       }
-    };
+    }
 
     it("should be aware of the 'this' identifier and dispatch the method on thisRef") {
       val context = fixture;
@@ -155,6 +155,6 @@ class MethodInvocationExpressionSpec extends Spec with ShouldMatchers with MockC
       val expr = new MethodInvocationExpression(target, "length", List());
 
       expr.accept(visitor);
-    };
-  };
+    }
+  }
 }

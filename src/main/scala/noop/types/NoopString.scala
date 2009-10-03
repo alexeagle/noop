@@ -27,20 +27,19 @@ import model.ClassDefinition;
 class NoopString(classDef: ClassDefinition, parameterInstances: Map[String, NoopObject],
     val value: String) extends NoopObject(classDef, parameterInstances) {
 
-  def nativeMethodMap = immutable.Map[String, Context => Option[NoopObject]](
-    "toString" -> ((c: Context) => Some(new NoopString(classDef,
-        Map.empty[String, NoopObject], value))),
+  def nativeMethodMap = immutable.Map[String, Context => NoopObject](
+    "toString" -> ((c: Context) => new NoopString(classDef,
+        Map.empty[String, NoopObject], value)),
 
-    // TODO: not the right way to make an integer
-    "length" -> ((c: Context) => Some({
+    "length" -> ((c: Context) => {
       val classLoader = c.classLoader;
       val classDef = classLoader.findClass("Int");
 
       new NoopInteger(classDef, Map.empty[String, NoopObject], value.length);
-    }))
+    })
   );
 
-  override def nativeMethod(name: String): (Context => Option[NoopObject]) = {
+  override def nativeMethod(name: String): (Context => NoopObject) = {
     return nativeMethodMap(name);
   }
 

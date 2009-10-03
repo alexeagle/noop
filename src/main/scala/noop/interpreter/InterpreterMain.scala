@@ -37,8 +37,8 @@ object InterpreterMain {
     val classLoader = new SourceFileClassLoader(new Parser(), args.toList.tail);
     val mainClass = classLoader.findClass(args(0));
 
-    new Interpreter(classLoader).runApplication(mainClass);
+    val returnVal = new Interpreter(classLoader).runApplication(mainClass);
 
-    System.exit(0);
-  };
+    System.exit(returnVal);
+  }
 }

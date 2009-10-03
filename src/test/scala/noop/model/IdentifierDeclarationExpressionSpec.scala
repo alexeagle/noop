@@ -18,7 +18,7 @@ package noop.model;
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import interpreter.{MockContext, InterpreterVisitor};
+import interpreter.{MockContext, InterpreterVisitor}
 import types.NoopString;
 
 /**
@@ -40,6 +40,6 @@ class IdentifierDeclarationExpressionSpec extends Spec with ShouldMatchers with 
       context.stack.top.identifiers should have size (1);
       context.stack.top.identifiers("myString")._2.asInstanceOf[NoopString].value should
           equal ("hello world");
-    };
-  };
+    }
+  }
 }

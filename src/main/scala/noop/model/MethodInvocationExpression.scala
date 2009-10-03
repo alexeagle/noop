@@ -30,5 +30,5 @@ class MethodInvocationExpression(val left: Expression, val name: String,
       visitor.afterArgumentVisit(this);
     });
     visitor.visit(this);
-  };
+  }
 }

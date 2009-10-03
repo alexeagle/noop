@@ -33,7 +33,7 @@ class CommentsSpec extends Spec with ShouldMatchers {
       val commonTree = parser.parseFile(source);
 
       commonTree.toStringTree() should equal ("(CLASS Foo)");
-    };
+    }
 
     it("should be able to parse a multi-line comment") {
       val source = """
@@ -44,7 +44,7 @@ class CommentsSpec extends Spec with ShouldMatchers {
       var commonTree = parser.parseFile(source);
 
       commonTree.toStringTree() should equal ("(CLASS Foo)");
-    };
+    }
 
     it("should be able to parse nested comments") {
       val source = """
@@ -56,12 +56,12 @@ class CommentsSpec extends Spec with ShouldMatchers {
       var commonTree = parser.parseFile(source);
 
       commonTree.toStringTree() should equal ("(CLASS Foo)");
-    };
+    }
 
     // Note: this makes Alex sad.
     it("should allow tab characters to appear in the source") {
       val source = "\tclass\tFoo() {\t}";
       parser.parseFile(source).toStringTree() should equal ("(CLASS Foo)");
-    };
-  };
+    }
+  }
 }

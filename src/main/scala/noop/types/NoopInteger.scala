@@ -31,29 +31,32 @@ class NoopInteger(classDef: ClassDefinition, parameterInstances: Map[String, Noo
     c.stack.top.identifiers("other")._2.asInstanceOf[NoopInteger].value;
   }
 
-  def nativeMethodMap = immutable.Map[String, Context => Option[NoopObject]](
+  def emptyParams = Map.empty[String, NoopObject];
+  def nativeMethodMap = immutable.Map[String, Context => NoopObject](
 
-    // TODO: this is an ugly way to make a new NoopInteger
-    "plus" -> ((c: Context) => Some(new NoopInteger(classDef,
-        Map.empty[String, NoopObject], value + other(c)))),
-    "minus" -> ((c: Context) => Some(new NoopInteger(classDef,
-        Map.empty[String, NoopObject], value - other(c)))),
-    "multiply" -> ((c: Context) => Some(new NoopInteger(classDef,
-        Map.empty[String, NoopObject], value * other(c)))),
-    "divide" -> ((c: Context) => Some(new NoopInteger(classDef,
-        Map.empty[String, NoopObject], value / other(c)))),
-    "modulo" -> ((c: Context) => Some(new NoopInteger(classDef,
-        Map.empty[String, NoopObject], value % other(c)))),
+    "plus" -> ((c: Context) => new NoopInteger(classDef, emptyParams, value + other(c))),
+    "minus" -> ((c: Context) => new NoopInteger(classDef, emptyParams, value - other(c))),
+    "multiply" -> ((c: Context) => new NoopInteger(classDef, emptyParams, value * other(c))),
+    "divide" -> ((c: Context) => new NoopInteger(classDef, emptyParams, value / other(c))),
+    "modulo" -> ((c: Context) => new NoopInteger(classDef, emptyParams, value % other(c))),
     "toString" -> ((c: Context) => {
       val classLoader = c.classLoader;
       val classDef = classLoader.findClass("String");
 
-      Some(new NoopString(classDef, Map.empty[String, NoopObject],
-          value.toString));
+      new NoopString(classDef, emptyParams, value.toString);
     })
   );
 
-  override def nativeMethod(name: String): (Context => Option[NoopObject]) = {
+  override def nativeMethod(name: String): (Context => NoopObject) = {
     return nativeMethodMap(name);
   }
+
+  def isComparable(obj: Any) = obj.isInstanceOf[NoopInteger];
+  override def equals(obj: Any) = obj match {
+    case that: NoopInteger => (that isComparable this) &&
+            that.value == this.value;
+    case _ => false;
+  }
+  override def hashCode = super.hashCode * 41 + value.hashCode;
+  override def toString() = value.toString;
 }

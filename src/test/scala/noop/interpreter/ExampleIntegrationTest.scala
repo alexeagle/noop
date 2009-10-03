@@ -15,7 +15,7 @@
  */
 package noop.interpreter;
 
-import java.io.{File, ByteArrayOutputStream};
+import java.io.{File, ByteArrayOutputStream}
 
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
@@ -36,7 +36,7 @@ class ExampleIntegrationTest extends Spec with ShouldMatchers {
         new File(getClass().getResource("/arithmetic").toURI).getAbsolutePath(),
         new File(getClass().getResource("/stdlib").toURI).getAbsolutePath());
     new SourceFileClassLoader(new Parser(), sourcePaths);
-  };
+  }
 
   def withRedirectedStandardOut(testFunction: ByteArrayOutputStream => Unit) {
     val originalOut = Console.out;
@@ -47,7 +47,7 @@ class ExampleIntegrationTest extends Spec with ShouldMatchers {
     } finally {
       Console.setOut(originalOut);
     }
-  };
+  }
 
   it("should run the hello world program") {
     withRedirectedStandardOut { (output) => {
@@ -59,7 +59,7 @@ class ExampleIntegrationTest extends Spec with ShouldMatchers {
       new Interpreter(classLoader).runApplication(mainClass);
       output.toString() should include("Hello World!");
     }}
-  };
+  }
 
   it("should run while loop") {
     withRedirectedStandardOut { (output) => {
@@ -68,7 +68,7 @@ class ExampleIntegrationTest extends Spec with ShouldMatchers {
       new Interpreter(classLoader).runApplication(mainClass);
       output.toString() should equal("Hello World!\n");
     }}
-  };
+  }
 
   it("should run the arithmetic program") {
     withRedirectedStandardOut { (output) => {
@@ -77,5 +77,5 @@ class ExampleIntegrationTest extends Spec with ShouldMatchers {
       new Interpreter(classLoader).runApplication(mainClass);
       output.toString() should include("3");
     }}
-  };
+  }
 }

@@ -15,10 +15,10 @@
  */
 package noop.interpreter.testing;
 
-import collection.mutable.{ArrayBuffer, Buffer, Stack};
+import collection.mutable.{ArrayBuffer, Buffer, Stack}
 
 import model.{ClassDefinition, EvaluatedExpression, Method, MethodInvocationExpression,
-    StringLiteralExpression};
+    StringLiteralExpression}
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -33,7 +33,7 @@ class TestRunner(classSearch: ClassSearch, classLoader: ClassLoader) {
       }
     });
     return tests;
-  };
+  }
 
   def runTests() = {
     val startTime = System.currentTimeMillis;
@@ -43,7 +43,7 @@ class TestRunner(classSearch: ClassSearch, classLoader: ClassLoader) {
     }
     val elapsed = (System.currentTimeMillis - startTime) / 1000;
     println("Ran " + tests.size + " test(s) in " + elapsed + " seconds.");
-  };
+  }
 
   /**
    * Run a single test
@@ -59,5 +59,5 @@ class TestRunner(classSearch: ClassSearch, classLoader: ClassLoader) {
     } finally {
       stack.pop();
     }
-  };
+  }
 }

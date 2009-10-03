@@ -19,8 +19,8 @@ import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
 import model.{Block, ClassDefinition, Method, MethodInvocationExpression, ShouldExpression,
-              StringLiteralExpression};
-import interpreter.testing.{TestFailedException, TestHolder, TestRunner};
+              StringLiteralExpression}
+import interpreter.testing.{TestFailedException, TestHolder, TestRunner}
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -38,14 +38,14 @@ class TestRunnerSpec extends Spec with ShouldMatchers with MockContext {
         def eachClass(f: ClassDefinition => Unit) = {
           f.apply(fooClass);
         }
-      };
+      }
 
       val testRunner = new TestRunner(classLoader, null);
       val testsToRun = testRunner.gatherTests();
       testsToRun should have length (1);
       testsToRun.first.testMethod should be theSameInstanceAs(unittest);
       testsToRun.first.classDef should be theSameInstanceAs(fooClass);
-    };
+    }
 
     it("should execute a test") {
       val classLoader = new MockClassLoader();
@@ -58,8 +58,8 @@ class TestRunnerSpec extends Spec with ShouldMatchers with MockContext {
 
       new TestRunner(null, classLoader).runTest(test);
       expression.timesCalled should be(1);
-    };
-  };
+    }
+  }
 
   describe("the 'should' operator") {
 
@@ -73,7 +73,7 @@ class TestRunnerSpec extends Spec with ShouldMatchers with MockContext {
 
       // TODO(jeremiele): no idea if it is the correct behavior
       context.stack.top.lastEvaluated.size should be (0);
-    };
+    }
 
     it("should throw a test failed exception if an equals matcher is not satisfied") {
       val matcher = new MethodInvocationExpression(null, "equal", List(new StringLiteralExpression("goodbye")));
@@ -84,6 +84,6 @@ class TestRunnerSpec extends Spec with ShouldMatchers with MockContext {
       intercept[TestFailedException] {
         shouldExpr.accept(visitor);
       }
-    };
-  };
+    }
+  }
 }

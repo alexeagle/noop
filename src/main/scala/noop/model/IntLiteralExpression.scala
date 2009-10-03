@@ -23,5 +23,5 @@ class IntLiteralExpression(val value: Int) extends Expression {
 
   def accept(visitor: Visitor) = {
     visitor.visit(this);
-  };
+  }
 }

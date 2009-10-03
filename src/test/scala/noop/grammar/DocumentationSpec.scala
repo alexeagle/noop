@@ -33,7 +33,7 @@ class DocumentationSpec extends Spec with ShouldMatchers {
           "(CLASS Awesome (doc \"This class is awesome\"))");
       val file = parser.file(source);
       file.classDef.documentation should equal("This class is awesome");
-    };
+    }
 
     it("should appear before a method declaration") {
       val source = "class Foo() { doc \"Here is my great method\" Int doIt() {}}";
@@ -41,6 +41,6 @@ class DocumentationSpec extends Spec with ShouldMatchers {
           "(CLASS Foo (METHOD (doc \"Here is my great method\") Int doIt))");
       val file = parser.file(source);
       file.classDef.methods(0).documentation should equal ("Here is my great method");
-    };
-  };
+    }
+  }
 }

@@ -24,5 +24,5 @@ class ReturnExpression(val expr: Expression) extends Expression {
   def accept(visitor: Visitor) = {
     expr.accept(visitor);
     visitor.visit(this);
-  };
+  }
 }

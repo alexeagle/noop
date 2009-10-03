@@ -17,11 +17,11 @@ package noop.grammar;
 
 import java.io.InputStream;
 
-import org.antlr.runtime.{ANTLRInputStream, ANTLRStringStream, CommonTokenStream};    
-import org.antlr.runtime.tree.{CommonTree, CommonTreeNodeStream};
+import org.antlr.runtime.{ANTLRInputStream, ANTLRStringStream, CommonTokenStream}
+import org.antlr.runtime.tree.{CommonTree, CommonTreeNodeStream}
 
 import model.File;
-import grammar.antlr.{DocLexer, DocParser, NoopAST, NoopParser, NoopLexer};
+import grammar.antlr.{DocLexer, DocParser, NoopAST, NoopParser, NoopLexer}
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -32,25 +32,25 @@ class Parser() {
     val lexer = new NoopLexer(input);
 
     return (lexer, new NoopParser(new CommonTokenStream(lexer)));
-  };
+  }
 
   def buildDocParser(input: ANTLRStringStream): (DocLexer, DocParser) = {
     val lexer = new DocLexer(input);
 
     return (lexer, new DocParser(new CommonTokenStream(lexer)));
-  };
+  }
 
   def parseFile(source: InputStream): CommonTree = {
     val (lexer, parser) = buildParser(new ANTLRInputStream(source));
 
     return parseFile(lexer, parser);
-  };
+  }
 
   def parseFile(source: String): CommonTree = {
     val (lexer, parser) = buildParser(new ANTLRStringStream(source));
 
     return parseFile(lexer, parser);
-  };
+  }
 
   def parseFile(lexer: NoopLexer, parser: NoopParser): CommonTree = {
     val file = parser.file();
@@ -59,7 +59,7 @@ class Parser() {
       throw new ParseException("Source failed to parse");
     }
     return file.getTree().asInstanceOf[CommonTree];
-  };
+  }
 
   def parseInterpretable(source: String): CommonTree = {
     val (lexer, parser) = buildParser(new ANTLRStringStream(source));
@@ -69,7 +69,7 @@ class Parser() {
       throw new ParseException("Source failed to parse");
     }
     return interpretable.getTree().asInstanceOf[CommonTree];
-  };
+  }
 
   def parseBlock(source: String): CommonTree = {
     val (lexer, parser) = buildParser(new ANTLRStringStream(source));
@@ -79,18 +79,18 @@ class Parser() {
       throw new ParseException("Source failed to parse");
     }
     return block.getTree().asInstanceOf[CommonTree];
-  };
+  }
 
   def parseDoc(source: String): CommonTree = {
     val (lexer, parser) = buildDocParser(new ANTLRStringStream(source));
     val doc = parser.doc();
 
     return doc.getTree().asInstanceOf[CommonTree];
-  };
+  }
 
   def buildTreeParser(ast: CommonTree): NoopAST = {
     return new NoopAST(new CommonTreeNodeStream(ast));
-  };
+  }
 
   def file(ast: CommonTree): File = {
     val treeParser = buildTreeParser(ast);
@@ -100,7 +100,7 @@ class Parser() {
       throw new ParseException("Syntax errors");
     }
     return file;
-  };
+  }
 
   def file(source: String): File = file(parseFile(source));
 

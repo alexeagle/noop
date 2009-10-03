@@ -15,9 +15,9 @@
  */
 package noop.interpreter;
 
-import collection.mutable.{Stack, ArrayBuffer};
+import collection.mutable.{Stack, ArrayBuffer}
 import model.{EvaluatedExpression, Expression, MethodInvocationExpression, StringLiteralExpression,
-    ClassDefinition};
+    ClassDefinition}
 
 /**
  * This class bootstraps the interpretation process, by setting up the ClassLoader with
@@ -28,7 +28,7 @@ import model.{EvaluatedExpression, Expression, MethodInvocationExpression, Strin
  */
 class Interpreter(classLoader: ClassLoader) {
 
-  def runApplication(mainClass: ClassDefinition) = {
+  def runApplication(mainClass: ClassDefinition): Int = {
     val context = new Context(new Stack[Frame], classLoader);
 
     context.addRootFrame();
@@ -40,5 +40,6 @@ class Interpreter(classLoader: ClassLoader) {
     val mainInstance = new EvaluatedExpression(mainClass.getInstance(classLoader));
 
     new MethodInvocationExpression(mainInstance, "main", args).accept(visitor);
-  };
+    return 0;
+  }
 }

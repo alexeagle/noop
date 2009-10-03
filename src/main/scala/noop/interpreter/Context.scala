@@ -19,11 +19,11 @@ import collection.mutable.Stack;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
- * @author jeremiele@google.com (Jeremie Lenfant-Engelmann)
+ * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class Context(val stack: Stack[Frame], val classLoader: ClassLoader) {
 
   def addRootFrame() = {
     stack.push(new Frame(null, null));
-  };
+  }
 }
