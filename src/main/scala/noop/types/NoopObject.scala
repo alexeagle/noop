@@ -34,4 +34,7 @@ class NoopObject(val classDef: ClassDefinition, val parameterInstances: Map[Stri
    def executeNativeMethod(c: Context, name: String): NoopObject = {
     return nativeMethod(name).apply(c);
   }
+
+
+  override def toString = classDef.name;
 }

@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.interpreter;
 
+import model.{IdentifierExpression, IntLiteralExpression, Parameter, Method, Block, MethodInvocationExpression, StringLiteralExpression}
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
@@ -24,7 +25,7 @@ import types.{NoopString, NoopObject};
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-class MethodInvocationExpressionSpec extends Spec with ShouldMatchers with MockContext {
+class MethodInvocationSpec extends Spec with ShouldMatchers with MockContext {
 
   describe("a method invocation") {
 

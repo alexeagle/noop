@@ -25,6 +25,7 @@ repositories.remote << "http://www.ibiblio.org/maven2"
 
 ANTLR = ["org.antlr:antlr:jar:3.1.1"]
 ANTLR_RUNTIME = ["org.antlr:antlr-runtime:jar:3.1.1"]
+SLF4J = ["org.slf4j:slf4j-api:jar:1.5.6", "org.slf4j:slf4j-simple:jar:1.5.6"]
 Buildr::ANTLR::REQUIRES.clear
 Buildr::ANTLR::REQUIRES.concat(ANTLR)
 
@@ -40,7 +41,7 @@ define "noop" do
   resources.from [_('src/main/noop'), _('examples/noop')]
 
   compile.from antlr
-  compile.with [ANTLR, ANTLR_RUNTIME]
+  compile.with [ANTLR, ANTLR_RUNTIME, SLF4J]
 
   package(:jar).
       with(:manifest=>{'Main-Class' => 'noop.interpreter.InterpreterMain'})

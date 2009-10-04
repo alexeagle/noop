@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.interpreter;
 
+import model.{StringLiteralExpression, IdentifierDeclarationExpression}
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
@@ -24,7 +25,7 @@ import types.NoopString;
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-class IdentifierDeclarationExpressionSpec extends Spec with ShouldMatchers with MockContext {
+class IdentifierDeclarationSpec extends Spec with ShouldMatchers with MockContext {
 
   describe("an assignment expression") {
 
