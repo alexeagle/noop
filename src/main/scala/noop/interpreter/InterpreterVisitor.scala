@@ -72,7 +72,7 @@ class InterpreterVisitor(val context: Context) extends Visitor {
 
     currentFrame.lastEvaluated.clear();
     currentFrame.addIdentifier(identifierDeclarationExpression.name,
-        new Tuple2[NoopType, NoopObject](null, obj)); 
+        new Tuple2[NoopType, NoopObject](null, obj));
   }
 
   def visit(identifierExpression: IdentifierExpression) = {
@@ -103,7 +103,7 @@ class InterpreterVisitor(val context: Context) extends Visitor {
   def enter(methodInvocationExpression: MethodInvocationExpression) = {
     evaluationStackSize = context.stack.top.lastEvaluated.size;
   }
-  
+
   def afterArgumentVisit(methodInvocationExpression: MethodInvocationExpression) = {
     if (context.stack.top.lastEvaluated.size > evaluationStackSize) {
       evaluationStackSize = context.stack.top.lastEvaluated.size;
