@@ -17,7 +17,6 @@ package noop.model;
 
 import collection.mutable.{ArrayBuffer, Buffer, Map};
 
-import interpreter.ClassLoader;
 import types.{NoopConsole, NoopObject};
 
 /**
@@ -37,22 +36,6 @@ class ClassDefinition (val name: String, val documentation: String) {
       case Some(method) => return method;
       case None => throw new NoSuchMethodException(
           "Method " + methodName + " is not defined on class " + name);
-    }
-  }
-
-  def getInstance(classLoader: ClassLoader): NoopObject = {
-    val parameterInstances = Map.empty[String, NoopObject];
-
-    for (param <- parameters) {
-      val classDef = classLoader.findClass(param.noopType);
-
-      parameterInstances += Pair(param.name, classDef.getInstance(classLoader));
-    }
-
-    //TODO(alexeagle): Injectables really needs work
-    name match {
-      case "Console" => new NoopConsole(this, parameterInstances);
-      case _ => new NoopObject(this, parameterInstances);
     }
   }
 }
