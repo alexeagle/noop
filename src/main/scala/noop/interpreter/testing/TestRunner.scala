@@ -56,7 +56,7 @@ class TestRunner(classSearch: ClassSearch, classLoader: ClassLoader) {
 
     stack.push(new Frame(instance, test.testMethod));
     try {
-      test.testMethod.execute(context, new InterpreterVisitor(context, new Injector(classLoader)));
+      new InterpreterVisitor(context, new Injector(classLoader)).visit(test.testMethod);
     } finally {
       stack.pop();
     }

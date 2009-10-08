@@ -23,7 +23,7 @@ import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
 import grammar.Parser;
-import interpreter.{Frame, Context, SourceFileClassLoader};
+import interpreter.{Frame, Context, InterpreterVisitor, SourceFileClassLoader};
 import model.Modifier;
 
 /**
@@ -61,7 +61,7 @@ class BooleanSpec extends Spec with ShouldMatchers {
       frame.addIdentifier("other", (null, aFalse));
       stack.push(frame);
 
-      method.execute(context, null);
+      new InterpreterVisitor(context, injector).visit(method);
       val theBool = context.stack.top.lastEvaluated(0);
 
       theBool should not be (null);

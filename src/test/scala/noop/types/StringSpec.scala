@@ -23,7 +23,7 @@ import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
 import grammar.Parser;
-import interpreter.{Frame, Context, SourceFileClassLoader};
+import interpreter.{Frame, Context, InterpreterVisitor, SourceFileClassLoader};
 import model.Modifier;
 
 /**
@@ -47,7 +47,8 @@ class StringSpec extends Spec with ShouldMatchers {
     it("should have a native implementation of the length method") {
       val classLoader = createFixture;
       val stringClass = classLoader.findClass("String");
-      val aString = new NoopString(stringClass, Map.empty[String, NoopObject], "hello", new Injector(classLoader));
+      val injector = new Injector(classLoader)
+      val aString = new NoopString(stringClass, Map.empty[String, NoopObject], "hello", injector);
       val method = stringClass.findMethod("length");
       val stack = new Stack[Frame]();
       val context = new Context(stack, classLoader);
@@ -56,7 +57,8 @@ class StringSpec extends Spec with ShouldMatchers {
       method.modifiers should contain(Modifier.native);
 
       stack.push(new Frame(aString, null));
-      method.execute(context, null);
+      new InterpreterVisitor(context, injector).visit(method);
+
       val theString = context.stack.top.lastEvaluated(0);
 
       theString should not be (null);

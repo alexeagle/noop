@@ -17,6 +17,7 @@ package noop.model
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
+ * TODO(alex): looks like we could have a single visit(Expression) method
  */
 
 class CompositeVisitor(visitors: Seq[Visitor]) extends Visitor {
@@ -65,6 +66,12 @@ class CompositeVisitor(visitors: Seq[Visitor]) extends Visitor {
   def visit(intLiteralExpression: IntLiteralExpression) = {
     for (v <- visitors) {
       v.visit(intLiteralExpression);
+    }
+  }
+
+  def visit(method: Method) = {
+    for (v <- visitors) {
+      v.visit(method);
     }
   }
 
