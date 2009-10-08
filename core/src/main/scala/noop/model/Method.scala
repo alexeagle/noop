@@ -17,8 +17,6 @@ package noop.model;
 
 import collection.mutable.{ArrayBuffer, Buffer};
 
-import interpreter.Context;
-
 /**
  * Represents the declaration of a method in source code.
  *

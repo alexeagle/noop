@@ -32,12 +32,13 @@ class Interpreter(classLoader: ClassLoader) {
     val context = new Context(new Stack[Frame], classLoader);
 
     context.addRootFrame();
-    val visitor = new CompositeVisitor(List(new LoggingAstVisitor(), new InterpreterVisitor(context, new Injector(classLoader))));
+    val injector = new Injector(classLoader);
+    val visitor = new CompositeVisitor(List(new LoggingAstVisitor(), new InterpreterVisitor(context, injector)));
     var args = new ArrayBuffer[Expression];
 
     //TODO: pass the list of command line arguments to main() instead
     args += new StringLiteralExpression("something");
-    val mainInstance = new EvaluatedExpression(mainClass.getInstance(classLoader));
+    val mainInstance = new EvaluatedExpression(injector.getInstance(mainClass));
 
     new MethodInvocationExpression(mainInstance, "main", args).accept(visitor);
     return 0;
