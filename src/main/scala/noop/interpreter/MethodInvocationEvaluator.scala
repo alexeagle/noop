@@ -23,7 +23,8 @@ import types.{NoopObject, NoopType};
 /**
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class MethodInvocationEvaluator(methodInvocationExpression: MethodInvocationExpression) {
+class MethodInvocationEvaluator(methodInvocationExpression: MethodInvocationExpression,
+    visitor: Visitor) {
 
   def createFrame(context: Context, thisRef: NoopObject): Frame = {
     val method = thisRef.classDef.findMethod(methodInvocationExpression.name);
@@ -31,7 +32,7 @@ class MethodInvocationEvaluator(methodInvocationExpression: MethodInvocationExpr
     return new Frame(thisRef, method);
   }
 
-  def execute(context: Context, visitor: Visitor) = {
+  def execute(context: Context) = {
     val currentFrame = context.stack.top;
     val arguments = new Stack[NoopObject]();
 
@@ -54,7 +55,7 @@ class MethodInvocationEvaluator(methodInvocationExpression: MethodInvocationExpr
     }
     context.stack.push(frame);
     try {
-      method.execute(context, visitor);
+      visitor.visit(method);
     } finally {
       removeStackFrame(context);
     }

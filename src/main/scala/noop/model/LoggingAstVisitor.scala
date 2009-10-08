@@ -58,6 +58,10 @@ class LoggingAstVisitor extends Visitor {
     logger.info("Int literal");
   }
 
+  def visit(method: Method) = {
+    logger.info("Method: " + method.name);
+  }
+
   def enter(methodInvocationExpression: MethodInvocationExpression) = {
     logger.info("Entering method call on " + methodInvocationExpression.name);
   }

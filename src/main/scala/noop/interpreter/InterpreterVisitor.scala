@@ -18,8 +18,9 @@ package noop.interpreter;
 import interpreter.testing.TestFailedException;
 import model.{AssignmentExpression, Block, BooleanLiteralExpression, DereferenceExpression,
     EvaluatedExpression, Expression, IdentifierDeclarationExpression, IdentifierExpression,
-    IntLiteralExpression, MethodInvocationExpression, OperatorExpression, ReturnExpression,
-    ShouldExpression, StringLiteralExpression, Visitor, WhileLoop}
+    IntLiteralExpression, Method, MethodInvocationExpression, Modifier,
+    OperatorExpression, ReturnExpression, ShouldExpression, StringLiteralExpression,
+    Visitor, WhileLoop}
 import types.{Injector, NoopBoolean, NoopInteger, NoopObject, NoopString, NoopType};
 
 /**
@@ -112,10 +113,21 @@ class InterpreterVisitor(val context: Context, injector: Injector) extends Visit
   }
 
   def visit(methodInvocationExpression: MethodInvocationExpression) = {
-    val methodInvocationEvaluator = new MethodInvocationEvaluator(methodInvocationExpression);
+    val methodInvocationEvaluator = new MethodInvocationEvaluator(methodInvocationExpression, this);
 
-    methodInvocationEvaluator.execute(context, this);
+    methodInvocationEvaluator.execute(context);
     evaluationStackSize = -1;
+  }
+
+  def visit(method: Method) = {
+    if (method.modifiers.contains(Modifier.native)) {
+      val obj = context.stack.top.thisRef;
+
+      val returnValue = obj.executeNativeMethod(List(), method.name);
+      context.stack.top.lastEvaluated += returnValue;
+    } else {
+      method.block.accept(this);
+    }
   }
 
   def visit(operatorExpression: OperatorExpression) = {

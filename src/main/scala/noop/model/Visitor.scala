@@ -36,6 +36,8 @@ trait Visitor {
 
   def visit(intLiteralExpression: IntLiteralExpression);
 
+  def visit(method: Method);
+
   def enter(methodInvocationExpression: MethodInvocationExpression);
 
   def afterArgumentVisit(methodInvocationExpression: MethodInvocationExpression);

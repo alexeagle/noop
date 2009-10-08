@@ -30,15 +30,4 @@ class Method(val name: String, val returnType: String, val block: Block, val doc
   val parameters: Buffer[Parameter] = new ArrayBuffer[Parameter]();
   val modifiers: Buffer[Modifier.Value] = new ArrayBuffer[Modifier.Value]();
 
-  //TODO(jeremie): this is a model object, should not contain interpreter logic
-  def execute(context: Context, visitor: Visitor) = {
-    if (modifiers.contains(Modifier.native)) {
-      val obj = context.stack.top.thisRef;
-      //TODO(alexeagle): assemble arguments
-      val returnValue = obj.executeNativeMethod(List(), name);
-      context.stack.top.lastEvaluated += returnValue;
-    } else {
-      block.accept(visitor);
-    }
-  }
 }
