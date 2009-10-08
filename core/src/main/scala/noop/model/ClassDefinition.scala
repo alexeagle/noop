@@ -17,7 +17,7 @@ package noop.model;
 
 import collection.mutable.{ArrayBuffer, Buffer, Map};
 
-import types.{NoopConsole, NoopObject};
+import types.NoopObject;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)

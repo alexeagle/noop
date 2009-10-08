@@ -50,13 +50,14 @@ class TestRunner(classSearch: ClassSearch, classLoader: ClassLoader) {
    * Run a single test
    */
   def runTest(test: TestHolder) = {
-    val instance = test.classDef.getInstance(classLoader);
+    val injector = new Injector(classLoader);
+    val instance = injector.getInstance(test.classDef);
     val stack = new Stack[Frame];
     val context = new Context(stack, classLoader);
 
     stack.push(new Frame(instance, test.testMethod));
     try {
-      new InterpreterVisitor(context, new Injector(classLoader)).visit(test.testMethod);
+      new InterpreterVisitor(context, injector).visit(test.testMethod);
     } finally {
       stack.pop();
     }

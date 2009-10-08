@@ -36,20 +36,24 @@ define "noop" do
   project.group = GROUP
   manifest["Implementation-Vendor"] = COPYRIGHT
 
-  antlr = antlr([_('src/main/antlr/Doc.g'), _('src/main/antlr/Noop.g'), _('src/main/antlr/NoopAST.g')], :in_package=>'noop.grammar.antlr')
-
-  resources.from [_('src/main/noop'), _('examples/noop')]
-
-  compile.from antlr
-  compile.with [ANTLR, ANTLR_RUNTIME, SLF4J]
-
-  package(:jar).
-      with(:manifest=>{'Main-Class' => 'noop.interpreter.InterpreterMain'})
-
-  compile.dependencies.each do |c|
-    if c.to_s.index("antlr-runtime") or c.to_s.index("scala-library")
-      package(:jar).merge(c).include('*.class')
-    end
+  define "core" do
+    antlr = antlr([_('src/main/antlr/Doc.g'), _('src/main/antlr/Noop.g'), _('src/main/antlr/NoopAST.g')],
+        :in_package=>'noop.grammar.antlr')
+    compile.from antlr
+    compile.with [ANTLR, ANTLR_RUNTIME, SLF4J]
+    package :jar
   end
-  package :sources
+
+  define "interpreter" do
+    resources.from [_('src/main/noop'), project("noop")._('examples/noop')]
+    package(:jar).with(:manifest=>{'Main-Class' => 'noop.interpreter.InterpreterMain'})
+    compile.with [project("core"), ANTLR_RUNTIME]
+    compile.dependencies.each do |c|
+      if c.to_s.index("antlr-runtime") or c.to_s.index("scala-library")
+        package(:jar).merge(c).include('*.class')
+      end
+    end
+    package :sources
+  end
+
 end
