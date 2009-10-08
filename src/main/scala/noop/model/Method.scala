@@ -34,8 +34,8 @@ class Method(val name: String, val returnType: String, val block: Block, val doc
   def execute(context: Context, visitor: Visitor) = {
     if (modifiers.contains(Modifier.native)) {
       val obj = context.stack.top.thisRef;
-
-      val returnValue = obj.executeNativeMethod(context, name);
+      //TODO(alexeagle): assemble arguments
+      val returnValue = obj.executeNativeMethod(List(), name);
       context.stack.top.lastEvaluated += returnValue;
     } else {
       block.accept(visitor);

@@ -24,7 +24,7 @@ import org.scalatest.Spec;
 
 import grammar.Parser;
 import model.{IntLiteralExpression, OperatorExpression};
-import types.NoopInteger;
+import types.{Injector, NoopInteger};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -46,7 +46,7 @@ class InterpreterSpec extends Spec with ShouldMatchers {
     it("should evaluate simple arithmetic") {
       val (classLoader, context) = createFixture;
       val expr = new OperatorExpression(new IntLiteralExpression(2), "+", new IntLiteralExpression(3));
-      val visitor = new InterpreterVisitor(context);
+      val visitor = new InterpreterVisitor(context, new Injector(classLoader));
 
       expr.accept(visitor);
       val result = context.stack.top.lastEvaluated(0);
@@ -60,7 +60,7 @@ class InterpreterSpec extends Spec with ShouldMatchers {
       val (classLoader, context) = createFixture;
       val parser = new Parser();
       val block = parser.buildTreeParser(parser.parseBlock(source)).block();
-      val visitor = new InterpreterVisitor(context);
+      val visitor = new InterpreterVisitor(context, new Injector(classLoader));
 
       block.statements(0).accept(visitor);
       val result = context.stack.top.lastEvaluated(0);
@@ -74,7 +74,7 @@ class InterpreterSpec extends Spec with ShouldMatchers {
       val (classLoader, context) = createFixture;
       val parser = new Parser();
       val block = parser.buildTreeParser(parser.parseBlock(source)).block();
-      val visitor = new InterpreterVisitor(context);
+      val visitor = new InterpreterVisitor(context, new Injector(classLoader));
 
       block.accept(visitor);
       context.stack.top.identifiers should contain key("a");

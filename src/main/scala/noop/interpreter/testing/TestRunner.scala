@@ -19,6 +19,7 @@ import collection.mutable.{ArrayBuffer, Buffer, Stack};
 
 import model.{ClassDefinition, EvaluatedExpression, Method, MethodInvocationExpression,
     StringLiteralExpression}
+import types.Injector;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -55,7 +56,7 @@ class TestRunner(classSearch: ClassSearch, classLoader: ClassLoader) {
 
     stack.push(new Frame(instance, test.testMethod));
     try {
-      test.testMethod.execute(context, new InterpreterVisitor(context));
+      test.testMethod.execute(context, new InterpreterVisitor(context, new Injector(classLoader)));
     } finally {
       stack.pop();
     }

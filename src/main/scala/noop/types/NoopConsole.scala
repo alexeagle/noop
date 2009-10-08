@@ -17,7 +17,7 @@ package noop.types;
 
 import collection.mutable.Map;
 
-import interpreter.{Context, InterpreterVisitor};
+import interpreter.InterpreterVisitor;
 import model.{ClassDefinition, EvaluatedExpression, MethodInvocationExpression};
 
 /**
@@ -27,24 +27,17 @@ import model.{ClassDefinition, EvaluatedExpression, MethodInvocationExpression};
 class NoopConsole(classDef: ClassDefinition, parameterInstances: Map[String, NoopObject])
     extends NoopObject(classDef, parameterInstances) {
 
-  def println(context: Context): NoopObject = {
-    val toPrint = context.stack.top.identifiers("s")._2;
-
-    new MethodInvocationExpression(
-        new EvaluatedExpression(toPrint), "toString", Nil).accept(
-          new InterpreterVisitor(context));
-    val toString = context.stack.top.lastEvaluated(0);
-
-    context.stack.top.lastEvaluated.clear();
+  def println(args: Seq[NoopObject]): NoopObject = {
+    val toPrint = args(0).asInstanceOf[NoopString];
     Console.println(toString.asInstanceOf[NoopString].value);
     return null;
   }
 
-  def nativeMethodMap = Map[String, Context => NoopObject] (
+  def nativeMethodMap = Map[String, Seq[NoopObject] => NoopObject] (
     "println" -> println
   );
 
-  override def nativeMethod(name: String): (Context => NoopObject) = {
+  override def nativeMethod(name: String): (Seq[NoopObject] => NoopObject) = {
     return nativeMethodMap(name);
   }
 }

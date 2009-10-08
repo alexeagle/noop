@@ -17,7 +17,6 @@ package noop.types;
 
 import collection.immutable;
 
-import interpreter.Context;
 import model.ClassDefinition;
 
 /**
@@ -25,28 +24,19 @@ import model.ClassDefinition;
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class NoopBoolean(classDef: ClassDefinition, parameterInstances: Map[String, NoopObject],
-    val value: Boolean) extends NoopObject(classDef, parameterInstances) {
+    val value: Boolean, injector: Injector)
+        extends NoopObject(classDef, parameterInstances) {
 
-  def other(c: Context): Boolean = {
-    c.stack.top.identifiers("other")._2.asInstanceOf[NoopBoolean].value;
-  }
-
-  def emptyParams = Map.empty[String, NoopObject];
-  def nativeMethodMap = immutable.Map[String, Context => NoopObject](
-
-    "and" -> ((c: Context) => new NoopBoolean(classDef, emptyParams, value && other(c))),
-    "or" -> ((c: Context) => new NoopBoolean(classDef, emptyParams, value || other(c))),
-    "xor" -> ((c: Context) => new NoopBoolean(classDef, emptyParams, value ^ other(c))),
-    "not" -> ((c: Context) => new NoopBoolean(classDef, emptyParams, !value)),
-    "toString" -> ((c: Context) => {
-      val classLoader = c.classLoader;
-      val classDef = classLoader.findClass("String");
-
-      new NoopString(classDef, emptyParams, value.toString);
-    })
+  def other(args: Seq[NoopObject]): Boolean = args(0).asInstanceOf[NoopBoolean].value;
+  def nativeMethodMap = immutable.Map[String, Seq[NoopObject] => NoopObject](
+    "and" -> ((args: Seq[NoopObject]) => injector.create(value && other(args))),
+    "or" -> ((args: Seq[NoopObject]) => injector.create(value || other(args))),
+    "xor" -> ((args: Seq[NoopObject]) => injector.create(value ^ other(args))),
+    "not" -> ((args: Seq[NoopObject]) => injector.create(!value)),
+    "toString" -> ((args: Seq[NoopObject]) => injector.create(value.toString))
   );
 
-  override def nativeMethod(name: String): (Context => NoopObject) = {
+  override def nativeMethod(name: String): (Seq[NoopObject] => NoopObject) = {
     return nativeMethodMap(name);
   }
 }

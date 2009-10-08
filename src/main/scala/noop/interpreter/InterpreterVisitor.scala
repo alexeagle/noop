@@ -20,13 +20,13 @@ import model.{AssignmentExpression, Block, BooleanLiteralExpression, Dereference
     EvaluatedExpression, Expression, IdentifierDeclarationExpression, IdentifierExpression,
     IntLiteralExpression, MethodInvocationExpression, OperatorExpression, ReturnExpression,
     ShouldExpression, StringLiteralExpression, Visitor, WhileLoop}
-import types.{NoopBoolean, NoopInteger, NoopObject, NoopString, NoopType};
+import types.{Injector, NoopBoolean, NoopInteger, NoopObject, NoopString, NoopType};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class InterpreterVisitor(val context: Context) extends Visitor {
+class InterpreterVisitor(val context: Context, injector: Injector) extends Visitor {
 
   def visit(assignmentExpression: AssignmentExpression) = {
     val currentFrame = context.stack.top;
@@ -51,8 +51,7 @@ class InterpreterVisitor(val context: Context) extends Visitor {
   def visit(booleanLiteralExpression: BooleanLiteralExpression) = {
     val noopBooleanClassDef = context.classLoader.findClass("Boolean");
 
-    context.stack.top.lastEvaluated += new NoopBoolean(noopBooleanClassDef,
-        Map.empty[String, NoopObject], booleanLiteralExpression.value);
+    context.stack.top.lastEvaluated += injector.create(booleanLiteralExpression.value);
   }
 
   def visit(dereferenceExpression: DereferenceExpression) = {
@@ -94,8 +93,7 @@ class InterpreterVisitor(val context: Context) extends Visitor {
   def visit(intLiteralExpression: IntLiteralExpression) = {
     val noopIntegerClassDef = context.classLoader.findClass("Int");
 
-    context.stack.top.lastEvaluated += new NoopInteger(noopIntegerClassDef,
-        Map.empty[String, NoopObject], intLiteralExpression.value);
+    context.stack.top.lastEvaluated += injector.create(intLiteralExpression.value);
   }
 
   var evaluationStackSize = -1;
@@ -140,8 +138,7 @@ class InterpreterVisitor(val context: Context) extends Visitor {
   def visit(stringLiteralExpression: StringLiteralExpression) = {
     val noopStringClassDef = context.classLoader.findClass("String");
 
-    context.stack.top.lastEvaluated += new NoopString(noopStringClassDef,
-        Map.empty[String, NoopObject], stringLiteralExpression.value);
+    context.stack.top.lastEvaluated += injector.create(stringLiteralExpression.value);
   }
 
   def visit(whileLoop: WhileLoop) = {

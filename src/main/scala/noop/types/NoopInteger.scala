@@ -17,7 +17,6 @@ package noop.types;
 
 import collection.immutable;
 
-import interpreter.Context;
 import model.ClassDefinition;
 
 /**
@@ -25,29 +24,22 @@ import model.ClassDefinition;
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class NoopInteger(classDef: ClassDefinition, parameterInstances: Map[String, NoopObject],
-    val value: Int) extends NoopObject(classDef, parameterInstances) {
+    val value: Int, injector: Injector) extends NoopObject(classDef, parameterInstances) {
 
-  def other(c: Context): Int = {
-    c.stack.top.identifiers("other")._2.asInstanceOf[NoopInteger].value;
+  def other(args: Seq[NoopObject]): Int = {
+    args(0).asInstanceOf[NoopInteger].value;
   }
 
-  def emptyParams = Map.empty[String, NoopObject];
-  def nativeMethodMap = immutable.Map[String, Context => NoopObject](
-
-    "plus" -> ((c: Context) => new NoopInteger(classDef, emptyParams, value + other(c))),
-    "minus" -> ((c: Context) => new NoopInteger(classDef, emptyParams, value - other(c))),
-    "multiply" -> ((c: Context) => new NoopInteger(classDef, emptyParams, value * other(c))),
-    "divide" -> ((c: Context) => new NoopInteger(classDef, emptyParams, value / other(c))),
-    "modulo" -> ((c: Context) => new NoopInteger(classDef, emptyParams, value % other(c))),
-    "toString" -> ((c: Context) => {
-      val classLoader = c.classLoader;
-      val classDef = classLoader.findClass("String");
-
-      new NoopString(classDef, emptyParams, value.toString);
-    })
+  def nativeMethodMap = immutable.Map[String, Seq[NoopObject] => NoopObject](
+    "plus" -> ((args: Seq[NoopObject]) => injector.create(value + other(args))),
+    "minus" -> ((args: Seq[NoopObject]) => injector.create(value - other(args))),
+    "multiply" -> ((args: Seq[NoopObject]) => injector.create(value * other(args))),
+    "divide" -> ((args: Seq[NoopObject]) => injector.create(value / other(args))),
+    "modulo" -> ((args: Seq[NoopObject]) => injector.create(value % other(args))),
+    "toString" -> ((args: Seq[NoopObject]) => injector.create(value.toString))
   );
 
-  override def nativeMethod(name: String): (Context => NoopObject) = {
+  override def nativeMethod(name: String): (Seq[NoopObject] => NoopObject) = {
     return nativeMethodMap(name);
   }
 

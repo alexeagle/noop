@@ -17,7 +17,6 @@ package noop.types;
 
 import collection.immutable;
 
-import interpreter.Context;
 import model.ClassDefinition;
 
 /**
@@ -25,21 +24,14 @@ import model.ClassDefinition;
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class NoopString(classDef: ClassDefinition, parameterInstances: Map[String, NoopObject],
-    val value: String) extends NoopObject(classDef, parameterInstances) {
+    val value: String, injector: Injector) extends NoopObject(classDef, parameterInstances) {
 
-  def nativeMethodMap = immutable.Map[String, Context => NoopObject](
-    "toString" -> ((c: Context) => new NoopString(classDef,
-        Map.empty[String, NoopObject], value)),
-
-    "length" -> ((c: Context) => {
-      val classLoader = c.classLoader;
-      val classDef = classLoader.findClass("Int");
-
-      new NoopInteger(classDef, Map.empty[String, NoopObject], value.length);
-    })
+  def nativeMethodMap = immutable.Map[String, Seq[NoopObject] => NoopObject](
+    "toString" -> ((args: Seq[NoopObject]) => injector.create(value)),
+    "length" -> ((args: Seq[NoopObject]) => injector.create(value.length))
   );
 
-  override def nativeMethod(name: String): (Context => NoopObject) = {
+  override def nativeMethod(name: String): (Seq[NoopObject] => NoopObject) = {
     return nativeMethodMap(name);
   }
 
