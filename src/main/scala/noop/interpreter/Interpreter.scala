@@ -17,7 +17,7 @@ package noop.interpreter;
 
 import collection.mutable.{Stack, ArrayBuffer};
 import model.{LoggingAstVisitor, CompositeVisitor, EvaluatedExpression, Expression, MethodInvocationExpression, StringLiteralExpression, ClassDefinition};
-
+import types.Injector;
 
 /**
  * This class bootstraps the interpretation process, by setting up the ClassLoader with
@@ -32,7 +32,7 @@ class Interpreter(classLoader: ClassLoader) {
     val context = new Context(new Stack[Frame], classLoader);
 
     context.addRootFrame();
-    val visitor = new CompositeVisitor(List(new LoggingAstVisitor(), new InterpreterVisitor(context)));
+    val visitor = new CompositeVisitor(List(new LoggingAstVisitor(), new InterpreterVisitor(context, new Injector(classLoader))));
     var args = new ArrayBuffer[Expression];
 
     //TODO: pass the list of command line arguments to main() instead

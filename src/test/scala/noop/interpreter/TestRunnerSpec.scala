@@ -67,7 +67,7 @@ class TestRunnerSpec extends Spec with ShouldMatchers with MockContext {
       val matcher = new MethodInvocationExpression(null, "equal", List(new StringLiteralExpression("hello")));
       val shouldExpr = new ShouldExpression(new StringLiteralExpression("hello"), matcher);
       val context = fixture;
-      val visitor = new InterpreterVisitor(context);
+      val visitor = new InterpreterVisitor(context, null);
 
       shouldExpr.accept(visitor);
 
@@ -79,7 +79,7 @@ class TestRunnerSpec extends Spec with ShouldMatchers with MockContext {
       val matcher = new MethodInvocationExpression(null, "equal", List(new StringLiteralExpression("goodbye")));
       val shouldExpr = new ShouldExpression(new StringLiteralExpression("hello"), matcher);
       val context = fixture;
-      val visitor = new InterpreterVisitor(context);
+      val visitor = new InterpreterVisitor(context, null);
 
       intercept[TestFailedException] {
         shouldExpr.accept(visitor);

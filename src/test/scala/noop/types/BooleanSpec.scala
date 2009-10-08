@@ -47,8 +47,9 @@ class BooleanSpec extends Spec with ShouldMatchers {
     it("should have a native implementation of the xor method") {
       val classLoader = createFixture;
       val boolClass = classLoader.findClass("Boolean");
-      val aTrue = new NoopBoolean(boolClass, Map.empty[String, NoopObject], true);
-      val aFalse = new NoopBoolean(boolClass, Map.empty[String, NoopObject], false);
+      val injector = new Injector(classLoader);
+      val aTrue = new NoopBoolean(boolClass, Map.empty[String, NoopObject], true, injector);
+      val aFalse = new NoopBoolean(boolClass, Map.empty[String, NoopObject], false, injector);
       val method = boolClass.findMethod("xor");
       val stack = new Stack[Frame]();
       val context = new Context(stack, classLoader);

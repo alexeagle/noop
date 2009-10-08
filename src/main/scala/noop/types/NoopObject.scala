@@ -17,7 +17,6 @@ package noop.types;
 
 import collection.Map;
 
-import interpreter.Context
 import model.ClassDefinition;
 
 /**
@@ -26,13 +25,13 @@ import model.ClassDefinition;
  */
 class NoopObject(val classDef: ClassDefinition, val parameterInstances: Map[String, NoopObject]) {
 
-  def nativeMethod(name: String): (Context => NoopObject) = {
+  def nativeMethod(name: String): (Seq[NoopObject] => NoopObject) = {
     throw new NoSuchMethodException("Native method implemention for '"
         + name + "' missing in " + classDef.name);
   }
 
-   def executeNativeMethod(c: Context, name: String): NoopObject = {
-    return nativeMethod(name).apply(c);
+   def executeNativeMethod(args: Seq[NoopObject], name: String): NoopObject = {
+    return nativeMethod(name).apply(args);
   }
 
 

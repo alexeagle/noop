@@ -47,7 +47,7 @@ class StringSpec extends Spec with ShouldMatchers {
     it("should have a native implementation of the length method") {
       val classLoader = createFixture;
       val stringClass = classLoader.findClass("String");
-      val aString = new NoopString(stringClass, Map.empty[String, NoopObject], "hello");
+      val aString = new NoopString(stringClass, Map.empty[String, NoopObject], "hello", new Injector(classLoader));
       val method = stringClass.findMethod("length");
       val stack = new Stack[Frame]();
       val context = new Context(stack, classLoader);

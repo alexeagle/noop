@@ -19,19 +19,22 @@ import model.{IdentifierExpression, IntLiteralExpression, Parameter, Method, Blo
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import interpreter.{Context, Frame, InterpreterVisitor, MockExpression, MockContext};
-import types.{NoopString, NoopObject};
+import types.{Injector, NoopString, NoopObject};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
 class MethodInvocationSpec extends Spec with ShouldMatchers with MockContext {
 
+  def interpreterFixture = {
+    val context = fixture;
+    (context, new InterpreterVisitor(context, new Injector(context.classLoader)));
+  }
+
   describe("a method invocation") {
 
     it("should throw an exception if the method doesn't exist on the type") {
-      val context = fixture;
-      val visitor = new InterpreterVisitor(context);
+      val (context, visitor) = interpreterFixture;
       val target = new StringLiteralExpression("aString");
       val expr = new MethodInvocationExpression(target, "noSuchMethodSorry", List());
       val exception = intercept[NoSuchMethodException] (
@@ -42,8 +45,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with MockContext {
     }
 
     it("should evaluate the method body in a new stack frame") {
-      val context = fixture;
-      val visitor = new InterpreterVisitor(context);
+      val (context, visitor) = interpreterFixture;
       val assertInNewFrame = (c: Context) =>
               c.stack.top should not be theSameInstanceAs(context.stack.top);
 
@@ -57,8 +59,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with MockContext {
     }
 
     it("should evaluate arguments and assign them to local variables indicated by the parameters") {
-      val context = fixture;
-      val visitor = new InterpreterVisitor(context);
+      val (context, visitor) = interpreterFixture;
       val paramName = "other";
       val arg = "argumentStr";
       val assertParamIsSetFromArgument = (c: Context) => {
@@ -80,8 +81,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with MockContext {
     }
 
     it("should throw an exception if the number of arguments don't match the parameter count") {
-      val context = fixture;
-      val visitor = new InterpreterVisitor(context);
+      val (context, visitor) = interpreterFixture;
       val myMethod = new Method("plus", "Void", null, null);
 
       myMethod.parameters += new Parameter("other", "String");
@@ -95,8 +95,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with MockContext {
     }
 
     it("should throw an exception if the evaluated argument does not match the type of the parameter") {
-      val context = fixture;
-      val visitor = new InterpreterVisitor(context);
+      val (context, visitor) = interpreterFixture;
       val myMethod = new Method("plus", "Void", null, null);
 
       myMethod.parameters += new Parameter("other", "String");
@@ -110,8 +109,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with MockContext {
     }
 
     it("should restore the original stack frame when finished even if exception") {
-      val context = fixture;
-      val visitor = new InterpreterVisitor(context);
+      val (context, visitor) = interpreterFixture;
       val myMethod = new Method("plus", "Void", null, null);
 
       context.classLoader.findClass("String").methods += myMethod;
@@ -127,8 +125,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with MockContext {
     }
 
     it("should throw an exception if an argument expression returns no value") {
-      val context = fixture;
-      val visitor = new InterpreterVisitor(context);
+      val (context, visitor) = interpreterFixture;
       val paramName = "other";
       val block = new Block();
       val myMethod = new Method("plus", "Void", block, null);
@@ -145,8 +142,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with MockContext {
     }
 
     it("should be aware of the 'this' identifier and dispatch the method on thisRef") {
-      val context = fixture;
-      val visitor = new InterpreterVisitor(context);
+      val (context, visitor) = interpreterFixture;
       new StringLiteralExpression("hello").accept(visitor);
       val thisRef: NoopObject = context.stack.top.lastEvaluated(0);
 

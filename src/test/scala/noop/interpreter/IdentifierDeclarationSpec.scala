@@ -19,8 +19,7 @@ import model.{StringLiteralExpression, IdentifierDeclarationExpression}
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import interpreter.{MockContext, InterpreterVisitor};
-import types.NoopString;
+import types.{Injector, NoopString};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -35,7 +34,7 @@ class IdentifierDeclarationSpec extends Spec with ShouldMatchers with MockContex
       identifierDeclaration.initialValue = Some(new StringLiteralExpression("hello world"));
 
       val context = fixture;
-      val visitor = new InterpreterVisitor(context);
+      val visitor = new InterpreterVisitor(context, new Injector(context.classLoader));
 
       identifierDeclaration.accept(visitor);
       context.stack.top.identifiers should have size (1);

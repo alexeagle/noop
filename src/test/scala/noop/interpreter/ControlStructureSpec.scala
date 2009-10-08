@@ -20,13 +20,20 @@ import org.scalatest.Spec;
 
 import model.{Block, BooleanLiteralExpression, Expression, ReturnExpression,
     StringLiteralExpression, Visitor, WhileLoop}
-import types.{NoopObject, NoopString};
+import types.{Injector, NoopObject, NoopString};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class ControlStructureSpec extends Spec with ShouldMatchers with MockContext {
+
+  def interpreterFixture = {
+    val context = fixture;
+    val block = new Block();
+    val visitor = new InterpreterVisitor(context, new Injector(context.classLoader));
+    (context, block, visitor);
+  }
 
   class TrueThenFalseExpression(timesToReturnTrue: Int) extends Expression {
     var called = 0;
@@ -40,10 +47,8 @@ class ControlStructureSpec extends Spec with ShouldMatchers with MockContext {
   describe("the while loop") {
 
     it("should execute the body when the condition is true") {
-      val context = fixture;
-      val block: Block = new Block();
+      val (context, block, visitor) = interpreterFixture;
       val expression: MockExpression = new MockExpression();
-      val visitor = new InterpreterVisitor(context);
       block.statements += expression;
 
       val whileLoop = new WhileLoop(new TrueThenFalseExpression(1), block);
@@ -53,10 +58,8 @@ class ControlStructureSpec extends Spec with ShouldMatchers with MockContext {
     }
 
     it("should not execute the body when the condition is false") {
-      val context = fixture;
-      val block: Block = new Block();
+      val (context, block, visitor) = interpreterFixture;
       val expression: MockExpression = new MockExpression();
-      val visitor = new InterpreterVisitor(context);
       block.statements += expression;
 
       val whileLoop = new WhileLoop(new BooleanLiteralExpression(false), block);
@@ -66,10 +69,8 @@ class ControlStructureSpec extends Spec with ShouldMatchers with MockContext {
     }
 
     it("should execute the body repeatedly as long as the condition is true") {
-      val context = fixture;
-      val block: Block = new Block();
+      val (context, block, visitor) = interpreterFixture;
       val expression: MockExpression = new MockExpression();
-      val visitor = new InterpreterVisitor(context);
       block.statements += expression;
 
       val whileLoop = new WhileLoop(new TrueThenFalseExpression(3), block);
@@ -82,10 +83,8 @@ class ControlStructureSpec extends Spec with ShouldMatchers with MockContext {
   describe("the return statement") {
 
     it("should exit the current block and return the supplied value") {
-      val context = fixture;
-      val block:Block = new Block();
+      val (context, block, visitor) = interpreterFixture;
       val returnMe = new ReturnExpression(new StringLiteralExpression("to return"));
-      val visitor = new InterpreterVisitor(context);
 
       block.statements += returnMe;
       val dontRunMe = new MockExpression((c: Context) => fail());
