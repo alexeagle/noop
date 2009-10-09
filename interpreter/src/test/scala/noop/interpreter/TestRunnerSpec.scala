@@ -19,8 +19,9 @@ import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
 import model.{Block, ClassDefinition, Method, MethodInvocationExpression, ShouldExpression,
-              StringLiteralExpression}
+              StringLiteralExpression};
 import interpreter.testing.{TestFailedException, TestHolder, TestRunner};
+import types.Injector;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -67,7 +68,7 @@ class TestRunnerSpec extends Spec with ShouldMatchers with MockContext {
       val matcher = new MethodInvocationExpression(null, "equal", List(new StringLiteralExpression("hello")));
       val shouldExpr = new ShouldExpression(new StringLiteralExpression("hello"), matcher);
       val context = fixture;
-      val visitor = new InterpreterVisitor(context, null);
+      val visitor = new InterpreterVisitor(context, new Injector(context.classLoader));
 
       shouldExpr.accept(visitor);
 
@@ -79,7 +80,7 @@ class TestRunnerSpec extends Spec with ShouldMatchers with MockContext {
       val matcher = new MethodInvocationExpression(null, "equal", List(new StringLiteralExpression("goodbye")));
       val shouldExpr = new ShouldExpression(new StringLiteralExpression("hello"), matcher);
       val context = fixture;
-      val visitor = new InterpreterVisitor(context, null);
+      val visitor = new InterpreterVisitor(context, new Injector(context.classLoader));
 
       intercept[TestFailedException] {
         shouldExpr.accept(visitor);

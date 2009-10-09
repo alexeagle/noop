@@ -15,12 +15,14 @@
  */
 package noop.interpreter;
 
+import scala.collection.mutable.ArrayBuffer;
+
 import interpreter.testing.TestFailedException;
 import model.{AssignmentExpression, Block, BooleanLiteralExpression, DereferenceExpression,
     EvaluatedExpression, Expression, IdentifierDeclarationExpression, IdentifierExpression,
     IntLiteralExpression, Method, MethodInvocationExpression, Modifier,
     OperatorExpression, ReturnExpression, ShouldExpression, StringLiteralExpression,
-    Visitor, WhileLoop}
+    Visitor, WhileLoop};
 import types.{Injector, NoopBoolean, NoopInteger, NoopObject, NoopString, NoopType};
 
 /**
@@ -122,8 +124,11 @@ class InterpreterVisitor(val context: Context, injector: Injector) extends Visit
   def visit(method: Method) = {
     if (method.modifiers.contains(Modifier.native)) {
       val obj = context.stack.top.thisRef;
-
-      val returnValue = obj.executeNativeMethod(List(), method.name);
+      val arguments = new ArrayBuffer[NoopObject];
+      for (parameter <- method.parameters) {
+        arguments += context.stack.top.identifiers(parameter.name)._2;
+      }
+      val returnValue = obj.executeNativeMethod(arguments, method.name);
       context.stack.top.lastEvaluated += returnValue;
     } else {
       method.block.accept(this);

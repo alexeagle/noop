@@ -28,8 +28,12 @@ class NoopConsole(classDef: ClassDefinition, parameterInstances: Map[String, Noo
     extends NoopObject(classDef, parameterInstances) {
 
   def println(args: Seq[NoopObject]): NoopObject = {
-    val toPrint = args(0).asInstanceOf[NoopString];
-    Console.println(toString.asInstanceOf[NoopString].value);
+    val toPrint = args(0) match {
+      case s: NoopString => s.value
+      case i: NoopInteger => i.value.toString
+      case _ => "Can't print " + args(0).getClass().getName()
+    }
+    Console.println(toPrint);
     return null;
   }
 
