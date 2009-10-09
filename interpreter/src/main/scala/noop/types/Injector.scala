@@ -29,7 +29,7 @@ class Injector(classLoader: ClassLoader) {
     //TODO(alexeagle): Injectables really needs work
     classDef.name match {
       case "Console" => new NoopConsole(classLoader.findClass("Console"), parameterInstances);
-      case _ => new NoopObject(classLoader.findClass("Object"), parameterInstances);
+      case _ => new NoopObject(classDef, parameterInstances);
     }
   }
 }
