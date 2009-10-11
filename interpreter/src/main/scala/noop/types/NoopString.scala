@@ -42,5 +42,5 @@ class NoopString(classDef: ClassDefinition, parameterInstances: Map[String, Noop
     case _ => false;
   }
   override def hashCode = super.hashCode * 41 + value.hashCode;
-  override def toString() = value;
+  override def toString() = "\"" + value + "\"";
 }

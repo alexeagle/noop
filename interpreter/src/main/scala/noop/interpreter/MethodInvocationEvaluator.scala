@@ -16,6 +16,7 @@
 package noop.interpreter;
 
 import collection.mutable.Stack;
+import org.slf4j.LoggerFactory;
 
 import model.{MethodInvocationExpression, Visitor};
 import types.{NoopObject, NoopType};
@@ -25,6 +26,7 @@ import types.{NoopObject, NoopType};
  */
 class MethodInvocationEvaluator(methodInvocationExpression: MethodInvocationExpression,
     visitor: Visitor) {
+  val logger = LoggerFactory.getLogger(this.getClass);
 
   def createFrame(context: Context, thisRef: NoopObject): Frame = {
     val method = thisRef.classDef.findMethod(methodInvocationExpression.name);
@@ -36,6 +38,8 @@ class MethodInvocationEvaluator(methodInvocationExpression: MethodInvocationExpr
     val currentFrame = context.stack.top;
     val arguments = new Stack[NoopObject]();
 
+    logger.trace("calling method {}, eval stack is {}", methodInvocationExpression.name,
+        currentFrame.lastEvaluated);
     for (i <- 0 until methodInvocationExpression.arguments.size) {
       arguments.push(currentFrame.lastEvaluated.pop());
     }

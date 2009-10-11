@@ -16,6 +16,7 @@
 package noop.interpreter;
 
 import collection.mutable.{Map, Stack};
+import org.slf4j.LoggerFactory;
 
 import model.Method;
 import types.{NoopType, NoopObject};
@@ -27,12 +28,14 @@ import types.{NoopType, NoopObject};
 class Frame(val thisRef: NoopObject, val method: Method) {
 
   val identifiers = Map.empty[String, Tuple2[NoopType, NoopObject]];
-  val lastEvaluated: Stack[NoopObject] = new Stack[NoopObject]();
+  val lastEvaluated = new Stack[NoopObject]();
+  val logger = LoggerFactory.getLogger(this.getClass());
 
   def addIdentifier(name: String, arg: Tuple2[NoopType, NoopObject]) = {
     if (identifiers.contains(name)) {
       throw new RuntimeException("Identifier " + name + " shadowing existing identifier.");
     }
+    logger.trace("Adding identifier {} to the current frame with value {}", name, arg._2);
     identifiers += Pair(name, arg);
   }
 }
