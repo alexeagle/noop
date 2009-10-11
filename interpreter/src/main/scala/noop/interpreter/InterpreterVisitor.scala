@@ -15,21 +15,23 @@
  */
 package noop.interpreter;
 
+import org.slf4j.LoggerFactory
 import scala.collection.mutable.ArrayBuffer;
 
 import interpreter.testing.TestFailedException;
 import model.{AssignmentExpression, Block, BooleanLiteralExpression, DereferenceExpression,
-    EvaluatedExpression, Expression, IdentifierDeclarationExpression, IdentifierExpression,
+    EvaluatedExpression, IdentifierDeclarationExpression, IdentifierExpression,
     IntLiteralExpression, Method, MethodInvocationExpression, Modifier,
     OperatorExpression, ReturnExpression, ShouldExpression, StringLiteralExpression,
     Visitor, WhileLoop};
-import types.{Injector, NoopBoolean, NoopInteger, NoopObject, NoopString, NoopType};
+import types.{Injector, NoopBoolean, NoopObject, NoopType};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class InterpreterVisitor(val context: Context, injector: Injector) extends Visitor {
+  val logger = LoggerFactory.getLogger(this.getClass());
 
   def visit(assignmentExpression: AssignmentExpression) = {
     val currentFrame = context.stack.top;
@@ -70,8 +72,9 @@ class InterpreterVisitor(val context: Context, injector: Injector) extends Visit
     if (currentFrame.lastEvaluated.isEmpty) {
       throw new RuntimeException("The right handside didn't evaluate to a proper value");
     }
-    val obj = currentFrame.lastEvaluated(0);
-
+    val obj = currentFrame.lastEvaluated.top;
+    logger.trace("identifierExpression of {} found an initial value {}",
+        identifierDeclarationExpression.name, obj);
     currentFrame.lastEvaluated.clear();
     currentFrame.addIdentifier(identifierDeclarationExpression.name,
         new Tuple2[NoopType, NoopObject](null, obj));
