@@ -21,9 +21,8 @@ class HelloVariables(Console console) implements Application {
 
   Int main(List args) {
     Boolean b = true;
-    String s = "Hello World!";
     while (b) {
-      // TODO(alexeagle): we need to scope the variables inside here
+      String s = "Hello World!";
       console.println(s);
       b = false;
     }

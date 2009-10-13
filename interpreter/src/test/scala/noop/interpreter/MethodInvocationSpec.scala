@@ -63,7 +63,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with MockContext {
       val paramName = "other";
       val arg = "argumentStr";
       val assertParamIsSetFromArgument = (c: Context) => {
-        val other = c.stack.top.identifiers("other")._2;
+        val other = c.stack.top.blockScopes.getIdentifier("other")._2;
         other.getClass() should be(classOf[NoopString]);
         other.asInstanceOf[NoopString].value should be(arg);
       }

@@ -26,16 +26,13 @@ import types.{NoopType, NoopObject};
   * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
   */
 class Frame(val thisRef: NoopObject, val method: Method) {
-
-  val identifiers = Map.empty[String, Tuple2[NoopType, NoopObject]];
+  val blockScopes = new BlockScopes(new Stack[Map[String, Tuple2[NoopType, NoopObject]]]());
   val lastEvaluated = new Stack[NoopObject]();
   val logger = LoggerFactory.getLogger(this.getClass());
 
   def addIdentifier(name: String, arg: Tuple2[NoopType, NoopObject]) = {
-    if (identifiers.contains(name)) {
-      throw new RuntimeException("Identifier " + name + " shadowing existing identifier.");
-    }
     logger.trace("Adding identifier {} to the current frame with value {}", name, arg._2);
-    identifiers += Pair(name, arg);
+    blockScopes.registerIdentifier(name, arg);
   }
+
 }

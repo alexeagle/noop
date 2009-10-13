@@ -76,10 +76,12 @@ class InterpreterSpec extends Spec with ShouldMatchers {
       val block = parser.buildTreeParser(parser.parseBlock(source)).block();
       val visitor = new InterpreterVisitor(context, new Injector(classLoader));
 
-      block.accept(visitor);
-      context.stack.top.identifiers should contain key("a");
-      context.stack.top.identifiers("a")._2 should not be (null);
-      context.stack.top.identifiers("a")._2.asInstanceOf[NoopInteger].value should equal (1);
+      context.stack.top.blockScopes.inScope("interpreter test") {
+        block.accept(visitor);
+        context.stack.top.blockScopes.scopes.top should contain key("a");
+        context.stack.top.blockScopes.getIdentifier("a")._2 should not be (null);
+        context.stack.top.blockScopes.getIdentifier("a")._2.asInstanceOf[NoopInteger].value should equal (1);
+      }
     }
   }
 }

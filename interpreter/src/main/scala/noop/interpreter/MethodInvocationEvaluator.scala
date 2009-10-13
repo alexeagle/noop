@@ -51,15 +51,17 @@ class MethodInvocationEvaluator(methodInvocationExpression: MethodInvocationExpr
       throw new RuntimeException("Method " + method.name + " takes " + method.parameters.size +
           " arguments but " + arguments.size + " were provided");
     }
-    for (i <- 0 until method.parameters.size) {
-      val value = arguments.pop();
-      val identifier = method.parameters(i).name;
-
-      frame.addIdentifier(identifier, new Tuple2[NoopType, NoopObject](null, value));
-    }
     context.stack.push(frame);
     try {
-      visitor.visit(method);
+      context.stack.top.blockScopes.inScope("method " + method) {
+        for (i <- 0 until method.parameters.size) {
+          val value = arguments.pop();
+          val identifier = method.parameters(i).name;
+
+          frame.addIdentifier(identifier, new Tuple2[NoopType, NoopObject](null, value));
+        }
+        visitor.visit(method);
+      }
     } finally {
       removeStackFrame(context);
     }

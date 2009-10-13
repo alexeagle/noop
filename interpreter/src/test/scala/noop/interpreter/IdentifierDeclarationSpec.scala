@@ -36,10 +36,12 @@ class IdentifierDeclarationSpec extends Spec with ShouldMatchers with MockContex
       val context = fixture;
       val visitor = new InterpreterVisitor(context, new Injector(context.classLoader));
 
-      identifierDeclaration.accept(visitor);
-      context.stack.top.identifiers should have size (1);
-      context.stack.top.identifiers("myString")._2.asInstanceOf[NoopString].value should
-          equal ("hello world");
+      context.stack.top.blockScopes.inScope("identifier declaration test") {
+        identifierDeclaration.accept(visitor);
+        context.stack.top.blockScopes.scopes.top should have size (1);
+        context.stack.top.blockScopes.getIdentifier("myString")._2.asInstanceOf[NoopString].value should
+            equal ("hello world");
+      }
     }
   }
 }
