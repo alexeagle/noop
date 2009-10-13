@@ -18,8 +18,8 @@ package noop.interpreter;
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import model.{Block, BooleanLiteralExpression, Expression, ReturnExpression,
-    StringLiteralExpression, Visitor, WhileLoop};
+import model.{IdentifierExpression, AssignmentExpression, Block, BooleanLiteralExpression, Expression,
+    IdentifierDeclarationExpression, ReturnExpression, StringLiteralExpression, Visitor, WhileLoop};
 import types.{Injector, NoopString};
 
 /**
@@ -77,6 +77,23 @@ class ControlStructureSpec extends Spec with ShouldMatchers with MockContext {
 
       whileLoop.accept(visitor);
       expression.timesCalled should be(3);
+    }
+
+    it("should scope variables within the block") {
+      val (context, block, visitor) = interpreterFixture;
+      val expression = new IdentifierDeclarationExpression("String", "s");
+      block.statements += expression;
+
+      val whileLoop = new WhileLoop(new TrueThenFalseExpression(2), block);
+
+      // should not throw exception
+      whileLoop.accept(visitor);
+
+      val enclosingBlock = new Block();
+      enclosingBlock.statements += block;
+      enclosingBlock.statements += new AssignmentExpression(
+          new IdentifierExpression("s"), new StringLiteralExpression("s"));
+      new WhileLoop(new TrueThenFalseExpression(1), enclosingBlock).accept(visitor);
     }
   }
 

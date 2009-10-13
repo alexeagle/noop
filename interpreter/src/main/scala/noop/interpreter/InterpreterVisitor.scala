@@ -42,11 +42,7 @@ class InterpreterVisitor(val context: Context, injector: Injector) extends Visit
     if (obj == null) {
       throw new RuntimeException("cannot assign Void");
     }
-    if (currentFrame.identifiers.contains(identifier)) {
-      currentFrame.identifiers(identifier) = Tuple(null, obj);
-    } else {
-      throw new IllegalStateException("No identifier " + identifier);
-    }
+    currentFrame.blockScopes.setValue(identifier, Tuple(null, obj));
   }
 
   def visit(block: Block) = {
@@ -86,8 +82,8 @@ class InterpreterVisitor(val context: Context, injector: Injector) extends Visit
 
     if (identifier == "this") {
       currentFrame.lastEvaluated += currentFrame.thisRef;
-    } else if (currentFrame.identifiers.contains(identifier)) {
-      currentFrame.lastEvaluated += currentFrame.identifiers(identifier)._2;
+    } else if (currentFrame.blockScopes.hasIdentifier(identifier)) {
+      currentFrame.lastEvaluated += currentFrame.blockScopes.getIdentifier(identifier)._2;
     } else if (currentFrame.thisRef.parameterInstances.contains(identifier)) {
       currentFrame.lastEvaluated += currentFrame.thisRef.parameterInstances(identifier);
     } else {
@@ -119,7 +115,6 @@ class InterpreterVisitor(val context: Context, injector: Injector) extends Visit
 
   def visit(methodInvocationExpression: MethodInvocationExpression) = {
     val methodInvocationEvaluator = new MethodInvocationEvaluator(methodInvocationExpression, this);
-
     methodInvocationEvaluator.execute(context);
     evaluationStackSize = -1;
   }
@@ -129,7 +124,7 @@ class InterpreterVisitor(val context: Context, injector: Injector) extends Visit
       val obj = context.stack.top.thisRef;
       val arguments = new ArrayBuffer[NoopObject];
       for (parameter <- method.parameters) {
-        arguments += context.stack.top.identifiers(parameter.name)._2;
+        arguments += context.stack.top.blockScopes.getIdentifier(parameter.name)._2;
       }
       val returnValue = obj.executeNativeMethod(arguments, method.name);
       context.stack.top.lastEvaluated += returnValue;
@@ -163,7 +158,9 @@ class InterpreterVisitor(val context: Context, injector: Injector) extends Visit
 
   def visit(whileLoop: WhileLoop) = {
     if (context.stack.top.lastEvaluated(0).asInstanceOf[NoopBoolean].value) {
-      whileLoop.body.accept(this);
+      context.stack.top.blockScopes.inScope("while loop") {
+        whileLoop.body.accept(this);
+      }
       whileLoop.accept(this);
     }
     context.stack.top.lastEvaluated.clear();

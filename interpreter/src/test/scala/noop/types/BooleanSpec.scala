@@ -57,13 +57,13 @@ class BooleanSpec extends Spec with ShouldMatchers {
       context.addRootFrame();
       method.modifiers should contain(Modifier.native);
       val frame = new Frame(aTrue, null);
-
-      frame.addIdentifier("other", (null, aFalse));
       stack.push(frame);
+      frame.blockScopes.inScope("boolean test") {
+        frame.addIdentifier("other", (null, aFalse));
 
-      new InterpreterVisitor(context, injector).visit(method);
+        new InterpreterVisitor(context, injector).visit(method);
+      }
       val theBool = context.stack.top.lastEvaluated(0);
-
       theBool should not be (null);
       theBool.asInstanceOf[NoopBoolean].value should be(true);
     }
