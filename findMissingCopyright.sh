@@ -1,3 +1,9 @@
 #!/bin/sh
+for root in core interpreter
+  do
+  for i in `find $root -name "*.scala"`
+    do 
+    head -2 $i | tail -1 | grep -v Copyright && echo $i
+    done
+  done
 
-for i in `find src -name "*.scala"` ; do head -2 $i | tail -1 | grep -v Copyright && echo $i ; done
