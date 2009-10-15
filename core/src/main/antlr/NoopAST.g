@@ -82,7 +82,7 @@ file returns [File file = new File()]
   @init { $SourceFile::file = $file;
           paraphrases.push("at top-level in file"); }
   @after { paraphrases.pop(); }
-  :	 namespaceDeclaration? importDeclaration* (classDeclaration | test)
+  :	 namespaceDeclaration? importDeclaration* (classDefinition | test)
   ;
 
 namespaceDeclaration
@@ -105,7 +105,7 @@ qualifiedType returns [String text]
 	{ $text = ($n.text == null) ? $t.text : $n.text + "." + $t.text; }
 	;
 
-classDeclaration
+classDefinition
 @init {
 	paraphrases.push("in class definition");
 	Buffer<Method> methodCollector = new ArrayBuffer<Method>();
@@ -179,11 +179,11 @@ unittest [Buffer<Method> unittests]
 	;
 
 classBlock [Buffer<Method> methods, Buffer<Method> unittests]
-	:	(identifierDeclaration | methodDeclaration[methods] | unittest[unittests])+
+	:	(identifierDeclaration | methodDefinition[methods] | unittest[unittests])+
 	;
 
-methodDeclaration [Buffer<Method> methods]
-@init { paraphrases.push("in method declaration"); }
+methodDefinition [Buffer<Method> methods]
+@init { paraphrases.push("in method definition"); }
 @after { paraphrases.pop(); }
   :	^(METHOD d=doc? m=modifiers? type=TypeIdentifier name=VariableIdentifier p=parameters? b=block)
   { Method method = new Method($name.text, $type.text, $b.block, $d.doc);
