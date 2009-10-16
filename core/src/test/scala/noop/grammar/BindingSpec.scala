@@ -1,6 +1,7 @@
 package noop.grammar
 
 
+import model.IdentifierExpression
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.Spec
 
@@ -28,13 +29,23 @@ class BindingSpec extends Spec with ShouldMatchers {
       parser.parseFile(source).toStringTree() should be(
           "(CLASS Foo (METHOD Int thing (BINDING (BIND A B))))");
       val file = parser.buildTreeParser(parser.parseFile(source)).file;
-      file.classDef.methods.first.anonymousBindings should have length(1);
+      val method = file.classDef.methods.first;
+      method.block.anonymousBindings should have length(1);
+      val firstBinding = method.block.anonymousBindings.first;
+      firstBinding.noopType should be("A");
+      firstBinding.binding.getClass() should be(classOf[IdentifierExpression]);
+      firstBinding.binding.asInstanceOf[IdentifierExpression].identifier should be ("B");
+
     }
 
     it("can appear as a named binding block") {
       val source = "class Foo() { Int thing() { binding MyBinding {} } }";
       parser.parseFile(source).toStringTree() should be(
           "(CLASS Foo (METHOD Int thing (BINDING MyBinding)))");
+      val file = parser.buildTreeParser(parser.parseFile(source)).file;
+      val method = file.classDef.methods.first;
+      method.block.anonymousBindings should be('empty);
+      method.block.namedBinding should be(Some("MyBinding"));
     }
 
     it("can appear in a method declaration with a name") {
@@ -47,6 +58,13 @@ class BindingSpec extends Spec with ShouldMatchers {
       val source = "class Foo() { Int thing() binding(This -> that) {} }";
       parser.parseFile(source).toStringTree() should be(
           "(CLASS Foo (METHOD Int thing (BINDING (BIND This that))))");
+      val file = parser.buildTreeParser(parser.parseFile(source)).file;
+      val method = file.classDef.methods.first;
+      method.block.anonymousBindings should have length(1);
+      val firstBinding = method.block.anonymousBindings.first;
+      firstBinding.noopType should be("This");
+      firstBinding.binding.getClass() should be(classOf[IdentifierExpression]);
+      firstBinding.binding.asInstanceOf[IdentifierExpression].identifier should be ("that");
     }
 
     it("can appear in a unittest declaration with a name") {

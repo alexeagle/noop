@@ -23,7 +23,9 @@ import collection.mutable.{ArrayBuffer, Buffer};
  */
 class Block extends Expression {
 
-  var statements: Buffer[Expression] = new ArrayBuffer[Expression]();
+  val statements: Buffer[Expression] = new ArrayBuffer[Expression]();
+  val anonymousBindings: Buffer[BindingDeclaration] = new ArrayBuffer[BindingDeclaration];
+  var namedBinding: Option[String] = None;
 
   def accept(visitor: Visitor): Unit = {
     for (statement <- statements) {
