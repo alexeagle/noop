@@ -173,7 +173,7 @@ test
 	
 unittest [Buffer<Method> unittests]
 	:	^(UNITTEST name=StringLiteral b=block)
-	{ Method method = new Method(stripQuotes($name.text), "Void", $b.block, stripQuotes($name.text));
+	{ Method method = new Method(stripQuotes($name.text), "Void", $b.block, stripQuotes($name.text), "");
 	  $unittests.\$plus\$eq(method);
 	}
 	;
@@ -185,18 +185,41 @@ classBlock [Buffer<Method> methods, Buffer<Method> unittests]
 methodDeclaration [Buffer<Method> methods]
 @init { paraphrases.push("in method declaration"); }
 @after { paraphrases.pop(); }
-  :	^(METHOD d=doc? m=modifiers? type=TypeIdentifier name=VariableIdentifier p=parameters? b=block)
-  { Method method = new Method($name.text, $type.text, $b.block, $d.doc);
+  :	^(METHOD d=doc? m=modifiers? type=TypeIdentifier name=VariableIdentifier p=parameters? b=block (anonBind=bindingsDeclaration | namedBind=bindingsReference)	)
+  { Method method = new Method($name.text, $type.text, $b.block, $d.doc, $namedBind.text);
     if ($p.parameters != null) {
   	  method.parameters().\$plus\$plus\$eq($p.parameters);
 	  }
 	  if ($m.modifiers != null) {
   	  method.modifiers().\$plus\$plus\$eq($m.modifiers);
   	}
+  	if ($anonBind.bindings != null) {
+  	  method.anonymousBindings().\$plus\$plus\$eq($anonBind.bindings);
+  	}
   	$methods.\$plus\$eq(method);
   }
   ;
 
+bindingsDeclaration returns [Buffer<BindingDeclaration> bindings]
+	:	^(BINDING b=bindings)
+	{ $bindings = $b.bindings; }
+	;
+
+bindingsReference returns [String text]
+  : ^(BINDING t=TypeIdentifier)
+  { $text = $t.text; }
+	;
+	
+bindings returns [Buffer<BindingDeclaration> bindings]
+  @init{ $bindings = new ArrayBuffer<BindingDeclaration>(); }
+	:	binding[bindings]
+	;
+	
+binding[Buffer<BindingDeclaration> bindings]
+	:	^(BIND t=TypeIdentifier exp=expression)
+	{ $bindings.\$plus\$eq(new BindingDeclaration($t.text, $exp.exp)); }
+	;
+	
 block returns [Block block]
   scope Block;
   @init { $block = new Block();

@@ -36,6 +36,8 @@ tokens {
   FOR;
   TEST;
   UNITTEST;
+  BINDING;
+  BIND;
 }
 
 @header {
@@ -145,12 +147,12 @@ test
 	;
 
 unittest
-	: 'unittest' StringLiteral block
-	-> ^(UNITTEST StringLiteral block?)
+	: 'unittest' StringLiteral bindingDeclaration? block
+	-> ^(UNITTEST StringLiteral bindingDeclaration? block?)
 	;
 
 methodSignature
-  : doc? modifiers? TypeIdentifier VariableIdentifier parameterList
+  : doc? modifiers? TypeIdentifier VariableIdentifier parameterList bindingDeclaration?
   ;
 
 methodDefinition
@@ -180,8 +182,28 @@ statement
 	| expression ';'!
 	| ifExpression
 	| shouldStatement ';'!
+	| bindingBlock
 	;
 	
+bindingDeclaration
+	:	'binding' (bindings | TypeIdentifier)
+	-> ^(BINDING bindings? TypeIdentifier?)
+	;
+	
+bindingBlock
+	:	'binding' (bindings | TypeIdentifier) block
+	-> ^(BINDING bindings? TypeIdentifier? block?)
+	;
+	
+bindings
+	:	'('! binding? (','! binding)* ')'!
+	;
+	
+binding
+	:	TypeIdentifier '->' expression
+	-> ^(BIND TypeIdentifier expression)
+	;
+
 shouldStatement
 	:	expression 'should'^ expression
 	;

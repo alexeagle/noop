@@ -1,5 +1,5 @@
-/**
- *  Copyright 2009 Google Inc.
+/*
+ * Copyright 2009 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package noop.model;
 
-import collection.mutable.{ArrayBuffer, Buffer};
-
 /**
- * Represents the declaration of a method in source code.
- *
  * @author alexeagle@google.com (Alex Eagle)
- * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class Method(val name: String, val returnType: String, val block: Block, val documentation: String, val namedBindings: String)  {
+class BindingDeclaration(val noopType: String, val binding: Expression) {
 
-  val parameters: Buffer[Parameter] = new ArrayBuffer[Parameter]();
-  val modifiers: Buffer[Modifier.Value] = new ArrayBuffer[Modifier.Value]();
-  val anonymousBindings: Buffer[BindingDeclaration] = new ArrayBuffer[BindingDeclaration];
 }
