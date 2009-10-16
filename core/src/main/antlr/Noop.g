@@ -147,12 +147,12 @@ test
 	;
 
 unittest
-	: 'unittest' StringLiteral bindingDeclaration? block
-	-> ^(UNITTEST StringLiteral bindingDeclaration? block?)
+	: 'unittest' StringLiteral bindingsDeclaration? block
+	-> ^(UNITTEST StringLiteral bindingsDeclaration? block?)
 	;
 
 methodSignature
-  : doc? modifiers? TypeIdentifier VariableIdentifier parameterList bindingDeclaration?
+  : doc? modifiers? TypeIdentifier VariableIdentifier parameterList bindingsDeclaration?
   ;
 
 methodDefinition
@@ -182,15 +182,15 @@ statement
 	| expression ';'!
 	| ifExpression
 	| shouldStatement ';'!
-	| bindingBlock
+	| bindingsBlock
 	;
 	
-bindingDeclaration
+bindingsDeclaration
 	:	'binding' (bindings | TypeIdentifier)
 	-> ^(BINDING bindings? TypeIdentifier?)
 	;
 	
-bindingBlock
+bindingsBlock
 	:	'binding' (bindings | TypeIdentifier) block
 	-> ^(BINDING bindings? TypeIdentifier? block?)
 	;
