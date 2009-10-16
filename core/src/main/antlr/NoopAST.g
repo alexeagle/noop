@@ -173,7 +173,7 @@ test
 	
 unittest [Buffer<Method> unittests]
 	:	^(UNITTEST name=StringLiteral b=block)
-	{ Method method = new Method(stripQuotes($name.text), "Void", $b.block, stripQuotes($name.text), "");
+	{ Method method = new Method(stripQuotes($name.text), "Void", $b.block, stripQuotes($name.text));
 	  $unittests.\$plus\$eq(method);
 	}
 	;
@@ -185,16 +185,13 @@ classBlock [Buffer<Method> methods, Buffer<Method> unittests]
 methodDeclaration [Buffer<Method> methods]
 @init { paraphrases.push("in method declaration"); }
 @after { paraphrases.pop(); }
-  :	^(METHOD d=doc? m=modifiers? type=TypeIdentifier name=VariableIdentifier p=parameters? b=block (anonBind=bindingsDeclaration | namedBind=bindingsReference)	)
-  { Method method = new Method($name.text, $type.text, $b.block, $d.doc, $namedBind.text);
+  :	^(METHOD d=doc? m=modifiers? type=TypeIdentifier name=VariableIdentifier p=parameters? b=block)
+  { Method method = new Method($name.text, $type.text, $b.block, $d.doc);
     if ($p.parameters != null) {
   	  method.parameters().\$plus\$plus\$eq($p.parameters);
 	  }
 	  if ($m.modifiers != null) {
   	  method.modifiers().\$plus\$plus\$eq($m.modifiers);
-  	}
-  	if ($anonBind.bindings != null) {
-  	  method.anonymousBindings().\$plus\$plus\$eq($anonBind.bindings);
   	}
   	$methods.\$plus\$eq(method);
   }
@@ -224,7 +221,13 @@ block returns [Block block]
   scope Block;
   @init { $block = new Block();
           $Block::block = $block; }
-  :	statement*
+  :	(anonBind=bindingsDeclaration | namedBind=bindingsReference) statement*
+  { 
+    $block.namedBinding_\$eq(new scala.Some($namedBind.text));
+    if ($anonBind.bindings != null) {
+  	  $block.anonymousBindings().\$plus\$plus\$eq($anonBind.bindings);
+  	}
+  }
   ;
 
 statement

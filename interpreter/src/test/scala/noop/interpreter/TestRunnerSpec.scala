@@ -33,7 +33,7 @@ class TestRunnerSpec extends Spec with ShouldMatchers with MockContext {
   describe("the test runner") {
 
     it("should find unittests within production classes") {
-      val unittest = new Method("name", "Void", new Block(), "doc", null);
+      val unittest = new Method("name", "Void", new Block(), "doc");
       fooClass.unittests += unittest;
       val classLoader = new ClassSearch() {
         def eachClass(f: ClassDefinition => Unit) = {
@@ -54,7 +54,7 @@ class TestRunnerSpec extends Spec with ShouldMatchers with MockContext {
       val expression = new MockExpression();
 
       block.statements += expression;
-      val testMethod = new Method("should execute me", "Void", block, "doc", null);
+      val testMethod = new Method("should execute me", "Void", block, "doc");
       val test = new TestHolder(fooClass, testMethod);
 
       new TestRunner(null, classLoader).runTest(test);
