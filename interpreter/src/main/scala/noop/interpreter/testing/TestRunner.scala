@@ -57,7 +57,9 @@ class TestRunner(classSearch: ClassSearch, classLoader: ClassLoader) {
 
     stack.push(new Frame(instance, test.testMethod));
     try {
-      new InterpreterVisitor(context, injector).visit(test.testMethod);
+      context.stack.top.blockScopes.inScope("test " + test.testMethod.name) {
+        new InterpreterVisitor(context, injector).visit(test.testMethod);
+      }
     } finally {
       stack.pop();
     }
