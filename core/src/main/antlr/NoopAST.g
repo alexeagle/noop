@@ -221,9 +221,11 @@ block returns [Block block]
   scope Block;
   @init { $block = new Block();
           $Block::block = $block; }
-  :	(anonBind=bindingsDeclaration | namedBind=bindingsReference) statement*
+  :	(anonBind=bindingsDeclaration | namedBind=bindingsReference)? statement*
   { 
-    $block.namedBinding_\$eq(new scala.Some($namedBind.text));
+    if ($namedBind.text != null) {
+      $block.namedBinding_\$eq(new scala.Some($namedBind.text));
+    }
     if ($anonBind.bindings != null) {
   	  $block.anonymousBindings().\$plus\$plus\$eq($anonBind.bindings);
   	}
