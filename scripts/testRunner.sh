@@ -1,0 +1,1 @@
+java -classpath $HOME/.m2/repository/org/antlr/antlr-runtime/3.1.1/antlr-runtime-3.1.1.jar:$HOME/.m2/repository/org/scala-lang/scala-library/2.7.5/scala-library-2.7.5.jar:target/classes/:target/generated noop.interpreter.testing.TestRunnerMain $@

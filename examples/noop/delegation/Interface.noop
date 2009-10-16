@@ -1,0 +1,10 @@
+//
+// Demonstration interface declaring a single method.
+//
+namespace delegation;
+
+interface Interface {
+
+  public void aMethod();
+
+}
