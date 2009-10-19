@@ -71,12 +71,12 @@ tokens {
 // A line of user input in the interactive interpreter
 interpretable
   :	(importDeclaration
-     | classDeclaration
+     | classDefinition
      | statement)+
 	;
 
 file
-	:	namespaceDeclaration? importDeclaration* (classDeclaration | interfaceDeclaration | test)
+	:	namespaceDeclaration? importDeclaration* (classDefinition | interfaceDefinition | test)
 	;
 
 namespaceDeclaration
@@ -92,7 +92,7 @@ ifExpression
   -> ^(IF expression* block*)
   ;
 
-methodDeclaration
+methodDefinition
 	: methodSignature block
 	-> ^(METHOD methodSignature block?)
 	;
@@ -105,7 +105,7 @@ qualifiedType
 	:	 (namespace '.'!)? TypeIdentifier
 	;
 
-classDeclaration
+classDefinition
 	: doc? modifiers? 'class' TypeIdentifier parameterList typeSpecifiers? classBlock
 	-> ^(CLASS modifiers? TypeIdentifier parameterList? typeSpecifiers? classBlock? doc?)
 	;
@@ -119,7 +119,7 @@ typeSpecifiers
 	-> ^(IMPL qualifiedType)*
 	;
 
-interfaceDeclaration
+interfaceDefinition
   : 'interface' TypeIdentifier interfaceBlock
   -> ^(INTERFACE TypeIdentifier interfaceBlock?)
   ;
@@ -134,11 +134,11 @@ modifier
 	;
 
 classBlock
-	:	'{'!  (identifierDeclaration ';'!)* methodDeclaration* unittest* '}'!
+	:	'{'!  (identifierDeclaration ';'!)* methodDefinition* unittest* '}'!
 	;
 
 interfaceBlock
-  : '{'! methodDefinition* '}'!
+  : '{'! methodDeclaration* '}'!
 	;
 
 test
@@ -155,7 +155,7 @@ methodSignature
   : doc? modifiers? TypeIdentifier VariableIdentifier parameterList bindingsDeclaration?
   ;
 
-methodDefinition
+methodDeclaration
   : methodSignature ';'
   -> ^(METHOD methodSignature)
   ;
