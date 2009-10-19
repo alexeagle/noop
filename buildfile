@@ -21,6 +21,7 @@ VERSION_NUMBER = "0.1.0-SNAPSHOT"
 GROUP = "com.google"
 COPYRIGHT = "Apache 2.0"
 
+
 repositories.remote << "http://www.ibiblio.org/maven2"
 
 ANTLR = ["org.antlr:antlr:jar:3.1.1"]
@@ -29,15 +30,17 @@ SLF4J = ["org.slf4j:slf4j-api:jar:1.5.6", "org.slf4j:slf4j-simple:jar:1.5.6"]
 Buildr::ANTLR::REQUIRES.clear
 Buildr::ANTLR::REQUIRES.concat(ANTLR)
 
-desc "The Noop language"
-define "noop" do
 
-  project.version = VERSION_NUMBER
-  project.group = GROUP
+
+desc "The Noop language"
+define 'noop', :version=>VERSION_NUMBER do
+
   manifest["Implementation-Vendor"] = COPYRIGHT
 
   define "core" do
-    antlr = antlr([_('src/main/antlr/Doc.g'), _('src/main/antlr/Noop.g'), _('src/main/antlr/NoopAST.g')],
+    antlr = antlr([_('src/main/antlr3/noop/grammar/antlr/Doc.g'), \
+                   _('src/main/antlr3/noop/grammar/antlr/Noop.g'), \
+                   _('src/main/antlr3/noop/grammar/antlr/NoopAST.g')],
         :in_package=>'noop.grammar.antlr')
     compile.from antlr
     compile.with [ANTLR, SLF4J]
