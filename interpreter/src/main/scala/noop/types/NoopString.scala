@@ -23,8 +23,8 @@ import model.ClassDefinition;
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class NoopString(classDef: ClassDefinition, parameterInstances: Map[String, NoopObject],
-    val value: String, injector: Injector) extends NoopObject(classDef, parameterInstances) {
+class NoopString(classDef: ClassDefinition, propertyMap: Map[String, NoopObject],
+    val value: String, injector: Injector) extends NoopObject(classDef, propertyMap) {
 
   def nativeMethodMap = immutable.Map[String, Seq[NoopObject] => NoopObject](
     "toString" -> ((args: Seq[NoopObject]) => injector.create(value)),

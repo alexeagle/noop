@@ -197,11 +197,39 @@ methodDefinition [Buffer<Method> methods]
   }
   ;
 
+bindingsDeclaration returns [Buffer<BindingDeclaration> bindings]
+	:	^(BINDING b=bindings)
+	{ $bindings = $b.bindings; }
+	;
+
+bindingsReference returns [String text]
+  : ^(BINDING t=TypeIdentifier)
+  { $text = $t.text; }
+	;
+	
+bindings returns [Buffer<BindingDeclaration> bindings]
+  @init{ $bindings = new ArrayBuffer<BindingDeclaration>(); }
+	:	binding[bindings]
+	;
+	
+binding[Buffer<BindingDeclaration> bindings]
+	:	^(BIND t=TypeIdentifier exp=expression)
+	{ $bindings.\$plus\$eq(new BindingDeclaration($t.text, $exp.exp)); }
+	;
+	
 block returns [Block block]
   scope Block;
   @init { $block = new Block();
           $Block::block = $block; }
-  :	statement*
+  :	(anonBind=bindingsDeclaration | namedBind=bindingsReference)? statement*
+  { 
+    if ($namedBind.text != null) {
+      $block.namedBinding_\$eq(new scala.Some($namedBind.text));
+    }
+    if ($anonBind.bindings != null) {
+  	  $block.anonymousBindings().\$plus\$plus\$eq($anonBind.bindings);
+  	}
+  }
   ;
 
 statement

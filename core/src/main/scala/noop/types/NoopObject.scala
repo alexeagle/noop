@@ -23,7 +23,7 @@ import model.ClassDefinition;
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class NoopObject(val classDef: ClassDefinition, val parameterInstances: Map[String, NoopObject]) {
+class NoopObject(val classDef: ClassDefinition, val propertyMap: Map[String, NoopObject]) {
 
   def nativeMethod(name: String): (Seq[NoopObject] => NoopObject) = {
     throw new NoSuchMethodException("Native method implemention for '"

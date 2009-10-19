@@ -15,13 +15,14 @@
  */
 package noop.interpreter;
 
-import collection.mutable.Stack;
+import collection.mutable.Stack
+import types.Injector;
 import model.{Method, Modifier, ClassDefinition};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-trait MockContext {
+trait ContextFixture {
 
   def fixture = {
     val stack = new Stack[Frame];
@@ -36,7 +37,8 @@ trait MockContext {
     classLoader.classes += Pair("Boolean", new ClassDefinition("Boolean", ""));
     val context = new Context(stack, classLoader);
 
-    context.addRootFrame();
-    context;
+    val injector = new Injector(classLoader);
+    context.addRootFrame(injector.create("aClazz"));
+    (context, injector);
   }
 }

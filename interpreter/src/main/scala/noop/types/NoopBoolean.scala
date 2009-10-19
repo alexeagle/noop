@@ -23,9 +23,9 @@ import model.ClassDefinition;
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class NoopBoolean(classDef: ClassDefinition, parameterInstances: Map[String, NoopObject],
+class NoopBoolean(classDef: ClassDefinition, propertyMap: Map[String, NoopObject],
     val value: Boolean, injector: Injector)
-        extends NoopObject(classDef, parameterInstances) {
+        extends NoopObject(classDef, propertyMap) {
 
   def other(args: Seq[NoopObject]): Boolean = args(0).asInstanceOf[NoopBoolean].value;
   def nativeMethodMap = immutable.Map[String, Seq[NoopObject] => NoopObject](

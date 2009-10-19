@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2009 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,18 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package noop.model;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
- * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class DereferenceExpression(val left: Expression, val right: Expression) extends Expression {
+class BindingDeclaration(val noopType: String, val binding: Expression) {
 
-  def accept(visitor: Visitor) = {
-    left.accept(visitor);
-    println("right " + right + " accepting visitor");
-    right.accept(visitor);
-    visitor.visit(this);
-  }
 }
