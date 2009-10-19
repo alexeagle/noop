@@ -16,7 +16,8 @@
 package noop.interpreter;
 
 import org.slf4j.LoggerFactory
-import scala.collection.mutable.ArrayBuffer;
+import scala.collection.mutable.ArrayBuffer
+import types.{NoopString, Injector, NoopBoolean, NoopObject, NoopType};
 
 import interpreter.testing.TestFailedException;
 import model.{AssignmentExpression, Block, BooleanLiteralExpression, DereferenceExpression,
@@ -24,7 +25,7 @@ import model.{AssignmentExpression, Block, BooleanLiteralExpression, Dereference
     IntLiteralExpression, Method, MethodInvocationExpression, Modifier,
     OperatorExpression, ReturnExpression, ShouldExpression, StringLiteralExpression,
     Visitor, WhileLoop};
-import types.{Injector, NoopBoolean, NoopObject, NoopType};
+
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -56,6 +57,14 @@ class InterpreterVisitor(val context: Context, injector: Injector) extends Visit
   }
 
   def visit(dereferenceExpression: DereferenceExpression) = {
+    val rhs = context.stack.top.lastEvaluated.pop;
+    val lhs = context.stack.top.lastEvaluated.pop;
+    val property = rhs.asInstanceOf[NoopString].value;
+    val result = lhs.asInstanceOf[NoopObject].propertyMap.get(property) match {
+      case Some(v) => v;
+      case None => throw new RuntimeException("No such property " + property);
+    }
+    context.stack.top.lastEvaluated += result;
   }
 
   def visit(evaluatedExpression: EvaluatedExpression) = {
@@ -79,16 +88,15 @@ class InterpreterVisitor(val context: Context, injector: Injector) extends Visit
   def visit(identifierExpression: IdentifierExpression) = {
     val currentFrame = context.stack.top;
     val identifier = identifierExpression.identifier;
-
+    logger.info("Visiting ID expr: {}", identifier);
     if (identifier == "this") {
       currentFrame.lastEvaluated += currentFrame.thisRef;
     } else if (currentFrame.blockScopes.hasIdentifier(identifier)) {
       currentFrame.lastEvaluated += currentFrame.blockScopes.getIdentifier(identifier)._2;
-    } else if (currentFrame.thisRef.parameterInstances.contains(identifier)) {
-      currentFrame.lastEvaluated += currentFrame.thisRef.parameterInstances(identifier);
+    } else if (currentFrame.thisRef.propertyMap.contains(identifier)) {
+      currentFrame.lastEvaluated += currentFrame.thisRef.propertyMap(identifier);
     } else {
-      throw new RuntimeException(
-          "Not an IdentifierExpression: " + identifier);
+      currentFrame.lastEvaluated += injector.create(identifier);
     }
   }
 

@@ -54,7 +54,7 @@ class BooleanSpec extends Spec with ShouldMatchers {
       val stack = new Stack[Frame]();
       val context = new Context(stack, classLoader);
 
-      context.addRootFrame();
+      context.addRootFrame(null);
       method.modifiers should contain(Modifier.native);
       val frame = new Frame(aTrue, null);
       stack.push(frame);

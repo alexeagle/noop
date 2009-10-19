@@ -53,7 +53,7 @@ class StringSpec extends Spec with ShouldMatchers {
       val stack = new Stack[Frame]();
       val context = new Context(stack, classLoader);
 
-      context.addRootFrame();
+      context.addRootFrame(null);
       method.modifiers should contain(Modifier.native);
 
       stack.push(new Frame(aString, null));

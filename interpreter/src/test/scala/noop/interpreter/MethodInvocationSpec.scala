@@ -24,11 +24,11 @@ import types.{Injector, NoopString, NoopObject};
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-class MethodInvocationSpec extends Spec with ShouldMatchers with MockContext {
+class MethodInvocationSpec extends Spec with ShouldMatchers with ContextFixture {
 
   def interpreterFixture = {
-    val context = fixture;
-    (context, new InterpreterVisitor(context, new Injector(context.classLoader)));
+    val (context, injector) = fixture;
+    (context, new InterpreterVisitor(context, injector));
   }
 
   describe("a method invocation") {

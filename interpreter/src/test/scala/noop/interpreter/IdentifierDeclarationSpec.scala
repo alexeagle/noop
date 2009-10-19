@@ -24,7 +24,7 @@ import types.{Injector, NoopString};
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-class IdentifierDeclarationSpec extends Spec with ShouldMatchers with MockContext {
+class IdentifierDeclarationSpec extends Spec with ShouldMatchers with ContextFixture {
 
   describe("an assignment expression") {
 
@@ -33,8 +33,8 @@ class IdentifierDeclarationSpec extends Spec with ShouldMatchers with MockContex
 
       identifierDeclaration.initialValue = Some(new StringLiteralExpression("hello world"));
 
-      val context = fixture;
-      val visitor = new InterpreterVisitor(context, new Injector(context.classLoader));
+      val (context, injector) = fixture;
+      val visitor = new InterpreterVisitor(context, injector);
 
       context.stack.top.blockScopes.inScope("identifier declaration test") {
         identifierDeclaration.accept(visitor);

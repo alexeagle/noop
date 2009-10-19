@@ -26,7 +26,7 @@ import types.Injector;
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-class TestRunnerSpec extends Spec with ShouldMatchers with MockContext {
+class TestRunnerSpec extends Spec with ShouldMatchers with ContextFixture {
 
   val fooClass = new ClassDefinition("Foo", "a class");
 
@@ -67,8 +67,8 @@ class TestRunnerSpec extends Spec with ShouldMatchers with MockContext {
     it("should be silent if the lefthand side matches an equals matcher") {
       val matcher = new MethodInvocationExpression(null, "equal", List(new StringLiteralExpression("hello")));
       val shouldExpr = new ShouldExpression(new StringLiteralExpression("hello"), matcher);
-      val context = fixture;
-      val visitor = new InterpreterVisitor(context, new Injector(context.classLoader));
+      val (context, injector) = fixture;
+      val visitor = new InterpreterVisitor(context, injector);
 
       shouldExpr.accept(visitor);
 
@@ -79,8 +79,8 @@ class TestRunnerSpec extends Spec with ShouldMatchers with MockContext {
     it("should throw a test failed exception if an equals matcher is not satisfied") {
       val matcher = new MethodInvocationExpression(null, "equal", List(new StringLiteralExpression("goodbye")));
       val shouldExpr = new ShouldExpression(new StringLiteralExpression("hello"), matcher);
-      val context = fixture;
-      val visitor = new InterpreterVisitor(context, new Injector(context.classLoader));
+      val (context, injector) = fixture;
+      val visitor = new InterpreterVisitor(context, injector);
 
       intercept[TestFailedException] {
         shouldExpr.accept(visitor);

@@ -23,8 +23,8 @@ import model.ClassDefinition;
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class NoopInteger(classDef: ClassDefinition, parameterInstances: Map[String, NoopObject],
-    val value: Int, injector: Injector) extends NoopObject(classDef, parameterInstances) {
+class NoopInteger(classDef: ClassDefinition, propertyMap: Map[String, NoopObject],
+    val value: Int, injector: Injector) extends NoopObject(classDef, propertyMap) {
 
   def other(args: Seq[NoopObject]): Int = {
     args(0).asInstanceOf[NoopInteger].value;
