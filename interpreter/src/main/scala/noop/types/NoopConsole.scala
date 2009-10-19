@@ -24,8 +24,8 @@ import model.{ClassDefinition, EvaluatedExpression, MethodInvocationExpression};
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class NoopConsole(classDef: ClassDefinition, parameterInstances: Map[String, NoopObject])
-    extends NoopObject(classDef, parameterInstances) {
+class NoopConsole(classDef: ClassDefinition, propertyMap: Map[String, NoopObject])
+    extends NoopObject(classDef, propertyMap) {
 
   def println(args: Seq[NoopObject]): NoopObject = {
     val toPrint = args(0) match {

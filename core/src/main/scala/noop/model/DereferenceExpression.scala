@@ -22,6 +22,9 @@ package noop.model;
 class DereferenceExpression(val left: Expression, val right: Expression) extends Expression {
 
   def accept(visitor: Visitor) = {
+    left.accept(visitor);
+    println("right " + right + " accepting visitor");
+    right.accept(visitor);
     visitor.visit(this);
   }
 }

@@ -15,7 +15,8 @@
  */
 package noop.interpreter;
 
-import collection.mutable.Stack;
+import collection.mutable.Stack
+import types.NoopObject;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -23,7 +24,7 @@ import collection.mutable.Stack;
  */
 class Context(val stack: Stack[Frame], val classLoader: ClassLoader) {
 
-  def addRootFrame() = {
-    stack.push(new Frame(null, null));
+  def addRootFrame(thisRef: NoopObject) = {
+    stack.push(new Frame(thisRef, null));
   }
 }

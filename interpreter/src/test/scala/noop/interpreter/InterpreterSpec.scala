@@ -37,7 +37,7 @@ class InterpreterSpec extends Spec with ShouldMatchers {
     val classLoader = new SourceFileClassLoader(new Parser(), List(stdLibSourcePath));
     val context = new Context(new Stack[Frame], classLoader);
 
-    context.addRootFrame();
+    context.addRootFrame(null);
     (classLoader, context);
   }
 

@@ -26,12 +26,12 @@ import types.{Injector, NoopString};
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class ControlStructureSpec extends Spec with ShouldMatchers with MockContext {
+class ControlStructureSpec extends Spec with ShouldMatchers with ContextFixture {
 
   def interpreterFixture = {
-    val context = fixture;
+    val (context, injector) = fixture;
     val block = new Block();
-    val visitor = new InterpreterVisitor(context, new Injector(context.classLoader));
+    val visitor = new InterpreterVisitor(context, injector);
     (context, block, visitor);
   }
 
