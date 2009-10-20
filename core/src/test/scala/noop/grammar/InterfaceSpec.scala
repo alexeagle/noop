@@ -39,7 +39,7 @@ class InterfaceSpec extends Spec with ShouldMatchers {
       val source = "interface MyInterface { Int helloWorld();  }";
       val commonTree = parser.parseFile(source);
 
-      commonTree.toStringTree() should equal ("(INTERFACE MyInterface (METHOD Int helloWorld))");
+      commonTree.toStringTree() should equal ("(INTERFACE MyInterface (METHOD (RETURN_TYPE Int) helloWorld))");
     }
 
     it("should not parse an interface with a method having a body") {

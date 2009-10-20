@@ -34,7 +34,7 @@ class MethodsSpec extends Spec with ShouldMatchers {
       val source = "class Bar() { String helloWorld() { Int i = 1; } }";
       val commonTree = parser.parseFile(source);
 
-      commonTree.toStringTree() should equal ("(CLASS Bar (METHOD String helloWorld " +
+      commonTree.toStringTree() should equal ("(CLASS Bar (METHOD (RETURN_TYPE String) helloWorld " +
           "(VAR Int (= i 1))))");
     }
 
@@ -42,14 +42,16 @@ class MethodsSpec extends Spec with ShouldMatchers {
       val source = "class Bar() { String helloWorld(String s, Int n) { Int i = 1; } }";
       val commonTree = parser.parseFile(source);
 
-      commonTree.toStringTree() should equal ("(CLASS Bar (METHOD String helloWorld " +
+      commonTree.toStringTree() should equal ("(CLASS Bar (METHOD (RETURN_TYPE String) helloWorld " +
           "(PARAMS (PARAM String s) (PARAM Int n)) (VAR Int (= i 1))))");
 
       val file = parser.file(source);
       file.classDef.methods.size should be (1);
       val firstMethod = file.classDef.methods(0)
       firstMethod.name should be ("helloWorld");
-      firstMethod.returnType should be ("String");
+      firstMethod.returnParameters.size should be (1);
+      firstMethod.returnParameters(0).name should be (null);
+      firstMethod.returnParameters(0).noopType should be ("String");
       firstMethod.parameters.size should be (2);
       firstMethod.parameters(0).name should be ("s");
       firstMethod.parameters(0).noopType should be ("String");
@@ -67,7 +69,7 @@ class MethodsSpec extends Spec with ShouldMatchers {
       val source = "class Bar() { String helloWorld() { Int i; } }";
       val commonTree = parser.parseFile(source);
 
-      commonTree.toStringTree() should equal ("(CLASS Bar (METHOD String helloWorld " +
+      commonTree.toStringTree() should equal ("(CLASS Bar (METHOD (RETURN_TYPE String) helloWorld " +
           "(VAR Int i)))");
 
       val file = parser.file(source);
@@ -83,21 +85,77 @@ class MethodsSpec extends Spec with ShouldMatchers {
     it("should parse a method invocation on a parameter reference") {
       val source = """class HelloWorld() { Int hello() { console.println("Hello, World!"); }}""";
       parser.parseFile(source).toStringTree() should equal(
-          """(CLASS HelloWorld (METHOD Int hello (. console println (ARGS "Hello, World!"))))""");
+          """(CLASS HelloWorld (METHOD (RETURN_TYPE Int) hello (. console println (ARGS "Hello, World!"))))""");
     }
 
     it("should parse a method with a return statement") {
       val source = "class Foo() { Void do() { return 4; } }";
       parser.parseFile(source).toStringTree() should equal (
-          "(CLASS Foo (METHOD Void do (return 4)))");
+          "(CLASS Foo (METHOD (RETURN_TYPE Void) do (return 4)))");
     }
 
     it("should allow the native modifier on a method") {
       val source = "class Foo() { native Void do() { Int i; }}";
       parser.parseFile(source).toStringTree() should equal (
-          "(CLASS Foo (METHOD (MOD native) Void do (VAR Int i)))");
+          "(CLASS Foo (METHOD (MOD native) (RETURN_TYPE Void) do (VAR Int i)))");
       val file = parser.file(source);
       file.classDef.methods(0).modifiers should contain(Modifier.native);
+    }
+
+    it("should parse a method with one anonymous return parameter (no parentheses)") {
+      val source = "class Math() { Int calculate() {} }";
+      val commonTree = parser.parseFile(source);
+
+      commonTree.toStringTree() should equal (
+          "(CLASS Math (METHOD (RETURN_TYPE Int) calculate))");
+
+      val file = parser.file(source);
+      file.classDef.methods.size should be (1);
+      val firstMethod = file.classDef.methods(0);
+      firstMethod.name should be ("calculate");
+      firstMethod.returnParameters.size should be (1);
+      firstMethod.returnParameters(0).name should be (null);
+      firstMethod.returnParameters(0).noopType should be ("Int");
+      firstMethod.parameters.size should be (0);
+      firstMethod.block.statements.size should be (0);
+    }
+
+    it("should parse a method with one named return parameter (parentheses)") {
+      val source = "class Math() { (Int a) calculate() {} }";
+      val commonTree = parser.parseFile(source);
+
+      commonTree.toStringTree() should equal (
+          "(CLASS Math (METHOD (RETURN_TYPE (PARAMS (PARAM Int a))) calculate))");
+
+      val file = parser.file(source);
+      file.classDef.methods.size should be (1);
+      val firstMethod = file.classDef.methods(0);
+      firstMethod.name should be ("calculate");
+      firstMethod.returnParameters.size should be (1);
+      firstMethod.returnParameters(0).name should be ("a");
+      firstMethod.returnParameters(0).noopType should be ("Int");
+      firstMethod.parameters.size should be (0);
+      firstMethod.block.statements.size should be (0);
+    }
+
+    it("should parse a method with multiple return parameters") {
+      val source = "class Math() { (Int a, Int b) calculate() {} }";
+      val commonTree = parser.parseFile(source);
+
+      commonTree.toStringTree() should equal (
+          "(CLASS Math (METHOD (RETURN_TYPE (PARAMS (PARAM Int a) (PARAM Int b))) calculate))");
+
+      val file = parser.file(source);
+      file.classDef.methods.size should be (1);
+      val firstMethod = file.classDef.methods(0);
+      firstMethod.name should be ("calculate");
+      firstMethod.returnParameters.size should be (2);
+      firstMethod.returnParameters(0).name should be ("a");
+      firstMethod.returnParameters(0).noopType should be ("Int");
+      firstMethod.returnParameters(1).name should be ("b");
+      firstMethod.returnParameters(1).noopType should be ("Int");
+      firstMethod.parameters.size should be (0);
+      firstMethod.block.statements.size should be (0);
     }
   }
 }
