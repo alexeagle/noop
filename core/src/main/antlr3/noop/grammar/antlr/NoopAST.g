@@ -173,8 +173,9 @@ test
 	
 unittest [Buffer<Method> unittests]
 	:	^(UNITTEST name=StringLiteral b=block)
-	{ Method method = new Method(stripQuotes($name.text), "Void", $b.block, stripQuotes($name.text));
+	{ Method method = new Method(stripQuotes($name.text), $b.block, stripQuotes($name.text));
 	  $unittests.\$plus\$eq(method);
+    method.returnParameters().\$plus\$eq(new Parameter(null, "Void")); // null *and* void
 	}
 	;
 
@@ -185,8 +186,9 @@ classBlock [Buffer<Method> methods, Buffer<Method> unittests]
 methodDefinition [Buffer<Method> methods]
 @init { paraphrases.push("in method definition"); }
 @after { paraphrases.pop(); }
-  :	^(METHOD d=doc? m=modifiers? type=TypeIdentifier name=VariableIdentifier p=parameters? b=block)
-  { Method method = new Method($name.text, $type.text, $b.block, $d.doc);
+  :	^(METHOD d=doc? m=modifiers? r=returnType name=VariableIdentifier p=parameters? b=block)
+  { Method method = new Method($name.text, $b.block, $d.doc);
+    method.returnParameters().\$plus\$plus\$eq($r.parameters);
     if ($p.parameters != null) {
   	  method.parameters().\$plus\$plus\$eq($p.parameters);
 	  }
@@ -194,6 +196,16 @@ methodDefinition [Buffer<Method> methods]
   	  method.modifiers().\$plus\$plus\$eq($m.modifiers);
   	}
   	$methods.\$plus\$eq(method);
+  }
+  ;
+
+returnType returns [Buffer<Parameter> parameters]
+  : ^(RETURN_TYPE t=TypeIdentifier) {
+    $parameters = new ArrayBuffer<Parameter>();
+    $parameters.\$plus\$eq(new Parameter(null, $t.text));
+  }
+  | ^(RETURN_TYPE p=parameters) {
+    $parameters = $p.parameters;
   }
   ;
 

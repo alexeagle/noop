@@ -23,8 +23,9 @@ import collection.mutable.{ArrayBuffer, Buffer};
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class Method(val name: String, val returnType: String, val block: Block, val documentation: String)  {
+class Method(val name: String, val block: Block, val documentation: String)  {
 
+  val returnParameters: Buffer[Parameter] = new ArrayBuffer[Parameter]();
   val parameters: Buffer[Parameter] = new ArrayBuffer[Parameter]();
   val modifiers: Buffer[Modifier.Value] = new ArrayBuffer[Modifier.Value]();
 }

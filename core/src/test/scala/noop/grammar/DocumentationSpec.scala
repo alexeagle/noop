@@ -38,7 +38,7 @@ class DocumentationSpec extends Spec with ShouldMatchers {
     it("should appear before a method declaration") {
       val source = "class Foo() { doc \"Here is my great method\" Int doIt() {}}";
       parser.parseFile(source).toStringTree() should equal (
-          "(CLASS Foo (METHOD (doc \"Here is my great method\") Int doIt))");
+          "(CLASS Foo (METHOD (doc \"Here is my great method\") (RETURN_TYPE Int) doIt))");
       val file = parser.file(source);
       file.classDef.methods(0).documentation should equal ("Here is my great method");
     }

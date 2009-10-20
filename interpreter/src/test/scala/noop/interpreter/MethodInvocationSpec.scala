@@ -51,7 +51,8 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with ContextFixture 
 
       val block = new Block();
       block.statements += new MockExpression(assertInNewFrame);
-      val myMethod = new Method("length", "Int", block, null);
+      val myMethod = new Method("length", block, null);
+      myMethod.returnParameters += new Parameter(null, "Int");
       context.classLoader.findClass("String").methods += myMethod;
       val target = new StringLiteralExpression("aString");
       val expr = new MethodInvocationExpression(target, "length", List());
@@ -70,7 +71,8 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with ContextFixture 
       val block = new Block();
 
       block.statements += new MockExpression(assertParamIsSetFromArgument);
-      val myMethod = new Method("plus", "Void", block, null);
+      val myMethod = new Method("plus", block, null);
+      myMethod.returnParameters += new Parameter(null, "Void");
 
       myMethod.parameters += new Parameter(paramName, "String");
       context.classLoader.findClass("String").methods += myMethod;
@@ -82,7 +84,8 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with ContextFixture 
 
     it("should throw an exception if the number of arguments don't match the parameter count") {
       val (context, visitor) = interpreterFixture;
-      val myMethod = new Method("plus", "Void", null, null);
+      val myMethod = new Method("plus", null, null);
+      myMethod.returnParameters += new Parameter(null, "Void");
 
       myMethod.parameters += new Parameter("other", "String");
       context.classLoader.findClass("String").methods += myMethod;
@@ -96,7 +99,8 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with ContextFixture 
 
     it("should throw an exception if the evaluated argument does not match the type of the parameter") {
       val (context, visitor) = interpreterFixture;
-      val myMethod = new Method("plus", "Void", null, null);
+      val myMethod = new Method("plus", null, null);
+      myMethod.returnParameters += new Parameter(null, "Void");
 
       myMethod.parameters += new Parameter("other", "String");
       context.classLoader.findClass("String").methods += myMethod;
@@ -110,7 +114,8 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with ContextFixture 
 
     it("should restore the original stack frame when finished even if exception") {
       val (context, visitor) = interpreterFixture;
-      val myMethod = new Method("plus", "Void", null, null);
+      val myMethod = new Method("plus", null, null);
+      myMethod.returnParameters += new Parameter(null, "Void");
 
       context.classLoader.findClass("String").methods += myMethod;
       val target = new StringLiteralExpression("string1");
@@ -128,7 +133,8 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with ContextFixture 
       val (context, visitor) = interpreterFixture;
       val paramName = "other";
       val block = new Block();
-      val myMethod = new Method("plus", "Void", block, null);
+      val myMethod = new Method("plus", block, null);
+      myMethod.returnParameters += new Parameter(null, "Void");
 
       myMethod.parameters += new Parameter(paramName, "String");
       context.classLoader.findClass("String").methods += myMethod;

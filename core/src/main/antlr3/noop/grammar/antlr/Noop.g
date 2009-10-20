@@ -38,6 +38,7 @@ tokens {
   UNITTEST;
   BINDING;
   BIND;
+  RETURN_TYPE;
 }
 
 @header {
@@ -152,7 +153,12 @@ unittest
 	;
 
 methodSignature
-  : doc? modifiers? TypeIdentifier VariableIdentifier parameterList bindingsDeclaration?
+  : doc? modifiers? returnType VariableIdentifier parameterList bindingsDeclaration?
+  ;
+
+returnType
+  : TypeIdentifier -> ^(RETURN_TYPE TypeIdentifier)
+  | parameterList -> ^(RETURN_TYPE parameterList)
   ;
 
 methodDeclaration

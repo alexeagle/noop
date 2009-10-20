@@ -29,7 +29,7 @@ class ParserSpec extends Spec with ShouldMatchers {
       val source = "class MyClass() { Int foo() { Int result = List.List(List()); } }";
       val parser = new Parser();
       parser.parseFile(source).toStringTree() should be (
-          "(CLASS MyClass (METHOD Int foo (VAR Int (= result (. List List (ARGS List ARGS))))))");
+          "(CLASS MyClass (METHOD (RETURN_TYPE Int) foo (VAR Int (= result (. List List (ARGS List ARGS))))))");
       intercept[ParseException] {
         val classDef = parser.file(source);
       }

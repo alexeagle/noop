@@ -40,7 +40,7 @@ class BindingSpec extends Spec with ShouldMatchers {
     it("can appear as an anonymous binding block") {
       val source = "class Foo() { Int thing() { binding(A -> B) {} } }";
       parser.parseFile(source).toStringTree() should be(
-          "(CLASS Foo (METHOD Int thing (BINDING (BIND A B))))");
+          "(CLASS Foo (METHOD (RETURN_TYPE Int) thing (BINDING (BIND A B))))");
       val file = parser.buildTreeParser(parser.parseFile(source)).file;
       val method = file.classDef.methods.first;
       method.block.anonymousBindings should have length(1);
@@ -55,7 +55,7 @@ class BindingSpec extends Spec with ShouldMatchers {
     it("can appear as a named binding block") {
       val source = "class Foo() { Int thing() { binding MyBinding {} } }";
       parser.parseFile(source).toStringTree() should be(
-          "(CLASS Foo (METHOD Int thing (BINDING MyBinding)))");
+          "(CLASS Foo (METHOD (RETURN_TYPE Int) thing (BINDING MyBinding)))");
       val file = parser.buildTreeParser(parser.parseFile(source)).file;
       val method = file.classDef.methods.first;
       method.block.anonymousBindings should be('empty);
@@ -65,7 +65,7 @@ class BindingSpec extends Spec with ShouldMatchers {
     it("can appear in a method declaration with a name") {
       val source = "class Foo() { Int thing() binding MyBinding {} }";
       parser.parseFile(source).toStringTree() should be(
-          "(CLASS Foo (METHOD Int thing (BINDING MyBinding)))");
+          "(CLASS Foo (METHOD (RETURN_TYPE Int) thing (BINDING MyBinding)))");
       val file = parser.buildTreeParser(parser.parseFile(source)).file;
       val method = file.classDef.methods.first;
       method.block.anonymousBindings should be('empty);
@@ -75,7 +75,7 @@ class BindingSpec extends Spec with ShouldMatchers {
     it("can appear anonymously in a method declaration") {
       val source = "class Foo() { Int thing() binding(This -> that) {} }";
       parser.parseFile(source).toStringTree() should be(
-          "(CLASS Foo (METHOD Int thing (BINDING (BIND This that))))");
+          "(CLASS Foo (METHOD (RETURN_TYPE Int) thing (BINDING (BIND This that))))");
       val file = parser.buildTreeParser(parser.parseFile(source)).file;
       val method = file.classDef.methods.first;
       method.block.anonymousBindings should have length(1);
