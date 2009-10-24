@@ -1,0 +1,2 @@
+java -classpath $HOME/.m2/repository/org/slf4j/slf4j-simple/1.5.6/slf4j-simple-1.5.6.jar:$HOME/.m2/repository/org/slf4j/slf4j-api/1.5.6/slf4j-api-1.5.6.jar:$HOME/.m2/repository/org/antlr/antlr-runtime/3.1.1/antlr-runtime-3.1.1.jar:$HOME/.m2/repository/org/scala-lang/scala-library/2.7.5/scala-library-2.7.5.jar:core/target/classes/:core/target/generated:interpreter/target/classes noop.interpreter.testing.TestRunnerMain $@
+

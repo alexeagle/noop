@@ -1,0 +1,17 @@
+import noop.Application;
+import noop.Console;
+
+class HelloWorld(Console console) implements Application {
+
+  Int main(List args) {
+    console.println("Hello World!");
+    return 0;
+  }
+
+  unittest "Should say hello" binding (Console -> MockConsole) {
+    List l;
+    Int result = main(l);
+    result should equal(0);
+    console.printed should equal("Hello World!");
+  }
+}
