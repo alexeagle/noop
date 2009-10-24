@@ -3,7 +3,7 @@ group Java;
 file(namespace, imports, class) ::= <<
 package <namespace>;
 
-<imports:{import <it>;}; separator="\n":{i | import <i>;}>
+<imports:{import <it>;}; separator="\n">
 
 <class>
 >>
