@@ -49,7 +49,6 @@ define 'noop', :version=>VERSION_NUMBER do
 
   define "compiler" do
     resources.from [_('src/main/stringtemplate')]
-    package(:jar).with(:manifest=>{'Main-Class' => 'noop.to.java.Java'})
     compile.with [project("core"), ANTLR, SLF4J]
     package :jar
   end
