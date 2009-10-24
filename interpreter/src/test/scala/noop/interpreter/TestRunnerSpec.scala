@@ -18,8 +18,8 @@ package noop.interpreter;
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import model.{Block, ClassDefinition, Method, MethodInvocationExpression, Parameter,
-              ShouldExpression, StringLiteralExpression};
+import model.{Block, ClassDefinition, Method, MethodInvocationExpression, ShouldExpression,
+              StringLiteralExpression};
 import interpreter.testing.{TestFailedException, TestHolder, TestRunner};
 import types.Injector;
 
@@ -34,7 +34,7 @@ class TestRunnerSpec extends Spec with ShouldMatchers with ContextFixture {
 
     it("should find unittests within production classes") {
       val unittest = new Method("name", new Block(), "doc");
-      unittest.returnParameters += new Parameter(null, "Void");
+      unittest.returnTypes += "Void";
       fooClass.unittests += unittest;
       val classLoader = new ClassSearch() {
         def eachClass(f: ClassDefinition => Unit) = {
@@ -56,7 +56,7 @@ class TestRunnerSpec extends Spec with ShouldMatchers with ContextFixture {
 
       block.statements += expression;
       val testMethod = new Method("should execute me", block, "doc");
-      testMethod.returnParameters += new Parameter(null, "Void");
+      testMethod.returnTypes += "Void";
       val test = new TestHolder(fooClass, testMethod);
 
       new TestRunner(null, classLoader).runTest(test);

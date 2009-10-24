@@ -17,7 +17,7 @@ package noop.interpreter;
 
 import collection.mutable.Stack
 import types.Injector;
-import model.{ClassDefinition, Method, Modifier, Parameter};
+import model.{ClassDefinition, Method, Modifier};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -29,7 +29,7 @@ trait ContextFixture {
     val classLoader = new MockClassLoader();
     val classDefinition = new ClassDefinition("String", "");
     val length = new Method("length", null, "");
-    length.returnParameters += new Parameter(null, "Int");
+    length.returnTypes += "Int";
     length.modifiers += Modifier.native;
     classDefinition.methods += length;
 

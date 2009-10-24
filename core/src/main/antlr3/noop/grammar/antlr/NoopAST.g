@@ -175,7 +175,7 @@ unittest [Buffer<Method> unittests]
 	:	^(UNITTEST name=StringLiteral b=block)
 	{ Method method = new Method(stripQuotes($name.text), $b.block, stripQuotes($name.text));
 	  $unittests.\$plus\$eq(method);
-    method.returnParameters().\$plus\$eq(new Parameter(null, "Void")); // null *and* void
+    method.returnTypes().\$plus\$eq("Void");
 	}
 	;
 
@@ -188,7 +188,7 @@ methodDefinition [Buffer<Method> methods]
 @after { paraphrases.pop(); }
   :	^(METHOD d=doc? m=modifiers? r=returnType name=VariableIdentifier p=parameters? b=block)
   { Method method = new Method($name.text, $b.block, $d.doc);
-    method.returnParameters().\$plus\$plus\$eq($r.parameters);
+    method.returnTypes().\$plus\$plus\$eq($r.types);
     if ($p.parameters != null) {
   	  method.parameters().\$plus\$plus\$eq($p.parameters);
 	  }
@@ -199,15 +199,16 @@ methodDefinition [Buffer<Method> methods]
   }
   ;
 
-returnType returns [Buffer<Parameter> parameters]
-  : ^(RETURN_TYPE t=TypeIdentifier) {
-    $parameters = new ArrayBuffer<Parameter>();
-    $parameters.\$plus\$eq(new Parameter(null, $t.text));
-  }
-  | ^(RETURN_TYPE p=parameters) {
-    $parameters = $p.parameters;
-  }
+returnType returns [Buffer<String> types = new ArrayBuffer<String>() ]
+  : ^(RETURN_TYPE type[$types]+)
   ;
+
+type [Buffer<String> types]
+	:	t=TypeIdentifier { 
+	  $types.\$plus\$eq($t.text);
+	}
+	;
+
 
 bindingsDeclaration returns [Buffer<BindingDeclaration> bindings]
 	:	^(BINDING b=bindings)

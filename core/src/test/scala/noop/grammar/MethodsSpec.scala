@@ -49,9 +49,8 @@ class MethodsSpec extends Spec with ShouldMatchers {
       file.classDef.methods.size should be (1);
       val firstMethod = file.classDef.methods(0)
       firstMethod.name should be ("helloWorld");
-      firstMethod.returnParameters.size should be (1);
-      firstMethod.returnParameters(0).name should be (null);
-      firstMethod.returnParameters(0).noopType should be ("String");
+      firstMethod.returnTypes.size should be (1);
+      firstMethod.returnTypes(0) should be ("String");
       firstMethod.parameters.size should be (2);
       firstMethod.parameters(0).name should be ("s");
       firstMethod.parameters(0).noopType should be ("String");
@@ -102,7 +101,7 @@ class MethodsSpec extends Spec with ShouldMatchers {
       file.classDef.methods(0).modifiers should contain(Modifier.native);
     }
 
-    it("should parse a method with one anonymous return parameter (no parentheses)") {
+    it("should parse a method with one return type (no parentheses)") {
       val source = "class Math() { Int calculate() {} }";
       val commonTree = parser.parseFile(source);
 
@@ -113,49 +112,73 @@ class MethodsSpec extends Spec with ShouldMatchers {
       file.classDef.methods.size should be (1);
       val firstMethod = file.classDef.methods(0);
       firstMethod.name should be ("calculate");
-      firstMethod.returnParameters.size should be (1);
-      firstMethod.returnParameters(0).name should be (null);
-      firstMethod.returnParameters(0).noopType should be ("Int");
+      firstMethod.returnTypes.size should be (1);
+      firstMethod.returnTypes(0) should be ("Int");
       firstMethod.parameters.size should be (0);
       firstMethod.block.statements.size should be (0);
     }
 
-    it("should parse a method with one named return parameter (parentheses)") {
+    it("should parse a method with one return type (parentheses)") {
+      val source = "class Math() { (Int) calculate() {} }";
+      val commonTree = parser.parseFile(source);
+
+      commonTree.toStringTree() should equal (
+          "(CLASS Math (METHOD (RETURN_TYPE Int) calculate))");
+
+      val file = parser.file(source);
+      file.classDef.methods.size should be (1);
+      val firstMethod = file.classDef.methods(0);
+      firstMethod.name should be ("calculate");
+      firstMethod.returnTypes.size should be (1);
+      firstMethod.returnTypes(0) should be ("Int");
+      firstMethod.parameters.size should be (0);
+      firstMethod.block.statements.size should be (0);
+    }
+
+    it("should parse a method with multiple return types") {
+      val source = "class Math() { (Int, Int) calculate() {} }";
+      val commonTree = parser.parseFile(source);
+
+      commonTree.toStringTree() should equal (
+          "(CLASS Math (METHOD (RETURN_TYPE Int Int) calculate))");
+
+      val file = parser.file(source);
+      file.classDef.methods.size should be (1);
+      val firstMethod = file.classDef.methods(0);
+      firstMethod.name should be ("calculate");
+      firstMethod.returnTypes.size should be (2);
+      firstMethod.returnTypes(0) should be ("Int");
+      firstMethod.returnTypes(1) should be ("Int");
+      firstMethod.parameters.size should be (0);
+      firstMethod.block.statements.size should be (0);
+    }
+
+    it ("should NOT parse a method with one named return parameter (no parentheses)") {
+      val source = "class Math() { Int a calculate() {} }";
+      intercept[ParseException] {
+        parser.parseFile(source);
+      }
+    }
+
+    it ("should NOT parse a method with one named return parameter (parentheses)") {
       val source = "class Math() { (Int a) calculate() {} }";
-      val commonTree = parser.parseFile(source);
-
-      commonTree.toStringTree() should equal (
-          "(CLASS Math (METHOD (RETURN_TYPE (PARAMS (PARAM Int a))) calculate))");
-
-      val file = parser.file(source);
-      file.classDef.methods.size should be (1);
-      val firstMethod = file.classDef.methods(0);
-      firstMethod.name should be ("calculate");
-      firstMethod.returnParameters.size should be (1);
-      firstMethod.returnParameters(0).name should be ("a");
-      firstMethod.returnParameters(0).noopType should be ("Int");
-      firstMethod.parameters.size should be (0);
-      firstMethod.block.statements.size should be (0);
+      intercept[ParseException] {
+        parser.parseFile(source);
+      }
     }
 
-    it("should parse a method with multiple return parameters") {
-      val source = "class Math() { (Int a, Int b) calculate() {} }";
-      val commonTree = parser.parseFile(source);
+    it ("should NOT parse a method with a mixture of named and unnamed return parameters") {
+      val source = "class Math() { (Int, Int b, Int) calculate() {} }";
+      intercept[ParseException] {
+        parser.parseFile(source);
+      }
+    }
 
-      commonTree.toStringTree() should equal (
-          "(CLASS Math (METHOD (RETURN_TYPE (PARAMS (PARAM Int a) (PARAM Int b))) calculate))");
-
-      val file = parser.file(source);
-      file.classDef.methods.size should be (1);
-      val firstMethod = file.classDef.methods(0);
-      firstMethod.name should be ("calculate");
-      firstMethod.returnParameters.size should be (2);
-      firstMethod.returnParameters(0).name should be ("a");
-      firstMethod.returnParameters(0).noopType should be ("Int");
-      firstMethod.returnParameters(1).name should be ("b");
-      firstMethod.returnParameters(1).noopType should be ("Int");
-      firstMethod.parameters.size should be (0);
-      firstMethod.block.statements.size should be (0);
+    it ("should NOT parse a method with multiple named return parameters") {
+      val source = "class Math() { (Int a, Int b) calcualte() {} }";
+      intercept[ParseException] {
+        parser.parseFile(source);
+      }
     }
   }
 }

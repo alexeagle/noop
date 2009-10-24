@@ -158,7 +158,11 @@ methodSignature
 
 returnType
   : TypeIdentifier -> ^(RETURN_TYPE TypeIdentifier)
-  | parameterList -> ^(RETURN_TYPE parameterList)
+  | '(' typeList ')' -> ^(RETURN_TYPE typeList)
+  ;
+
+typeList
+  : TypeIdentifier (','! TypeIdentifier)*
   ;
 
 methodDeclaration
