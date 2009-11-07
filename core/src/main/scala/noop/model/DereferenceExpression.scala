@@ -16,6 +16,10 @@
 package noop.model;
 
 /**
+ * An AST model element for a dereference, expressed syntactically as a dot.
+ * {@code a.b} is a dereference of the b property from the object referenced by a.
+ * A method call is not a dereference.
+ *
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
@@ -23,7 +27,6 @@ class DereferenceExpression(val left: Expression, val right: Expression) extends
 
   def accept(visitor: Visitor) = {
     left.accept(visitor);
-    println("right " + right + " accepting visitor");
     right.accept(visitor);
     visitor.visit(this);
   }

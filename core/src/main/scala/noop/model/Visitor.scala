@@ -53,4 +53,6 @@ trait Visitor {
   def visit(stringLiteralExpression: StringLiteralExpression);
 
   def visit(whileLoop: WhileLoop);
+
+  def visit(bindingDeclaration: BindingDeclaration);  
 }

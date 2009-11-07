@@ -122,4 +122,10 @@ class CompositeVisitor(visitors: Seq[Visitor]) extends Visitor {
       v.visit(whileLoop);
     }
   }
+
+  def visit(bindingDeclaration: BindingDeclaration) = {
+    for (v <- visitors) {
+      v.visit(bindingDeclaration);
+    }
+  }
 }

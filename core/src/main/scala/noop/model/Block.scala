@@ -28,6 +28,9 @@ class Block extends Expression {
   var namedBinding: Option[String] = None;
 
   def accept(visitor: Visitor): Unit = {
+    for (anonBinding <- anonymousBindings) {
+      anonBinding.accept(visitor);
+    }
     for (statement <- statements) {
       statement.accept(visitor);
       if (statement.isInstanceOf[ReturnExpression]) {
