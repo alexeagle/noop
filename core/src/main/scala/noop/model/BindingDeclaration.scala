@@ -17,8 +17,13 @@
 package noop.model;
 
 /**
+ * AST model element which represents a declaration of a binding from a type to an expression.
  * @author alexeagle@google.com (Alex Eagle)
  */
-class BindingDeclaration(val noopType: String, val binding: Expression) {
+class BindingDeclaration(val noopType: String, val binding: Expression) extends Expression {
 
+  def accept(visitor: Visitor) = {
+    binding.accept(visitor);
+    visitor.visit(this);
+  }
 }

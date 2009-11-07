@@ -93,4 +93,8 @@ class LoggingAstVisitor extends Visitor {
   def visit(whileLoop: WhileLoop) = {
     logger.info("while loop");
   }
+
+  def visit(bindingDeclaration: BindingDeclaration) = {
+    logger.info("binding {} to {}", bindingDeclaration.noopType, bindingDeclaration.binding);
+  }
 }

@@ -30,7 +30,7 @@ class NoopObject(val classDef: ClassDefinition, val propertyMap: Map[String, Noo
         + name + "' missing in " + classDef.name);
   }
 
-   def executeNativeMethod(args: Seq[NoopObject], name: String): NoopObject = {
+  def executeNativeMethod(args: Seq[NoopObject], name: String): NoopObject = {
     return nativeMethod(name).apply(args);
   }
 
