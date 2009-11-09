@@ -15,49 +15,48 @@
  */
 package noop.types;
 
-import collection.mutable.Stack;
+import collection.mutable.Stack
+import com.google.inject.Guice
+import inject.{GuiceBackedInjector, Injector}
 
+
+import interpreter._
 import java.io.File;
 
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
 import grammar.Parser;
-import interpreter.{Frame, Context, InterpreterVisitor, SourceFileClassLoader};
+
 import model.Modifier;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
 class StringSpec extends Spec with ShouldMatchers {
-
-  def createFixture = {
-    val stdlibSourcePath = new File(getClass().getResource("/stdlib").toURI).getAbsolutePath();
-    new SourceFileClassLoader(new Parser(), List(stdlibSourcePath))
-  }
+  def fixture = Guice.createInjector(new InterpreterModule(), new NoopTypesModule());
 
   describe("a Noop String") {
-
     it("should have a valid class definition parsed from Noop source") {
-      val classLoader = createFixture;
+      val classLoader = fixture.getInstance(classOf[ClassLoader]);
       val classDef = classLoader.findClass("String");
       classDef.name should be("String");
     }
 
     it("should have a native implementation of the length method") {
-      val classLoader = createFixture;
+      val injector = fixture;
+      val classLoader = injector.getInstance(classOf[ClassLoader]);
       val stringClass = classLoader.findClass("String");
-      val injector = new Injector(classLoader)
-      val aString = new NoopString(stringClass, Map.empty[String, NoopObject], "hello", injector);
+
+      val aString = injector.getInstance(classOf[StringFactory]).create("hello");
       val method = stringClass.findMethod("length");
-      val stack = new Stack[Frame]();
-      val context = new Context(stack, classLoader);
+      val context = injector.getInstance(classOf[Context]);
 
       context.addRootFrame(null);
       method.modifiers should contain(Modifier.native);
 
-      stack.push(new Frame(aString, null));
-      new InterpreterVisitor(context, injector).visit(method);
+      context.stack.push(new Frame(aString, null));
+      injector.getInstance(classOf[InterpreterVisitor]).visit(method);
 
       val theString = context.stack.top.lastEvaluated(0);
 

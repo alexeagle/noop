@@ -15,15 +15,17 @@
  */
 package noop.types;
 
-import com.google.inject.Key
-import model.ClassDefinition;
+import com.google.inject.AbstractModule;
+import com.google.inject.assistedinject.FactoryProvider;
 
 /**
- * In Guice terms, a NoopType is synonymous with a Key.
- *
  * @author alexeagle@google.com (Alex Eagle)
- * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class NoopType(classDef: ClassDefinition, propertyMap: Map[String, NoopObject], val typeName: String)
-    extends NoopObject(classDef, propertyMap) {
+
+class NoopTypesModule extends AbstractModule {
+  override def configure() = {
+    bind(classOf[BooleanFactory]).toProvider(FactoryProvider.newFactory(classOf[BooleanFactory], classOf[NoopBoolean]));
+    bind(classOf[StringFactory]).toProvider(FactoryProvider.newFactory(classOf[StringFactory], classOf[NoopString]));
+    bind(classOf[IntegerFactory]).toProvider(FactoryProvider.newFactory(classOf[IntegerFactory], classOf[NoopInteger]));
+  }
 }
