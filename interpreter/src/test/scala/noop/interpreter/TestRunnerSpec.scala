@@ -15,18 +15,18 @@
  */
 package noop.interpreter;
 
-import org.scalatest.matchers.ShouldMatchers;
+import inject.Injector
+import model._
+import org.scalatest.matchers.ShouldMatchers
+import types.StringFactory;
 import org.scalatest.Spec;
 
-import model.{Block, ClassDefinition, Method, MethodInvocationExpression, ShouldExpression,
-              StringLiteralExpression};
 import interpreter.testing.{TestFailedException, TestHolder, TestRunner};
-import types.Injector;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-class TestRunnerSpec extends Spec with ShouldMatchers with ContextFixture {
+class TestRunnerSpec extends Spec with ShouldMatchers with GuiceInterpreterFixture {
 
   val fooClass = new ClassDefinition("Foo", "a class");
 
@@ -42,7 +42,7 @@ class TestRunnerSpec extends Spec with ShouldMatchers with ContextFixture {
         }
       }
 
-      val testRunner = new TestRunner(classLoader, null);
+      val testRunner = new TestRunner(classLoader, null, null, null);
       val testsToRun = testRunner.gatherTests();
       testsToRun should have length (1);
       testsToRun.first.testMethod should be theSameInstanceAs(unittest);
@@ -50,7 +50,7 @@ class TestRunnerSpec extends Spec with ShouldMatchers with ContextFixture {
     }
 
     it("should execute a test") {
-      val classLoader = new MockClassLoader();
+      val injector = fixture;
       val block = new Block();
       val expression = new MockExpression();
 
@@ -59,34 +59,8 @@ class TestRunnerSpec extends Spec with ShouldMatchers with ContextFixture {
       testMethod.returnTypes += "Void";
       val test = new TestHolder(fooClass, testMethod);
 
-      new TestRunner(null, classLoader).runTest(test);
+      injector.getInstance(classOf[TestRunner]).runTest(test);
       expression.timesCalled should be(1);
-    }
-  }
-
-  describe("the 'should' operator") {
-
-    it("should be silent if the lefthand side matches an equals matcher") {
-      val matcher = new MethodInvocationExpression(null, "equal", List(new StringLiteralExpression("hello")));
-      val shouldExpr = new ShouldExpression(new StringLiteralExpression("hello"), matcher);
-      val (context, injector) = fixture;
-      val visitor = new InterpreterVisitor(context, injector);
-
-      shouldExpr.accept(visitor);
-
-      // TODO(jeremiele): no idea if it is the correct behavior
-      context.stack.top.lastEvaluated.size should be (0);
-    }
-
-    it("should throw a test failed exception if an equals matcher is not satisfied") {
-      val matcher = new MethodInvocationExpression(null, "equal", List(new StringLiteralExpression("goodbye")));
-      val shouldExpr = new ShouldExpression(new StringLiteralExpression("hello"), matcher);
-      val (context, injector) = fixture;
-      val visitor = new InterpreterVisitor(context, injector);
-
-      intercept[TestFailedException] {
-        shouldExpr.accept(visitor);
-      }
     }
   }
 }

@@ -15,16 +15,22 @@
  */
 package noop.interpreter;
 
-import model.{StringLiteralExpression, IdentifierDeclarationExpression}
+import inject.Injector
+import model.{Visitor, StringLiteralExpression, IdentifierDeclarationExpression}
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import types.{Injector, NoopString};
+import types.{NoopString};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-class IdentifierDeclarationSpec extends Spec with ShouldMatchers with ContextFixture {
+class IdentifierDeclarationSpec extends Spec with ShouldMatchers with GuiceInterpreterFixture {
+
+  def myFixture = {
+    val injector = fixture;
+    (injector.getInstance(classOf[Context]), injector.getInstance(classOf[Visitor]));
+  }
 
   describe("an assignment expression") {
 
@@ -33,8 +39,7 @@ class IdentifierDeclarationSpec extends Spec with ShouldMatchers with ContextFix
 
       identifierDeclaration.initialValue = Some(new StringLiteralExpression("hello world"));
 
-      val (context, injector) = fixture;
-      val visitor = new InterpreterVisitor(context, injector);
+      val (context, visitor) = myFixture;
 
       context.stack.top.blockScopes.inScope("identifier declaration test") {
         identifierDeclaration.accept(visitor);

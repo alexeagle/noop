@@ -15,24 +15,24 @@
  */
 package noop.interpreter;
 
+import inject.Injector
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
 import model.{IdentifierExpression, AssignmentExpression, Block, BooleanLiteralExpression, Expression,
     IdentifierDeclarationExpression, ReturnExpression, StringLiteralExpression, Visitor, WhileLoop};
-import types.{Injector, NoopString};
+import types.{NoopString};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class ControlStructureSpec extends Spec with ShouldMatchers with ContextFixture {
+class ControlStructureSpec extends Spec with ShouldMatchers with GuiceInterpreterFixture {
 
   def interpreterFixture = {
-    val (context, injector) = fixture;
+    val injector = fixture;
     val block = new Block();
-    val visitor = new InterpreterVisitor(context, injector);
-    (context, block, visitor);
+    (injector.getInstance(classOf[Context]), block, injector.getInstance(classOf[Visitor]));
   }
 
   class TrueThenFalseExpression(timesToReturnTrue: Int) extends Expression {

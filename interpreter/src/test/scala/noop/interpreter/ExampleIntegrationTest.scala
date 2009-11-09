@@ -15,7 +15,9 @@
  */
 package noop.interpreter;
 
-import java.io.{File, ByteArrayOutputStream};
+import com.google.inject.Guice
+import java.io.{File, ByteArrayOutputStream}
+import types.NoopTypesModule;
 
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
@@ -28,6 +30,8 @@ import grammar.Parser;
  * @author alexeagle@google.com (Alex Eagle)
  */
 class ExampleIntegrationTest extends Spec with ShouldMatchers {
+
+  def createInjector() = Guice.createInjector(new InterpreterModule(), new NoopTypesModule());
 
   def createFixture = {
     val sourcePaths = List(
@@ -52,11 +56,10 @@ class ExampleIntegrationTest extends Spec with ShouldMatchers {
   it("should run the hello world program") {
     withRedirectedStandardOut { (output) => {
       val classLoader = createFixture;
-      println("ABOUT TO FIND CLASS");
       val mainClass = classLoader.findClass("HelloWorld");
-      println("FOUND CLASS");
       mainClass should not be(null);
-      new Interpreter(classLoader).runApplication(mainClass);
+
+      createInjector().getInstance(classOf[Interpreter]).runApplication(mainClass);
       output.toString() should include("Hello World!");
     }}
   }
@@ -65,7 +68,7 @@ class ExampleIntegrationTest extends Spec with ShouldMatchers {
     withRedirectedStandardOut { (output) => {
       val classLoader = createFixture;
       val mainClass = classLoader.findClass("WhileLoop");
-      new Interpreter(classLoader).runApplication(mainClass);
+      createInjector().getInstance(classOf[Interpreter]).runApplication(mainClass);
       output.toString() should equal("Hello World!\n");
     }}
   }
@@ -74,7 +77,7 @@ class ExampleIntegrationTest extends Spec with ShouldMatchers {
     withRedirectedStandardOut { (output) => {
       val classLoader = createFixture;
       val mainClass = classLoader.findClass("Arithmetic");
-      new Interpreter(classLoader).runApplication(mainClass);
+      createInjector().getInstance(classOf[Interpreter]).runApplication(mainClass);
       output.toString() should include("3");
     }}
   }
