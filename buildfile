@@ -21,16 +21,15 @@ VERSION_NUMBER = "0.1.0-SNAPSHOT"
 GROUP = "com.google"
 COPYRIGHT = "Apache 2.0"
 
-
 repositories.remote << "http://www.ibiblio.org/maven2"
 
 ANTLR = ["org.antlr:antlr:jar:3.1.1"]
 ANTLR_RUNTIME = ["org.antlr:antlr-runtime:jar:3.1.1"]
 SLF4J = ["org.slf4j:slf4j-api:jar:1.5.6", "org.slf4j:slf4j-simple:jar:1.5.6"]
+GUICE = ["aopalliance:aopalliance:jar:1.0",
+         "com.google.inject:guice:jar:2.0", "com.google.inject.extensions:guice-assisted-inject:jar:2.0" ]
 Buildr::ANTLR::REQUIRES.clear
 Buildr::ANTLR::REQUIRES.concat(ANTLR)
-
-
 
 desc "The Noop language"
 define 'noop', :version=>VERSION_NUMBER do
@@ -57,9 +56,10 @@ define 'noop', :version=>VERSION_NUMBER do
     # TODO - only want examples as a test resource
     resources.from [_('src/main/noop'), project("noop")._('examples/noop')]
     package(:jar).with(:manifest=>{'Main-Class' => 'noop.interpreter.InterpreterMain'})
-    compile.with [project("core"), ANTLR_RUNTIME, SLF4J]
+    compile.with [project("core"), ANTLR_RUNTIME, SLF4J, GUICE]
     compile.dependencies.each do |c|
-      unless c.to_s.index("scala-compiler")
+      # TODO - we have collisions, need to use jarjar or maven shadow plugin
+      unless c.to_s.index("scala-compiler") or c.to_s.index("guice")
         package(:jar).merge(c).include('*.class')
       end
     end
