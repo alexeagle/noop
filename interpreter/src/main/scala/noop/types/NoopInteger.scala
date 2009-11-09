@@ -16,27 +16,28 @@
 package noop.types;
 
 import collection.immutable;
-
-import model.ClassDefinition;
+import com.google.inject.assistedinject.Assisted;
+import com.google.inject.Inject;
+import noop.interpreter.ClassLoader;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class NoopInteger(classDef: ClassDefinition, propertyMap: Map[String, NoopObject],
-    val value: Int, injector: Injector) extends NoopObject(classDef, propertyMap) {
+class NoopInteger @Inject() (classLoader: ClassLoader, integerFactory: IntegerFactory, stringFactory: StringFactory, @Assisted val value: Int)
+    extends NoopObject(classLoader.findClass("Int"), Map.empty[String, NoopObject]) {
 
   def other(args: Seq[NoopObject]): Int = {
     args(0).asInstanceOf[NoopInteger].value;
   }
 
   def nativeMethodMap = immutable.Map[String, Seq[NoopObject] => NoopObject](
-    "plus" -> ((args: Seq[NoopObject]) => injector.create(value + other(args))),
-    "minus" -> ((args: Seq[NoopObject]) => injector.create(value - other(args))),
-    "multiply" -> ((args: Seq[NoopObject]) => injector.create(value * other(args))),
-    "divide" -> ((args: Seq[NoopObject]) => injector.create(value / other(args))),
-    "modulo" -> ((args: Seq[NoopObject]) => injector.create(value % other(args))),
-    "toString" -> ((args: Seq[NoopObject]) => injector.create(value.toString))
+    "plus" -> ((args: Seq[NoopObject]) => integerFactory.create(value + other(args))),
+    "minus" -> ((args: Seq[NoopObject]) => integerFactory.create(value - other(args))),
+    "multiply" -> ((args: Seq[NoopObject]) => integerFactory.create(value * other(args))),
+    "divide" -> ((args: Seq[NoopObject]) => integerFactory.create(value / other(args))),
+    "modulo" -> ((args: Seq[NoopObject]) => integerFactory.create(value % other(args))),
+    "toString" -> ((args: Seq[NoopObject]) => stringFactory.create(value.toString))
   );
 
   override def nativeMethod(name: String): (Seq[NoopObject] => NoopObject) = {

@@ -13,17 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.types;
-
-import com.google.inject.Key
-import model.ClassDefinition;
+package noop.types
 
 /**
- * In Guice terms, a NoopType is synonymous with a Key.
- *
+ * Produces {@link NoopInteger}'s out of Scala {@link Int}'s.
  * @author alexeagle@google.com (Alex Eagle)
- * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class NoopType(classDef: ClassDefinition, propertyMap: Map[String, NoopObject], val typeName: String)
-    extends NoopObject(classDef, propertyMap) {
+
+trait IntegerFactory {
+  def create(value: Int): NoopInteger;
 }

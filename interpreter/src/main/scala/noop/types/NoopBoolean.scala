@@ -15,25 +15,25 @@
  */
 package noop.types;
 
-import collection.immutable;
-
-import model.ClassDefinition;
+import collection.immutable
+import com.google.inject.assistedinject.Assisted
+import com.google.inject.Inject
+import interpreter.ClassLoader;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class NoopBoolean(classDef: ClassDefinition, propertyMap: Map[String, NoopObject],
-    val value: Boolean, injector: Injector)
-        extends NoopObject(classDef, propertyMap) {
+class NoopBoolean @Inject() (classLoader: ClassLoader, booleanFactory: BooleanFactory, stringFactory: StringFactory, @Assisted val value: Boolean)
+        extends NoopObject(classLoader.findClass("Boolean"), Map.empty[String, NoopObject]) {
 
   def other(args: Seq[NoopObject]): Boolean = args(0).asInstanceOf[NoopBoolean].value;
   def nativeMethodMap = immutable.Map[String, Seq[NoopObject] => NoopObject](
-    "and" -> ((args: Seq[NoopObject]) => injector.create(value && other(args))),
-    "or" -> ((args: Seq[NoopObject]) => injector.create(value || other(args))),
-    "xor" -> ((args: Seq[NoopObject]) => injector.create(value ^ other(args))),
-    "not" -> ((args: Seq[NoopObject]) => injector.create(!value)),
-    "toString" -> ((args: Seq[NoopObject]) => injector.create(value.toString))
+    "and" -> ((args: Seq[NoopObject]) => booleanFactory.create(value && other(args))),
+    "or" -> ((args: Seq[NoopObject]) => booleanFactory.create(value || other(args))),
+    "xor" -> ((args: Seq[NoopObject]) => booleanFactory.create(value ^ other(args))),
+    "not" -> ((args: Seq[NoopObject]) => booleanFactory.create(!value)),
+    "toString" -> ((args: Seq[NoopObject]) => stringFactory.create(value.toString))
   );
 
   override def nativeMethod(name: String): (Seq[NoopObject] => NoopObject) = {

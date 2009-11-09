@@ -15,6 +15,9 @@
  */
 package noop.types;
 
+import com.google.inject.Guice
+import inject.{GuiceBackedInjector, Injector}
+import interpreter._
 import java.io.File;
 
 import collection.mutable.Stack;
@@ -23,45 +26,41 @@ import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
 import grammar.Parser;
-import interpreter.{Frame, Context, InterpreterVisitor, SourceFileClassLoader};
+
 import model.Modifier;
 
 /**
  * @author Erik Soe Sorensen (eriksoe@gmail.com)
  */
 class BooleanSpec extends Spec with ShouldMatchers {
-
-  def createFixture = {
-    val stdlibSourcePath = new File(getClass().getResource("/stdlib").toURI).getAbsolutePath();
-    new SourceFileClassLoader(new Parser(), List(stdlibSourcePath))
-  }
+  def fixture = Guice.createInjector(new InterpreterModule(), new NoopTypesModule());
 
   describe("a Noop Boolean") {
 
     it("should have a valid class definition parsed from Noop source") {
-      val classLoader = createFixture;
+      val classLoader = fixture.getInstance(classOf[ClassLoader]);
       val classDef = classLoader.findClass("Boolean");
       classDef.name should be("Boolean");
     }
 
     it("should have a native implementation of the xor method") {
-      val classLoader = createFixture;
+      val injector = fixture;
+      val classLoader = injector.getInstance(classOf[ClassLoader]);
       val boolClass = classLoader.findClass("Boolean");
-      val injector = new Injector(classLoader);
-      val aTrue = new NoopBoolean(boolClass, Map.empty[String, NoopObject], true, injector);
-      val aFalse = new NoopBoolean(boolClass, Map.empty[String, NoopObject], false, injector);
+      val booleanFactory = injector.getInstance(classOf[BooleanFactory]);
+      val aTrue = booleanFactory.create(true);
+      val aFalse = booleanFactory.create(false);
       val method = boolClass.findMethod("xor");
-      val stack = new Stack[Frame]();
-      val context = new Context(stack, classLoader);
+      val context = injector.getInstance(classOf[Context]);
 
       context.addRootFrame(null);
       method.modifiers should contain(Modifier.native);
       val frame = new Frame(aTrue, null);
-      stack.push(frame);
+      context.stack.push(frame);
       frame.blockScopes.inScope("boolean test") {
         frame.addIdentifier("other", (null, aFalse));
 
-        new InterpreterVisitor(context, injector).visit(method);
+        injector.getInstance(classOf[InterpreterVisitor]).visit(method);
       }
       val theBool = context.stack.top.lastEvaluated(0);
       theBool should not be (null);
