@@ -13,19 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.interpreter.testing;
+package noop.inject;
 
-import com.google.inject.Guice
-import grammar.Parser;
+import model.ClassDefinition
+import types.{NoopString, NoopInteger, NoopBoolean, NoopObject}
+
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-object TestRunnerMain {
 
-  def main(args: Array[String]) {
-    val injector = Guice.createInjector(new InterpreterModule());
-    val classLoader = new SourceFileClassLoader(new Parser(), args.toList);
-    injector.getInstance(classOf[TestRunner]).runTests();
-  }
+trait Injector {
+  def getInstance(classDef: ClassDefinition): NoopObject;
+  def withBindings(bindings: Map[String, NoopObject])(f: => Any): Unit;
 }

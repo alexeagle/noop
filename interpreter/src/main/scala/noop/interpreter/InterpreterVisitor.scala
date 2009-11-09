@@ -15,23 +15,24 @@
  */
 package noop.interpreter;
 
+import com.google.inject.Inject
+import inject.Injector
+import model._
 import org.slf4j.LoggerFactory
 import scala.collection.mutable.ArrayBuffer
-import types.{NoopString, Injector, NoopBoolean, NoopObject, NoopType};
+import types._
+
 
 import interpreter.testing.TestFailedException;
-import model.{AssignmentExpression, Block, BooleanLiteralExpression, DereferenceExpression,
-    EvaluatedExpression, IdentifierDeclarationExpression, IdentifierExpression,
-    IntLiteralExpression, Method, MethodInvocationExpression, Modifier,
-    OperatorExpression, ReturnExpression, ShouldExpression, StringLiteralExpression,
-    Visitor, WhileLoop};
+
 
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class InterpreterVisitor(val context: Context, injector: Injector) extends Visitor {
+class InterpreterVisitor @Inject() (val context: Context, injector: Injector, booleanFactory: BooleanFactory, stringFactory: StringFactory, integerFactory: IntegerFactory)
+    extends Visitor {
   val logger = LoggerFactory.getLogger(this.getClass());
 
   def visit(assignmentExpression: AssignmentExpression) = {
@@ -53,7 +54,7 @@ class InterpreterVisitor(val context: Context, injector: Injector) extends Visit
   def visit(booleanLiteralExpression: BooleanLiteralExpression) = {
     val noopBooleanClassDef = context.classLoader.findClass("Boolean");
 
-    context.stack.top.lastEvaluated += injector.create(booleanLiteralExpression.value);
+    context.stack.top.lastEvaluated += booleanFactory.create(booleanLiteralExpression.value);
   }
 
   def visit(dereferenceExpression: DereferenceExpression) = {
@@ -96,14 +97,14 @@ class InterpreterVisitor(val context: Context, injector: Injector) extends Visit
     } else if (currentFrame.thisRef.propertyMap.contains(identifier)) {
       currentFrame.lastEvaluated += currentFrame.thisRef.propertyMap(identifier);
     } else {
-      currentFrame.lastEvaluated += injector.create(identifier);
+      currentFrame.lastEvaluated += stringFactory.create(identifier);
     }
   }
 
   def visit(intLiteralExpression: IntLiteralExpression) = {
     val noopIntegerClassDef = context.classLoader.findClass("Int");
 
-    context.stack.top.lastEvaluated += injector.create(intLiteralExpression.value);
+    context.stack.top.lastEvaluated += integerFactory.create(intLiteralExpression.value);
   }
 
   var evaluationStackSize = -1;
@@ -161,7 +162,7 @@ class InterpreterVisitor(val context: Context, injector: Injector) extends Visit
   def visit(stringLiteralExpression: StringLiteralExpression) = {
     val noopStringClassDef = context.classLoader.findClass("String");
 
-    context.stack.top.lastEvaluated += injector.create(stringLiteralExpression.value);
+    context.stack.top.lastEvaluated += stringFactory.create(stringLiteralExpression.value);
   }
 
   def visit(whileLoop: WhileLoop) = {
@@ -171,6 +172,14 @@ class InterpreterVisitor(val context: Context, injector: Injector) extends Visit
       }
       whileLoop.accept(this);
     }
+    context.stack.top.lastEvaluated.clear();
+  }
+
+  def visit(bindingDeclaration: BindingDeclaration) = {
+    val boundValue = context.stack.top.lastEvaluated.top;
+
+    // TODO(alexeagle): collect up all the declarations and make one new child fixture
+    // fixture.addBinding(bindingDeclaration.noopType, boundValue);
     context.stack.top.lastEvaluated.clear();
   }
 }

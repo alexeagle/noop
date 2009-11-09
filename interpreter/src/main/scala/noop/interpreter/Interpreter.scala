@@ -15,9 +15,12 @@
  */
 package noop.interpreter;
 
-import collection.mutable.{Stack, ArrayBuffer};
-import model.{LoggingAstVisitor, CompositeVisitor, EvaluatedExpression, Expression, MethodInvocationExpression, StringLiteralExpression, ClassDefinition};
-import types.Injector;
+import collection.mutable.{Stack, ArrayBuffer}
+import com.google.inject.{Inject, Guice}
+import inject.{Injector, GuiceBackedInjector}
+import model._
+
+
 
 /**
  * This class bootstraps the interpretation process, by setting up the ClassLoader with
@@ -26,15 +29,12 @@ import types.Injector;
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class Interpreter(classLoader: ClassLoader) {
+class Interpreter @Inject() (classLoader: ClassLoader, injector: Injector, context: Context, visitor: Visitor) {
 
   def runApplication(mainClass: ClassDefinition): Int = {
-    val context = new Context(new Stack[Frame], classLoader);
-    val injector = new Injector(classLoader);
     val mainInstance = injector.getInstance(mainClass);
 
     context.addRootFrame(mainInstance);
-    val visitor = new CompositeVisitor(List(new LoggingAstVisitor(), new InterpreterVisitor(context, injector)));
     var args = new ArrayBuffer[Expression];
 
     //TODO: pass the list of command line arguments to main() instead

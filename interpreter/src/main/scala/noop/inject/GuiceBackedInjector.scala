@@ -13,24 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.types
-
-import model.{ClassDefinition, Parameter}
-import scala.collection.mutable;
-import interpreter.ClassLoader;
+package noop.inject
 
 /**
+ * An implementation of our Noop fixture which uses Guice to store the bindings and create objects.
  * @author alexeagle@google.com (Alex Eagle)
  */
 
-class Injector(classLoader: ClassLoader) {
+import model.ClassDefinition;
+import interpreter.ClassLoader;
+import types.{NoopConsole, NoopObject};
 
-  def boolClass = classLoader.findClass("Boolean");
-  def create(value: Boolean) = new NoopBoolean(boolClass, Map.empty[String, NoopObject], value, this);
-  def intClass = classLoader.findClass("Int");
-  def create(value: Int) = new NoopInteger(intClass, Map.empty[String, NoopObject], value, this);
-  def stringClass = classLoader.findClass("String");
-  def create(value: String) = new NoopString(stringClass, Map.empty[String, NoopObject], value, this);
+import com.google.inject.{AbstractModule, Guice};
+import scala.collection.mutable;
+
+class GuiceBackedInjector(classLoader: ClassLoader, injector: com.google.inject.Injector) extends Injector {
+  // A pointer to the youngest child fixture
+  var currentInjector: com.google.inject.Injector = injector;
 
   def getInstance(classDef: ClassDefinition): NoopObject = {
     val propertyMap = mutable.Map.empty[String, NoopObject];
@@ -41,10 +40,21 @@ class Injector(classLoader: ClassLoader) {
       propertyMap += Pair(param.name, getInstance(paramClassDef));
     }
 
-    //TODO(alexeagle): Injectables really needs work
+    //TODO(alexeagle): Injectables still really needs work
     classDef.name match {
       case "Console" => new NoopConsole(classLoader.findClass("Console"), propertyMap);
       case _ => new NoopObject(classDef, propertyMap);
     }
+  }
+
+  def withBindings(bindings: Map[String, NoopObject])(f: => Any): Unit = {
+    val module = new AbstractModule() {
+      def configure() = {
+        // TODO: add the bindings into this module
+      }
+    };
+    currentInjector = injector.createChildInjector(module);
+    f;
+    currentInjector = currentInjector.getParent();
   }
 }
