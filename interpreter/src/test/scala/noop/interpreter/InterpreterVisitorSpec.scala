@@ -15,30 +15,30 @@
  */
 package noop.interpreter
 
+import inject.Injector
+import model.{Visitor, IdentifierDeclarationExpression, ClassDefinition, DereferenceExpression,
+    EvaluatedExpression, IdentifierExpression}
+import types.{BooleanFactory, StringFactory, NoopObject, NoopString};
 
-import model.{IdentifierExpression, EvaluatedExpression, ClassDefinition, StringLiteralExpression, DereferenceExpression, IdentifierDeclarationExpression}
-import org.scalatest.matchers.ShouldMatchers
-import types.{NoopObject, NoopString, Injector};
+
+import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
-
-
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-class InterpreterVisitorSpec extends Spec with ShouldMatchers with ContextFixture {
+class InterpreterVisitorSpec extends Spec with ShouldMatchers with GuiceInterpreterFixture {
   def interpreterFixture = {
-    val (context, injector) = fixture;
-    val visitor = new InterpreterVisitor(context, injector);
-    (context, injector, visitor);
+    val injector = fixture;
+    (injector.getInstance(classOf[Context]), injector.getInstance(classOf[Visitor]), injector);
   }
   describe("the interpreter visitor") {
     it("should visit an identifier declaration and get the initial value from the eval stack") {
-      val (context, injector, visitor) = interpreterFixture;
+      val (context, visitor, injector) = interpreterFixture;
       val identifierDeclaration = new IdentifierDeclarationExpression("String", "s");
 
-      context.stack.top.lastEvaluated += injector.create(true);
-      context.stack.top.lastEvaluated += injector.create("hello");
+      context.stack.top.lastEvaluated += injector.getInstance(classOf[BooleanFactory]).create(true);
+      context.stack.top.lastEvaluated += injector.getInstance(classOf[StringFactory]).create("hello");
 
       context.stack.top.blockScopes.inScope("interpreter test") {
         visitor.visit(identifierDeclaration);
@@ -47,8 +47,9 @@ class InterpreterVisitorSpec extends Spec with ShouldMatchers with ContextFixtur
     }
 
     it("should dereference a property from a referenced object") {
-      val (context, injector, visitor) = interpreterFixture;
-      val anObject = new NoopObject(new ClassDefinition("Obj", ""), Map("foo" -> injector.create("bar")));
+      val (context, visitor, injector) = interpreterFixture;
+      val stringFactory = injector.getInstance(classOf[StringFactory]);
+      val anObject = new NoopObject(new ClassDefinition("Obj", ""), Map("foo" -> stringFactory.create("bar")));
       context.stack.top.blockScopes.inScope("interpereter_tast") {
         val deref = new DereferenceExpression(new EvaluatedExpression(anObject), new IdentifierExpression("foo"))
         deref.accept(visitor);

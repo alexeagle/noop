@@ -15,20 +15,21 @@
  */
 package noop.interpreter;
 
-import model.{IdentifierExpression, IntLiteralExpression, Parameter, Method, Block, MethodInvocationExpression, StringLiteralExpression}
+import inject.Injector
+import model._
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import types.{Injector, NoopString, NoopObject};
+import types.{NoopString, NoopObject};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-class MethodInvocationSpec extends Spec with ShouldMatchers with ContextFixture {
+class MethodInvocationSpec extends Spec with ShouldMatchers with GuiceInterpreterFixture {
 
   def interpreterFixture = {
-    val (context, injector) = fixture;
-    (context, new InterpreterVisitor(context, injector));
+    val injector = fixture;
+    (injector.getInstance(classOf[Context]), injector.getInstance(classOf[Visitor]));
   }
 
   describe("a method invocation") {
@@ -78,7 +79,6 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with ContextFixture 
       context.classLoader.findClass("String").methods += myMethod;
       val target = new StringLiteralExpression("string1");
       val expr = new MethodInvocationExpression(target, "plus", List(new StringLiteralExpression(arg)));
-
       expr.accept(visitor);
     }
 

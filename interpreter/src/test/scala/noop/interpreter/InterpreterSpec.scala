@@ -15,16 +15,16 @@
  */
 package noop.interpreter;
 
+import inject.{GuiceBackedInjector, Injector};
+import model.{Visitor, IntLiteralExpression, OperatorExpression};
+import types.{NoopTypesModule, NoopObject, IntegerFactory, NoopInteger};
+import grammar.Parser;
+
 import java.io.{ByteArrayOutputStream, File};
-
 import collection.mutable.Stack;
-
+import com.google.inject.Guice;
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
-
-import grammar.Parser;
-import model.{IntLiteralExpression, OperatorExpression};
-import types.{Injector, NoopInteger};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -33,20 +33,19 @@ import types.{Injector, NoopInteger};
 class InterpreterSpec extends Spec with ShouldMatchers {
 
   def createFixture = {
-    val stdLibSourcePath = new File(getClass().getResource("/stdlib").toURI).getAbsolutePath();
-    val classLoader = new SourceFileClassLoader(new Parser(), List(stdLibSourcePath));
-    val context = new Context(new Stack[Frame], classLoader);
-
+    val injector = Guice.createInjector(new InterpreterModule(), new NoopTypesModule());
+    val context: Context = injector.getInstance(classOf[Context]);
     context.addRootFrame(null);
-    (classLoader, context);
+    
+    (context, injector.getInstance(classOf[Visitor]));
+
   }
 
   describe("the interpreter") {
 
     it("should evaluate simple arithmetic") {
-      val (classLoader, context) = createFixture;
+      val (context, visitor) = createFixture;
       val expr = new OperatorExpression(new IntLiteralExpression(2), "+", new IntLiteralExpression(3));
-      val visitor = new InterpreterVisitor(context, new Injector(classLoader));
 
       expr.accept(visitor);
       val result = context.stack.top.lastEvaluated(0);
@@ -57,10 +56,9 @@ class InterpreterSpec extends Spec with ShouldMatchers {
 
     it("should evaluate more complex arithmetic") {
       val source = "{ (1 + 2) * 3 - 10 / 2 % 4; }";
-      val (classLoader, context) = createFixture;
+      val (context, visitor) = createFixture;
       val parser = new Parser();
       val block = parser.buildTreeParser(parser.parseBlock(source)).block();
-      val visitor = new InterpreterVisitor(context, new Injector(classLoader));
 
       block.statements(0).accept(visitor);
       val result = context.stack.top.lastEvaluated(0);
@@ -71,10 +69,9 @@ class InterpreterSpec extends Spec with ShouldMatchers {
 
     it("should assign variables") {
       val source = "{ Int a; a = 1; }";
-      val (classLoader, context) = createFixture;
+      val (context, visitor) = createFixture;
       val parser = new Parser();
       val block = parser.buildTreeParser(parser.parseBlock(source)).block();
-      val visitor = new InterpreterVisitor(context, new Injector(classLoader));
 
       context.stack.top.blockScopes.inScope("interpreter test") {
         block.accept(visitor);

@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.interpreter;
+package noop.interpreter
 
-import collection.mutable.Stack
-import types.Injector;
-import model.{ClassDefinition, Method, Modifier};
-
+import model.{Method, Modifier, ClassDefinition};
+import com.google.inject.{Provides, AbstractModule, Singleton};
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-trait ContextFixture {
 
-  def fixture = {
-    val stack = new Stack[Frame];
+class InterpreterTestingModule extends AbstractModule {
+  override def configure() = {
+  }
+
+  @Provides @Singleton def mockClassLoader(): ClassLoader = {
     val classLoader = new MockClassLoader();
     val classDefinition = new ClassDefinition("String", "");
     val length = new Method("length", null, "");
@@ -36,10 +36,6 @@ trait ContextFixture {
     classLoader.classes += Pair("String", classDefinition);
     classLoader.classes += Pair("Int", new ClassDefinition("Int", ""));
     classLoader.classes += Pair("Boolean", new ClassDefinition("Boolean", ""));
-    val context = new Context(stack, classLoader);
-
-    val injector = new Injector(classLoader);
-    context.addRootFrame(injector.create("aClazz"));
-    (context, injector);
+    return classLoader;
   }
 }
