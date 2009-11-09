@@ -15,16 +15,16 @@
  */
 package noop.interpreter.testing;
 
-import collection.mutable.{ArrayBuffer, Buffer, Stack};
+import collection.mutable.{ArrayBuffer, Buffer, Stack}
+import com.google.inject.{Inject, Guice}
+import inject.{Injector}
 
-import model.{ClassDefinition, EvaluatedExpression, Method, MethodInvocationExpression,
-    StringLiteralExpression}
-import types.Injector;
-
+import model._
+import types.{NoopBoolean, BooleanFactory}
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-class TestRunner(classSearch: ClassSearch, classLoader: ClassLoader) {
+class TestRunner @Inject() (classSearch: ClassSearch, classLoader: ClassLoader, injector: Injector, interpreterVisitor: Visitor) {
 
   def gatherTests(): Buffer[TestHolder] = {
     var tests = new ArrayBuffer[TestHolder];
@@ -50,15 +50,14 @@ class TestRunner(classSearch: ClassSearch, classLoader: ClassLoader) {
    * Run a single test
    */
   def runTest(test: TestHolder) = {
-    val injector = new Injector(classLoader);
-    val instance = injector.getInstance(test.classDef);
     val stack = new Stack[Frame];
     val context = new Context(stack, classLoader);
+    val instance = injector.getInstance(test.classDef);
 
     stack.push(new Frame(instance, test.testMethod));
     try {
       context.stack.top.blockScopes.inScope("test " + test.testMethod.name) {
-        new InterpreterVisitor(context, injector).visit(test.testMethod);
+        interpreterVisitor.visit(test.testMethod);
       }
     } finally {
       stack.pop();

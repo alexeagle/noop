@@ -15,6 +15,7 @@
  */
 package noop.interpreter;
 
+import com.google.inject.Guice
 import grammar.Parser;
 
 /**
@@ -33,11 +34,11 @@ object InterpreterMain {
       System.exit(1);
     }
 
-    //TODO: guice? other injector?
+    val injector = Guice.createInjector(new InterpreterModule());
     val classLoader = new SourceFileClassLoader(new Parser(), args.toList.tail);
     val mainClass = classLoader.findClass(args(0));
-
-    val returnVal = new Interpreter(classLoader).runApplication(mainClass);
+    val interpreter = injector.getInstance(classOf[Interpreter]);
+    val returnVal = interpreter.runApplication(mainClass);
 
     System.exit(returnVal);
   }
