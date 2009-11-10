@@ -15,17 +15,21 @@
  */
 package noop.types;
 
-import collection.immutable;
+import model.ClassDefinition;
+
+import scala.collection.immutable;
+import com.google.inject.name.Named;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.Inject;
-import noop.interpreter.ClassLoader;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class NoopInteger @Inject() (classLoader: ClassLoader, integerFactory: IntegerFactory, stringFactory: StringFactory, @Assisted val value: Int)
-    extends NoopObject(classLoader.findClass("Int"), Map.empty[String, NoopObject]) {
+class NoopInteger @Inject() (@Named("Int") classDef: ClassDefinition,
+                             integerFactory: IntegerFactory, stringFactory: StringFactory,
+                             @Assisted val value: Int)
+    extends NoopObject(classDef, Map.empty[String, NoopObject]) {
 
   def other(args: Seq[NoopObject]): Int = {
     args(0).asInstanceOf[NoopInteger].value;

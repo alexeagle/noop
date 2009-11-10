@@ -15,17 +15,21 @@
  */
 package noop.types;
 
-import collection.immutable
+import model.ClassDefinition;
+
+import scala.collection.immutable
 import com.google.inject.assistedinject.Assisted
 import com.google.inject.Inject
-import interpreter.ClassLoader;
+import com.google.inject.name.Named
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class NoopBoolean @Inject() (classLoader: ClassLoader, booleanFactory: BooleanFactory, stringFactory: StringFactory, @Assisted val value: Boolean)
-        extends NoopObject(classLoader.findClass("Boolean"), Map.empty[String, NoopObject]) {
+class NoopBoolean @Inject() (@Named("Boolean") classDef: ClassDefinition,
+                             booleanFactory: BooleanFactory, stringFactory: StringFactory,
+                             @Assisted val value: Boolean)
+        extends NoopObject(classDef, Map.empty[String, NoopObject]) {
 
   def other(args: Seq[NoopObject]): Boolean = args(0).asInstanceOf[NoopBoolean].value;
   def nativeMethodMap = immutable.Map[String, Seq[NoopObject] => NoopObject](
