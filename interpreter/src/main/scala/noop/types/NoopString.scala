@@ -15,18 +15,21 @@
  */
 package noop.types;
 
+import com.google.inject.name.Named
+import model.ClassDefinition;
+
 import collection.immutable;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.Inject;
-import noop.interpreter.ClassLoader;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-// TODO(alex): we want the classDef, not the classLoader
-class NoopString @Inject() (classLoader: ClassLoader, integerFactory: IntegerFactory, stringFactory: StringFactory, @Assisted val value: String)
-    extends NoopObject(classLoader.findClass("String"), Map.empty[String, NoopObject]) {
+class NoopString @Inject() (@Named("String") classDef: ClassDefinition,
+                            integerFactory: IntegerFactory, stringFactory: StringFactory,
+                            @Assisted val value: String)
+    extends NoopObject(classDef, Map.empty[String, NoopObject]) {
 
   def nativeMethodMap = immutable.Map[String, Seq[NoopObject] => NoopObject](
     "toString" -> ((args: Seq[NoopObject]) => stringFactory.create(value)),

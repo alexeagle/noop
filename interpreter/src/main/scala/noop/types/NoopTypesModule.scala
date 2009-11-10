@@ -15,8 +15,12 @@
  */
 package noop.types;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.assistedinject.FactoryProvider;
+import model.ClassDefinition;
+import interpreter.ClassLoader;
+
+import com.google.inject.assistedinject.FactoryProvider
+import com.google.inject.name.Named
+import com.google.inject.{Provides, AbstractModule, Singleton}
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -28,4 +32,14 @@ class NoopTypesModule extends AbstractModule {
     bind(classOf[StringFactory]).toProvider(FactoryProvider.newFactory(classOf[StringFactory], classOf[NoopString]));
     bind(classOf[IntegerFactory]).toProvider(FactoryProvider.newFactory(classOf[IntegerFactory], classOf[NoopInteger]));
   }
+
+  @Provides @Singleton @Named("Int")
+  def intClassDef(classLoader: ClassLoader): ClassDefinition = classLoader.findClass("Int");
+
+  @Provides @Singleton @Named("String")
+  def stringClassDef(classLoader: ClassLoader): ClassDefinition = classLoader.findClass("String");
+
+  @Provides @Singleton @Named("Boolean")
+  def booleanClassDef(classLoader: ClassLoader): ClassDefinition = classLoader.findClass("Boolean");
+
 }

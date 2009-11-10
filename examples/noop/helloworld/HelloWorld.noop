@@ -8,7 +8,7 @@ class HelloWorld(Console console) implements Application {
     return 0;
   }
 
-  unittest "Should say hello" binding (Console -> MockConsole) {
+  unittest "Should say hello" binding (Console -> FakeConsole) {
     List l;
     Int result = main(l);
     result should equal(0);
