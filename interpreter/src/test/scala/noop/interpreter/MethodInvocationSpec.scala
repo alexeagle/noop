@@ -54,7 +54,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with GuiceInterprete
       block.statements += new MockExpression(assertInNewFrame);
       val myMethod = new Method("length", block, null);
       myMethod.returnTypes += "Int";
-      context.classLoader.findClass("String").methods += myMethod;
+      context.classLoader.findClass("noop.String").methods += myMethod;
       val target = new StringLiteralExpression("aString");
       val expr = new MethodInvocationExpression(target, "length", List());
       expr.accept(visitor);
@@ -76,7 +76,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with GuiceInterprete
       myMethod.returnTypes += "Void";
 
       myMethod.parameters += new Parameter(paramName, "String");
-      context.classLoader.findClass("String").methods += myMethod;
+      context.classLoader.findClass("noop.String").methods += myMethod;
       val target = new StringLiteralExpression("string1");
       val expr = new MethodInvocationExpression(target, "plus", List(new StringLiteralExpression(arg)));
       expr.accept(visitor);
@@ -88,7 +88,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with GuiceInterprete
       myMethod.returnTypes += "Void";
 
       myMethod.parameters += new Parameter("other", "String");
-      context.classLoader.findClass("String").methods += myMethod;
+      context.classLoader.findClass("noop.String").methods += myMethod;
       val target = new StringLiteralExpression("string1");
       val expr = new MethodInvocationExpression(target, "plus", List());
 
@@ -103,7 +103,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with GuiceInterprete
       myMethod.returnTypes += "Void";
 
       myMethod.parameters += new Parameter("other", "String");
-      context.classLoader.findClass("String").methods += myMethod;
+      context.classLoader.findClass("noop.String").methods += myMethod;
       val target = new StringLiteralExpression("string1");
       val expr = new MethodInvocationExpression(target, "plus", List(new IntLiteralExpression(1)));
 
@@ -117,7 +117,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with GuiceInterprete
       val myMethod = new Method("plus", null, null);
       myMethod.returnTypes += "Void";
 
-      context.classLoader.findClass("String").methods += myMethod;
+      context.classLoader.findClass("noop.String").methods += myMethod;
       val target = new StringLiteralExpression("string1");
       val expr = new MethodInvocationExpression(target, "plus", List());
       val currentFrame = new Frame(null, null);
@@ -137,7 +137,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with GuiceInterprete
       myMethod.returnTypes += "Void";
 
       myMethod.parameters += new Parameter(paramName, "String");
-      context.classLoader.findClass("String").methods += myMethod;
+      context.classLoader.findClass("noop.String").methods += myMethod;
 
       val target = new StringLiteralExpression("string1");
       val expr = new MethodInvocationExpression(target, "plus", List(new MockExpression()));

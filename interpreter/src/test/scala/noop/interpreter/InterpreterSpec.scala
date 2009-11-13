@@ -33,7 +33,7 @@ import org.scalatest.Spec;
 class InterpreterSpec extends Spec with ShouldMatchers {
 
   def createFixture = {
-    val injector = Guice.createInjector(new InterpreterModule(), new NoopTypesModule());
+    val injector = Guice.createInjector(new InterpreterModule(List()), new NoopTypesModule());
     val context: Context = injector.getInstance(classOf[Context]);
     context.addRootFrame(null);
     

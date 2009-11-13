@@ -15,8 +15,9 @@
  */
 package noop.interpreter.testing;
 
-import com.google.inject.Guice
-import grammar.Parser;
+import noop.types.NoopTypesModule;
+
+import com.google.inject.Guice;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -24,8 +25,7 @@ import grammar.Parser;
 object TestRunnerMain {
 
   def main(args: Array[String]) {
-    val injector = Guice.createInjector(new InterpreterModule());
-    val classLoader = new SourceFileClassLoader(new Parser(), args.toList);
+    val injector = Guice.createInjector(new InterpreterModule(args.toList), new NoopTypesModule());
     injector.getInstance(classOf[TestRunner]).runTests();
   }
 }

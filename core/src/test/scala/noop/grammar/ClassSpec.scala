@@ -56,6 +56,16 @@ class ClassSpec extends Spec with ShouldMatchers {
       file.classDef.parameters(0).noopType should be ("String");
     }
 
+    it("should parse a class with a fully-qualified type in a parameter") {
+      val source = "class Bar(noop.String a) {}";
+      val commonTree = parser.parseFile(source);
+
+      commonTree.toStringTree() should equal ("(CLASS Bar (PARAMS (PARAM noop String a)))");
+
+      val file = parser.file(source);
+      file.classDef.parameters(0).noopType should be ("noop.String");
+    }
+
     it("should parse a class with multiple parameters") {
       val source = "class Bar(A a, B b, C c) {}";
       val commonTree = parser.parseFile(source);

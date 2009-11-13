@@ -118,5 +118,12 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       classesFound should have length(1);
       classesFound(0).name should be("Foo");
     }
+
+    it("should locate standard libraries in the classpath") {
+      val classLoader = new SourceFileClassLoader(new Parser(), List());
+      val classDef = classLoader.findClass("noop.Object");
+
+      classDef.name should equal("Object");
+    }
   }
 }

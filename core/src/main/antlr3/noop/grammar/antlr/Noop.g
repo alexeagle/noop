@@ -282,8 +282,8 @@ parameters
 	;
 
 parameter
-	: modifiers? TypeIdentifier VariableIdentifier
-	-> ^(PARAM modifiers? TypeIdentifier VariableIdentifier)
+	: modifiers? qualifiedType VariableIdentifier
+	-> ^(PARAM modifiers? qualifiedType VariableIdentifier)
 	;
 
 literal

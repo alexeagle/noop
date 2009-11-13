@@ -34,12 +34,12 @@ class NoopTypesModule extends AbstractModule {
   }
 
   @Provides @Singleton @Named("Int")
-  def intClassDef(classLoader: ClassLoader): ClassDefinition = classLoader.findClass("Int");
+  def intClassDef(classLoader: ClassLoader): ClassDefinition = classLoader.findClass("noop.Int");
 
   @Provides @Singleton @Named("String")
-  def stringClassDef(classLoader: ClassLoader): ClassDefinition = classLoader.findClass("String");
+  def stringClassDef(classLoader: ClassLoader): ClassDefinition = classLoader.findClass("noop.String");
 
   @Provides @Singleton @Named("Boolean")
-  def booleanClassDef(classLoader: ClassLoader): ClassDefinition = classLoader.findClass("Boolean");
+  def booleanClassDef(classLoader: ClassLoader): ClassDefinition = classLoader.findClass("noop.Boolean");
 
 }
