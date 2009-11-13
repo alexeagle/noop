@@ -15,7 +15,9 @@
  */
 package noop.inject
 
-import noop.interpreter.InterpreterModule;
+
+import interpreter.InterpreterModule;
+import java.io.File;
 import noop.types.NoopTypesModule;
 
 
@@ -30,7 +32,7 @@ import org.scalatest.Spec
 class GuiceBackedInjectorSpec extends Spec with ShouldMatchers {
   describe("the injector") {
     it("should create a boolean") {
-      val guiceInjector = Guice.createInjector(new NoopTypesModule(), new InterpreterModule())
+      val guiceInjector = Guice.createInjector(new NoopTypesModule(), new InterpreterModule(List()));
       val noopInjector: Injector = guiceInjector.getInstance(classOf[Injector]);
       //TODO(alexeagle): finish the test!
     }

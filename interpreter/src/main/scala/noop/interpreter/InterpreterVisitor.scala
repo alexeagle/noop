@@ -52,8 +52,6 @@ class InterpreterVisitor @Inject() (val context: Context, injector: Injector, bo
   }
 
   def visit(booleanLiteralExpression: BooleanLiteralExpression) = {
-    val noopBooleanClassDef = context.classLoader.findClass("Boolean");
-
     context.stack.top.lastEvaluated += booleanFactory.create(booleanLiteralExpression.value);
   }
 
@@ -102,8 +100,6 @@ class InterpreterVisitor @Inject() (val context: Context, injector: Injector, bo
   }
 
   def visit(intLiteralExpression: IntLiteralExpression) = {
-    val noopIntegerClassDef = context.classLoader.findClass("Int");
-
     context.stack.top.lastEvaluated += integerFactory.create(intLiteralExpression.value);
   }
 
@@ -160,8 +156,6 @@ class InterpreterVisitor @Inject() (val context: Context, injector: Injector, bo
   }
 
   def visit(stringLiteralExpression: StringLiteralExpression) = {
-    val noopStringClassDef = context.classLoader.findClass("String");
-
     context.stack.top.lastEvaluated += stringFactory.create(stringLiteralExpression.value);
   }
 

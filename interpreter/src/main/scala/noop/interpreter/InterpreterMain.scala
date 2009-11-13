@@ -15,8 +15,9 @@
  */
 package noop.interpreter;
 
-import com.google.inject.Guice
+import com.google.inject.Guice;
 import grammar.Parser;
+import types.NoopTypesModule;
 
 /**
  * The static entry point into the Noop interpreter, for use from the command-line.
@@ -34,11 +35,9 @@ object InterpreterMain {
       System.exit(1);
     }
 
-    val injector = Guice.createInjector(new InterpreterModule());
-    val classLoader = new SourceFileClassLoader(new Parser(), args.toList.tail);
-    val mainClass = classLoader.findClass(args(0));
-    val interpreter = injector.getInstance(classOf[Interpreter]);
-    val returnVal = interpreter.runApplication(mainClass);
+    val injector = Guice.createInjector(new InterpreterModule(args.toList.tail), new NoopTypesModule());
+    val mainClass = injector.getInstance(classOf[ClassLoader]).findClass(args(0));
+    val returnVal = injector.getInstance(classOf[Interpreter]).runApplication(mainClass);
 
     System.exit(returnVal);
   }

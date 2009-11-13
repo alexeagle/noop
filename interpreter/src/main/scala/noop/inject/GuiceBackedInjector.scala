@@ -42,7 +42,7 @@ class GuiceBackedInjector(classLoader: ClassLoader, injector: com.google.inject.
 
     //TODO(alexeagle): Injectables still really needs work
     val obj = classDef.name match {
-      case "Console" => new NoopConsole(classLoader.findClass("Console"));
+      case "Console" => new NoopConsole(classLoader.findClass("noop.Console"));
       case _ => new NoopObject(classDef);
     }
     obj.propertyMap ++= propertyMap;

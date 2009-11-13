@@ -15,9 +15,10 @@
  */
 package noop.interpreter;
 
-import java.io.{FileInputStream, File};
 
-import collection.mutable.Map;
+
+import collection.mutable.Map
+import java.io.{InputStream, FileInputStream, File};
 
 import grammar.{ParseException, Parser};
 import model.ClassDefinition;
@@ -33,21 +34,31 @@ class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends Clas
 
   def getClassDefinition(file: File): ClassDefinition = {
     try {
-      return parser.file(new FileInputStream(file)).classDef;
+      getClassDefinition(new FileInputStream(file));
     } catch {
       case ex: ParseException =>
-          throw new ParseException("Failed to parse " + file.getAbsolutePath());
+        throw new ParseException("Failed to parse " + file.getAbsolutePath());
     }
   }
 
+  def getClassDefinition(stream: InputStream): ClassDefinition = parser.file(stream).classDef;
+
   def findClass(className: String): ClassDefinition = {
+    if (cache.contains(className)) {
+      return cache(className);
+    }
     val parts = className.split("\\.");
     val expectedFile = parts.last + ".noop";
     val relativePath = parts.take(parts.size - 1).mkString(File.separator);
 
-    if (cache.contains(className)) {
-      return cache(className);
+    // First, look in the classpath (noop stdlib is there)
+    val locationInClasspath = String.format("/%s/%s", relativePath, expectedFile);
+    val stream = getClass().getResourceAsStream(locationInClasspath);
+    if (stream != null) {
+      return getClassDefinition(stream);
     }
+    
+    // If not found, look in the filesystem
     for (path <- srcPaths) {
       val dir = new File(path, relativePath);
       if (!dir.isDirectory()) {

@@ -32,19 +32,19 @@ import org.scalatest.Spec;
  * @author alexeagle@google.com (Alex Eagle)
  */
 class StringSpec extends Spec with ShouldMatchers {
-  def fixture = Guice.createInjector(new InterpreterModule(), new NoopTypesModule());
+  def fixture = Guice.createInjector(new InterpreterModule(List()), new NoopTypesModule());
 
   describe("a Noop String") {
     it("should have a valid class definition parsed from Noop source") {
       val classLoader = fixture.getInstance(classOf[ClassLoader]);
-      val classDef = classLoader.findClass("String");
+      val classDef = classLoader.findClass("noop.String");
       classDef.name should be("String");
     }
 
     it("should have a native implementation of the length method") {
       val injector = fixture;
       val classLoader = injector.getInstance(classOf[ClassLoader]);
-      val stringClass = classLoader.findClass("String");
+      val stringClass = classLoader.findClass("noop.String");
 
       val aString = injector.getInstance(classOf[StringFactory]).create("hello");
       val method = stringClass.findMethod("length");

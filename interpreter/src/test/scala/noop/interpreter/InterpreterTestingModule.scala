@@ -18,9 +18,11 @@ package noop.interpreter
 import model.{Method, Modifier, ClassDefinition};
 import com.google.inject.{Provides, AbstractModule, Singleton};
 /**
+ * This module sets up a classloader which doesn't rely on reading real .noop files to get the
+ * standard library classes.
+ *
  * @author alexeagle@google.com (Alex Eagle)
  */
-
 class InterpreterTestingModule extends AbstractModule {
   override def configure() = {
   }
@@ -33,9 +35,9 @@ class InterpreterTestingModule extends AbstractModule {
     length.modifiers += Modifier.native;
     classDefinition.methods += length;
 
-    classLoader.classes += Pair("String", classDefinition);
-    classLoader.classes += Pair("Int", new ClassDefinition("Int", ""));
-    classLoader.classes += Pair("Boolean", new ClassDefinition("Boolean", ""));
+    classLoader.classes += Pair("noop.String", classDefinition);
+    classLoader.classes += Pair("noop.Int", new ClassDefinition("Int", ""));
+    classLoader.classes += Pair("noop.Boolean", new ClassDefinition("Boolean", ""));
     return classLoader;
   }
 }

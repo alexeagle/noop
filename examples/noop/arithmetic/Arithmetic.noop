@@ -10,7 +10,7 @@ Two things about Arithmetic:
 
  @author Alex Eagle (alexeagle@google.com)
 """
-class Arithmetic(Console console) implements Application {
+class Arithmetic(noop.Console console) implements Application {
   Int main(List args) {
     Int i = 1;
     Int j = 2;

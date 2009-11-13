@@ -27,15 +27,14 @@ import scala.collection.mutable;
  * @author alexeagle@google.com (Alex Eagle)
  */
 
-class InterpreterModule extends AbstractModule {
+class InterpreterModule(srcRoots: List[String]) extends AbstractModule {
   override def configure() = {
     bind(classOf[ClassSearch]).to(classOf[SourceFileClassLoader]);
     bind(classOf[ClassLoader]).to(classOf[SourceFileClassLoader]);
   }
 
   @Provides @Singleton def getClassLoader(parser: Parser) = {
-    val stdlibSourcePath = new File(getClass().getResource("/stdlib").toURI).getAbsolutePath();
-    new SourceFileClassLoader(parser, List(stdlibSourcePath))
+    new SourceFileClassLoader(parser, srcRoots);
   }
 
   @Provides def getInjector(classLoader: ClassLoader): Injector =

@@ -17,7 +17,7 @@
 import noop.Application;
 import noop.Console;
 
-class HelloVariables(Console console) implements Application {
+class HelloVariables(noop.Console console) implements Application {
 
   Int main(List args) {
     Boolean b = true;
