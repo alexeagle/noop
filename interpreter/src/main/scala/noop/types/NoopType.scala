@@ -15,8 +15,7 @@
  */
 package noop.types;
 
-import com.google.inject.Key
-import model.ClassDefinition;
+import noop.model.ClassDefinition;
 
 /**
  * In Guice terms, a NoopType is synonymous with a Key.
@@ -24,6 +23,6 @@ import model.ClassDefinition;
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class NoopType(classDef: ClassDefinition, propertyMap: Map[String, NoopObject], val typeName: String)
-    extends NoopObject(classDef, propertyMap) {
+class NoopType(classDef: ClassDefinition, val typeName: String)
+    extends NoopObject(classDef) {
 }

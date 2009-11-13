@@ -15,9 +15,9 @@
  */
 package noop.model;
 
-import collection.mutable.{ArrayBuffer, Buffer, Map};
+import noop.types.NoopObject;
 
-import types.NoopObject;
+import scala.collection.mutable.{ArrayBuffer, Buffer, Map};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -29,7 +29,7 @@ class ClassDefinition (val name: String, val documentation: String) {
   val interfaces: Buffer[String] = new ArrayBuffer[String];
   val methods: Buffer[Method] = new ArrayBuffer[Method];
   val unittests: Buffer[Method] = new ArrayBuffer[Method];
-  val modifiers:Buffer[Modifier.Value] = new ArrayBuffer[Modifier.Value];
+  val modifiers: Buffer[Modifier.Value] = new ArrayBuffer[Modifier.Value];
 
   def findMethod(methodName: String): Method = {
     methods.find(method => method.name == methodName) match {

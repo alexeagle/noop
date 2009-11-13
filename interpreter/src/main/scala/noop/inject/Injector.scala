@@ -15,9 +15,8 @@
  */
 package noop.inject;
 
-import model.ClassDefinition
-import types.{NoopString, NoopInteger, NoopBoolean, NoopObject}
-
+import noop.model.ClassDefinition;
+import noop.types.NoopObject;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)

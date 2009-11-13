@@ -16,16 +16,14 @@
 package noop.types;
 
 import collection.mutable.Map;
-
-import interpreter.InterpreterVisitor;
-import model.{ClassDefinition, EvaluatedExpression, MethodInvocationExpression};
+import noop.model.ClassDefinition;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class NoopConsole(classDef: ClassDefinition, propertyMap: Map[String, NoopObject])
-    extends NoopObject(classDef, propertyMap) {
+class NoopConsole(classDef: ClassDefinition)
+    extends NoopObject(classDef) {
 
   def println(args: Seq[NoopObject]): NoopObject = {
     val toPrint = args(0) match {

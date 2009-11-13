@@ -15,7 +15,7 @@
  */
 package noop.types;
 
-import model.ClassDefinition;
+import noop.model.ClassDefinition;
 
 import scala.collection.immutable;
 import com.google.inject.name.Named;
@@ -29,7 +29,7 @@ import com.google.inject.Inject;
 class NoopInteger @Inject() (@Named("Int") classDef: ClassDefinition,
                              integerFactory: IntegerFactory, stringFactory: StringFactory,
                              @Assisted val value: Int)
-    extends NoopObject(classDef, Map.empty[String, NoopObject]) {
+        extends NoopObject(classDef) {
 
   def other(args: Seq[NoopObject]): Int = {
     args(0).asInstanceOf[NoopInteger].value;

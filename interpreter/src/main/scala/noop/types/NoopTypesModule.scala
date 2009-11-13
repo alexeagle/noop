@@ -15,8 +15,8 @@
  */
 package noop.types;
 
-import model.ClassDefinition;
-import interpreter.ClassLoader;
+import noop.model.ClassDefinition;
+import noop.interpreter.ClassLoader;
 
 import com.google.inject.assistedinject.FactoryProvider
 import com.google.inject.name.Named
