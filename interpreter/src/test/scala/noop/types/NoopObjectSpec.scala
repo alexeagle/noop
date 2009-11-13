@@ -20,8 +20,8 @@ import java.io.File;
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import grammar.Parser;
-import interpreter.SourceFileClassLoader;
+import noop.grammar.Parser;
+import noop.interpreter.SourceFileClassLoader;
 
 /**
  * @author gabrielh@gmail.com (Gabriel Handford)
@@ -38,7 +38,7 @@ class NoopObjectSpec extends Spec with ShouldMatchers {
     it ("should throw NoSuchMethodException on missing native method") {
       val classLoader = createFixture;
       val objectClass = classLoader.findClass("Object");
-      val obj = new NoopObject(objectClass, null);
+      val obj = new NoopObject(objectClass);
       val exception = intercept[NoSuchMethodException] (
         obj.executeNativeMethod(null, "testMissingNativeMethod")
       );

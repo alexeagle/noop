@@ -15,10 +15,10 @@
  */
 package noop.interpreter
 
-import inject.Injector
-import model.{Visitor, IdentifierDeclarationExpression, ClassDefinition, DereferenceExpression,
+import noop.inject.Injector
+import noop.model.{Visitor, IdentifierDeclarationExpression, ClassDefinition, DereferenceExpression,
     EvaluatedExpression, IdentifierExpression}
-import types.{BooleanFactory, StringFactory, NoopObject, NoopString};
+import noop.types.{BooleanFactory, StringFactory, NoopObject, NoopString};
 
 
 import org.scalatest.matchers.ShouldMatchers;
@@ -49,7 +49,8 @@ class InterpreterVisitorSpec extends Spec with ShouldMatchers with GuiceInterpre
     it("should dereference a property from a referenced object") {
       val (context, visitor, injector) = interpreterFixture;
       val stringFactory = injector.getInstance(classOf[StringFactory]);
-      val anObject = new NoopObject(new ClassDefinition("Obj", ""), Map("foo" -> stringFactory.create("bar")));
+      val anObject = new NoopObject(new ClassDefinition("Obj", ""));
+      anObject.propertyMap += Pair("foo", stringFactory.create("bar"));
       context.stack.top.blockScopes.inScope("interpereter_tast") {
         val deref = new DereferenceExpression(new EvaluatedExpression(anObject), new IdentifierExpression("foo"))
         deref.accept(visitor);

@@ -15,11 +15,11 @@
  */
 package noop.interpreter;
 
-import model.{Visitor, CompositeVisitor, LoggingAstVisitor};
-import grammar.Parser;
+import noop.model.{Visitor, CompositeVisitor, LoggingAstVisitor};
+import noop.inject.{Injector, GuiceBackedInjector};
+import noop.grammar.Parser;
 
 import com.google.inject.{Guice, Provides, AbstractModule, Singleton};
-import inject.{Injector, GuiceBackedInjector};
 import java.io.File;
 import scala.collection.mutable;
 
@@ -38,10 +38,10 @@ class InterpreterModule extends AbstractModule {
     new SourceFileClassLoader(parser, List(stdlibSourcePath))
   }
 
-  @Provides def getInjector(classLoader: interpreter.ClassLoader): Injector =
+  @Provides def getInjector(classLoader: ClassLoader): Injector =
       new GuiceBackedInjector(classLoader, Guice.createInjector());
 
-  @Provides @Singleton def getContext(classLoader: interpreter.ClassLoader) =
+  @Provides @Singleton def getContext(classLoader: ClassLoader) =
       new Context(new mutable.Stack[Frame], classLoader);
 
   /**

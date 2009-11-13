@@ -16,7 +16,7 @@
 package noop.types;
 
 import com.google.inject.name.Named
-import model.ClassDefinition;
+import noop.model.ClassDefinition;
 
 import collection.immutable;
 import com.google.inject.assistedinject.Assisted;
@@ -29,7 +29,7 @@ import com.google.inject.Inject;
 class NoopString @Inject() (@Named("String") classDef: ClassDefinition,
                             integerFactory: IntegerFactory, stringFactory: StringFactory,
                             @Assisted val value: String)
-    extends NoopObject(classDef, Map.empty[String, NoopObject]) {
+        extends NoopObject(classDef) {
 
   def nativeMethodMap = immutable.Map[String, Seq[NoopObject] => NoopObject](
     "toString" -> ((args: Seq[NoopObject]) => stringFactory.create(value)),

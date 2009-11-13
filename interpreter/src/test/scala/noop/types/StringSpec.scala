@@ -15,20 +15,18 @@
  */
 package noop.types;
 
+import noop.inject.{GuiceBackedInjector, Injector}
+import noop.interpreter._
+import noop.grammar.Parser;
+import noop.model.Modifier;
+
 import collection.mutable.Stack
+
 import com.google.inject.Guice
-import inject.{GuiceBackedInjector, Injector}
-
-
-import interpreter._
 import java.io.File;
 
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
-
-import grammar.Parser;
-
-import model.Modifier;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)

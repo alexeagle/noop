@@ -20,15 +20,15 @@ package noop.inject
  * @author alexeagle@google.com (Alex Eagle)
  */
 
-import model.ClassDefinition;
-import interpreter.ClassLoader;
-import types.{NoopConsole, NoopObject};
+import noop.model.ClassDefinition;
+import noop.interpreter.ClassLoader;
+import noop.types.{NoopConsole, NoopObject};
 
-import com.google.inject.{AbstractModule, Guice};
+import com.google.inject.{AbstractModule, Key};
 import scala.collection.mutable;
 
 class GuiceBackedInjector(classLoader: ClassLoader, injector: com.google.inject.Injector) extends Injector {
-  // A pointer to the youngest child fixture
+  // A pointer to the youngest child injector
   var currentInjector: com.google.inject.Injector = injector;
 
   def getInstance(classDef: ClassDefinition): NoopObject = {
@@ -41,10 +41,12 @@ class GuiceBackedInjector(classLoader: ClassLoader, injector: com.google.inject.
     }
 
     //TODO(alexeagle): Injectables still really needs work
-    classDef.name match {
-      case "Console" => new NoopConsole(classLoader.findClass("Console"), propertyMap);
-      case _ => new NoopObject(classDef, propertyMap);
+    val obj = classDef.name match {
+      case "Console" => new NoopConsole(classLoader.findClass("Console"));
+      case _ => new NoopObject(classDef);
     }
+    obj.propertyMap ++= propertyMap;
+    return obj;
   }
 
   def withBindings(bindings: Map[String, NoopObject])(f: => Any): Unit = {
