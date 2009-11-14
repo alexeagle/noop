@@ -20,7 +20,7 @@ import java.io.InputStream;
 import org.antlr.runtime.{ANTLRInputStream, ANTLRStringStream, CommonTokenStream};
 import org.antlr.runtime.tree.{CommonTree, CommonTreeNodeStream};
 
-import model.File;
+import model.SourceFile;
 import grammar.antlr.{DocLexer, DocParser, NoopAST, NoopParser, NoopLexer};
 
 /**
@@ -92,7 +92,7 @@ class Parser() {
     return new NoopAST(new CommonTreeNodeStream(ast));
   }
 
-  def file(ast: CommonTree): File = {
+  def file(ast: CommonTree): SourceFile = {
     val treeParser = buildTreeParser(ast);
     val file = treeParser.file();
 
@@ -102,7 +102,7 @@ class Parser() {
     return file;
   }
 
-  def file(source: String): File = file(parseFile(source));
+  def file(source: String): SourceFile = file(parseFile(source));
 
-  def file(source: InputStream): File = file(parseFile(source));
+  def file(source: InputStream): SourceFile = file(parseFile(source));
 }

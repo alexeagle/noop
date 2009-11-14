@@ -13,19 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.interpreter.testing;
 
-import noop.types.NoopTypesModule;
-
-import com.google.inject.Guice;
-
-/**
- * @author alexeagle@google.com (Alex Eagle)
- */
-object TestRunnerMain {
-
-  def main(args: Array[String]) {
-    val injector = Guice.createInjector(new InterpreterModule(args.toList), new NoopTypesModule());
-    injector.getInstance(classOf[TestRunner]).runTests();
-  }
+class Console() {
+  native Void println(String str) {}
 }

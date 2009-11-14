@@ -18,24 +18,26 @@ package noop.interpreter
 import model.{Method, Modifier, ClassDefinition};
 import com.google.inject.{Provides, AbstractModule, Singleton};
 /**
+ * This module sets up a classloader which doesn't rely on reading real .noop files to get the
+ * standard library classes.
+ *
  * @author alexeagle@google.com (Alex Eagle)
  */
-
 class InterpreterTestingModule extends AbstractModule {
   override def configure() = {
   }
 
   @Provides @Singleton def mockClassLoader(): ClassLoader = {
     val classLoader = new MockClassLoader();
-    val classDefinition = new ClassDefinition("String", "");
+    val classDefinition = new ClassDefinition("String", "noop", "");
     val length = new Method("length", null, "");
     length.returnTypes += "Int";
     length.modifiers += Modifier.native;
     classDefinition.methods += length;
 
-    classLoader.classes += Pair("String", classDefinition);
-    classLoader.classes += Pair("Int", new ClassDefinition("Int", ""));
-    classLoader.classes += Pair("Boolean", new ClassDefinition("Boolean", ""));
+    classLoader.classes += Pair("noop.String", classDefinition);
+    classLoader.classes += Pair("noop.Int", new ClassDefinition("Int", "noop", ""));
+    classLoader.classes += Pair("noop.Boolean", new ClassDefinition("Boolean", "noop", ""));
     return classLoader;
   }
 }

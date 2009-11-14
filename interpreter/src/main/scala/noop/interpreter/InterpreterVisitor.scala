@@ -31,7 +31,8 @@ import interpreter.testing.TestFailedException;
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class InterpreterVisitor @Inject() (val context: Context, injector: Injector, booleanFactory: BooleanFactory, stringFactory: StringFactory, integerFactory: IntegerFactory)
+class InterpreterVisitor @Inject() (val context: Context, injector: Injector, booleanFactory: BooleanFactory,
+                                    stringFactory: StringFactory, integerFactory: IntegerFactory)
     extends Visitor {
   val logger = LoggerFactory.getLogger(this.getClass());
 
@@ -52,8 +53,6 @@ class InterpreterVisitor @Inject() (val context: Context, injector: Injector, bo
   }
 
   def visit(booleanLiteralExpression: BooleanLiteralExpression) = {
-    val noopBooleanClassDef = context.classLoader.findClass("Boolean");
-
     context.stack.top.lastEvaluated += booleanFactory.create(booleanLiteralExpression.value);
   }
 
@@ -102,8 +101,6 @@ class InterpreterVisitor @Inject() (val context: Context, injector: Injector, bo
   }
 
   def visit(intLiteralExpression: IntLiteralExpression) = {
-    val noopIntegerClassDef = context.classLoader.findClass("Int");
-
     context.stack.top.lastEvaluated += integerFactory.create(intLiteralExpression.value);
   }
 
@@ -160,8 +157,6 @@ class InterpreterVisitor @Inject() (val context: Context, injector: Injector, bo
   }
 
   def visit(stringLiteralExpression: StringLiteralExpression) = {
-    val noopStringClassDef = context.classLoader.findClass("String");
-
     context.stack.top.lastEvaluated += stringFactory.create(stringLiteralExpression.value);
   }
 

@@ -31,14 +31,15 @@ import grammar.Parser;
  */
 class ExampleIntegrationTest extends Spec with ShouldMatchers {
 
-  def createInjector() = Guice.createInjector(new InterpreterModule(), new NoopTypesModule());
+  def createInjector() = {
+    Guice.createInjector(new InterpreterModule(List()), new NoopTypesModule());
+  }
 
   def createFixture = {
     val sourcePaths = List(
         new File(getClass().getResource("/helloworld").toURI).getAbsolutePath(),
         new File(getClass().getResource("/controlFlow").toURI).getAbsolutePath(),
-        new File(getClass().getResource("/arithmetic").toURI).getAbsolutePath(),
-        new File(getClass().getResource("/stdlib").toURI).getAbsolutePath());
+        new File(getClass().getResource("/arithmetic").toURI).getAbsolutePath());
     new SourceFileClassLoader(new Parser(), sourcePaths);
   }
 

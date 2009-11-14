@@ -29,22 +29,21 @@ import noop.interpreter.SourceFileClassLoader;
 class NoopObjectSpec extends Spec with ShouldMatchers {
 
   def createFixture = {
-    val stdlibSourcePath = new File(getClass().getResource("/stdlib").toURI).getAbsolutePath();
-    new SourceFileClassLoader(new Parser(), List(stdlibSourcePath))
+    new SourceFileClassLoader(new Parser(), List())
   }
 
   describe("a Noop Object") {
 
     it ("should throw NoSuchMethodException on missing native method") {
       val classLoader = createFixture;
-      val objectClass = classLoader.findClass("Object");
+      val objectClass = classLoader.findClass("noop.Object");
       val obj = new NoopObject(objectClass);
       val exception = intercept[NoSuchMethodException] (
         obj.executeNativeMethod(null, "testMissingNativeMethod")
       );
 
       exception.getMessage() should include(
-          "Native method implemention for 'testMissingNativeMethod' missing in Object");
+          "Native method implemention for 'testMissingNativeMethod' missing in noop.Object");
 
     }
   }

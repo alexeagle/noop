@@ -49,7 +49,7 @@ class InterpreterVisitorSpec extends Spec with ShouldMatchers with GuiceInterpre
     it("should dereference a property from a referenced object") {
       val (context, visitor, injector) = interpreterFixture;
       val stringFactory = injector.getInstance(classOf[StringFactory]);
-      val anObject = new NoopObject(new ClassDefinition("Obj", ""));
+      val anObject = new NoopObject(new ClassDefinition("Obj", "", ""));
       anObject.propertyMap += Pair("foo", stringFactory.create("bar"));
       context.stack.top.blockScopes.inScope("interpereter_tast") {
         val deref = new DereferenceExpression(new EvaluatedExpression(anObject), new IdentifierExpression("foo"))
