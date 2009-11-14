@@ -1,8 +1,7 @@
 import noop.Application;
 import noop.Console;
 
-// TODO(alex): the import statement above should let us omit the package
-class HelloWorld(noop.Console console) implements Application {
+class HelloWorld(Console console) implements Application {
 
   Int main(List args) {
     console.println("Hello World!");

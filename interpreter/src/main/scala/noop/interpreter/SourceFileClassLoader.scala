@@ -18,10 +18,11 @@ package noop.interpreter;
 
 
 import collection.mutable.Map
-import java.io.{InputStream, FileInputStream, File};
+import java.io.{InputStream, FileInputStream, File}
+import model.{Parameter, ClassDefinition};
 
 import grammar.{ParseException, Parser};
-import model.ClassDefinition;
+
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -59,8 +60,24 @@ class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends Clas
       }
     }
 
+    return postProcess(classDef, className);
+  }
+
+  /**
+   * We want the AST produced by the ANTLR tree parser to be free from interpreter specific stuff.
+   * But, the AST is in a raw form, so we fill in some details to make interpreting easier.
+   */
+  def postProcess(classDef: ClassDefinition, className: String): ClassDefinition = {
     if (classDef.namespace == "") {
+      val parts = className.split("\\.");
       classDef.namespace = parts.take(parts.size - 1).mkString(".");
+    }
+    for (val param <- classDef.parameters) {
+      for (val `import` <- classDef.imports) {
+        if (`import`.split("\\.").last == param.noopType) {
+          param.noopType = `import`;
+        }
+      }
     }
     return classDef;
   }
