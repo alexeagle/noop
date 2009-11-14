@@ -20,7 +20,7 @@ options {
 }
 
 scope SourceFile {
-  File file;
+  SourceFile file;
 }
 
 scope Block {
@@ -77,7 +77,7 @@ scope Block {
   }
 }
 
-file returns [File file = new File()]
+file returns [SourceFile file = new SourceFile()]
   scope SourceFile;
   @init { $SourceFile::file = $file;
           paraphrases.push("at top-level in file"); }
@@ -121,6 +121,7 @@ classDefinition
 	          d=doc?)
 	{
 	ClassDefinition classDef = new ClassDefinition($t.text, $SourceFile::file.namespace(), $d.doc);
+	classDef.imports().\$plus\$plus\$eq($SourceFile::file.imports());
 	classDef.methods().\$plus\$plus\$eq(methodCollector);
 	classDef.unittests().\$plus\$plus\$eq(unittestCollector);
 	classDef.interfaces().\$plus\$plus\$eq(interfaceCollector);

@@ -22,7 +22,7 @@ import scala.collection.mutable.{ArrayBuffer, Buffer};
  *
  * @author alexeagle@google.com (Alex Eagle)
  */
-class File {
+class SourceFile {
 
   var namespace: String = "";
   var imports: Buffer[String] = new ArrayBuffer[String];
