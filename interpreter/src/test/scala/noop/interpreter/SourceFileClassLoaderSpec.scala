@@ -70,6 +70,7 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       val classDef = classLoader.findClass("noop.Foo")
 
       classDef.name should equal("Foo")
+      classDef.namespace should equal("noop")
     }
 
     it("should load a class in a nested namespace") {
@@ -86,6 +87,7 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       val classDef = classLoader.findClass("noop.package.Foo")
 
       classDef.name should equal("Foo")
+      classDef.namespace should equal("noop.package")
     }
 
     it("should throw ClassNotFound if the class doesn't exist") {
@@ -117,6 +119,44 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       classLoader.eachClass((c:ClassDefinition) => classesFound += c);
       classesFound should have length(1);
       classesFound(0).name should be("Foo");
+    }
+
+    it("should locate standard libraries in the classpath") {
+      val classLoader = new SourceFileClassLoader(new Parser(), List());
+      val classDef = classLoader.findClass("noop.Object");
+
+      classDef.name should equal("Object");
+      classDef.namespace should equal("noop");
+    }
+
+    it("should not overwrite an explicit namespace in the file with the relative path") {
+      new File(tmpDir, "noop").mkdir();
+      val source = new File(new File(tmpDir, "noop"), "Foo.noop");
+      source.deleteOnExit();
+      val printWriter = new PrintWriter(new FileWriter(source))
+      printWriter.println("namespace namespace1; class Foo() {}");
+      printWriter.close();
+
+      val srcPaths = List(tmpDir.getAbsolutePath());
+      val classLoader = new SourceFileClassLoader(new Parser(), srcPaths);
+      val classDef = classLoader.findClass("noop.Foo")
+
+      classDef.name should equal("Foo")
+      classDef.namespace should equal("namespace1")
+    }
+
+    it("should replace parameter types with their fully-qualified version") {
+      val source = new File(tmpDir, "AnotherClass.noop");
+      source.deleteOnExit();
+      val printWriter = new PrintWriter(new FileWriter(source))
+      printWriter.println("import namespace1.Foo; class AnotherClass(Foo thing) {}");
+      printWriter.close();
+
+      val srcPaths = List(tmpDir.getAbsolutePath());
+      val classLoader = new SourceFileClassLoader(new Parser(), srcPaths);
+      val classDef = classLoader.findClass("AnotherClass")
+
+      classDef.parameters.first.noopType should equal("namespace1.Foo")
     }
   }
 }

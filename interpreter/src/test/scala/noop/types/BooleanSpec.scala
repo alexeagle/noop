@@ -33,20 +33,20 @@ import model.Modifier;
  * @author Erik Soe Sorensen (eriksoe@gmail.com)
  */
 class BooleanSpec extends Spec with ShouldMatchers {
-  def fixture = Guice.createInjector(new InterpreterModule(), new NoopTypesModule());
+  def fixture = Guice.createInjector(new InterpreterModule(List()), new NoopTypesModule());
 
   describe("a Noop Boolean") {
 
     it("should have a valid class definition parsed from Noop source") {
       val classLoader = fixture.getInstance(classOf[ClassLoader]);
-      val classDef = classLoader.findClass("Boolean");
+      val classDef = classLoader.findClass("noop.Boolean");
       classDef.name should be("Boolean");
     }
 
     it("should have a native implementation of the xor method") {
       val injector = fixture;
       val classLoader = injector.getInstance(classOf[ClassLoader]);
-      val boolClass = classLoader.findClass("Boolean");
+      val boolClass = classLoader.findClass("noop.Boolean");
       val booleanFactory = injector.getInstance(classOf[BooleanFactory]);
       val aTrue = booleanFactory.create(true);
       val aFalse = booleanFactory.create(false);

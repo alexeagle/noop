@@ -19,5 +19,6 @@ package noop.model;
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class Parameter(val name:String, val noopType: String) {
+class Parameter(val name:String, var noopType: String) {
+  override def toString() = String.format("Param[%s %s]", noopType, name);
 }

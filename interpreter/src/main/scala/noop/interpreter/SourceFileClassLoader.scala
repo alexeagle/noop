@@ -15,12 +15,14 @@
  */
 package noop.interpreter;
 
-import java.io.{FileInputStream, File};
 
-import collection.mutable.Map;
+
+import collection.mutable.Map
+import java.io.{InputStream, FileInputStream, File}
+import model.{Parameter, ClassDefinition};
 
 import grammar.{ParseException, Parser};
-import model.ClassDefinition;
+
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -33,21 +35,63 @@ class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends Clas
 
   def getClassDefinition(file: File): ClassDefinition = {
     try {
-      return parser.file(new FileInputStream(file)).classDef;
+      getClassDefinition(new FileInputStream(file));
     } catch {
       case ex: ParseException =>
-          throw new ParseException("Failed to parse " + file.getAbsolutePath());
+        throw new ParseException("Failed to parse " + file.getAbsolutePath());
     }
   }
 
+  def getClassDefinition(stream: InputStream): ClassDefinition = parser.file(stream).classDef;
+
   def findClass(className: String): ClassDefinition = {
+    if (cache.contains(className)) {
+      return cache(className);
+    }
     val parts = className.split("\\.");
     val expectedFile = parts.last + ".noop";
     val relativePath = parts.take(parts.size - 1).mkString(File.separator);
 
-    if (cache.contains(className)) {
-      return cache(className);
+    val classDef: ClassDefinition = searchInClasspath(relativePath, expectedFile) match {
+      case Some(c) => c;
+      case None => searchInFilesystem(relativePath, expectedFile) match {
+        case Some(c) => c;
+        case None => throw new ClassNotFoundException("Could not find class: " + className);
+      }
     }
+
+    return postProcess(classDef, className);
+  }
+
+  /**
+   * We want the AST produced by the ANTLR tree parser to be free from interpreter specific stuff.
+   * But, the AST is in a raw form, so we fill in some details to make interpreting easier.
+   */
+  def postProcess(classDef: ClassDefinition, className: String): ClassDefinition = {
+    if (classDef.namespace == "") {
+      val parts = className.split("\\.");
+      classDef.namespace = parts.take(parts.size - 1).mkString(".");
+    }
+    for (val param <- classDef.parameters) {
+      for (val `import` <- classDef.imports) {
+        if (`import`.split("\\.").last == param.noopType) {
+          param.noopType = `import`;
+        }
+      }
+    }
+    return classDef;
+  }
+
+  def searchInClasspath(relativePath: String, expectedFile: String): Option[ClassDefinition] = {
+    val locationInClasspath = String.format("/%s/%s", relativePath, expectedFile);
+    val stream = getClass().getResourceAsStream(locationInClasspath);
+    if (stream != null) {
+      return Some(getClassDefinition(stream));
+    }
+    return None;
+  }
+
+  def searchInFilesystem(relativePath: String, expectedFile: String): Option[ClassDefinition] = {
     for (path <- srcPaths) {
       val dir = new File(path, relativePath);
       if (!dir.isDirectory()) {
@@ -56,11 +100,11 @@ class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends Clas
       val files = dir.listFiles();
 
       files.find(f => f.getName() == expectedFile) match {
-        case Some(file) => return getClassDefinition(file);
+        case Some(file) => return Some(getClassDefinition(file));
         case None => // will try in next directory
       }
     }
-    throw new ClassNotFoundException("Could not find class: " + className);
+    return None;
   }
 
   def addNativeClass(name: String, classDef: ClassDefinition) = {
