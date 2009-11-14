@@ -29,15 +29,15 @@ class InterpreterTestingModule extends AbstractModule {
 
   @Provides @Singleton def mockClassLoader(): ClassLoader = {
     val classLoader = new MockClassLoader();
-    val classDefinition = new ClassDefinition("String", "");
+    val classDefinition = new ClassDefinition("String", "noop", "");
     val length = new Method("length", null, "");
     length.returnTypes += "Int";
     length.modifiers += Modifier.native;
     classDefinition.methods += length;
 
     classLoader.classes += Pair("noop.String", classDefinition);
-    classLoader.classes += Pair("noop.Int", new ClassDefinition("Int", ""));
-    classLoader.classes += Pair("noop.Boolean", new ClassDefinition("Boolean", ""));
+    classLoader.classes += Pair("noop.Int", new ClassDefinition("Int", "noop", ""));
+    classLoader.classes += Pair("noop.Boolean", new ClassDefinition("Boolean", "noop", ""));
     return classLoader;
   }
 }

@@ -16,25 +16,36 @@
 package noop.inject
 
 
-import interpreter.InterpreterModule;
-import java.io.File;
-import noop.types.NoopTypesModule;
-
-
+import interpreter.InterpreterModule
+import model.ClassDefinition
 import com.google.inject.Guice
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.Spec
+import types.{NoopObject, NoopConsole, NoopTypesModule}
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
 
 class GuiceBackedInjectorSpec extends Spec with ShouldMatchers {
+  def fixture = {
+     val guiceInjector = Guice.createInjector(new NoopTypesModule(), new InterpreterModule(List()));
+     guiceInjector.getInstance(classOf[Injector]);
+  }
   describe("the injector") {
-    it("should create a boolean") {
-      val guiceInjector = Guice.createInjector(new NoopTypesModule(), new InterpreterModule(List()));
-      val noopInjector: Injector = guiceInjector.getInstance(classOf[Injector]);
-      //TODO(alexeagle): finish the test!
+    it("should create a NoopConsole instance") {
+      val noopInjector: Injector = fixture;
+      val instance = noopInjector.getInstance(new ClassDefinition("Console", "noop", ""));
+      instance.getClass() should be(classOf[NoopConsole]);
+
+    }
+    
+    it("should create an instance of a user-defined type") {
+      val noopInjector: Injector = fixture;
+      val userClass = new ClassDefinition("A", "", "A class named A");
+      val instance = noopInjector.getInstance(userClass);
+      instance.getClass() should be(classOf[NoopObject]);
+      instance.classDef should be(userClass);
     }
   }
 }

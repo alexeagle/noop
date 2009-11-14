@@ -28,7 +28,7 @@ import interpreter.testing.{TestFailedException, TestHolder, TestRunner};
  */
 class TestRunnerSpec extends Spec with ShouldMatchers with GuiceInterpreterFixture {
 
-  val fooClass = new ClassDefinition("Foo", "a class");
+  val fooClass = new ClassDefinition("Foo", "", "a class");
 
   describe("the test runner") {
 

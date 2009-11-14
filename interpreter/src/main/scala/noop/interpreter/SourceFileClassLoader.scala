@@ -51,14 +51,30 @@ class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends Clas
     val expectedFile = parts.last + ".noop";
     val relativePath = parts.take(parts.size - 1).mkString(File.separator);
 
-    // First, look in the classpath (noop stdlib is there)
+    val classDef: ClassDefinition = searchInClasspath(relativePath, expectedFile) match {
+      case Some(c) => c;
+      case None => searchInFilesystem(relativePath, expectedFile) match {
+        case Some(c) => c;
+        case None => throw new ClassNotFoundException("Could not find class: " + className);
+      }
+    }
+
+    if (classDef.namespace == "") {
+      classDef.namespace = parts.take(parts.size - 1).mkString(".");
+    }
+    return classDef;
+  }
+
+  def searchInClasspath(relativePath: String, expectedFile: String): Option[ClassDefinition] = {
     val locationInClasspath = String.format("/%s/%s", relativePath, expectedFile);
     val stream = getClass().getResourceAsStream(locationInClasspath);
     if (stream != null) {
-      return getClassDefinition(stream);
+      return Some(getClassDefinition(stream));
     }
-    
-    // If not found, look in the filesystem
+    return None;
+  }
+
+  def searchInFilesystem(relativePath: String, expectedFile: String): Option[ClassDefinition] = {
     for (path <- srcPaths) {
       val dir = new File(path, relativePath);
       if (!dir.isDirectory()) {
@@ -67,11 +83,11 @@ class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends Clas
       val files = dir.listFiles();
 
       files.find(f => f.getName() == expectedFile) match {
-        case Some(file) => return getClassDefinition(file);
+        case Some(file) => return Some(getClassDefinition(file));
         case None => // will try in next directory
       }
     }
-    throw new ClassNotFoundException("Could not find class: " + className);
+    return None;
   }
 
   def addNativeClass(name: String, classDef: ClassDefinition) = {

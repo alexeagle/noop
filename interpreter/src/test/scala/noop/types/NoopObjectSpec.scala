@@ -43,7 +43,7 @@ class NoopObjectSpec extends Spec with ShouldMatchers {
       );
 
       exception.getMessage() should include(
-          "Native method implemention for 'testMissingNativeMethod' missing in Object");
+          "Native method implemention for 'testMissingNativeMethod' missing in noop.Object");
 
     }
   }
