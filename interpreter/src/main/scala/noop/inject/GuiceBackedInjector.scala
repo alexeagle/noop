@@ -32,20 +32,15 @@ class GuiceBackedInjector(classLoader: ClassLoader, injector: com.google.inject.
   var currentInjector: com.google.inject.Injector = injector;
 
   def getInstance(classDef: ClassDefinition): NoopObject = {
-    val propertyMap = mutable.Map.empty[String, NoopObject];
+    val obj = classDef.qualifiedName match {
+      case "noop.Console" => new NoopConsole(classLoader.findClass("noop.Console"));
+      case _ => new NoopObject(classDef);
+    }
 
     for (param <- classDef.parameters) {
       val paramClassDef = classLoader.findClass(param.noopType);
-
-      propertyMap += Pair(param.name, getInstance(paramClassDef));
+      obj.propertyMap += Pair(param.name, getInstance(paramClassDef));
     }
-
-    //TODO(alexeagle): Injectables still really needs work
-    val obj = classDef.name match {
-      case "Console" => new NoopConsole(classLoader.findClass("noop.Console"));
-      case _ => new NoopObject(classDef);
-    }
-    obj.propertyMap ++= propertyMap;
     return obj;
   }
 

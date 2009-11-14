@@ -20,10 +20,12 @@ import noop.types.NoopObject;
 import scala.collection.mutable.{ArrayBuffer, Buffer, Map};
 
 /**
+ * namespace is mutable because we may infer the namespace from the relative path of the file
+ * 
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class ClassDefinition (val name: String, val documentation: String) {
+class ClassDefinition (val name: String, var namespace: String, val documentation: String) {
 
   val parameters: Buffer[Parameter] = new ArrayBuffer[Parameter];
   val interfaces: Buffer[String] = new ArrayBuffer[String];
@@ -38,4 +40,6 @@ class ClassDefinition (val name: String, val documentation: String) {
           "Method " + methodName + " is not defined on class " + name);
     }
   }
+
+  def qualifiedName = if (namespace == "") name else namespace + "." + name;
 }

@@ -120,7 +120,7 @@ classDefinition
 	          classBlock[methodCollector, unittestCollector]? 
 	          d=doc?)
 	{
-	ClassDefinition classDef = new ClassDefinition($t.text, $d.doc);
+	ClassDefinition classDef = new ClassDefinition($t.text, $SourceFile::file.namespace(), $d.doc);
 	classDef.methods().\$plus\$plus\$eq(methodCollector);
 	classDef.unittests().\$plus\$plus\$eq(unittestCollector);
 	classDef.interfaces().\$plus\$plus\$eq(interfaceCollector);

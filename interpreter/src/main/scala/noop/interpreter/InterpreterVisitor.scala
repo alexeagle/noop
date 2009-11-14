@@ -31,7 +31,8 @@ import interpreter.testing.TestFailedException;
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class InterpreterVisitor @Inject() (val context: Context, injector: Injector, booleanFactory: BooleanFactory, stringFactory: StringFactory, integerFactory: IntegerFactory)
+class InterpreterVisitor @Inject() (val context: Context, injector: Injector, booleanFactory: BooleanFactory,
+                                    stringFactory: StringFactory, integerFactory: IntegerFactory)
     extends Visitor {
   val logger = LoggerFactory.getLogger(this.getClass());
 

@@ -28,7 +28,7 @@ class NoopObject(val classDef: ClassDefinition) {
 
   def nativeMethod(name: String): (Seq[NoopObject] => NoopObject) = {
     throw new NoSuchMethodException("Native method implemention for '"
-        + name + "' missing in " + classDef.name);
+        + name + "' missing in " + classDef.qualifiedName);
   }
 
   def executeNativeMethod(args: Seq[NoopObject], name: String): NoopObject = {
