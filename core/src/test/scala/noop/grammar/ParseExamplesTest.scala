@@ -26,9 +26,9 @@ class ParseExamplesTest extends Spec with ShouldMatchers {
   describe("the parser") {
     it("should parse all the .noop files found under the /examples directory") {
       // TODO(alex): this is a brittle way to get to the /examples directory :(
-      val sourcesRoot = getClass.getResource("/");
+      val sourcesRoot = getClass.getResource("/examples");
       sourcesRoot.getProtocol should be("file");
-      val examplesDir = new File(new File(sourcesRoot.getPath).getParentFile(), "examples");
+      val examplesDir = new File(sourcesRoot.getPath);
       parseAllFilesInDirectory(examplesDir);
     }
   }
