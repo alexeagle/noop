@@ -1,0 +1,30 @@
+namespace arithmetic;
+
+import noop.Application;
+import noop.Console;
+
+doc """
+This is the first sentence of the documentation, and will be used as the short description.
+
+Here are two things about Arithmetic:
+ * This class demonstrates some basic arithmetic operations
+ * It converts an Int to a String automatically
+
+That should appear as a bulleted list.
+noop.HelloWorld should link automatically to that class.
+
+ @author Alex Eagle (alexeagle@google.com)
+"""
+class Arithmetic(Console console) implements Application {
+  doc """
+  This is the entry point of the application.
+  """
+  Int main(List args) {
+    Int i = 1;
+    Int j = 2;
+    Int k = i + j;
+
+    console.println(k);
+    return 0;
+  }
+}
