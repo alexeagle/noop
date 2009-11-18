@@ -20,6 +20,7 @@ package noop.interpreter;
 import collection.mutable.Map
 import java.io.{InputStream, FileInputStream, File}
 import model.{Parameter, ClassDefinition};
+import org.slf4j.LoggerFactory;
 
 import grammar.{ParseException, Parser};
 
@@ -30,7 +31,7 @@ import grammar.{ParseException, Parser};
  */
 class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends ClassLoader with
     ClassSearch {
-
+  val logger = LoggerFactory.getLogger(classOf[SourceFileClassLoader]);
   val cache = Map.empty[String, ClassDefinition];
 
   def getClassDefinition(file: File): ClassDefinition = {
@@ -88,6 +89,7 @@ class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends Clas
     if (stream != null) {
       return Some(getClassDefinition(stream));
     }
+    logger.info("Class {} not found in classpath", locationInClasspath);
     return None;
   }
 
@@ -114,16 +116,19 @@ class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends Clas
   def eachClass(f: ClassDefinition => Unit) = {
     for (path <- srcPaths) {
       var srcRoot = new File(path);
-      eachClassInPath(srcRoot, f);
+      eachClassInPath(srcRoot, "", f);
     }
   }
 
-  def eachClassInPath(dir: File, f: ClassDefinition => Unit): Unit = {
-    for(file <- dir.listFiles()) {
+  def eachClassInPath(dir: File, relativePath: String, f: ClassDefinition => Unit): Unit = {
+    for(file: File <- dir.listFiles()) {
       if (file.isDirectory()) {
-        eachClassInPath(file, f);
+        val newRelativePath = relativePath + file.getName() + ".";
+        eachClassInPath(file, newRelativePath, f);
       } else if (file.getName().endsWith(".noop")) {
-        f.apply(getClassDefinition(file));
+        val classDef = getClassDefinition(file)
+        val className = relativePath + file.getName().substring(0, file.getName().length - 5);
+        f.apply(postProcess(classDef, className));
       }
     }
   }
