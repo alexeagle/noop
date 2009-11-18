@@ -119,7 +119,6 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       classLoader.eachClass((c:ClassDefinition) => classesFound += c);
       classesFound should have length(1);
       classesFound(0).name should be("Foo");
-      classesFound(0).qualifiedName should be("package.Foo");
     }
 
     it("should locate standard libraries in the classpath") {
