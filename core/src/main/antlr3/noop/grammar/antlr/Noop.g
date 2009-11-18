@@ -39,9 +39,6 @@ tokens {
   BINDING;
   BIND;
   RETURN_TYPE;
-  TRY;
-  CATCH;
-  FINALLY;
 }
 
 @header {
@@ -156,13 +153,8 @@ unittest
 	;
 
 methodSignature
-  : doc? modifiers? returnType VariableIdentifier parameterList bindingsDeclaration? throwsDeclaration?
+  : doc? modifiers? returnType VariableIdentifier parameterList bindingsDeclaration?
   ;
-
-throwsDeclaration
-	: 'throws' qualifiedType
-	-> ^('throws' qualifiedType)
-	;
 
 returnType
   : TypeIdentifier -> ^(RETURN_TYPE TypeIdentifier)
@@ -201,16 +193,7 @@ statement
 	| ifExpression
 	| shouldStatement ';'!
 	| bindingsBlock
-	| tryCatchBlock
 	;
-
-tryCatchBlock
-	: 'try' block 'catch' block ('finally' block)?
-	-> ^(TRY block CATCH block (FINALLY block)?)
-	| 'try' block 'finally' block
-	-> ^(TRY block FINALLY block)
-	;
-
 	
 bindingsDeclaration
 	:	'binding' (bindings | TypeIdentifier)
