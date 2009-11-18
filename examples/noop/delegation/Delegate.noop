@@ -6,7 +6,7 @@ namespace delegation;
 
 class Delegate(Console console) implements Interface {
 
-  public void aMethod() {
+  Void aMethod() {
     console.println("Delegate executed aMethod()");
   }
   
