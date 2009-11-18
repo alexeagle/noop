@@ -12,6 +12,6 @@ class HelloWorld(Console console) implements Application {
     List l;
     Int result = main(l);
     result should equal(0);
-    // console.printed should equal("Hello World!");
+    console.printed should equal("Hello World!");
   }
 }

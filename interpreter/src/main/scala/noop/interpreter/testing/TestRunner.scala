@@ -24,8 +24,7 @@ import types.{NoopBoolean, BooleanFactory}
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-class TestRunner @Inject() (classSearch: ClassSearch, classLoader: ClassLoader, injector: Injector,
-                            interpreterVisitor: Visitor, context: Context) {
+class TestRunner @Inject() (classSearch: ClassSearch, classLoader: ClassLoader, injector: Injector, interpreterVisitor: Visitor) {
 
   def gatherTests(): Buffer[TestHolder] = {
     var tests = new ArrayBuffer[TestHolder];
@@ -51,15 +50,17 @@ class TestRunner @Inject() (classSearch: ClassSearch, classLoader: ClassLoader, 
    * Run a single test
    */
   def runTest(test: TestHolder) = {
+    val stack = new Stack[Frame];
+    val context = new Context(stack, classLoader);
     val instance = injector.getInstance(test.classDef);
 
-    context.stack.push(new Frame(instance, test.testMethod));
+    stack.push(new Frame(instance, test.testMethod));
     try {
       context.stack.top.blockScopes.inScope("test " + test.testMethod.name) {
         interpreterVisitor.visit(test.testMethod);
       }
     } finally {
-      context.stack.pop();
+      stack.pop();
     }
   }
 }
