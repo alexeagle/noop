@@ -42,7 +42,7 @@ class TestRunnerSpec extends Spec with ShouldMatchers with GuiceInterpreterFixtu
         }
       }
 
-      val testRunner = new TestRunner(classLoader, null, null, null);
+      val testRunner = new TestRunner(classLoader, null, null, null, null);
       val testsToRun = testRunner.gatherTests();
       testsToRun should have length (1);
       testsToRun.first.testMethod should be theSameInstanceAs(unittest);
