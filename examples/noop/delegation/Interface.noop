@@ -4,5 +4,7 @@
 namespace delegation;
 
 interface Interface {
-  Void aMethod();
+
+  public void aMethod();
+
 }
