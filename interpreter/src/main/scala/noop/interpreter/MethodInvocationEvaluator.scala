@@ -25,7 +25,7 @@ import types.{NoopObject, NoopType};
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class MethodInvocationEvaluator(methodInvocationExpression: MethodInvocationExpression,
-    visitor: Visitor) {PET
+    visitor: Visitor) {
   val logger = LoggerFactory.getLogger(this.getClass);
 
   def createFrame(context: Context, thisRef: NoopObject): Frame = {
