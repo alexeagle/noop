@@ -1,0 +1,11 @@
+groupId: com.google.code.noop
+artifactId: noop-parent
+version: 0.1.0-SNAPSHOT
+packaging: pom
+name: Noop - Parent Project
+description: "The parent metadata project for the Noop programming language, for use with the maven build system."
+build:
+  pluginManagement:
+    plugins:
+      - { artifactId: maven-surefire-plugin, version: 2.4.3 }
+modules: [ core ]
