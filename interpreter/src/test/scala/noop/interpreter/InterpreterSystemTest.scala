@@ -27,8 +27,10 @@ class InterpreterSystemTest extends Spec with ShouldMatchers with ConsoleTestFix
 
   describe("the interpreter") {
     it("should run successfully") {
-      InterpreterMain.main(List("helloworld.HelloWorld", "examples/noop").toArray);
-      InterpreterMain.exitCodeForTesting should be(0);
+      withRedirectedStandardOut { (output) => {
+        InterpreterMain.main(List("helloworld.HelloWorld", "examples/noop").toArray);
+        InterpreterMain.exitCodeForTesting should be(0);
+      }}
     }
 
     it("should print an error and exit with error status if no arguments are given") {
@@ -40,8 +42,10 @@ class InterpreterSystemTest extends Spec with ShouldMatchers with ConsoleTestFix
     }
 
     it("should use the working directory as a source root") {
-      InterpreterMain.main(List("examples.noop.helloworld.HelloWorld").toArray);
-      InterpreterMain.exitCodeForTesting should be(0);
+      withRedirectedStandardOut { (output) => {
+        InterpreterMain.main(List("examples.noop.helloworld.HelloWorld").toArray);
+        InterpreterMain.exitCodeForTesting should be(0);
+      }}
     }
   }
 }
