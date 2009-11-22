@@ -15,7 +15,7 @@
  */
 namespace delegation;
 
-doc """
+"""
  Demonstration interface declaring a single method.
 """
 interface Interface {

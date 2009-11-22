@@ -18,7 +18,7 @@ namespace arithmetic;
 import noop.Application;
 import noop.Console;
 
-doc """
+"""
 This is the first sentence of the documentation, and will be used as the short description.
 
 Here are two things about Arithmetic:
@@ -31,7 +31,7 @@ noop.HelloWorld should link automatically to that class.
  @author Alex Eagle (alexeagle@google.com)
 """
 class Arithmetic(Console console) implements Application {
-  doc """
+  """
   This is the entry point of the application.
   """
   Int main() {
