@@ -16,20 +16,20 @@
 package noop.interpreter;
 
 import com.google.inject.Guice
-import java.io.{File, ByteArrayOutputStream}
-import types.NoopTypesModule;
+import java.io.File
+import noop.types.NoopTypesModule;
 
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import grammar.Parser;
+import noop.grammar.Parser;
 
 /**
  * This test runs all the example noop programs found under /examples.
  *
  * @author alexeagle@google.com (Alex Eagle)
  */
-class ExampleIntegrationTest extends Spec with ShouldMatchers {
+class ExampleIntegrationTest extends Spec with ShouldMatchers with ConsoleTestFixture {
 
   def createInjector() = {
     Guice.createInjector(new InterpreterModule(List()), new NoopTypesModule());
@@ -41,17 +41,6 @@ class ExampleIntegrationTest extends Spec with ShouldMatchers {
         new File(getClass().getResource("/controlFlow").toURI).getAbsolutePath(),
         new File(getClass().getResource("/arithmetic").toURI).getAbsolutePath());
     new SourceFileClassLoader(new Parser(), sourcePaths);
-  }
-
-  def withRedirectedStandardOut(testFunction: ByteArrayOutputStream => Unit) {
-    val originalOut = Console.out;
-    val output = new ByteArrayOutputStream();
-    try {
-      Console.setOut(output);
-      testFunction(output);
-    } finally {
-      Console.setOut(originalOut);
-    }
   }
 
   it("should run the hello world program") {

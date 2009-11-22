@@ -16,8 +16,7 @@
 package noop.interpreter;
 
 import com.google.inject.Guice;
-import grammar.Parser;
-import types.NoopTypesModule;
+import noop.types.NoopTypesModule;
 
 /**
  * The static entry point into the Noop interpreter, for use from the command-line.
@@ -27,18 +26,33 @@ import types.NoopTypesModule;
  */
 object InterpreterMain {
 
-  def main(args: Array[String]) {
+  // The problem with statics: not testable!!
+  var testing: Boolean = false;
+  var exitCodeForTesting: Int = 0;
+  def disableSystemExitForTesting = {
+    testing = true;
+  }
 
+  def main(args: Array[String]) = {
     //TODO: a proper command line parser, like scalax.io.CommandLineParser
-    if (args.size < 2) {
-      println("Usage: InterpreterMain main-class paths/to/sources ...");
-      System.exit(1);
+    if (args.size < 1) {
+      println("Usage: InterpreterMain main-class [source roots ...]");
+      exit(1);
+    } else {
+      val sourcePaths = args.toList.tail + System.getProperty("user.dir");
+      val injector = Guice.createInjector(new InterpreterModule(sourcePaths), new NoopTypesModule());
+      val mainClass = injector.getInstance(classOf[ClassLoader]).findClass(args(0));
+      val returnVal = injector.getInstance(classOf[Interpreter]).runApplication(mainClass);
+
+      exit(returnVal);
     }
+  }
 
-    val injector = Guice.createInjector(new InterpreterModule(args.toList.tail), new NoopTypesModule());
-    val mainClass = injector.getInstance(classOf[ClassLoader]).findClass(args(0));
-    val returnVal = injector.getInstance(classOf[Interpreter]).runApplication(mainClass);
-
-    System.exit(returnVal);
+  def exit(exitCode: Int) {
+    if (testing) {
+      exitCodeForTesting = exitCode;
+    } else {
+      System.exit(exitCode);
+    }
   }
 }
