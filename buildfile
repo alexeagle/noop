@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # scalac runs out of heap on my machine otherwise
-ENV['JAVA_OPTS'] ||= '-Xms512m -Xmx1g'
+ENV['JAVA_OPTS'] ||= '-Xmx512m'
 
 require 'buildr/antlr'
 require 'buildr/scala'
