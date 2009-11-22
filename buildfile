@@ -15,9 +15,7 @@
 require 'buildr/antlr'
 require 'buildr/scala'
 
-# Version number for this release
 VERSION_NUMBER = "0.1.0-SNAPSHOT"
-# Group identifier for your projects
 GROUP = "com.google"
 COPYRIGHT = "Apache 2.0"
 
@@ -28,6 +26,7 @@ ANTLR_RUNTIME = ["org.antlr:antlr-runtime:jar:3.1.1"]
 SLF4J = ["org.slf4j:slf4j-api:jar:1.5.6", "org.slf4j:slf4j-simple:jar:1.5.6"]
 GUICE = ["aopalliance:aopalliance:jar:1.0",
          "com.google.inject:guice:jar:2.0", "com.google.inject.extensions:guice-assisted-inject:jar:2.0" ]
+# Force Buildr Antlr integration to use the version we specify
 Buildr::ANTLR::REQUIRES.clear
 Buildr::ANTLR::REQUIRES.concat(ANTLR)
 
@@ -57,12 +56,10 @@ define 'noop', :version=>VERSION_NUMBER do
     resources.from [_('src/main/noop'), project("noop")._('examples/noop')]
     package(:jar).with(:manifest=>{'Main-Class' => 'noop.interpreter.InterpreterMain'})
     compile.with [project("core"), ANTLR_RUNTIME, SLF4J, GUICE]
-    compile.dependencies.each do |c|
-      # TODO - we have collisions, need to use jarjar or maven shadow plugin
-      unless c.to_s.index("scala-compiler") or c.to_s.index("guice")
-        package(:jar).merge(c).include('*.class')
-      end
-    end
+    package(:zip).
+      include(compile.dependencies, :path=>'lib').
+      include(_("target/#{id}-#{version}.jar"), :path=>'lib').
+      include(project("noop")._("scripts/noop.sh"), :as=>"noop", :path=>'bin')
     package :sources
   end
 
