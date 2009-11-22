@@ -17,8 +17,8 @@ package noop.interpreter;
 
 import collection.mutable.{Stack, ArrayBuffer}
 import com.google.inject.{Inject, Guice}
-import inject.{Injector, GuiceBackedInjector}
-import model._
+import noop.inject.{Injector, GuiceBackedInjector}
+import noop.model._
 
 
 
@@ -35,12 +35,7 @@ class Interpreter @Inject() (classLoader: ClassLoader, injector: Injector, conte
     val mainInstance = injector.getInstance(mainClass);
 
     context.addRootFrame(mainInstance);
-    var args = new ArrayBuffer[Expression];
-
-    //TODO: pass the list of command line arguments to main() instead
-    args += new StringLiteralExpression("something");
-
-    new MethodInvocationExpression(new EvaluatedExpression(mainInstance), "main", args).accept(visitor);
+    new MethodInvocationExpression(new EvaluatedExpression(mainInstance), "main", List()).accept(visitor);
     return 0;
   }
 }

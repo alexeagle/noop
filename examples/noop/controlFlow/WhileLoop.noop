@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+namespace controlFlow;
 
 import noop.Application;
 import noop.Console;
 
 class HelloVariables(Console console) implements Application {
 
-  Int main(List args) {
+  Int main() {
     Boolean b = true;
     while (b) {
       String s = "Hello World!";

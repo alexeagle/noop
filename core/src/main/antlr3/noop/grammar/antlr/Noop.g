@@ -124,7 +124,7 @@ typeSpecifiers
 	;
 
 interfaceDefinition
-  : 'interface' TypeIdentifier interfaceBlock
+  : doc? 'interface' TypeIdentifier interfaceBlock
   -> ^(INTERFACE TypeIdentifier interfaceBlock?)
   ;
 
