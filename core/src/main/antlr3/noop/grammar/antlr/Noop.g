@@ -21,6 +21,7 @@ options {
 }
 
 tokens {
+  DOC;
   CLASS;
   INTERFACE;
   PARAMS;
@@ -115,7 +116,7 @@ classDefinition
 	;
 
 doc
-	:	'doc'^ StringLiteral
+	:	StringLiteral -> ^(DOC StringLiteral)
 	;
 
 typeSpecifiers
@@ -125,7 +126,7 @@ typeSpecifiers
 
 interfaceDefinition
   : doc? 'interface' TypeIdentifier interfaceBlock
-  -> ^(INTERFACE TypeIdentifier interfaceBlock?)
+  -> ^(INTERFACE TypeIdentifier interfaceBlock? doc?)
   ;
 
 modifiers

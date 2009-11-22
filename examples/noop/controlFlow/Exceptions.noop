@@ -17,7 +17,7 @@ namespace noop.controlFlow;
 
 import java.lang.NumberFormatException;
 
-doc """
+"""
 Examples of throwing and catching Exceptions in Noop.
 
 All exceptions are unchecked.

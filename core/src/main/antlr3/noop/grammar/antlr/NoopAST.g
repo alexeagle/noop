@@ -82,7 +82,7 @@ file returns [SourceFile file = new SourceFile()]
   @init { $SourceFile::file = $file;
           paraphrases.push("at top-level in file"); }
   @after { paraphrases.pop(); }
-  :	 namespaceDeclaration? importDeclaration* (classDefinition | test)
+  :	 namespaceDeclaration? importDeclaration* (classDefinition | interfaceDefinition | test)
   ;
 
 namespaceDeclaration
@@ -133,6 +133,17 @@ classDefinition
 	}
 	$SourceFile::file.classDef_\$eq(classDef);
 	}
+	;
+
+interfaceDefinition
+	: ^(INTERFACE m=modifiers? t=TypeIdentifier d=doc?)
+	{
+	ClassDefinition classDef = new ClassDefinition($t.text, $SourceFile::file.namespace(), $d.doc);
+  if ($m.modifiers != null) {
+	  classDef.modifiers().\$plus\$plus\$eq($m.modifiers);
+	}
+	$SourceFile::file.classDef_\$eq(classDef);
+	}	
 	;
 
 parameters returns [Buffer<Parameter> parameters = new ArrayBuffer<Parameter>() ]
@@ -346,6 +357,6 @@ literal returns [Expression exp]
 	;
 
 doc returns [String doc]
-	:	^('doc' s=StringLiteral)
+	:	^(DOC s=StringLiteral)
 	{ $doc = stripQuotes($s.text); }
 	;

@@ -15,7 +15,7 @@
  */
 
 namespace delegation;
-doc """
+"""
  Demonstration class that declares another instance as a delegate and
  absorbs (inherits) its contract, delegating all contracted methods to
  the delegate

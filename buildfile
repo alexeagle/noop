@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# scalac runs out of heap on my machine otherwise
+ENV['JAVA_OPTS'] ||= '-Xms512m -Xmx1g'
+
 require 'buildr/antlr'
 require 'buildr/scala'
 
@@ -40,8 +43,8 @@ define 'noop', :version=>VERSION_NUMBER do
                    _('src/main/antlr3/noop/grammar/antlr/Noop.g'), \
                    _('src/main/antlr3/noop/grammar/antlr/NoopAST.g')],
         :in_package=>'noop.grammar.antlr')
-    compile.from antlr
-    compile.with [ANTLR, SLF4J]
+    compile.from(antlr).
+      with [ANTLR, SLF4J]
     package :jar
   end
 
@@ -59,7 +62,8 @@ define 'noop', :version=>VERSION_NUMBER do
     package(:zip).
       include(compile.dependencies, :path=>'lib').
       include(_("target/#{id}-#{version}.jar"), :path=>'lib').
-      include(project("noop")._("scripts/noop.sh"), :as=>"noop", :path=>'bin')
+      include(project("noop")._("scripts/noop.sh"), :as=>"noop", :path=>'bin').
+      include(project("noop")._("COPYING"))
     package :sources
   end
 

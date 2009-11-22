@@ -28,19 +28,27 @@ class DocumentationSpec extends Spec with ShouldMatchers {
   describe("documentation") {
 
     it("should appear before a class definition, in a string literal") {
-      val source = "doc \"This class is awesome\" class Awesome() {}";
+      val source = "\"This class is awesome\" class Awesome() {}";
       parser.parseFile(source).toStringTree() should equal (
-          "(CLASS Awesome (doc \"This class is awesome\"))");
+          "(CLASS Awesome (DOC \"This class is awesome\"))");
       val file = parser.file(source);
       file.classDef.documentation should equal("This class is awesome");
     }
 
     it("should appear before a method declaration") {
-      val source = "class Foo() { doc \"Here is my great method\" Int doIt() {}}";
+      val source = "class Foo() { \"Here is my great method\" Int doIt() {}}";
       parser.parseFile(source).toStringTree() should equal (
-          "(CLASS Foo (METHOD (doc \"Here is my great method\") (RETURN_TYPE Int) doIt))");
+          "(CLASS Foo (METHOD (DOC \"Here is my great method\") (RETURN_TYPE Int) doIt))");
       val file = parser.file(source);
       file.classDef.methods(0).documentation should equal ("Here is my great method");
+    }
+
+    it("can use the triple-quoted string literal and appear on an interface") {
+      val source = "\"\"\"\nMulti-line\ndocumentation\n\"\"\" interface Bar {}";
+      parser.parseFile(source).toStringTree() should equal (
+          "(INTERFACE Bar (DOC \"\"\"\nMulti-line\ndocumentation\n\"\"\"))");
+      val file = parser.file(source);
+      file.classDef.documentation should equal ("\nMulti-line\ndocumentation\n");
     }
   }
 }

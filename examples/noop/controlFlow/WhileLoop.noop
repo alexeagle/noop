@@ -18,6 +18,7 @@ namespace controlFlow;
 import noop.Application;
 import noop.Console;
 
+"A while loop example"
 class HelloVariables(Console console) implements Application {
 
   Int main() {

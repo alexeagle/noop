@@ -15,7 +15,7 @@
  */
 namespace delegation;
 
-doc """
+"""
 Demonstration class that implements an interface and will be used as a delegate.
 """
 class Delegate(Console console) implements Interface {
