@@ -32,7 +32,8 @@ class ClassDefinition (val name: String, var namespace: String, val documentatio
   val methods: Buffer[Method] = new ArrayBuffer[Method];
   val unittests: Buffer[Method] = new ArrayBuffer[Method];
   val modifiers: Buffer[Modifier.Value] = new ArrayBuffer[Modifier.Value];
-  val imports: Buffer[String] = new ArrayBuffer[String]; 
+  val imports: Buffer[String] = new ArrayBuffer[String];
+  val bindings: Buffer[BindingDeclaration] = new ArrayBuffer[BindingDeclaration];
 
   def findMethod(methodName: String): Method = {
     methods.find(method => method.name == methodName) match {

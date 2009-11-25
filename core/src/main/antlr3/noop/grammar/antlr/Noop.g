@@ -81,7 +81,7 @@ interpretable
 	;
 
 file
-	:	namespaceDeclaration? importDeclaration* (classDefinition | interfaceDefinition | test)
+	:	namespaceDeclaration? importDeclaration* (classDefinition | interfaceDefinition | bindingDefinition | test)
 	;
 
 namespaceDeclaration
@@ -152,12 +152,12 @@ test
 	;
 
 unittest
-	: 'unittest' StringLiteral bindingsDeclaration? block
-	-> ^(UNITTEST StringLiteral bindingsDeclaration? block?)
+	: 'unittest' StringLiteral bindingDeclaration? block
+	-> ^(UNITTEST StringLiteral bindingDeclaration? block?)
 	;
 
 methodSignature
-  : doc? modifiers? returnType VariableIdentifier parameterList bindingsDeclaration? throwsDeclaration?
+  : doc? modifiers? returnType VariableIdentifier parameterList throwsDeclaration?
   ;
 
 throwsDeclaration
@@ -212,15 +212,19 @@ tryCatchBlock
 	-> ^(TRY block FINALLY block)
 	;
 
+bindingDefinition
+	:	'binding' qualifiedType '{' (binding ';')+ '}'
+	-> ^(BINDING qualifiedType binding+)
+	;
 	
-bindingsDeclaration
-	:	'binding' (bindings | TypeIdentifier)
-	-> ^(BINDING bindings? TypeIdentifier?)
+bindingDeclaration
+	:	'binding' (bindings | qualifiedType)
+	-> ^(BINDING bindings? qualifiedType?)
 	;
 	
 bindingsBlock
-	:	'binding' (bindings | TypeIdentifier) block
-	-> ^(BINDING bindings? TypeIdentifier? block?)
+	:	'binding' (bindings | qualifiedType) block
+	-> ^(BINDING bindings? qualifiedType? block?)
 	;
 	
 bindings
@@ -228,8 +232,8 @@ bindings
 	;
 	
 binding
-	:	TypeIdentifier '->' expression
-	-> ^(BIND TypeIdentifier expression)
+	:	qualifiedType '->' expression
+	-> ^(BIND qualifiedType expression)
 	;
 
 shouldStatement

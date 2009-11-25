@@ -50,5 +50,9 @@ class DocumentationSpec extends Spec with ShouldMatchers {
       val file = parser.file(source);
       file.classDef.documentation should equal ("\nMulti-line\ndocumentation\n");
     }
+
+    it("shoud appear before a bindings definition") {
+      
+    }
   }
 }

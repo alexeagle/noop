@@ -15,7 +15,7 @@
  */
 package noop.grammar
 
-import model.{StringLiteralExpression, IdentifierExpression};
+import noop.model.{StringLiteralExpression, IdentifierExpression};
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
@@ -33,8 +33,13 @@ class BindingSpec extends Spec with ShouldMatchers {
               "Port -> 9876; " +
               "Max -> firstThing;" +
               "}";
-      // TODO(alex): figure out a good syntax for this
-      // parser.parseFile(source).toStringTree() should be("(BINDING Something)");
+      parser.parseFile(source).toStringTree() should be(
+        "(BINDING Something (BIND BankService BankServiceImpl) (BIND Port 9876) (BIND Max firstThing))");
+      val file = parser.buildTreeParser(parser.parseFile(source)).file;
+      file.classDef.bindings should have length(3);
+      file.classDef.bindings.first.noopType should be("BankService");
+      file.classDef.bindings.first.binding.getClass() should be(classOf[IdentifierExpression]);
+      file.classDef.bindings.first.binding.asInstanceOf[IdentifierExpression].identifier should be ("BankServiceImpl");
     }
 
     it("can appear as an anonymous binding block") {
@@ -62,27 +67,20 @@ class BindingSpec extends Spec with ShouldMatchers {
       method.block.namedBinding should be(Some("MyBinding"));
     }
 
-    it("can appear in a method declaration with a name") {
+    it("can not appear in a method declaration with a name") {
       val source = "class Foo() { Int thing() binding MyBinding {} }";
-      parser.parseFile(source).toStringTree() should be(
+      intercept[ParseException] {
+        parser.parseFile(source).toStringTree() should be(
           "(CLASS Foo (METHOD (RETURN_TYPE Int) thing (BINDING MyBinding)))");
-      val file = parser.buildTreeParser(parser.parseFile(source)).file;
-      val method = file.classDef.methods.first;
-      method.block.anonymousBindings should be('empty);
-      method.block.namedBinding should be(Some("MyBinding"));
+      }
     }
 
-    it("can appear anonymously in a method declaration") {
+    it("can not appear anonymously in a method declaration") {
       val source = "class Foo() { Int thing() binding(This -> that) {} }";
-      parser.parseFile(source).toStringTree() should be(
+      intercept[ParseException] {
+        parser.parseFile(source).toStringTree() should be(
           "(CLASS Foo (METHOD (RETURN_TYPE Int) thing (BINDING (BIND This that))))");
-      val file = parser.buildTreeParser(parser.parseFile(source)).file;
-      val method = file.classDef.methods.first;
-      method.block.anonymousBindings should have length(1);
-      val firstBinding = method.block.anonymousBindings.first;
-      firstBinding.noopType should be("This");
-      firstBinding.binding.getClass() should be(classOf[IdentifierExpression]);
-      firstBinding.binding.asInstanceOf[IdentifierExpression].identifier should be ("that");
+      }
     }
 
     it("can appear in a unittest declaration with a name") {

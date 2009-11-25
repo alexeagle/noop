@@ -82,7 +82,7 @@ file returns [SourceFile file = new SourceFile()]
   @init { $SourceFile::file = $file;
           paraphrases.push("at top-level in file"); }
   @after { paraphrases.pop(); }
-  :	 namespaceDeclaration? importDeclaration* (classDefinition | interfaceDefinition | test)
+  :	 namespaceDeclaration? importDeclaration* (classDefinition | interfaceDefinition | bindingsDefinition | test)
   ;
 
 namespaceDeclaration
@@ -221,6 +221,14 @@ type [Buffer<String> types]
 	}
 	;
 
+bindingsDefinition
+  : ^(BINDING t=TypeIdentifier b=bindings d=doc?)
+	{
+		ClassDefinition classDef = new ClassDefinition($t.text, $SourceFile::file.namespace(), $d.doc);
+		classDef.bindings().\$plus\$plus\$eq($b.bindings);
+	  $SourceFile::file.classDef_\$eq(classDef);
+	}
+	;
 
 bindingsDeclaration returns [Buffer<BindingDeclaration> bindings]
 	:	^(BINDING b=bindings)
@@ -228,17 +236,17 @@ bindingsDeclaration returns [Buffer<BindingDeclaration> bindings]
 	;
 
 bindingsReference returns [String text]
-  : ^(BINDING t=TypeIdentifier)
+  : ^(BINDING t=qualifiedType)
   { $text = $t.text; }
 	;
 	
 bindings returns [Buffer<BindingDeclaration> bindings]
   @init{ $bindings = new ArrayBuffer<BindingDeclaration>(); }
-	:	binding[bindings]
+	:	binding[bindings]*
 	;
 	
 binding[Buffer<BindingDeclaration> bindings]
-	:	^(BIND t=TypeIdentifier exp=expression)
+	:	^(BIND t=qualifiedType exp=expression)
 	{ $bindings.\$plus\$eq(new BindingDeclaration($t.text, $exp.exp)); }
 	;
 	
