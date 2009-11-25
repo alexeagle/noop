@@ -212,9 +212,10 @@ tryCatchBlock
 	-> ^(TRY block FINALLY block)
 	;
 
+//TODO(alex): The binding syntax seems a little scattered. Sometimes semicolon, sometimes comma?
 bindingDefinition
-	:	doc? 'binding' qualifiedType '{' (binding ';')* '}'
-	-> ^(BINDING qualifiedType doc? binding*)
+	:	doc? 'binding' qualifiedType '{' ((binding | typealias) ';')* '}'
+	-> ^(BINDING qualifiedType doc? binding* typealias*)
 	;
 	
 bindingDeclaration
@@ -234,6 +235,10 @@ bindings
 binding
 	:	qualifiedType '->' expression
 	-> ^(BIND qualifiedType expression)
+	;
+	
+typealias
+	: 'alias'^ qualifiedType TypeIdentifier
 	;
 
 shouldStatement

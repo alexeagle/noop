@@ -106,4 +106,12 @@ class BindingSpec extends Spec with ShouldMatchers {
       firstBinding.binding.asInstanceOf[StringLiteralExpression].value should be ("foo");
     }
   }
+
+  describe("the type alias") {
+    it("should parse") {
+      val source = "binding App { alias Int Port; }";
+      parser.parseFile(source).toStringTree() should be(
+          "(BINDING App (alias Int Port))");
+    }
+  }
 }
