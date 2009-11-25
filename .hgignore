@@ -1,8 +1,6 @@
 target
 reports
-.*\.iml
 .*\.iws
-.*\.ipr
 .DS_Store
 ^\..*
 pom.xml
