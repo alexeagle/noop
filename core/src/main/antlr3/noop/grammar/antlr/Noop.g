@@ -213,8 +213,8 @@ tryCatchBlock
 	;
 
 bindingDefinition
-	:	'binding' qualifiedType '{' (binding ';')+ '}'
-	-> ^(BINDING qualifiedType binding+)
+	:	doc? 'binding' qualifiedType '{' (binding ';')* '}'
+	-> ^(BINDING qualifiedType doc? binding*)
 	;
 	
 bindingDeclaration

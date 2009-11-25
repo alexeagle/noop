@@ -222,7 +222,7 @@ type [Buffer<String> types]
 	;
 
 bindingsDefinition
-  : ^(BINDING t=TypeIdentifier b=bindings d=doc?)
+  : ^(BINDING t=TypeIdentifier d=doc? b=bindings)
 	{
 		ClassDefinition classDef = new ClassDefinition($t.text, $SourceFile::file.namespace(), $d.doc);
 		classDef.bindings().\$plus\$plus\$eq($b.bindings);
