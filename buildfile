@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # scalac runs out of heap on my machine otherwise
-ENV['JAVA_OPTS'] ||= '-Xmx512m'
+ENV['JAVA_OPTS'] ||= '-Xmx512m -XX:MaxPermSize=256m'
 
 require 'buildr/antlr'
 require 'buildr/scala'
