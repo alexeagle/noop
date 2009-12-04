@@ -194,7 +194,7 @@ block
 	;
 
 statement
-	:	identifierDeclaration ';'!
+	: identifierDeclaration ';'!
 	| whileLoop
 	| forLoop
 	| 'return'^ expression ';'!

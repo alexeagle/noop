@@ -26,7 +26,6 @@ import scala.collection.mutable;
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-
 class InterpreterModule(srcRoots: List[String]) extends AbstractModule {
   override def configure() = {
     bind(classOf[ClassSearch]).to(classOf[SourceFileClassLoader]);

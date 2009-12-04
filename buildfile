@@ -26,7 +26,7 @@ repositories.remote << "http://www.ibiblio.org/maven2"
 
 ANTLR = ["org.antlr:antlr:jar:3.1.1"]
 ANTLR_RUNTIME = ["org.antlr:antlr-runtime:jar:3.1.1"]
-SLF4J = ["org.slf4j:slf4j-api:jar:1.5.6", "org.slf4j:slf4j-nop:jar:1.5.6"]
+SLF4J = ["org.slf4j:slf4j-api:jar:1.5.6", "org.slf4j:slf4j-simple:jar:1.5.6"]
 GUICE = ["aopalliance:aopalliance:jar:1.0",
          "com.google.inject:guice:jar:2.0", "com.google.inject.extensions:guice-assisted-inject:jar:2.0" ]
 # Force Buildr Antlr integration to use the version we specify
