@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace helloWorld;
+namespace helloworld;
 
 import noop.Application;
 import noop.Console;

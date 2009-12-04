@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace helloWorld;
+namespace helloworld;
 
-import helloWorld.HelloWorld;
+import helloworld.HelloWorld;
 import noop.Application;
 
 binding HelloWorldBinding {
