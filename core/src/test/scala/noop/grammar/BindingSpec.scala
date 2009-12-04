@@ -15,8 +15,9 @@
  */
 package noop.grammar
 
-import noop.model.{StringLiteralExpression, IdentifierExpression};
-import org.scalatest.matchers.ShouldMatchers;
+
+import org.scalatest.matchers.ShouldMatchers
+import noop.model.{BindingDefinition, StringLiteralExpression, IdentifierExpression};
 import org.scalatest.Spec;
 
 /**
@@ -36,10 +37,11 @@ class BindingSpec extends Spec with ShouldMatchers {
       parser.parseFile(source).toStringTree() should be(
         "(BINDING Something (BIND BankService BankServiceImpl) (BIND Port 9876) (BIND Max firstThing))");
       val file = parser.buildTreeParser(parser.parseFile(source)).file;
-      file.classDef.bindings should have length(3);
-      file.classDef.bindings.first.noopType should be("BankService");
-      file.classDef.bindings.first.binding.getClass() should be(classOf[IdentifierExpression]);
-      file.classDef.bindings.first.binding.asInstanceOf[IdentifierExpression].identifier should be ("BankServiceImpl");
+      val bindingDef = file.classDef.asInstanceOf[BindingDefinition];
+      bindingDef.bindings should have length(3);
+      bindingDef.bindings.first.noopType should be("BankService");
+      bindingDef.bindings.first.boundTo.getClass() should be(classOf[IdentifierExpression]);
+      bindingDef.bindings.first.boundTo.asInstanceOf[IdentifierExpression].identifier should be ("BankServiceImpl");
     }
 
     it("can appear as an anonymous binding block") {
@@ -52,8 +54,8 @@ class BindingSpec extends Spec with ShouldMatchers {
       method.block.namedBinding should be(None);
       val firstBinding = method.block.anonymousBindings.first;
       firstBinding.noopType should be("A");
-      firstBinding.binding.getClass() should be(classOf[IdentifierExpression]);
-      firstBinding.binding.asInstanceOf[IdentifierExpression].identifier should be ("B");
+      firstBinding.boundTo.getClass() should be(classOf[IdentifierExpression]);
+      firstBinding.boundTo.asInstanceOf[IdentifierExpression].identifier should be ("B");
 
     }
 
@@ -102,8 +104,8 @@ class BindingSpec extends Spec with ShouldMatchers {
       method.block.anonymousBindings should have length(1);
       val firstBinding = method.block.anonymousBindings.first;
       firstBinding.noopType should be("String");
-      firstBinding.binding.getClass() should be(classOf[StringLiteralExpression]);
-      firstBinding.binding.asInstanceOf[StringLiteralExpression].value should be ("foo");
+      firstBinding.boundTo.getClass() should be(classOf[StringLiteralExpression]);
+      firstBinding.boundTo.asInstanceOf[StringLiteralExpression].value should be ("foo");
     }
   }
 

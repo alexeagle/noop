@@ -20,8 +20,6 @@ import com.google.inject.{Inject, Guice}
 import noop.inject.{Injector, GuiceBackedInjector}
 import noop.model._
 
-
-
 /**
  * This class bootstraps the interpretation process, by setting up the ClassLoader with
  * native Scala-implemented Noop types, and starting off the first method invocation.
@@ -31,11 +29,27 @@ import noop.model._
  */
 class Interpreter @Inject() (classLoader: ClassLoader, injector: Injector, context: Context, visitor: Visitor) {
 
-  def runApplication(mainClass: ClassDefinition): Int = {
+  def runApplication(bindingDefinition: BindingDefinition): Int = {
+    // TODO(alex): Register bindings with the injector, then request an instance of noop.Application
+    bindingDefinition.bindings.find((b: BindingDeclaration) => b.noopType == "Application") match {
+      case Some(binding: BindingDeclaration) => {
+        val applicationType = binding.boundTo.asInstanceOf[IdentifierExpression].identifier;
+        val applicationClass = classLoader.findClass(bindingDefinition.resolveType(applicationType));
+        applicationClass match {
+          case concrete: ConcreteClassDefinition => runFromConcrete(concrete);
+          case _ => throw new IllegalStateException("Application must be bound to concrete class");
+        }
+      }
+      case None => throw new IllegalStateException("No binding for Application was found");
+    }
+  }
+
+  def runFromConcrete(mainClass: ConcreteClassDefinition): Int = {
     val mainInstance = injector.getInstance(mainClass);
 
     context.addRootFrame(mainInstance);
     new MethodInvocationExpression(new EvaluatedExpression(mainInstance), "main", List()).accept(visitor);
+    // TODO(alex): return the value from the main
     return 0;
   }
 }

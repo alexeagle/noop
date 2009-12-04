@@ -95,6 +95,6 @@ class LoggingAstVisitor extends Visitor {
   }
 
   def visit(bindingDeclaration: BindingDeclaration) = {
-    logger.info("binding {} to {}", bindingDeclaration.noopType, bindingDeclaration.binding);
+    logger.info("binding {} to {}", bindingDeclaration.noopType, bindingDeclaration.boundTo);
   }
 }

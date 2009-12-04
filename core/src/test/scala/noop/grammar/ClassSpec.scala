@@ -15,10 +15,11 @@
  */
 package noop.grammar;
 
-import org.scalatest.matchers.ShouldMatchers;
+import org.scalatest.matchers.ShouldMatchers
+import noop.model.{ConcreteClassDefinition, Modifier};
 import org.scalatest.Spec;
 
-import noop.model.Modifier;
+
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -94,9 +95,10 @@ class ClassSpec extends Spec with ShouldMatchers {
           "(CLASS Foo (IMPL A) (IMPL a b C) (IMPL d E))");
       val file = parser.file(source);
       file.classDef.name should be ("Foo");
-      file.classDef.interfaces(0) should be("A");
-      file.classDef.interfaces(1) should be ("a.b.C");
-      file.classDef.interfaces(2) should be ("d.E");
+      val concreteDef = file.classDef.asInstanceOf[ConcreteClassDefinition];
+      concreteDef.interfaces(0) should be("A");
+      concreteDef.interfaces(1) should be ("a.b.C");
+      concreteDef.interfaces(2) should be ("d.E");
     }
 
     it("should allow the native modifier on a class") {
