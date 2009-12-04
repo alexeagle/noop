@@ -16,28 +16,14 @@
 package noop.model;
 
 /**
- * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class OperatorExpression(val left: Expression, val operator: String, val right: Expression)
-    extends Expression {
+class ConditionalOrExpression(val lhs: Expression, val rhs: Expression) extends Expression {
 
   def accept(visitor: Visitor) = {
-    val methodName = operator match {
-      case "+" => "plus";
-      case "-" => "minus";
-      case "*" => "multiply";
-      case "/" => "divide";
-      case "%" => "modulo";
-      case "==" => "equals";
-      case "!=" => "doesNotEqual";
-      case ">" => "greaterThan";
-      case "<" => "lesserThan";
-      case ">=" => "greaterOrEqualThan";
-      case "<=" => "lesserOrEqualThan";
-    }
-
-    new MethodInvocationExpression(left, methodName, List(right)).accept(visitor);
+    lhs.accept(visitor);
+    visitor.visit(this);
+    rhs.accept(visitor);
     visitor.visit(this);
   }
 }

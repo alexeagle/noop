@@ -22,14 +22,17 @@ import com.google.inject.name.Named;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.Inject;
 
+import scala.collection.immutable;
+
+import model.ClassDefinition;
+
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class NoopInteger @Inject() (@Named("Int") classDef: ClassDefinition,
-                             integerFactory: IntegerFactory, stringFactory: StringFactory,
-                             @Assisted val value: Int)
-        extends NoopObject(classDef) {
+    integerFactory: IntegerFactory, stringFactory: StringFactory, booleanFactory: BooleanFactory,
+    @Assisted val value: Int) extends NoopObject(classDef) {
 
   def other(args: Seq[NoopObject]): Int = {
     args(0).asInstanceOf[NoopInteger].value;
@@ -41,6 +44,12 @@ class NoopInteger @Inject() (@Named("Int") classDef: ClassDefinition,
     "multiply" -> ((args: Seq[NoopObject]) => integerFactory.create(value * other(args))),
     "divide" -> ((args: Seq[NoopObject]) => integerFactory.create(value / other(args))),
     "modulo" -> ((args: Seq[NoopObject]) => integerFactory.create(value % other(args))),
+    "equals" -> ((args: Seq[NoopObject]) => booleanFactory.create(value == other(args))),
+    "doesNotEqual" -> ((args: Seq[NoopObject]) => booleanFactory.create(value != other(args))),
+    "greaterThan" -> ((args: Seq[NoopObject]) => booleanFactory.create(value > other(args))),
+    "lesserThan" -> ((args: Seq[NoopObject]) => booleanFactory.create(value < other(args))),
+    "greaterOrEqualThan" -> ((args: Seq[NoopObject]) => booleanFactory.create(value >= other(args))),
+    "lesserOrEqualThan" -> ((args: Seq[NoopObject]) => booleanFactory.create(value <= other(args))),
     "toString" -> ((args: Seq[NoopObject]) => stringFactory.create(value.toString))
   );
 

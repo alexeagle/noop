@@ -54,5 +54,9 @@ trait Visitor {
 
   def visit(whileLoop: WhileLoop);
 
-  def visit(bindingDeclaration: BindingDeclaration);  
+  def visit(bindingDeclaration: BindingDeclaration);
+
+  def visit(conditionalAndExpression: ConditionalAndExpression);
+
+  def visit(conditionalOrExpression: ConditionalOrExpression);
 }

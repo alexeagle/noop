@@ -317,6 +317,8 @@ expression returns [Expression exp]
   { $exp = $o.exp; }
   | ass=assignment
   { $exp = $ass.exp; }
+  | c=conditionalExpression
+  { $exp = $c.exp; }
   | right=(VariableIdentifier|TypeIdentifier) a=arguments?
   { Expression left = new IdentifierExpression("this");
     if ($a.args != null) {
@@ -326,9 +328,20 @@ expression returns [Expression exp]
 	  }
   }
   ;
+
+conditionalExpression returns [Expression exp]
+  : ^(cond=('||' | '&&') left=expression right=expression)
+  {
+    if ($cond.text.equals("||")) {
+      $exp = new ConditionalOrExpression($left.exp, $right.exp);
+    } else if ($cond.text.equals("&&")) {
+      $exp = new ConditionalAndExpression($left.exp, $right.exp);
+    }
+  }
+  ;
   
 operatorExpression returns [Expression exp]
-	: ^(op=('+'|'-'|'*'|'/'|'%') left=expression right=expression)
+	: ^(op=('+' | '-' | '*' | '/' | '%' | '==' | '!=' | '>' | '<' | '>=' | '<=') left=expression right=expression)
 	{ $exp = new OperatorExpression($left.exp, $op.text, $right.exp); }
 	;
 

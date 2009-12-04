@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.interpreter
+package noop.interpreter;
 
 import model.{Method, Modifier, ClassDefinition};
 import com.google.inject.{Provides, AbstractModule, Singleton};
+
 /**
  * This module sets up a classloader which doesn't rely on reading real .noop files to get the
  * standard library classes.

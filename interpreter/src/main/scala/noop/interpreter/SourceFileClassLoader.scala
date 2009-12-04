@@ -15,15 +15,12 @@
  */
 package noop.interpreter;
 
-
-
 import collection.mutable.Map
 import java.io.{InputStream, FileInputStream, File}
 import model.{Parameter, ClassDefinition};
 import org.slf4j.LoggerFactory;
 
 import grammar.{ParseException, Parser};
-
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
