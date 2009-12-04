@@ -1,0 +1,14 @@
+target
+reports
+.*\.iws
+.DS_Store
+^\..*
+pom.xml
+.pom.yml
+bin
+build
+.project
+.classpath
+.settings
+
+.scala_dependencies
