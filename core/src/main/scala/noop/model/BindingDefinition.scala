@@ -13,18 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.model
+
+import scala.collection.mutable.{ArrayBuffer, Buffer};
 
 /**
- * AST model element which represents a declaration of a binding from a type to an expression.
- * @author alexeagle@google.com (Alex Eagle)
+ * AST element representing a top-level bindings definition
+ * @author Alex Eagle (alexeagle@google.com)
  */
-class BindingDeclaration(val noopType: String, val boundTo: Expression) extends Expression {
+class BindingDefinition(name: String, namespace: String, documentation: String)
+    extends ClassDefinition(name, namespace, documentation) {
+  val bindings: Buffer[BindingDeclaration] = new ArrayBuffer[BindingDeclaration];
 
-  def accept(visitor: Visitor) = {
-    boundTo.accept(visitor);
-    visitor.visit(this);
-  }
-
-  override def toString() = noopType + " -> " + boundTo;
 }

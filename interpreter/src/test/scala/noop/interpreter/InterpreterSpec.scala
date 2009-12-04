@@ -15,13 +15,13 @@
  */
 package noop.interpreter;
 
-import inject.{GuiceBackedInjector, Injector};
-import model.{Visitor, IntLiteralExpression, OperatorExpression};
-import types.{NoopTypesModule, NoopObject, IntegerFactory, NoopInteger};
-import grammar.Parser;
 
-import java.io.{ByteArrayOutputStream, File};
+import noop.inject.Injector
+import noop.types.{NoopObject, NoopTypesModule, NoopInteger}
+import noop.model.{ClassDefinition, ConcreteClassDefinition, Visitor, IntLiteralExpression, OperatorExpression}
 import collection.mutable.Stack;
+import noop.grammar.Parser;
+
 import com.google.inject.Guice;
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
@@ -31,17 +31,16 @@ import org.scalatest.Spec;
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class InterpreterSpec extends Spec with ShouldMatchers {
+  describe("integration tests for the interpreter") {
 
-  def createFixture = {
-    val injector = Guice.createInjector(new InterpreterModule(List()), new NoopTypesModule());
-    val context: Context = injector.getInstance(classOf[Context]);
-    context.addRootFrame(null);
-    
-    (context, injector.getInstance(classOf[Visitor]));
+    def createFixture = {
+      val injector = Guice.createInjector(new InterpreterModule(List()), new NoopTypesModule());
+      val context: Context = injector.getInstance(classOf[Context]);
+      context.addRootFrame(null);
 
-  }
+      (context, injector.getInstance(classOf[Visitor]));
 
-  describe("the interpreter") {
+    }
 
     it("should evaluate simple arithmetic") {
       val (context, visitor) = createFixture;

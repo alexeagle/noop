@@ -13,18 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.model
+
+import scala.collection.mutable.{ArrayBuffer, Buffer};
 
 /**
- * AST model element which represents a declaration of a binding from a type to an expression.
- * @author alexeagle@google.com (Alex Eagle)
+ * An AST element representing a concrete class. To the user, this is a "class", but to us,
+ * a class may be an interface or a binding as well. This is similar to Java's confusion
+ * but it's familiar.
+ *
+ * @author Alex Eagle (alexeagle@google.com)
  */
-class BindingDeclaration(val noopType: String, val boundTo: Expression) extends Expression {
 
-  def accept(visitor: Visitor) = {
-    boundTo.accept(visitor);
-    visitor.visit(this);
-  }
-
-  override def toString() = noopType + " -> " + boundTo;
+class ConcreteClassDefinition(name: String, namespace: String, documentation: String)
+    extends ClassDefinition(name, namespace, documentation) {
+  val interfaces: Buffer[String] = new ArrayBuffer[String];
+  val parameters: Buffer[Parameter] = new ArrayBuffer[Parameter];
 }

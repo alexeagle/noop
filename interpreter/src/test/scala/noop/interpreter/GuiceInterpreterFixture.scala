@@ -19,10 +19,10 @@ import com.google.inject.util.Modules
 import java.io.File;
 import com.google.inject.{Injector, Guice};
 import types.{StringFactory, NoopTypesModule};
+
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-
 trait GuiceInterpreterFixture {
   def fixture: Injector = {
     val injector = Guice.createInjector(
