@@ -53,8 +53,9 @@ class ClassSpec extends Spec with ShouldMatchers {
 
       val file = parser.file(source);
       file.classDef.name should be ("Bar");
-      file.classDef.parameters(0).name should be ("a");
-      file.classDef.parameters(0).noopType should be ("String");
+      val concreteClass = file.classDef.asInstanceOf[ConcreteClassDefinition];
+      concreteClass.parameters(0).name should be ("a");
+      concreteClass.parameters(0).noopType should be ("String");
     }
 
     it("should parse a class with a fully-qualified type in a parameter") {
@@ -64,7 +65,8 @@ class ClassSpec extends Spec with ShouldMatchers {
       commonTree.toStringTree() should equal ("(CLASS Bar (PARAMS (PARAM noop String a)))");
 
       val file = parser.file(source);
-      file.classDef.parameters(0).noopType should be ("noop.String");
+      val concreteClass = file.classDef.asInstanceOf[ConcreteClassDefinition];
+      concreteClass.parameters(0).noopType should be ("noop.String");
     }
 
     it("should parse a class with multiple parameters") {

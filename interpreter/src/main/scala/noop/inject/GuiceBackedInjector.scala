@@ -20,11 +20,12 @@ package noop.inject
  * @author alexeagle@google.com (Alex Eagle)
  */
 
-import noop.model.ClassDefinition;
+
+import model.{ConcreteClassDefinition, ClassDefinition}
 import noop.interpreter.ClassLoader;
 import noop.types.{NoopConsole, NoopObject};
 
-import com.google.inject.{AbstractModule, Key};
+import com.google.inject.AbstractModule;
 import scala.collection.mutable;
 
 class GuiceBackedInjector(classLoader: ClassLoader, injector: com.google.inject.Injector) extends Injector {
@@ -37,9 +38,12 @@ class GuiceBackedInjector(classLoader: ClassLoader, injector: com.google.inject.
       case _ => new NoopObject(classDef);
     }
 
-    for (param <- classDef.parameters) {
-      val paramClassDef = classLoader.findClass(classDef.resolveType(param.noopType));
-      obj.propertyMap += Pair(param.name, getInstance(paramClassDef));
+    if (classDef.isInstanceOf[ConcreteClassDefinition]) {
+      val concreteClass = classDef.asInstanceOf[ConcreteClassDefinition];
+      for (param <- concreteClass.parameters) {
+        val paramClassDef = classLoader.findClass(classDef.resolveType(param.noopType));
+        obj.propertyMap += Pair(param.name, getInstance(paramClassDef));
+      }
     }
     return obj;
   }

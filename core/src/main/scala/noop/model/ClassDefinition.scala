@@ -27,8 +27,6 @@ import scala.collection.mutable.{ArrayBuffer, Buffer};
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class ClassDefinition (val name: String, var namespace: String, val documentation: String) {
-  // TODO(alex): parameters belongs on ConcreteClassDefinition
-  val parameters: Buffer[Parameter] = new ArrayBuffer[Parameter];
   val methods: Buffer[Method] = new ArrayBuffer[Method];
   val unittests: Buffer[Method] = new ArrayBuffer[Method];
   val modifiers: Buffer[Modifier.Value] = new ArrayBuffer[Modifier.Value];

@@ -28,5 +28,5 @@ import scala.collection.mutable.{ArrayBuffer, Buffer};
 class ConcreteClassDefinition(name: String, namespace: String, documentation: String)
     extends ClassDefinition(name, namespace, documentation) {
   val interfaces: Buffer[String] = new ArrayBuffer[String];
-
+  val parameters: Buffer[Parameter] = new ArrayBuffer[Parameter];
 }
