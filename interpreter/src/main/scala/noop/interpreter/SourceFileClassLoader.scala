@@ -17,10 +17,10 @@ package noop.interpreter;
 
 import collection.mutable.Map
 import java.io.{InputStream, FileInputStream, File}
-import model.{Parameter, ClassDefinition};
 import org.slf4j.LoggerFactory;
 
-import grammar.{ParseException, Parser};
+import noop.model.{Parameter, ClassDefinition};
+import noop.grammar.{ParseException, Parser};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -69,13 +69,6 @@ class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends Clas
     if (classDef.namespace == "") {
       val parts = className.split("\\.");
       classDef.namespace = parts.take(parts.size - 1).mkString(".");
-    }
-    for (val param <- classDef.parameters) {
-      for (val `import` <- classDef.imports) {
-        if (`import`.split("\\.").last == param.noopType) {
-          param.noopType = `import`;
-        }
-      }
     }
     return classDef;
   }
