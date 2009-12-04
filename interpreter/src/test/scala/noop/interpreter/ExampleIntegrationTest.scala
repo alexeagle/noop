@@ -17,6 +17,7 @@ package noop.interpreter;
 
 import com.google.inject.Guice
 import java.io.File
+import model.BindingDefinition
 import noop.types.NoopTypesModule;
 
 import org.scalatest.matchers.ShouldMatchers;
@@ -46,10 +47,10 @@ class ExampleIntegrationTest extends Spec with ShouldMatchers with ConsoleTestFi
   it("should run the hello world program") {
     withRedirectedStandardOut { (output) => {
       val classLoader = createFixture;
-      val mainClass = classLoader.findClass("HelloWorld");
+      val mainClass = classLoader.findClass("HelloWorldBinding");
       mainClass should not be(null);
 
-      createInjector().getInstance(classOf[Interpreter]).runApplication(mainClass);
+      createInjector().getInstance(classOf[Interpreter]).runApplication(mainClass.asInstanceOf[BindingDefinition]);
       output.toString() should include("Hello World!");
     }}
   }
@@ -57,8 +58,8 @@ class ExampleIntegrationTest extends Spec with ShouldMatchers with ConsoleTestFi
   it("should run while loop") {
     withRedirectedStandardOut { (output) => {
       val classLoader = createFixture;
-      val mainClass = classLoader.findClass("WhileLoop");
-      createInjector().getInstance(classOf[Interpreter]).runApplication(mainClass);
+      val mainClass = classLoader.findClass("WhileLoopBinding");
+      createInjector().getInstance(classOf[Interpreter]).runApplication(mainClass.asInstanceOf[BindingDefinition]);
       output.toString() should equal("Hello World!\n");
     }}
   }
@@ -66,8 +67,8 @@ class ExampleIntegrationTest extends Spec with ShouldMatchers with ConsoleTestFi
   it("should run the arithmetic program") {
     withRedirectedStandardOut { (output) => {
       val classLoader = createFixture;
-      val mainClass = classLoader.findClass("Arithmetic");
-      createInjector().getInstance(classOf[Interpreter]).runApplication(mainClass);
+      val mainClass = classLoader.findClass("ArithmeticBinding");
+      createInjector().getInstance(classOf[Interpreter]).runApplication(mainClass.asInstanceOf[BindingDefinition]);
       output.toString() should include("3");
     }}
   }

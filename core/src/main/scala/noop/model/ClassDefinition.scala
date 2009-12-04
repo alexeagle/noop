@@ -15,9 +15,10 @@
  */
 package noop.model;
 
-import noop.types.NoopObject;
+import noop.types.NoopObject
+import org.slf4j.LoggerFactory;
 
-import scala.collection.mutable.{ArrayBuffer, Buffer, Map};
+import scala.collection.mutable.{ArrayBuffer, Buffer};
 
 /**
  * namespace is mutable because we may infer the namespace from the relative path of the file
@@ -26,14 +27,19 @@ import scala.collection.mutable.{ArrayBuffer, Buffer, Map};
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class ClassDefinition (val name: String, var namespace: String, val documentation: String) {
-
+  // TODO(alex): parameters belongs on ConcreteClassDefinition
   val parameters: Buffer[Parameter] = new ArrayBuffer[Parameter];
-  val interfaces: Buffer[String] = new ArrayBuffer[String];
   val methods: Buffer[Method] = new ArrayBuffer[Method];
   val unittests: Buffer[Method] = new ArrayBuffer[Method];
   val modifiers: Buffer[Modifier.Value] = new ArrayBuffer[Modifier.Value];
   val imports: Buffer[String] = new ArrayBuffer[String];
-  val bindings: Buffer[BindingDeclaration] = new ArrayBuffer[BindingDeclaration];
+
+  def resolveType(noopType: String): String = {
+    imports.find((imp: String) => imp.split("\\.").last == noopType) match {
+      case Some(qualifiedType) => return qualifiedType;
+      case None => throw new IllegalAccessError();
+    }
+  }
 
   def findMethod(methodName: String): Method = {
     methods.find(method => method.name == methodName) match {

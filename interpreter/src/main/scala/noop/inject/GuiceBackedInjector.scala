@@ -38,7 +38,7 @@ class GuiceBackedInjector(classLoader: ClassLoader, injector: com.google.inject.
     }
 
     for (param <- classDef.parameters) {
-      val paramClassDef = classLoader.findClass(param.noopType);
+      val paramClassDef = classLoader.findClass(classDef.resolveType(param.noopType));
       obj.propertyMap += Pair(param.name, getInstance(paramClassDef));
     }
     return obj;
