@@ -120,7 +120,7 @@ classDefinition
 	          classBlock[methodCollector, unittestCollector]? 
 	          d=doc?)
 	{
-	ClassDefinition classDef = new ClassDefinition($t.text, $SourceFile::file.namespace(), $d.doc);
+	ConcreteClassDefinition classDef = new ConcreteClassDefinition($t.text, $SourceFile::file.namespace(), $d.doc);
 	classDef.imports().\$plus\$plus\$eq($SourceFile::file.imports());
 	classDef.methods().\$plus\$plus\$eq(methodCollector);
 	classDef.unittests().\$plus\$plus\$eq(unittestCollector);
@@ -138,7 +138,7 @@ classDefinition
 interfaceDefinition
 	: ^(INTERFACE m=modifiers? t=TypeIdentifier d=doc?)
 	{
-	ClassDefinition classDef = new ClassDefinition($t.text, $SourceFile::file.namespace(), $d.doc);
+	InterfaceDefinition classDef = new InterfaceDefinition($t.text, $SourceFile::file.namespace(), $d.doc);
   if ($m.modifiers != null) {
 	  classDef.modifiers().\$plus\$plus\$eq($m.modifiers);
 	}
@@ -224,8 +224,9 @@ type [Buffer<String> types]
 bindingsDefinition
   : ^(BINDING t=TypeIdentifier d=doc? b=bindings)
 	{
-		ClassDefinition classDef = new ClassDefinition($t.text, $SourceFile::file.namespace(), $d.doc);
-		classDef.bindings().\$plus\$plus\$eq($b.bindings);
+	  BindingDefinition classDef = new BindingDefinition($t.text, $SourceFile::file.namespace(), $d.doc);
+	  classDef.bindings().\$plus\$plus\$eq($b.bindings);
+	  classDef.imports().\$plus\$plus\$eq($SourceFile::file.imports());
 	  $SourceFile::file.classDef_\$eq(classDef);
 	}
 	;
@@ -320,8 +321,8 @@ expression returns [Expression exp]
   | c=conditionalExpression
   { $exp = $c.exp; }
   | right=(VariableIdentifier|TypeIdentifier) a=arguments?
-  { Expression left = new IdentifierExpression("this");
-    if ($a.args != null) {
+  { if ($a.args != null) {
+        Expression left = new IdentifierExpression("this");
 	    $exp = new MethodInvocationExpression(left, $right.text, $a.args);
 	  } else {
 	    $exp = new IdentifierExpression($right.text);
@@ -366,7 +367,7 @@ argument[Buffer<Expression> args]
   {
     $args.\$plus\$eq($exp.exp);
   }
-	;
+  ;
 
 literal returns [Expression exp]
 	: i=INT

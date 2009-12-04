@@ -15,7 +15,8 @@
  */
 package noop.interpreter;
 
-import com.google.inject.Guice;
+import com.google.inject.Guice
+import model.BindingDefinition;
 import noop.types.NoopTypesModule;
 
 /**
@@ -42,9 +43,13 @@ object InterpreterMain {
       val sourcePaths = args.toList.tail + System.getProperty("user.dir");
       val injector = Guice.createInjector(new InterpreterModule(sourcePaths), new NoopTypesModule());
       val mainClass = injector.getInstance(classOf[ClassLoader]).findClass(args(0));
-      val returnVal = injector.getInstance(classOf[Interpreter]).runApplication(mainClass);
-
-      exit(returnVal);
+      mainClass match {
+        case binding: BindingDefinition => {
+          val returnVal = injector.getInstance(classOf[Interpreter]).runApplication(binding);
+          exit(returnVal);
+        }
+        case _ => throw new IllegalArgumentException("Can only run a binding");
+      }
     }
   }
 
