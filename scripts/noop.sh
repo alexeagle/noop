@@ -25,6 +25,9 @@ CLASSPATH=''
 for lib in $(ls ${NOOP_HOME}/lib); do
     CLASSPATH="${CLASSPATH}:${NOOP_HOME}/lib/$lib"
 done
-CMD="java -cp ${CLASSPATH} noop.interpreter.InterpreterMain"
+JAVA='java'
+[ -d "${JAVA_HOME}" ] && JAVA="${JAVA_HOME}/bin/java"
+
+CMD="${JAVA} -cp ${CLASSPATH} noop.interpreter.InterpreterMain"
 echo "DEBUG: running noop with command line '${CMD} $@'"
 $CMD $@
