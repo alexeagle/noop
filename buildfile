@@ -62,9 +62,9 @@ define 'noop', :version=>VERSION_NUMBER do
     package(:zip).
       include(compile.dependencies, :path=>'lib').
       include(_("target/#{id}-#{version}.jar"), :path=>'lib').
+      # TODO(alex): need to chmod 755 if I can figure out how
       include(project("noop")._("scripts/noop.sh"), :as=>"noop", :path=>'bin').
       include(project("noop")._("COPYING"))
     package :sources
   end
-
 end
