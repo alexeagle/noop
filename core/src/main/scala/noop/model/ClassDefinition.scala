@@ -35,7 +35,7 @@ class ClassDefinition (val name: String, var namespace: String, val documentatio
   def resolveType(noopType: String): String = {
     imports.find((imp: String) => imp.split("\\.").last == noopType) match {
       case Some(qualifiedType) => return qualifiedType;
-      case None => throw new IllegalAccessError();
+      case None => return noopType;
     }
   }
 

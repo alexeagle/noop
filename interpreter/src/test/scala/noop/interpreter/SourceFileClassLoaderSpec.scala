@@ -22,8 +22,8 @@ import collection.mutable.ArrayBuffer;
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import grammar.{ParseException, Parser};
-import model.ClassDefinition;
+import noop.grammar.{ParseException, Parser};
+import noop.model.ClassDefinition;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -55,7 +55,7 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       val classDef = classLoader.findClass("MyClass")
 
       classDef.name should equal("MyClass")
-	}
+    }
 
     it("should load a class in a namespace") {
       new File(tmpDir, "noop").mkdir();
