@@ -13,13 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace commandLine;
+package noop.interpreter
 
-import noop.system.RawCommandLineArguments;
-import noop.Console;
+import java.io.{FileWriter, File}
 
-class CommandLineApp(RawCommandLineArguments args, Console console) implements Application {
-  Int main() {
-    console.println(args);
+/**
+ * @author alexeagle@google.com (Alex Eagle)
+ */
+trait TempFileFixture {
+  def withTempFile(filename: String, content: String)(testFunction: => Any) {
+    val tempFile = new File(filename);
+    try {
+      val writer = new FileWriter(tempFile);
+      writer.write(content);
+      writer.close();
+      testFunction;
+    } finally {
+      tempFile.delete;
+    }
   }
 }
