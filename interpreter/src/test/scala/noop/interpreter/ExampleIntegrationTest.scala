@@ -18,14 +18,14 @@ package noop.interpreter;
 import com.google.inject.Guice
 import java.net.{URL, URLClassLoader}
 
-import java.io.File;
+import java.io.File
+import noop.model.persistence.ClassRepository;
 import noop.model.BindingDefinition;
 import noop.types.NoopTypesModule;
 
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import noop.grammar.Parser;
 
 /**
  * This test runs all the example noop programs found under /examples.
@@ -36,7 +36,7 @@ class ExampleIntegrationTest extends Spec with ShouldMatchers with ConsoleTestFi
 
   def createFixture = {
     val injector = Guice.createInjector(new InterpreterModule(List()), new NoopTypesModule());
-    val classLoader = new SourceFileClassLoader(new Parser(), List());
+    val classLoader = new SourceFileClassLoader(new ClassRepository(), List());
     (classLoader, injector.getInstance(classOf[Interpreter]));
   }
 

@@ -18,9 +18,8 @@ package noop.interpreter;
 
 import noop.inject.Injector
 import noop.types.{NoopObject, NoopTypesModule, NoopInteger}
-import noop.model.{ClassDefinition, ConcreteClassDefinition, Visitor, IntLiteralExpression, OperatorExpression}
-import collection.mutable.Stack;
-import noop.grammar.Parser;
+import collection.mutable.Stack
+import noop.model._;
 
 import com.google.inject.Guice;
 import org.scalatest.matchers.ShouldMatchers;
@@ -56,8 +55,8 @@ class InterpreterSpec extends Spec with ShouldMatchers {
     it("should evaluate more complex arithmetic") {
       val source = "{ (1 + 2) * 3 - 10 / 2 % 4; }";
       val (context, visitor) = createFixture;
-      val parser = new Parser();
-      val block = parser.buildTreeParser(parser.parseBlock(source)).block();
+
+      val block: Block = null;
 
       block.statements(0).accept(visitor);
       val result = context.stack.top.lastEvaluated(0);
@@ -69,8 +68,8 @@ class InterpreterSpec extends Spec with ShouldMatchers {
     it("should assign variables") {
       val source = "{ Int a; a = 1; }";
       val (context, visitor) = createFixture;
-      val parser = new Parser();
-      val block = parser.buildTreeParser(parser.parseBlock(source)).block();
+      
+      val block: Block = null;
 
       context.stack.top.blockScopes.inScope("interpreter test") {
         block.accept(visitor);

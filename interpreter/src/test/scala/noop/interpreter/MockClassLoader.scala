@@ -19,7 +19,6 @@ import java.io.File;
 
 import collection.mutable;
 
-import grammar.Parser
 import model.ClassDefinition;
 
 /**

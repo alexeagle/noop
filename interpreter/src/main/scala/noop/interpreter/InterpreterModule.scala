@@ -15,9 +15,10 @@
  */
 package noop.interpreter;
 
-import noop.model.{Visitor, CompositeVisitor, LoggingAstVisitor};
+import noop.model.{Visitor, CompositeVisitor, LoggingAstVisitor}
+import noop.model.persistence.{ClassRepository, YamlAstSerializer}
+
 import noop.inject.{Injector, GuiceBackedInjector};
-import noop.grammar.Parser;
 
 import com.google.inject.{Guice, Provides, AbstractModule, Singleton};
 import java.io.File;
@@ -32,8 +33,8 @@ class InterpreterModule(srcRoots: List[String]) extends AbstractModule {
     bind(classOf[ClassLoader]).to(classOf[SourceFileClassLoader]);
   }
 
-  @Provides @Singleton def getClassLoader(parser: Parser) = {
-    new SourceFileClassLoader(parser, srcRoots);
+  @Provides @Singleton def getClassLoader(classRepo: ClassRepository) = {
+    new SourceFileClassLoader(classRepo, srcRoots);
   }
 
   @Provides def getInjector(classLoader: ClassLoader): Injector =

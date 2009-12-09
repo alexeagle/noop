@@ -15,14 +15,14 @@
  */
 package noop.interpreter;
 
-import java.io.{PrintWriter, BufferedWriter, FileWriter, File};
+import java.io.{PrintWriter, BufferedWriter, FileWriter, File}
+import noop.model.persistence.ClassRepository;
 
 import collection.mutable.ArrayBuffer;
 
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import noop.grammar.{ParseException, Parser};
 import noop.model.ClassDefinition;
 
 /**
@@ -37,7 +37,7 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
 
     it("should throw an exception if given a non-existent directory") {
       val srcPaths = List("doesNotExist");
-      val classLoader = new SourceFileClassLoader(new Parser(), srcPaths);
+      val classLoader = new SourceFileClassLoader(new ClassRepository(), srcPaths);
       intercept[RuntimeException] {
         classLoader.findClass("Foo");
       }
@@ -51,7 +51,7 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       printWriter.close();
 
       val srcPaths = List(tmpDir.getAbsolutePath());
-      val classLoader = new SourceFileClassLoader(new Parser(), srcPaths);
+      val classLoader = new SourceFileClassLoader(new ClassRepository(), srcPaths);
       val classDef = classLoader.findClass("MyClass")
 
       classDef.name should equal("MyClass")
@@ -66,7 +66,7 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       printWriter.close();
 
       val srcPaths = List(tmpDir.getAbsolutePath());
-      val classLoader = new SourceFileClassLoader(new Parser(), srcPaths);
+      val classLoader = new SourceFileClassLoader(new ClassRepository(), srcPaths);
       val classDef = classLoader.findClass("noop.Foo")
 
       classDef.name should equal("Foo")
@@ -83,7 +83,7 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       printWriter.close();
 
       val srcPaths = List(tmpDir.getAbsolutePath());
-      val classLoader = new SourceFileClassLoader(new Parser(), srcPaths);
+      val classLoader = new SourceFileClassLoader(new ClassRepository(), srcPaths);
       val classDef = classLoader.findClass("noop.package.Foo")
 
       classDef.name should equal("Foo")
@@ -92,7 +92,7 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
 
     it("should throw ClassNotFound if the class doesn't exist") {
       val srcPaths = List(tmpDir.getAbsolutePath());
-      val classLoader = new SourceFileClassLoader(new Parser(), srcPaths);
+      val classLoader = new SourceFileClassLoader(new ClassRepository(), srcPaths);
       intercept[ClassNotFoundException] {
         classLoader.findClass("Foo");
       }
@@ -113,7 +113,7 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       printWriter.println("class Foo() {}");
       printWriter.close();
 
-      val classLoader = new SourceFileClassLoader(new Parser(), List(srcPath.getAbsolutePath));
+      val classLoader = new SourceFileClassLoader(new ClassRepository(), List(srcPath.getAbsolutePath));
 
       val classesFound = new ArrayBuffer[ClassDefinition];
       classLoader.eachClass((c:ClassDefinition) => classesFound += c);
@@ -123,7 +123,7 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
     }
 
     it("should locate standard libraries in the classpath") {
-      val classLoader = new SourceFileClassLoader(new Parser(), List());
+      val classLoader = new SourceFileClassLoader(new ClassRepository(), List());
       val classDef = classLoader.findClass("noop.Object");
 
       classDef.name should equal("Object");
@@ -139,7 +139,7 @@ class SourceFileClassLoaderSpec extends Spec with ShouldMatchers {
       printWriter.close();
 
       val srcPaths = List(tmpDir.getAbsolutePath());
-      val classLoader = new SourceFileClassLoader(new Parser(), srcPaths);
+      val classLoader = new SourceFileClassLoader(new ClassRepository(), srcPaths);
       val classDef = classLoader.findClass("noop.Foo")
 
       classDef.name should equal("Foo")

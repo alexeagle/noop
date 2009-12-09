@@ -17,7 +17,6 @@ package noop.types;
 
 import noop.inject.{GuiceBackedInjector, Injector}
 import noop.interpreter._
-import noop.grammar.Parser;
 import noop.model.Modifier;
 
 import collection.mutable.Stack
