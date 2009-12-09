@@ -25,8 +25,6 @@ import collection.mutable.Stack;
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import grammar.Parser;
-
 import model.Modifier;
 
 /**

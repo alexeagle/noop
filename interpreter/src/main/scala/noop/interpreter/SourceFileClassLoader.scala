@@ -17,16 +17,17 @@ package noop.interpreter;
 
 import collection.mutable.Map
 import java.io.{InputStream, FileInputStream, File}
-import org.slf4j.LoggerFactory;
+import org.slf4j.LoggerFactory
+import noop.model.persistence.{ClassRepository, YamlAstSerializer}
+
 
 import noop.model.{Parameter, ClassDefinition};
-import noop.grammar.{ParseException, Parser};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends ClassLoader with
+class SourceFileClassLoader(classRepo: ClassRepository, srcPaths: List[String]) extends ClassLoader with
     ClassSearch {
   val logger = LoggerFactory.getLogger(classOf[SourceFileClassLoader]);
   val cache = Map.empty[String, ClassDefinition];
@@ -35,12 +36,12 @@ class SourceFileClassLoader(parser: Parser, srcPaths: List[String]) extends Clas
     try {
       getClassDefinition(new FileInputStream(file));
     } catch {
-      case ex: ParseException =>
-        throw new ParseException("Failed to parse " + file.getAbsolutePath());
+      case ex: Exception =>
+        throw new Exception("Failed to parse " + file.getAbsolutePath(), ex);
     }
   }
 
-  def getClassDefinition(stream: InputStream): ClassDefinition = parser.file(stream).classDef;
+  def getClassDefinition(stream: InputStream): ClassDefinition = classRepo.getClassDefinition(stream);
 
   def findClass(className: String): ClassDefinition = {
     if (cache.contains(className)) {

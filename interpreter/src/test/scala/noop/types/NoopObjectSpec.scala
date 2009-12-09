@@ -15,12 +15,12 @@
  */
 package noop.types;
 
-import java.io.File;
+import java.io.File
+import noop.model.persistence.ClassRepository;
 
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import noop.grammar.Parser;
 import noop.interpreter.SourceFileClassLoader;
 
 /**
@@ -29,7 +29,7 @@ import noop.interpreter.SourceFileClassLoader;
 class NoopObjectSpec extends Spec with ShouldMatchers {
 
   def createFixture = {
-    new SourceFileClassLoader(new Parser(), List())
+    new SourceFileClassLoader(new ClassRepository(), List())
   }
 
   describe("a Noop Object") {
