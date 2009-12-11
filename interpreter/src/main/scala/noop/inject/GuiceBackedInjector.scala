@@ -21,8 +21,10 @@ package noop.inject
  */
 
 
-import model.{ConcreteClassDefinition, ClassDefinition}
-import noop.interpreter.ClassLoader;
+import noop.model.{ConcreteClassDefinition, ClassDefinition}
+import noop.interpreter.ClassLoader
+import noop.model.proto.Noop.Property
+import collection.jcl.Buffer;
 import noop.types.{NoopConsole, NoopObject};
 
 import com.google.inject.AbstractModule;
@@ -32,18 +34,15 @@ class GuiceBackedInjector(classLoader: ClassLoader, injector: com.google.inject.
   // A pointer to the youngest child injector
   var currentInjector: com.google.inject.Injector = injector;
 
-  def getInstance(classDef: ClassDefinition): NoopObject = {
-    val obj = classDef.qualifiedName match {
+  def getInstance(classDef: ConcreteClassDefinition): NoopObject = {
+    val obj = classDef.data.getName match {
       case "noop.Console" => new NoopConsole(classLoader.findClass("noop.Console"));
       case _ => new NoopObject(classDef);
     }
 
-    if (classDef.isInstanceOf[ConcreteClassDefinition]) {
-      val concreteClass = classDef.asInstanceOf[ConcreteClassDefinition];
-      for (param <- concreteClass.parameters) {
-        val paramClassDef = classLoader.findClass(classDef.resolveType(param.noopType));
-        obj.propertyMap += Pair(param.name, getInstance(paramClassDef));
-      }
+    for (property: Property <- Buffer(classDef.data.getPropertyList())) {
+      val propClassDef = classLoader.findClass(property.getType);
+      obj.propertyMap += Pair(property.getName, getInstance(paramClassDef));
     }
     return obj;
   }

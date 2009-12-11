@@ -15,12 +15,11 @@
  */
 package noop.model
 
+import proto.Noop.Interface
+
 /**
  * AST model element for an interface.
  * @author Alex Eagle (alexeagle@google.com)
  */
 
-class InterfaceDefinition(name: String, namespace: String, documentation: String)
-    extends ClassDefinition(name, namespace, documentation) {
-
-}
+class InterfaceDefinition(val data: Interface) extends ClassDefinition

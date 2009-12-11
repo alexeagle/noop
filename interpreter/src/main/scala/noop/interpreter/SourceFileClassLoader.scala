@@ -18,10 +18,9 @@ package noop.interpreter;
 import collection.mutable.Map
 import java.io.{InputStream, FileInputStream, File}
 import org.slf4j.LoggerFactory
-import noop.model.persistence.{ClassRepository, YamlAstSerializer}
+import noop.model.persistence.{ClassRepository}
+import noop.model.{ConcreteClassDefinition, Parameter, ClassDefinition}
 
-
-import noop.model.{Parameter, ClassDefinition};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -32,7 +31,7 @@ class SourceFileClassLoader(classRepo: ClassRepository, srcPaths: List[String]) 
   val logger = LoggerFactory.getLogger(classOf[SourceFileClassLoader]);
   val cache = Map.empty[String, ClassDefinition];
 
-  def getClassDefinition(file: File): ClassDefinition = {
+  def getClassDefinition(file: File): ConcreteClassDefinition = {
     try {
       getClassDefinition(new FileInputStream(file));
     } catch {
@@ -41,7 +40,7 @@ class SourceFileClassLoader(classRepo: ClassRepository, srcPaths: List[String]) 
     }
   }
 
-  def getClassDefinition(stream: InputStream): ClassDefinition = classRepo.getClassDefinition(stream);
+  def getClassDefinition(stream: InputStream): ConcreteClassDefinition = classRepo.getClassDefinition(stream);
 
   def findClass(className: String): ClassDefinition = {
     if (cache.contains(className)) {
@@ -51,7 +50,7 @@ class SourceFileClassLoader(classRepo: ClassRepository, srcPaths: List[String]) 
     val expectedFile = parts.last + ".noop";
     val relativePath = parts.take(parts.size - 1).mkString(File.separator);
 
-    val classDef: ClassDefinition = searchInClasspath(relativePath, expectedFile) match {
+    val classDef: ConcreteClassDefinition = searchInClasspath(relativePath, expectedFile) match {
       case Some(c) => c;
       case None => searchInFilesystem(relativePath, expectedFile) match {
         case Some(c) => c;
@@ -74,7 +73,7 @@ class SourceFileClassLoader(classRepo: ClassRepository, srcPaths: List[String]) 
     return classDef;
   }
 
-  def searchInClasspath(relativePath: String, expectedFile: String): Option[ClassDefinition] = {
+  def searchInClasspath(relativePath: String, expectedFile: String): Option[ConcreteClassDefinition] = {
     val locationInClasspath = String.format("/%s/%s", relativePath, expectedFile);
     val stream = getClass().getResourceAsStream(locationInClasspath);
     if (stream != null) {
@@ -84,7 +83,7 @@ class SourceFileClassLoader(classRepo: ClassRepository, srcPaths: List[String]) 
     return None;
   }
 
-  def searchInFilesystem(relativePath: String, expectedFile: String): Option[ClassDefinition] = {
+  def searchInFilesystem(relativePath: String, expectedFile: String): Option[ConcreteClassDefinition] = {
     for (path <- srcPaths) {
       val dir = new File(path, relativePath);
       if (!dir.isDirectory()) {
@@ -111,7 +110,7 @@ class SourceFileClassLoader(classRepo: ClassRepository, srcPaths: List[String]) 
     }
   }
 
-  def eachClassInPath(dir: File, relativePath: String, f: ClassDefinition => Unit): Unit = {
+  def eachClassInPath(dir: File, relativePath: String, f: ConcreteClassDefinition => Unit): Unit = {
     for(file: File <- dir.listFiles()) {
       if (file.isDirectory()) {
         val newRelativePath = relativePath + file.getName() + ".";
