@@ -15,11 +15,12 @@
  */
 package noop.interpreter;
 
-import collection.mutable.Stack;
+import collection.mutable.Stack
+import noop.model.{ConcreteClassDefinition, MethodInvocationExpression, Visitor};
 import org.slf4j.LoggerFactory;
 
-import model.{MethodInvocationExpression, Visitor};
-import types.{NoopObject, NoopType};
+
+import noop.types.{NoopObject, NoopType};
 
 /**
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
@@ -29,7 +30,7 @@ class MethodInvocationEvaluator(methodInvocationExpression: MethodInvocationExpr
   val logger = LoggerFactory.getLogger(this.getClass);
 
   def createFrame(context: Context, thisRef: NoopObject): Frame = {
-    val method = thisRef.classDef.findMethod(methodInvocationExpression.name);
+    val method = thisRef.classDef.asInstanceOf[ConcreteClassDefinition].findMethod(methodInvocationExpression.name);
 
     return new Frame(thisRef, method);
   }
@@ -56,7 +57,7 @@ class MethodInvocationEvaluator(methodInvocationExpression: MethodInvocationExpr
       context.stack.top.blockScopes.inScope("method " + method) {
         for (i <- 0 until method.parameters.size) {
           val value = arguments.pop();
-          val identifier = method.parameters(i).name;
+          val identifier = method.parameters(i).getName;
 
           frame.addIdentifier(identifier, new Tuple2[NoopType, NoopObject](null, value));
         }

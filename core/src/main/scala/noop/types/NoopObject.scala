@@ -15,8 +15,7 @@
  */
 package noop.types;
 
-import collection.mutable.Map;
-
+import collection.mutable.Map
 import noop.model.ClassDefinition;
 
 /**

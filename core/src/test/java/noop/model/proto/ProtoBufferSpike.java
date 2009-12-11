@@ -26,7 +26,7 @@ public class ProtoBufferSpike {
             .setBlock(BindingBlock.newBuilder()
             .addBind(BindOperator.newBuilder()
             .setType("noop.Application")
-            .setTo(Expression.newBuilder().setType(IDENTIFIER).setStringVal("example.CmdLineArgs")))))
+            .setBoundTo(Expression.newBuilder().setType(IDENTIFIER).setStringVal("example.CmdLineArgs")))))
         .addConcreteClass(ConcreteClass.newBuilder()
             .setName("example.CmdLineArgs")
             .setDocumentation("Demonstrates reading command line arguments in Noop.")

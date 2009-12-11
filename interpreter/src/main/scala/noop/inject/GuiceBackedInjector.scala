@@ -35,14 +35,14 @@ class GuiceBackedInjector(classLoader: ClassLoader, injector: com.google.inject.
   var currentInjector: com.google.inject.Injector = injector;
 
   def getInstance(classDef: ConcreteClassDefinition): NoopObject = {
-    val obj = classDef.data.getName match {
+    val obj = classDef.name match {
       case "noop.Console" => new NoopConsole(classLoader.findClass("noop.Console"));
       case _ => new NoopObject(classDef);
     }
 
-    for (property: Property <- Buffer(classDef.data.getPropertyList())) {
+    for (property: Property <- classDef.properties) {
       val propClassDef = classLoader.findClass(property.getType);
-      obj.propertyMap += Pair(property.getName, getInstance(paramClassDef));
+      obj.propertyMap += Pair(property.getName, getInstance(propClassDef.asInstanceOf[ConcreteClassDefinition]));
     }
     return obj;
   }

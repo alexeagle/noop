@@ -17,10 +17,10 @@ package noop.interpreter.testing;
 
 import collection.mutable.{ArrayBuffer, Buffer, Stack}
 import com.google.inject.{Inject, Guice}
-import inject.{Injector}
+import noop.inject.{Injector}
 
-import model._
-import types.{NoopBoolean, BooleanFactory}
+import noop.model._
+import noop.types.{NoopBoolean, BooleanFactory}
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
@@ -29,9 +29,9 @@ class TestRunner @Inject() (classSearch: ClassSearch, classLoader: ClassLoader, 
 
   def gatherTests(): Buffer[TestHolder] = {
     var tests = new ArrayBuffer[TestHolder];
-    classSearch.eachClass((c:ClassDefinition) => {
+    classSearch.eachClass((c:ConcreteClassDefinition) => {
       for (testMethod <- c.unittests) {
-        tests += new TestHolder(c, testMethod);
+        tests += new TestHolder(c, new UnittestDefinition(testMethod));
       }
     });
     return tests;

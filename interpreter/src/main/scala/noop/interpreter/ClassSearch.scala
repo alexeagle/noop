@@ -15,12 +15,12 @@
  */
 package noop.interpreter;
 
-import model.ClassDefinition;
+import noop.model.ConcreteClassDefinition;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
 trait ClassSearch {
 
-  def eachClass(f: ClassDefinition => Unit);
+  def eachClass(f: ConcreteClassDefinition => Unit);
 }

@@ -1,8 +1,9 @@
 package noop.model
 
-import collection.mutable.{ArrayBuffer, Buffer}
+import collection.mutable.{Buffer, ArrayBuffer}
 
 /**
+ * A module is a collection of classes. It might be useful to have it correspond with a subproject/module/component
  * @author alexeagle@google.com (Alex Eagle)
  */
 

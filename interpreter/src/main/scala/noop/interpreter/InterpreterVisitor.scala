@@ -15,20 +15,16 @@
  */
 package noop.interpreter;
 
-import com.google.inject.Inject;
-import inject.Injector;
+import com.google.inject.Inject
+import noop.model.proto.Noop;
+import noop.inject.Injector;
 import org.slf4j.LoggerFactory;
 
 import scala.collection.mutable.ArrayBuffer;
 
-import interpreter.testing.TestFailedException;
-import model.{AssignmentExpression, BindingDeclaration, Block, BooleanLiteralExpression,
-    ConditionalAndExpression, ConditionalOrExpression, DereferenceExpression,
-    EvaluatedExpression, IdentifierDeclarationExpression, IdentifierExpression,
-    IntLiteralExpression, Method, MethodInvocationExpression, Modifier,
-    OperatorExpression, ReturnExpression, ShouldExpression, StringLiteralExpression,
-    Visitor, WhileLoop};
-import types._;
+import noop.interpreter.testing.TestFailedException;
+import noop.model._;
+import noop.types._;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -129,12 +125,12 @@ class InterpreterVisitor @Inject() (val context: Context, injector: Injector,
     evaluationStackSize = -1;
   }
 
-  def visit(method: Method) = {
-    if (method.modifiers.contains(Modifier.native)) {
+  def visit(method: MethodDefinition) = {
+    if (method.modifiers.contains(Noop.Modifier.NATIVE)) {
       val obj = context.stack.top.thisRef;
       val arguments = new ArrayBuffer[NoopObject];
       for (parameter <- method.parameters) {
-        arguments += context.stack.top.blockScopes.getIdentifier(parameter.name)._2;
+        arguments += context.stack.top.blockScopes.getIdentifier(parameter.getName)._2;
       }
       val returnValue = obj.executeNativeMethod(arguments, method.name);
       context.stack.top.lastEvaluated += returnValue;

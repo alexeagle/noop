@@ -50,27 +50,12 @@ class SourceFileClassLoader(classRepo: ClassRepository, srcPaths: List[String]) 
     val expectedFile = parts.last + ".noop";
     val relativePath = parts.take(parts.size - 1).mkString(File.separator);
 
-    val classDef: ConcreteClassDefinition = searchInClasspath(relativePath, expectedFile) match {
-      case Some(c) => c;
+    searchInClasspath(relativePath, expectedFile) match {
       case None => searchInFilesystem(relativePath, expectedFile) match {
         case Some(c) => c;
         case None => throw new ClassNotFoundException("Could not find class: " + className);
       }
     }
-
-    return postProcess(classDef, className);
-  }
-
-  /**
-   * We want the AST produced by the ANTLR tree parser to be free from interpreter specific stuff.
-   * But, the AST is in a raw form, so we fill in some details to make interpreting easier.
-   */
-  def postProcess(classDef: ClassDefinition, className: String): ClassDefinition = {
-    if (classDef.namespace == "") {
-      val parts = className.split("\\.");
-      classDef.namespace = parts.take(parts.size - 1).mkString(".");
-    }
-    return classDef;
   }
 
   def searchInClasspath(relativePath: String, expectedFile: String): Option[ConcreteClassDefinition] = {
@@ -117,8 +102,7 @@ class SourceFileClassLoader(classRepo: ClassRepository, srcPaths: List[String]) 
         eachClassInPath(file, newRelativePath, f);
       } else if (file.getName().endsWith(".noop")) {
         val classDef = getClassDefinition(file)
-        val className = relativePath + file.getName().substring(0, file.getName().length - 5);
-        f.apply(postProcess(classDef, className));
+        f.apply(classDef);
       }
     }
   }

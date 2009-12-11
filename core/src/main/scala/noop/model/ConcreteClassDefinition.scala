@@ -15,8 +15,8 @@
  */
 package noop.model
 
-import proto.Noop.{Method, ConcreteClass}
 import collection.jcl.Buffer
+import proto.Noop.{Unittest, Property, Method, ConcreteClass}
 
 /**
  * An AST element representing a concrete class. To the user, this is a "class", but to us,
@@ -27,6 +27,10 @@ import collection.jcl.Buffer
  */
 
 class ConcreteClassDefinition(val data: ConcreteClass) extends ClassDefinition {
+  def properties: Seq[Property] = Buffer(data.getPropertyList);
+  def name: String = data.getName;
+  def unittests: Seq[Unittest] = Buffer(data.getUnittestList);
+  
   def findMethod(methodName: String): MethodDefinition = {
     val methods: Seq[Method] = Buffer(data.getMethodList());
     methods.find((method: Method) => method.getSignature.getName == methodName) match {
