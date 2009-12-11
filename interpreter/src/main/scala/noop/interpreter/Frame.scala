@@ -18,14 +18,14 @@ package noop.interpreter;
 import collection.mutable.{Map, Stack};
 import org.slf4j.LoggerFactory;
 
-import model.Method;
-import types.{NoopType, NoopObject};
+import noop.model.MethodDefinition;
+import noop.types.{NoopType, NoopObject};
 
  /**
   * @author alexeagle@google.com (Alex Eagle)
   * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
   */
-class Frame(val thisRef: NoopObject, val method: Method) {
+class Frame(val thisRef: NoopObject, val method: MethodDefinition) {
   val blockScopes = new BlockScopes(new Stack[Map[String, Tuple2[NoopType, NoopObject]]]());
   val lastEvaluated = new Stack[NoopObject]();
   val logger = LoggerFactory.getLogger(this.getClass());

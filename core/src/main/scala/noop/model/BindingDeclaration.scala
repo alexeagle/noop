@@ -13,18 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.model
+
+import proto.Noop.BindOperator;
 
 /**
  * AST model element which represents a declaration of a binding from a type to an expression.
  * @author alexeagle@google.com (Alex Eagle)
  */
-class BindingDeclaration(val noopType: String, val boundTo: Expression) extends Expression {
+class BindingDeclaration(val data: BindOperator) extends Expression {
 
   def accept(visitor: Visitor) = {
-    boundTo.accept(visitor);
+    Expression.forData(data.getTo).accept(visitor);
     visitor.visit(this);
   }
 
-  override def toString() = noopType + " -> " + boundTo;
+  override def toString() = data.getType + " -> " + data.getTo;
 }

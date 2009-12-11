@@ -16,7 +16,7 @@
 package noop.interpreter;
 
 import noop.model.{Visitor, CompositeVisitor, LoggingAstVisitor}
-import noop.model.persistence.{ClassRepository, YamlAstSerializer}
+import noop.model.persistence.{ClassRepository}
 
 import noop.inject.{Injector, GuiceBackedInjector};
 

@@ -15,7 +15,8 @@
  */
 package noop.model
 
-import scala.collection.mutable.{ArrayBuffer, Buffer};
+import proto.Noop.{Method, ConcreteClass}
+import collection.jcl.Buffer
 
 /**
  * An AST element representing a concrete class. To the user, this is a "class", but to us,
@@ -25,8 +26,13 @@ import scala.collection.mutable.{ArrayBuffer, Buffer};
  * @author Alex Eagle (alexeagle@google.com)
  */
 
-class ConcreteClassDefinition(name: String, namespace: String, documentation: String)
-    extends ClassDefinition(name, namespace, documentation) {
-  val interfaces: Buffer[String] = new ArrayBuffer[String];
-  val parameters: Buffer[Parameter] = new ArrayBuffer[Parameter];
+class ConcreteClassDefinition(val data: ConcreteClass) extends ClassDefinition {
+  def findMethod(methodName: String): MethodDefinition = {
+    val methods: Seq[Method] = Buffer(data.getMethodList());
+    methods.find((method: Method) => method.getSignature.getName == methodName) match {
+      case Some(method) => return new MethodDefinition(method);
+      case None => throw new NoSuchMethodException(
+          "Method " + methodName + " is not defined on class " + data.getName);
+    }
+  }
 }

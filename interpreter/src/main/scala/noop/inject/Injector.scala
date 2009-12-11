@@ -15,14 +15,16 @@
  */
 package noop.inject;
 
-import noop.model.ClassDefinition;
-import noop.types.NoopObject;
+
+import noop.types.NoopObject
+import noop.model.{ConcreteClassDefinition, ClassDefinition};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
 
 trait Injector {
-  def getInstance(classDef: ClassDefinition): NoopObject;
+  // TODO(alexeagle): should also be able to request an interface
+  def getInstance(classDef: ConcreteClassDefinition): NoopObject;
   def withBindings(bindings: Map[String, NoopObject])(f: => Any): Unit;
 }

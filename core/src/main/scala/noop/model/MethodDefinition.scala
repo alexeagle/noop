@@ -15,7 +15,7 @@
  */
 package noop.model;
 
-import collection.mutable.{ArrayBuffer, Buffer};
+import proto.Noop.Method;
 
 /**
  * Represents the declaration of a method in source code.
@@ -23,11 +23,7 @@ import collection.mutable.{ArrayBuffer, Buffer};
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class Method(val name: String, val block: Block, val documentation: String)  {
-
-  val returnTypes: Buffer[String] = new ArrayBuffer[String]();
-  val parameters: Buffer[Parameter] = new ArrayBuffer[Parameter]();
-  val modifiers: Buffer[Modifier.Value] = new ArrayBuffer[Modifier.Value]();
-
-  override def toString() = String.format("Method %s (%s) returns %s", name, parameters, returnTypes);
+class MethodDefinition(val data: Method)  {
+  override def toString() = String.format("Method %s (%s) returns %s",
+    data.getSignature.getName, data.getSignature.getArgumentList, data.getSignature.getReturnTypeList);
 }

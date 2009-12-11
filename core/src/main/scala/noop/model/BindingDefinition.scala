@@ -15,14 +15,13 @@
  */
 package noop.model
 
-import scala.collection.mutable.{ArrayBuffer, Buffer};
+import proto.Noop.Binding
+import collection.jcl.Buffer
 
 /**
  * AST element representing a top-level bindings definition
  * @author Alex Eagle (alexeagle@google.com)
  */
-class BindingDefinition(name: String, namespace: String, documentation: String)
-    extends ClassDefinition(name, namespace, documentation) {
-  val bindings: Buffer[BindingDeclaration] = new ArrayBuffer[BindingDeclaration];
-
+class BindingDefinition(val data: Binding) extends ClassDefinition() {
+  def bindings: Seq[BindingDeclaration] = Buffer(data.getBlock.getBindList).map(b => new BindingDeclaration(b));
 }
