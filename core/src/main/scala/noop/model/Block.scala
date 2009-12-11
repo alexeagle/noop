@@ -15,13 +15,14 @@
  */
 package noop.model;
 
-import collection.mutable.{ArrayBuffer, Buffer};
+import collection.mutable.{ArrayBuffer, Buffer}
+import proto.Noop;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class Block extends Expression {
+class Block(val data: Noop.Block) extends Expression {
 
   val statements: Buffer[Expression] = new ArrayBuffer[Expression]();
   val anonymousBindings: Buffer[BindingDeclaration] = new ArrayBuffer[BindingDeclaration];

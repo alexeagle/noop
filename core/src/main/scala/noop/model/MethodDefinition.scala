@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.model
 
-import proto.Noop.Method;
+import collection.jcl.Buffer
+import proto.Noop.{Modifier, Property, Method};
 
 /**
  * Represents the declaration of a method in source code.
@@ -24,6 +25,11 @@ import proto.Noop.Method;
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class MethodDefinition(val data: Method)  {
+  def name:String = data.getSignature.getName;
+  def parameters: Seq[Property] = Buffer(data.getSignature.getArgumentList);
+  def modifiers: Seq[Modifier] = Buffer(data.getSignature.getModifierList);
+  def block: Block = new Block(data.getBlock);
+
   override def toString() = String.format("Method %s (%s) returns %s",
     data.getSignature.getName, data.getSignature.getArgumentList, data.getSignature.getReturnTypeList);
 }

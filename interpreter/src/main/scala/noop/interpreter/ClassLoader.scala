@@ -15,9 +15,8 @@
  */
 package noop.interpreter;
 
-import java.io.File;
-
-import model.ClassDefinition;
+import java.io.File
+import noop.model.ClassDefinition;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)

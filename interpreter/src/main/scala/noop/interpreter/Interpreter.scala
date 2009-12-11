@@ -34,7 +34,7 @@ class Interpreter @Inject() (classLoader: ClassLoader, injector: Injector, conte
     bindingDefinition.bindings.find((b: BindingDeclaration) => b.noopType == "Application") match {
       case Some(binding: BindingDeclaration) => {
         val applicationType = binding.boundTo.asInstanceOf[IdentifierExpression].identifier;
-        val applicationClass = classLoader.findClass(bindingDefinition.resolveType(applicationType));
+        val applicationClass = classLoader.findClass(applicationType);
         applicationClass match {
           case concrete: ConcreteClassDefinition => runFromConcrete(concrete);
           case _ => throw new IllegalStateException("Application must be bound to concrete class");

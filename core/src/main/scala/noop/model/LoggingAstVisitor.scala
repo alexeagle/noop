@@ -59,7 +59,7 @@ class LoggingAstVisitor extends Visitor {
   }
 
   def visit(method: MethodDefinition) = {
-    logger.info("Method: " + method.data.getSignature.getName);
+    logger.info("Method: " + method.name);
   }
 
   def enter(methodInvocationExpression: MethodInvocationExpression) = {

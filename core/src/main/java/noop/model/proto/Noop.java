@@ -10,6 +10,7 @@ public final class Noop {
   public enum Modifier
       implements com.google.protobuf.ProtocolMessageEnum {
     MUTABLE(0, 1),
+    NATIVE(1, 2),
     ;
     
     
@@ -18,6 +19,7 @@ public final class Noop {
     public static Modifier valueOf(int value) {
       switch (value) {
         case 1: return MUTABLE;
+        case 2: return NATIVE;
         default: return null;
       }
     }
@@ -48,7 +50,7 @@ public final class Noop {
     }
     
     private static final Modifier[] VALUES = {
-      MUTABLE, 
+      MUTABLE, NATIVE, 
     };
     public static Modifier valueOf(
         com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
@@ -3095,8 +3097,20 @@ public final class Noop {
     public boolean hasDocumentation() { return hasDocumentation; }
     public java.lang.String getDocumentation() { return documentation_; }
     
-    // repeated string return_type = 3;
-    public static final int RETURN_TYPE_FIELD_NUMBER = 3;
+    // repeated .Modifier modifier = 3;
+    public static final int MODIFIER_FIELD_NUMBER = 3;
+    private java.util.List<noop.model.proto.Noop.Modifier> modifier_ =
+      java.util.Collections.emptyList();
+    public java.util.List<noop.model.proto.Noop.Modifier> getModifierList() {
+      return modifier_;
+    }
+    public int getModifierCount() { return modifier_.size(); }
+    public noop.model.proto.Noop.Modifier getModifier(int index) {
+      return modifier_.get(index);
+    }
+    
+    // repeated string return_type = 4;
+    public static final int RETURN_TYPE_FIELD_NUMBER = 4;
     private java.util.List<java.lang.String> returnType_ =
       java.util.Collections.emptyList();
     public java.util.List<java.lang.String> getReturnTypeList() {
@@ -3107,8 +3121,8 @@ public final class Noop {
       return returnType_.get(index);
     }
     
-    // repeated .Property argument = 4;
-    public static final int ARGUMENT_FIELD_NUMBER = 4;
+    // repeated .Property argument = 5;
+    public static final int ARGUMENT_FIELD_NUMBER = 5;
     private java.util.List<noop.model.proto.Noop.Property> argument_ =
       java.util.Collections.emptyList();
     public java.util.List<noop.model.proto.Noop.Property> getArgumentList() {
@@ -3135,11 +3149,14 @@ public final class Noop {
       if (hasDocumentation()) {
         output.writeString(2, getDocumentation());
       }
+      for (noop.model.proto.Noop.Modifier element : getModifierList()) {
+        output.writeEnum(3, element.getNumber());
+      }
       for (java.lang.String element : getReturnTypeList()) {
-        output.writeString(3, element);
+        output.writeString(4, element);
       }
       for (noop.model.proto.Noop.Property element : getArgumentList()) {
-        output.writeMessage(4, element);
+        output.writeMessage(5, element);
       }
       getUnknownFields().writeTo(output);
     }
@@ -3160,6 +3177,15 @@ public final class Noop {
       }
       {
         int dataSize = 0;
+        for (noop.model.proto.Noop.Modifier element : getModifierList()) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeEnumSizeNoTag(element.getNumber());
+        }
+        size += dataSize;
+        size += 1 * getModifierList().size();
+      }
+      {
+        int dataSize = 0;
         for (java.lang.String element : getReturnTypeList()) {
           dataSize += com.google.protobuf.CodedOutputStream
             .computeStringSizeNoTag(element);
@@ -3169,7 +3195,7 @@ public final class Noop {
       }
       for (noop.model.proto.Noop.Property element : getArgumentList()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, element);
+          .computeMessageSize(5, element);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -3304,6 +3330,10 @@ public final class Noop {
           throw new IllegalStateException(
             "build() has already been called on this Builder.");
         }
+        if (result.modifier_ != java.util.Collections.EMPTY_LIST) {
+          result.modifier_ =
+            java.util.Collections.unmodifiableList(result.modifier_);
+        }
         if (result.returnType_ != java.util.Collections.EMPTY_LIST) {
           result.returnType_ =
             java.util.Collections.unmodifiableList(result.returnType_);
@@ -3333,6 +3363,12 @@ public final class Noop {
         }
         if (other.hasDocumentation()) {
           setDocumentation(other.getDocumentation());
+        }
+        if (!other.modifier_.isEmpty()) {
+          if (result.modifier_.isEmpty()) {
+            result.modifier_ = new java.util.ArrayList<noop.model.proto.Noop.Modifier>();
+          }
+          result.modifier_.addAll(other.modifier_);
         }
         if (!other.returnType_.isEmpty()) {
           if (result.returnType_.isEmpty()) {
@@ -3379,11 +3415,21 @@ public final class Noop {
               setDocumentation(input.readString());
               break;
             }
-            case 26: {
-              addReturnType(input.readString());
+            case 24: {
+              int rawValue = input.readEnum();
+              noop.model.proto.Noop.Modifier value = noop.model.proto.Noop.Modifier.valueOf(rawValue);
+              if (value == null) {
+                unknownFields.mergeVarintField(3, rawValue);
+              } else {
+                addModifier(value);
+              }
               break;
             }
             case 34: {
+              addReturnType(input.readString());
+              break;
+            }
+            case 42: {
               noop.model.proto.Noop.Property.Builder subBuilder = noop.model.proto.Noop.Property.newBuilder();
               input.readMessage(subBuilder, extensionRegistry);
               addArgument(subBuilder.buildPartial());
@@ -3436,7 +3482,47 @@ public final class Noop {
         return this;
       }
       
-      // repeated string return_type = 3;
+      // repeated .Modifier modifier = 3;
+      public java.util.List<noop.model.proto.Noop.Modifier> getModifierList() {
+        return java.util.Collections.unmodifiableList(result.modifier_);
+      }
+      public int getModifierCount() {
+        return result.getModifierCount();
+      }
+      public noop.model.proto.Noop.Modifier getModifier(int index) {
+        return result.getModifier(index);
+      }
+      public Builder setModifier(int index, noop.model.proto.Noop.Modifier value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.modifier_.set(index, value);
+        return this;
+      }
+      public Builder addModifier(noop.model.proto.Noop.Modifier value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        if (result.modifier_.isEmpty()) {
+          result.modifier_ = new java.util.ArrayList<noop.model.proto.Noop.Modifier>();
+        }
+        result.modifier_.add(value);
+        return this;
+      }
+      public Builder addAllModifier(
+          java.lang.Iterable<? extends noop.model.proto.Noop.Modifier> values) {
+        if (result.modifier_.isEmpty()) {
+          result.modifier_ = new java.util.ArrayList<noop.model.proto.Noop.Modifier>();
+        }
+        super.addAll(values, result.modifier_);
+        return this;
+      }
+      public Builder clearModifier() {
+        result.modifier_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // repeated string return_type = 4;
       public java.util.List<java.lang.String> getReturnTypeList() {
         return java.util.Collections.unmodifiableList(result.returnType_);
       }
@@ -3476,7 +3562,7 @@ public final class Noop {
         return this;
       }
       
-      // repeated .Property argument = 4;
+      // repeated .Property argument = 5;
       public java.util.List<noop.model.proto.Noop.Property> getArgumentList() {
         return java.util.Collections.unmodifiableList(result.argument_);
       }
@@ -4243,17 +4329,17 @@ public final class Noop {
     public boolean hasType() { return hasType; }
     public java.lang.String getType() { return type_; }
     
-    // required .Expression to = 2;
-    public static final int TO_FIELD_NUMBER = 2;
-    private boolean hasTo;
-    private noop.model.proto.Noop.Expression to_ = noop.model.proto.Noop.Expression.getDefaultInstance();
-    public boolean hasTo() { return hasTo; }
-    public noop.model.proto.Noop.Expression getTo() { return to_; }
+    // required .Expression boundTo = 2;
+    public static final int BOUNDTO_FIELD_NUMBER = 2;
+    private boolean hasBoundTo;
+    private noop.model.proto.Noop.Expression boundTo_ = noop.model.proto.Noop.Expression.getDefaultInstance();
+    public boolean hasBoundTo() { return hasBoundTo; }
+    public noop.model.proto.Noop.Expression getBoundTo() { return boundTo_; }
     
     public final boolean isInitialized() {
       if (!hasType) return false;
-      if (!hasTo) return false;
-      if (!getTo().isInitialized()) return false;
+      if (!hasBoundTo) return false;
+      if (!getBoundTo().isInitialized()) return false;
       return true;
     }
     
@@ -4262,8 +4348,8 @@ public final class Noop {
       if (hasType()) {
         output.writeString(1, getType());
       }
-      if (hasTo()) {
-        output.writeMessage(2, getTo());
+      if (hasBoundTo()) {
+        output.writeMessage(2, getBoundTo());
       }
       getUnknownFields().writeTo(output);
     }
@@ -4278,9 +4364,9 @@ public final class Noop {
         size += com.google.protobuf.CodedOutputStream
           .computeStringSize(1, getType());
       }
-      if (hasTo()) {
+      if (hasBoundTo()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getTo());
+          .computeMessageSize(2, getBoundTo());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -4434,8 +4520,8 @@ public final class Noop {
         if (other.hasType()) {
           setType(other.getType());
         }
-        if (other.hasTo()) {
-          mergeTo(other.getTo());
+        if (other.hasBoundTo()) {
+          mergeBoundTo(other.getBoundTo());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -4468,11 +4554,11 @@ public final class Noop {
             }
             case 18: {
               noop.model.proto.Noop.Expression.Builder subBuilder = noop.model.proto.Noop.Expression.newBuilder();
-              if (hasTo()) {
-                subBuilder.mergeFrom(getTo());
+              if (hasBoundTo()) {
+                subBuilder.mergeFrom(getBoundTo());
               }
               input.readMessage(subBuilder, extensionRegistry);
-              setTo(subBuilder.buildPartial());
+              setBoundTo(subBuilder.buildPartial());
               break;
             }
           }
@@ -4501,40 +4587,40 @@ public final class Noop {
         return this;
       }
       
-      // required .Expression to = 2;
-      public boolean hasTo() {
-        return result.hasTo();
+      // required .Expression boundTo = 2;
+      public boolean hasBoundTo() {
+        return result.hasBoundTo();
       }
-      public noop.model.proto.Noop.Expression getTo() {
-        return result.getTo();
+      public noop.model.proto.Noop.Expression getBoundTo() {
+        return result.getBoundTo();
       }
-      public Builder setTo(noop.model.proto.Noop.Expression value) {
+      public Builder setBoundTo(noop.model.proto.Noop.Expression value) {
         if (value == null) {
           throw new NullPointerException();
         }
-        result.hasTo = true;
-        result.to_ = value;
+        result.hasBoundTo = true;
+        result.boundTo_ = value;
         return this;
       }
-      public Builder setTo(noop.model.proto.Noop.Expression.Builder builderForValue) {
-        result.hasTo = true;
-        result.to_ = builderForValue.build();
+      public Builder setBoundTo(noop.model.proto.Noop.Expression.Builder builderForValue) {
+        result.hasBoundTo = true;
+        result.boundTo_ = builderForValue.build();
         return this;
       }
-      public Builder mergeTo(noop.model.proto.Noop.Expression value) {
-        if (result.hasTo() &&
-            result.to_ != noop.model.proto.Noop.Expression.getDefaultInstance()) {
-          result.to_ =
-            noop.model.proto.Noop.Expression.newBuilder(result.to_).mergeFrom(value).buildPartial();
+      public Builder mergeBoundTo(noop.model.proto.Noop.Expression value) {
+        if (result.hasBoundTo() &&
+            result.boundTo_ != noop.model.proto.Noop.Expression.getDefaultInstance()) {
+          result.boundTo_ =
+            noop.model.proto.Noop.Expression.newBuilder(result.boundTo_).mergeFrom(value).buildPartial();
         } else {
-          result.to_ = value;
+          result.boundTo_ = value;
         }
-        result.hasTo = true;
+        result.hasBoundTo = true;
         return this;
       }
-      public Builder clearTo() {
-        result.hasTo = false;
-        result.to_ = noop.model.proto.Noop.Expression.getDefaultInstance();
+      public Builder clearBoundTo() {
+        result.hasBoundTo = false;
+        result.boundTo_ = noop.model.proto.Noop.Expression.getDefaultInstance();
         return this;
       }
     }
@@ -6784,32 +6870,33 @@ public final class Noop {
       "\n\tInterface\022\014\n\004name\030\001 \002(\t\022\025\n\rdocumentati" +
       "on\030\002 \001(\t\022 \n\006method\030\003 \003(\0132\020.MethodSignatu" +
       "re\"8\n\005Alias\022\014\n\004name\030\001 \002(\t\022\025\n\rdocumentati" +
-      "on\030\002 \001(\t\022\n\n\002of\030\003 \002(\t\"h\n\017MethodSignature\022" +
-      "\014\n\004name\030\001 \002(\t\022\025\n\rdocumentation\030\002 \001(\t\022\023\n\013" +
-      "return_type\030\003 \003(\t\022\033\n\010argument\030\004 \003(\0132\t.Pr",
-      "operty\"D\n\006Method\022#\n\tsignature\030\001 \002(\0132\020.Me" +
-      "thodSignature\022\025\n\005block\030\002 \002(\0132\006.Block\"+\n\014" +
-      "BindingBlock\022\033\n\004bind\030\001 \003(\0132\r.BindOperato" +
-      "r\"5\n\014BindOperator\022\014\n\004type\030\001 \002(\t\022\027\n\002to\030\002 " +
-      "\002(\0132\013.Expression\"&\n\005Block\022\035\n\tstatement\030\001" +
-      " \003(\0132\n.Statement\"\253\001\n\tStatement\022\035\n\004type\030\001" +
-      " \002(\0162\017.Statement.Type\022+\n\020methodInvocatio" +
-      "n\030\002 \001(\0132\021.MethodInvocation\022\035\n\010returned\030\003" +
-      " \001(\0132\013.Expression\"3\n\004Type\022\025\n\021METHOD_INVO" +
-      "CATION\020\001\022\024\n\020RETURN_STATEMENT\020\002\"[\n\020Method",
-      "Invocation\022\030\n\003lhs\030\001 \002(\0132\013.Expression\022\016\n\006" +
-      "method\030\002 \002(\t\022\035\n\010argument\030\003 \003(\0132\013.Express" +
-      "ion\"\254\002\n\nExpression\022\036\n\004type\030\001 \002(\0162\020.Expre" +
-      "ssion.Type\022\022\n\nbooleanVal\030\002 \001(\010\022\021\n\tstring" +
-      "Val\030\003 \001(\t\022\021\n\tnumberVal\030\004 \001(\r\022\030\n\003lhs\030\005 \001(" +
-      "\0132\013.Expression\022\030\n\003rhs\030\006 \001(\0132\013.Expression" +
-      "\"\217\001\n\004Type\022\r\n\tEVALUATED\020\001\022\023\n\017BOOLEAN_LITE" +
-      "RAL\020\002\022\022\n\016STRING_LITERAL\020\003\022\022\n\016NUMBER_LITE" +
-      "RAL\020\004\022\016\n\nIDENTIFIER\020\005\022\017\n\013CONDITIONAL\020\006\022\017" +
-      "\n\013DEREFERENCE\020\007\022\t\n\005INDEX\020\010\"6\n\010Unittest\022\023",
-      "\n\013description\030\001 \002(\t\022\025\n\rdocumentation\030\002 \001" +
-      "(\t*\027\n\010Modifier\022\013\n\007MUTABLE\020\001B\022\n\020noop.mode" +
-      "l.proto"
+      "on\030\002 \001(\t\022\n\n\002of\030\003 \002(\t\"\205\001\n\017MethodSignature" +
+      "\022\014\n\004name\030\001 \002(\t\022\025\n\rdocumentation\030\002 \001(\t\022\033\n" +
+      "\010modifier\030\003 \003(\0162\t.Modifier\022\023\n\013return_typ",
+      "e\030\004 \003(\t\022\033\n\010argument\030\005 \003(\0132\t.Property\"D\n\006" +
+      "Method\022#\n\tsignature\030\001 \002(\0132\020.MethodSignat" +
+      "ure\022\025\n\005block\030\002 \002(\0132\006.Block\"+\n\014BindingBlo" +
+      "ck\022\033\n\004bind\030\001 \003(\0132\r.BindOperator\":\n\014BindO" +
+      "perator\022\014\n\004type\030\001 \002(\t\022\034\n\007boundTo\030\002 \002(\0132\013" +
+      ".Expression\"&\n\005Block\022\035\n\tstatement\030\001 \003(\0132" +
+      "\n.Statement\"\253\001\n\tStatement\022\035\n\004type\030\001 \002(\0162" +
+      "\017.Statement.Type\022+\n\020methodInvocation\030\002 \001" +
+      "(\0132\021.MethodInvocation\022\035\n\010returned\030\003 \001(\0132" +
+      "\013.Expression\"3\n\004Type\022\025\n\021METHOD_INVOCATIO",
+      "N\020\001\022\024\n\020RETURN_STATEMENT\020\002\"[\n\020MethodInvoc" +
+      "ation\022\030\n\003lhs\030\001 \002(\0132\013.Expression\022\016\n\006metho" +
+      "d\030\002 \002(\t\022\035\n\010argument\030\003 \003(\0132\013.Expression\"\254" +
+      "\002\n\nExpression\022\036\n\004type\030\001 \002(\0162\020.Expression" +
+      ".Type\022\022\n\nbooleanVal\030\002 \001(\010\022\021\n\tstringVal\030\003" +
+      " \001(\t\022\021\n\tnumberVal\030\004 \001(\r\022\030\n\003lhs\030\005 \001(\0132\013.E" +
+      "xpression\022\030\n\003rhs\030\006 \001(\0132\013.Expression\"\217\001\n\004" +
+      "Type\022\r\n\tEVALUATED\020\001\022\023\n\017BOOLEAN_LITERAL\020\002" +
+      "\022\022\n\016STRING_LITERAL\020\003\022\022\n\016NUMBER_LITERAL\020\004" +
+      "\022\016\n\nIDENTIFIER\020\005\022\017\n\013CONDITIONAL\020\006\022\017\n\013DER",
+      "EFERENCE\020\007\022\t\n\005INDEX\020\010\"6\n\010Unittest\022\023\n\013des" +
+      "cription\030\001 \002(\t\022\025\n\rdocumentation\030\002 \001(\t*#\n" +
+      "\010Modifier\022\013\n\007MUTABLE\020\001\022\n\n\006NATIVE\020\002B\022\n\020no" +
+      "op.model.proto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -6869,7 +6956,7 @@ public final class Noop {
           internal_static_MethodSignature_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_MethodSignature_descriptor,
-              new java.lang.String[] { "Name", "Documentation", "ReturnType", "Argument", },
+              new java.lang.String[] { "Name", "Documentation", "Modifier", "ReturnType", "Argument", },
               noop.model.proto.Noop.MethodSignature.class,
               noop.model.proto.Noop.MethodSignature.Builder.class);
           internal_static_Method_descriptor =
@@ -6893,7 +6980,7 @@ public final class Noop {
           internal_static_BindOperator_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_BindOperator_descriptor,
-              new java.lang.String[] { "Type", "To", },
+              new java.lang.String[] { "Type", "BoundTo", },
               noop.model.proto.Noop.BindOperator.class,
               noop.model.proto.Noop.BindOperator.Builder.class);
           internal_static_Block_descriptor =

@@ -23,10 +23,13 @@ import proto.Noop.BindOperator;
  */
 class BindingDeclaration(val data: BindOperator) extends Expression {
 
+  def noopType: String = data.getType;
+  def boundTo: Expression = ExpressionConverter.fromData(data.getBoundTo);
+
   def accept(visitor: Visitor) = {
-    Expression.forData(data.getTo).accept(visitor);
+    ExpressionConverter.fromData(data.getBoundTo).accept(visitor);
     visitor.visit(this);
   }
 
-  override def toString() = data.getType + " -> " + data.getTo;
+  override def toString() = data.getType + " -> " + data.getBoundTo;
 }

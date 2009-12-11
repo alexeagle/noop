@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.interpreter.testing;
+package noop.interpreter.testing
 
-import model.{ClassDefinition, Method};
+import noop.model.{UnittestDefinition, ConcreteClassDefinition}
+
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-class TestHolder(val classDef: ClassDefinition, val testMethod: Method)
+class TestHolder(val classDef: ConcreteClassDefinition, val testMethod: UnittestDefinition)

@@ -6,6 +6,7 @@ option java_package = "noop.model.proto";
 
 enum Modifier {
   MUTABLE = 1;
+  NATIVE = 2;
 }
 
 message Module {
@@ -55,8 +56,9 @@ message Alias {
 message MethodSignature {
   required string name = 1;
   optional string documentation = 2;
-  repeated string return_type = 3;
-  repeated Property argument = 4;
+  repeated Modifier modifier = 3;
+  repeated string return_type = 4;
+  repeated Property argument = 5;
 }
 
 message Method {

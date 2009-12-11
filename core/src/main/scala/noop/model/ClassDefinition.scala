@@ -16,9 +16,6 @@
 package noop.model;
 
 /**
- * namespace is mutable because we may infer the namespace from the relative path of the file
- *
  * @author alexeagle@google.com (Alex Eagle)
- * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 trait ClassDefinition
