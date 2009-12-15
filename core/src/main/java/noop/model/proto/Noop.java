@@ -7,8 +7,7 @@ public final class Noop {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
-  public enum Modifier
-      implements com.google.protobuf.ProtocolMessageEnum {
+  public static enum Modifier {
     MUTABLE(0, 1),
     NATIVE(1, 2),
     ;
@@ -23,18 +22,6 @@ public final class Noop {
         default: return null;
       }
     }
-    
-    public static com.google.protobuf.Internal.EnumLiteMap<Modifier>
-        internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static com.google.protobuf.Internal.EnumLiteMap<Modifier>
-        internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<Modifier>() {
-            public Modifier findValueByNumber(int number) {
-              return Modifier.valueOf(number)
-    ;        }
-          };
     
     public final com.google.protobuf.Descriptors.EnumValueDescriptor
         getValueDescriptor() {
@@ -72,6 +59,342 @@ public final class Noop {
     }
   }
   
+  public static final class Documentation extends
+      com.google.protobuf.GeneratedMessage {
+    // Use Documentation.newBuilder() to construct.
+    private Documentation() {}
+    
+    private static final Documentation defaultInstance = new Documentation();
+    public static Documentation getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Documentation getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return noop.model.proto.Noop.internal_static_Documentation_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return noop.model.proto.Noop.internal_static_Documentation_fieldAccessorTable;
+    }
+    
+    // required string summary = 1;
+    private boolean hasSummary;
+    private java.lang.String summary_ = "";
+    public boolean hasSummary() { return hasSummary; }
+    public java.lang.String getSummary() { return summary_; }
+    
+    // repeated string author = 2;
+    private java.util.List<java.lang.String> author_ =
+      java.util.Collections.emptyList();
+    public java.util.List<java.lang.String> getAuthorList() {
+      return author_;
+    }
+    public int getAuthorCount() { return author_.size(); }
+    public java.lang.String getAuthor(int index) {
+      return author_.get(index);
+    }
+    
+    // repeated string parameter = 3;
+    private java.util.List<java.lang.String> parameter_ =
+      java.util.Collections.emptyList();
+    public java.util.List<java.lang.String> getParameterList() {
+      return parameter_;
+    }
+    public int getParameterCount() { return parameter_.size(); }
+    public java.lang.String getParameter(int index) {
+      return parameter_.get(index);
+    }
+    
+    // repeated string return = 4;
+    private java.util.List<java.lang.String> return_ =
+      java.util.Collections.emptyList();
+    public java.util.List<java.lang.String> getReturnList() {
+      return return_;
+    }
+    public int getReturnCount() { return return_.size(); }
+    public java.lang.String getReturn(int index) {
+      return return_.get(index);
+    }
+    
+    // optional string details = 5;
+    private boolean hasDetails;
+    private java.lang.String details_ = "";
+    public boolean hasDetails() { return hasDetails; }
+    public java.lang.String getDetails() { return details_; }
+    
+    public static noop.model.proto.Noop.Documentation parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static noop.model.proto.Noop.Documentation parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.Noop.Documentation parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static noop.model.proto.Noop.Documentation parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.Noop.Documentation parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static noop.model.proto.Noop.Documentation parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.Noop.Documentation parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static noop.model.proto.Noop.Documentation parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(noop.model.proto.Noop.Documentation prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using noop.model.proto.Noop.Documentation.newBuilder()
+      private Builder() {}
+      
+      noop.model.proto.Noop.Documentation result = new noop.model.proto.Noop.Documentation();
+      
+      @Override
+      protected noop.model.proto.Noop.Documentation internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new noop.model.proto.Noop.Documentation();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return noop.model.proto.Noop.Documentation.getDescriptor();
+      }
+      
+      public noop.model.proto.Noop.Documentation getDefaultInstanceForType() {
+        return noop.model.proto.Noop.Documentation.getDefaultInstance();
+      }
+      
+      public noop.model.proto.Noop.Documentation build() {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private noop.model.proto.Noop.Documentation buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public noop.model.proto.Noop.Documentation buildPartial() {
+        if (result.author_ != java.util.Collections.EMPTY_LIST) {
+          result.author_ =
+            java.util.Collections.unmodifiableList(result.author_);
+        }
+        if (result.parameter_ != java.util.Collections.EMPTY_LIST) {
+          result.parameter_ =
+            java.util.Collections.unmodifiableList(result.parameter_);
+        }
+        if (result.return_ != java.util.Collections.EMPTY_LIST) {
+          result.return_ =
+            java.util.Collections.unmodifiableList(result.return_);
+        }
+        noop.model.proto.Noop.Documentation returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      
+      // required string summary = 1;
+      public boolean hasSummary() {
+        return result.hasSummary();
+      }
+      public java.lang.String getSummary() {
+        return result.getSummary();
+      }
+      public Builder setSummary(java.lang.String value) {
+        result.hasSummary = true;
+        result.summary_ = value;
+        return this;
+      }
+      public Builder clearSummary() {
+        result.hasSummary = false;
+        result.summary_ = "";
+        return this;
+      }
+      
+      // repeated string author = 2;
+      public java.util.List<java.lang.String> getAuthorList() {
+        return java.util.Collections.unmodifiableList(result.author_);
+      }
+      public int getAuthorCount() {
+        return result.getAuthorCount();
+      }
+      public java.lang.String getAuthor(int index) {
+        return result.getAuthor(index);
+      }
+      public Builder setAuthor(int index, java.lang.String value) {
+        result.author_.set(index, value);
+        return this;
+      }
+      public Builder addAuthor(java.lang.String value) {
+        if (result.author_.isEmpty()) {
+          result.author_ = new java.util.ArrayList<java.lang.String>();
+        }
+        result.author_.add(value);
+        return this;
+      }
+      public Builder addAllAuthor(
+          java.lang.Iterable<? extends java.lang.String> values) {
+        if (result.author_.isEmpty()) {
+          result.author_ = new java.util.ArrayList<java.lang.String>();
+        }
+        super.addAll(values, result.author_);
+        return this;
+      }
+      public Builder clearAuthor() {
+        result.author_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // repeated string parameter = 3;
+      public java.util.List<java.lang.String> getParameterList() {
+        return java.util.Collections.unmodifiableList(result.parameter_);
+      }
+      public int getParameterCount() {
+        return result.getParameterCount();
+      }
+      public java.lang.String getParameter(int index) {
+        return result.getParameter(index);
+      }
+      public Builder setParameter(int index, java.lang.String value) {
+        result.parameter_.set(index, value);
+        return this;
+      }
+      public Builder addParameter(java.lang.String value) {
+        if (result.parameter_.isEmpty()) {
+          result.parameter_ = new java.util.ArrayList<java.lang.String>();
+        }
+        result.parameter_.add(value);
+        return this;
+      }
+      public Builder addAllParameter(
+          java.lang.Iterable<? extends java.lang.String> values) {
+        if (result.parameter_.isEmpty()) {
+          result.parameter_ = new java.util.ArrayList<java.lang.String>();
+        }
+        super.addAll(values, result.parameter_);
+        return this;
+      }
+      public Builder clearParameter() {
+        result.parameter_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // repeated string return = 4;
+      public java.util.List<java.lang.String> getReturnList() {
+        return java.util.Collections.unmodifiableList(result.return_);
+      }
+      public int getReturnCount() {
+        return result.getReturnCount();
+      }
+      public java.lang.String getReturn(int index) {
+        return result.getReturn(index);
+      }
+      public Builder setReturn(int index, java.lang.String value) {
+        result.return_.set(index, value);
+        return this;
+      }
+      public Builder addReturn(java.lang.String value) {
+        if (result.return_.isEmpty()) {
+          result.return_ = new java.util.ArrayList<java.lang.String>();
+        }
+        result.return_.add(value);
+        return this;
+      }
+      public Builder addAllReturn(
+          java.lang.Iterable<? extends java.lang.String> values) {
+        if (result.return_.isEmpty()) {
+          result.return_ = new java.util.ArrayList<java.lang.String>();
+        }
+        super.addAll(values, result.return_);
+        return this;
+      }
+      public Builder clearReturn() {
+        result.return_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // optional string details = 5;
+      public boolean hasDetails() {
+        return result.hasDetails();
+      }
+      public java.lang.String getDetails() {
+        return result.getDetails();
+      }
+      public Builder setDetails(java.lang.String value) {
+        result.hasDetails = true;
+        result.details_ = value;
+        return this;
+      }
+      public Builder clearDetails() {
+        result.hasDetails = false;
+        result.details_ = "";
+        return this;
+      }
+    }
+    
+    static {
+      noop.model.proto.Noop.getDescriptor();
+    }
+  }
+  
   public static final class Module extends
       com.google.protobuf.GeneratedMessage {
     // Use Module.newBuilder() to construct.
@@ -91,27 +414,31 @@ public final class Noop {
       return noop.model.proto.Noop.internal_static_Module_descriptor;
     }
     
+    @Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return noop.model.proto.Noop.internal_static_Module_fieldAccessorTable;
     }
     
     // required string name = 1;
-    public static final int NAME_FIELD_NUMBER = 1;
     private boolean hasName;
     private java.lang.String name_ = "";
     public boolean hasName() { return hasName; }
     public java.lang.String getName() { return name_; }
     
-    // optional string documentation = 2;
-    public static final int DOCUMENTATION_FIELD_NUMBER = 2;
+    // optional .Documentation documentation = 2;
     private boolean hasDocumentation;
-    private java.lang.String documentation_ = "";
+    private noop.model.proto.Noop.Documentation documentation_ = noop.model.proto.Noop.Documentation.getDefaultInstance();
     public boolean hasDocumentation() { return hasDocumentation; }
-    public java.lang.String getDocumentation() { return documentation_; }
+    public noop.model.proto.Noop.Documentation getDocumentation() { return documentation_; }
     
-    // repeated .Binding binding = 3;
-    public static final int BINDING_FIELD_NUMBER = 3;
+    // optional string copyright = 3;
+    private boolean hasCopyright;
+    private java.lang.String copyright_ = "";
+    public boolean hasCopyright() { return hasCopyright; }
+    public java.lang.String getCopyright() { return copyright_; }
+    
+    // repeated .Binding binding = 4;
     private java.util.List<noop.model.proto.Noop.Binding> binding_ =
       java.util.Collections.emptyList();
     public java.util.List<noop.model.proto.Noop.Binding> getBindingList() {
@@ -122,8 +449,7 @@ public final class Noop {
       return binding_.get(index);
     }
     
-    // repeated .Alias alias = 4;
-    public static final int ALIAS_FIELD_NUMBER = 4;
+    // repeated .Alias alias = 5;
     private java.util.List<noop.model.proto.Noop.Alias> alias_ =
       java.util.Collections.emptyList();
     public java.util.List<noop.model.proto.Noop.Alias> getAliasList() {
@@ -134,8 +460,7 @@ public final class Noop {
       return alias_.get(index);
     }
     
-    // repeated .Interface interface = 5;
-    public static final int INTERFACE_FIELD_NUMBER = 5;
+    // repeated .Interface interface = 6;
     private java.util.List<noop.model.proto.Noop.Interface> interface_ =
       java.util.Collections.emptyList();
     public java.util.List<noop.model.proto.Noop.Interface> getInterfaceList() {
@@ -146,8 +471,7 @@ public final class Noop {
       return interface_.get(index);
     }
     
-    // repeated .ConcreteClass concrete_class = 6;
-    public static final int CONCRETE_CLASS_FIELD_NUMBER = 6;
+    // repeated .ConcreteClass concrete_class = 7;
     private java.util.List<noop.model.proto.Noop.ConcreteClass> concreteClass_ =
       java.util.Collections.emptyList();
     public java.util.List<noop.model.proto.Noop.ConcreteClass> getConcreteClassList() {
@@ -158,79 +482,15 @@ public final class Noop {
       return concreteClass_.get(index);
     }
     
-    public final boolean isInitialized() {
-      if (!hasName) return false;
-      for (noop.model.proto.Noop.Binding element : getBindingList()) {
-        if (!element.isInitialized()) return false;
-      }
-      for (noop.model.proto.Noop.Alias element : getAliasList()) {
-        if (!element.isInitialized()) return false;
-      }
-      for (noop.model.proto.Noop.Interface element : getInterfaceList()) {
-        if (!element.isInitialized()) return false;
-      }
-      for (noop.model.proto.Noop.ConcreteClass element : getConcreteClassList()) {
-        if (!element.isInitialized()) return false;
-      }
-      return true;
+    // repeated .Test test = 8;
+    private java.util.List<noop.model.proto.Noop.Test> test_ =
+      java.util.Collections.emptyList();
+    public java.util.List<noop.model.proto.Noop.Test> getTestList() {
+      return test_;
     }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasName()) {
-        output.writeString(1, getName());
-      }
-      if (hasDocumentation()) {
-        output.writeString(2, getDocumentation());
-      }
-      for (noop.model.proto.Noop.Binding element : getBindingList()) {
-        output.writeMessage(3, element);
-      }
-      for (noop.model.proto.Noop.Alias element : getAliasList()) {
-        output.writeMessage(4, element);
-      }
-      for (noop.model.proto.Noop.Interface element : getInterfaceList()) {
-        output.writeMessage(5, element);
-      }
-      for (noop.model.proto.Noop.ConcreteClass element : getConcreteClassList()) {
-        output.writeMessage(6, element);
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasName()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getName());
-      }
-      if (hasDocumentation()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getDocumentation());
-      }
-      for (noop.model.proto.Noop.Binding element : getBindingList()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, element);
-      }
-      for (noop.model.proto.Noop.Alias element : getAliasList()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, element);
-      }
-      for (noop.model.proto.Noop.Interface element : getInterfaceList()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, element);
-      }
-      for (noop.model.proto.Noop.ConcreteClass element : getConcreteClassList()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(6, element);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
+    public int getTestCount() { return test_.size(); }
+    public noop.model.proto.Noop.Test getTest(int index) {
+      return test_.get(index);
     }
     
     public static noop.model.proto.Noop.Module parseFrom(
@@ -240,7 +500,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Module parseFrom(
         com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -251,7 +511,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Module parseFrom(
         byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -262,20 +522,9 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Module parseFrom(
         java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static noop.model.proto.Noop.Module parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input).buildParsed();
-    }
-    public static noop.model.proto.Noop.Module parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
                .buildParsed();
     }
     public static noop.model.proto.Noop.Module parseFrom(
@@ -285,49 +534,42 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Module parseFrom(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
     
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
     public static Builder newBuilder(noop.model.proto.Noop.Module prototype) {
-      return newBuilder().mergeFrom(prototype);
+      return new Builder().mergeFrom(prototype);
     }
-    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private noop.model.proto.Noop.Module result;
-      
       // Construct using noop.model.proto.Noop.Module.newBuilder()
       private Builder() {}
       
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new noop.model.proto.Noop.Module();
-        return builder;
-      }
+      noop.model.proto.Noop.Module result = new noop.model.proto.Noop.Module();
       
+      @Override
       protected noop.model.proto.Noop.Module internalGetResult() {
         return result;
       }
       
+      @Override
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
         result = new noop.model.proto.Noop.Module();
         return this;
       }
       
+      @Override
       public Builder clone() {
-        return create().mergeFrom(result);
+        return new Builder().mergeFrom(result);
       }
       
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return noop.model.proto.Noop.Module.getDescriptor();
@@ -337,12 +579,10 @@ public final class Noop {
         return noop.model.proto.Noop.Module.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public noop.model.proto.Noop.Module build() {
-        if (result != null && !isInitialized()) {
-          throw newUninitializedMessageException(result);
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
         }
         return buildPartial();
       }
@@ -350,17 +590,13 @@ public final class Noop {
       private noop.model.proto.Noop.Module buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
         if (!isInitialized()) {
-          throw newUninitializedMessageException(
+          throw new com.google.protobuf.UninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
         return buildPartial();
       }
       
       public noop.model.proto.Noop.Module buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
-        }
         if (result.binding_ != java.util.Collections.EMPTY_LIST) {
           result.binding_ =
             java.util.Collections.unmodifiableList(result.binding_);
@@ -377,111 +613,13 @@ public final class Noop {
           result.concreteClass_ =
             java.util.Collections.unmodifiableList(result.concreteClass_);
         }
+        if (result.test_ != java.util.Collections.EMPTY_LIST) {
+          result.test_ =
+            java.util.Collections.unmodifiableList(result.test_);
+        }
         noop.model.proto.Noop.Module returnMe = result;
         result = null;
         return returnMe;
-      }
-      
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof noop.model.proto.Noop.Module) {
-          return mergeFrom((noop.model.proto.Noop.Module)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(noop.model.proto.Noop.Module other) {
-        if (other == noop.model.proto.Noop.Module.getDefaultInstance()) return this;
-        if (other.hasName()) {
-          setName(other.getName());
-        }
-        if (other.hasDocumentation()) {
-          setDocumentation(other.getDocumentation());
-        }
-        if (!other.binding_.isEmpty()) {
-          if (result.binding_.isEmpty()) {
-            result.binding_ = new java.util.ArrayList<noop.model.proto.Noop.Binding>();
-          }
-          result.binding_.addAll(other.binding_);
-        }
-        if (!other.alias_.isEmpty()) {
-          if (result.alias_.isEmpty()) {
-            result.alias_ = new java.util.ArrayList<noop.model.proto.Noop.Alias>();
-          }
-          result.alias_.addAll(other.alias_);
-        }
-        if (!other.interface_.isEmpty()) {
-          if (result.interface_.isEmpty()) {
-            result.interface_ = new java.util.ArrayList<noop.model.proto.Noop.Interface>();
-          }
-          result.interface_.addAll(other.interface_);
-        }
-        if (!other.concreteClass_.isEmpty()) {
-          if (result.concreteClass_.isEmpty()) {
-            result.concreteClass_ = new java.util.ArrayList<noop.model.proto.Noop.ConcreteClass>();
-          }
-          result.concreteClass_.addAll(other.concreteClass_);
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              setName(input.readString());
-              break;
-            }
-            case 18: {
-              setDocumentation(input.readString());
-              break;
-            }
-            case 26: {
-              noop.model.proto.Noop.Binding.Builder subBuilder = noop.model.proto.Noop.Binding.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addBinding(subBuilder.buildPartial());
-              break;
-            }
-            case 34: {
-              noop.model.proto.Noop.Alias.Builder subBuilder = noop.model.proto.Noop.Alias.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addAlias(subBuilder.buildPartial());
-              break;
-            }
-            case 42: {
-              noop.model.proto.Noop.Interface.Builder subBuilder = noop.model.proto.Noop.Interface.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addInterface(subBuilder.buildPartial());
-              break;
-            }
-            case 50: {
-              noop.model.proto.Noop.ConcreteClass.Builder subBuilder = noop.model.proto.Noop.ConcreteClass.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addConcreteClass(subBuilder.buildPartial());
-              break;
-            }
-          }
-        }
       }
       
       
@@ -493,41 +631,69 @@ public final class Noop {
         return result.getName();
       }
       public Builder setName(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasName = true;
+        result.hasName = true;
         result.name_ = value;
         return this;
       }
       public Builder clearName() {
         result.hasName = false;
-        result.name_ = getDefaultInstance().getName();
+        result.name_ = "";
         return this;
       }
       
-      // optional string documentation = 2;
+      // optional .Documentation documentation = 2;
       public boolean hasDocumentation() {
         return result.hasDocumentation();
       }
-      public java.lang.String getDocumentation() {
+      public noop.model.proto.Noop.Documentation getDocumentation() {
         return result.getDocumentation();
       }
-      public Builder setDocumentation(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasDocumentation = true;
+      public Builder setDocumentation(noop.model.proto.Noop.Documentation value) {
+        result.hasDocumentation = true;
         result.documentation_ = value;
+        return this;
+      }
+      public Builder setDocumentation(noop.model.proto.Noop.Documentation.Builder builderForValue) {
+        result.hasDocumentation = true;
+        result.documentation_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeDocumentation(noop.model.proto.Noop.Documentation value) {
+        if (result.hasDocumentation() &&
+            result.documentation_ != noop.model.proto.Noop.Documentation.getDefaultInstance()) {
+          result.documentation_ =
+            noop.model.proto.Noop.Documentation.newBuilder(result.documentation_).mergeFrom(value).buildPartial();
+        } else {
+          result.documentation_ = value;
+        }
+        result.hasDocumentation = true;
         return this;
       }
       public Builder clearDocumentation() {
         result.hasDocumentation = false;
-        result.documentation_ = getDefaultInstance().getDocumentation();
+        result.documentation_ = noop.model.proto.Noop.Documentation.getDefaultInstance();
         return this;
       }
       
-      // repeated .Binding binding = 3;
+      // optional string copyright = 3;
+      public boolean hasCopyright() {
+        return result.hasCopyright();
+      }
+      public java.lang.String getCopyright() {
+        return result.getCopyright();
+      }
+      public Builder setCopyright(java.lang.String value) {
+        result.hasCopyright = true;
+        result.copyright_ = value;
+        return this;
+      }
+      public Builder clearCopyright() {
+        result.hasCopyright = false;
+        result.copyright_ = "";
+        return this;
+      }
+      
+      // repeated .Binding binding = 4;
       public java.util.List<noop.model.proto.Noop.Binding> getBindingList() {
         return java.util.Collections.unmodifiableList(result.binding_);
       }
@@ -538,9 +704,6 @@ public final class Noop {
         return result.getBinding(index);
       }
       public Builder setBinding(int index, noop.model.proto.Noop.Binding value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.binding_.set(index, value);
         return this;
       }
@@ -549,9 +712,6 @@ public final class Noop {
         return this;
       }
       public Builder addBinding(noop.model.proto.Noop.Binding value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         if (result.binding_.isEmpty()) {
           result.binding_ = new java.util.ArrayList<noop.model.proto.Noop.Binding>();
         }
@@ -578,7 +738,7 @@ public final class Noop {
         return this;
       }
       
-      // repeated .Alias alias = 4;
+      // repeated .Alias alias = 5;
       public java.util.List<noop.model.proto.Noop.Alias> getAliasList() {
         return java.util.Collections.unmodifiableList(result.alias_);
       }
@@ -589,9 +749,6 @@ public final class Noop {
         return result.getAlias(index);
       }
       public Builder setAlias(int index, noop.model.proto.Noop.Alias value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.alias_.set(index, value);
         return this;
       }
@@ -600,9 +757,6 @@ public final class Noop {
         return this;
       }
       public Builder addAlias(noop.model.proto.Noop.Alias value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         if (result.alias_.isEmpty()) {
           result.alias_ = new java.util.ArrayList<noop.model.proto.Noop.Alias>();
         }
@@ -629,7 +783,7 @@ public final class Noop {
         return this;
       }
       
-      // repeated .Interface interface = 5;
+      // repeated .Interface interface = 6;
       public java.util.List<noop.model.proto.Noop.Interface> getInterfaceList() {
         return java.util.Collections.unmodifiableList(result.interface_);
       }
@@ -640,9 +794,6 @@ public final class Noop {
         return result.getInterface(index);
       }
       public Builder setInterface(int index, noop.model.proto.Noop.Interface value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.interface_.set(index, value);
         return this;
       }
@@ -651,9 +802,6 @@ public final class Noop {
         return this;
       }
       public Builder addInterface(noop.model.proto.Noop.Interface value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         if (result.interface_.isEmpty()) {
           result.interface_ = new java.util.ArrayList<noop.model.proto.Noop.Interface>();
         }
@@ -680,7 +828,7 @@ public final class Noop {
         return this;
       }
       
-      // repeated .ConcreteClass concrete_class = 6;
+      // repeated .ConcreteClass concrete_class = 7;
       public java.util.List<noop.model.proto.Noop.ConcreteClass> getConcreteClassList() {
         return java.util.Collections.unmodifiableList(result.concreteClass_);
       }
@@ -691,9 +839,6 @@ public final class Noop {
         return result.getConcreteClass(index);
       }
       public Builder setConcreteClass(int index, noop.model.proto.Noop.ConcreteClass value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.concreteClass_.set(index, value);
         return this;
       }
@@ -702,9 +847,6 @@ public final class Noop {
         return this;
       }
       public Builder addConcreteClass(noop.model.proto.Noop.ConcreteClass value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         if (result.concreteClass_.isEmpty()) {
           result.concreteClass_ = new java.util.ArrayList<noop.model.proto.Noop.ConcreteClass>();
         }
@@ -730,14 +872,55 @@ public final class Noop {
         result.concreteClass_ = java.util.Collections.emptyList();
         return this;
       }
+      
+      // repeated .Test test = 8;
+      public java.util.List<noop.model.proto.Noop.Test> getTestList() {
+        return java.util.Collections.unmodifiableList(result.test_);
+      }
+      public int getTestCount() {
+        return result.getTestCount();
+      }
+      public noop.model.proto.Noop.Test getTest(int index) {
+        return result.getTest(index);
+      }
+      public Builder setTest(int index, noop.model.proto.Noop.Test value) {
+        result.test_.set(index, value);
+        return this;
+      }
+      public Builder setTest(int index, noop.model.proto.Noop.Test.Builder builderForValue) {
+        result.test_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addTest(noop.model.proto.Noop.Test value) {
+        if (result.test_.isEmpty()) {
+          result.test_ = new java.util.ArrayList<noop.model.proto.Noop.Test>();
+        }
+        result.test_.add(value);
+        return this;
+      }
+      public Builder addTest(noop.model.proto.Noop.Test.Builder builderForValue) {
+        if (result.test_.isEmpty()) {
+          result.test_ = new java.util.ArrayList<noop.model.proto.Noop.Test>();
+        }
+        result.test_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllTest(
+          java.lang.Iterable<? extends noop.model.proto.Noop.Test> values) {
+        if (result.test_.isEmpty()) {
+          result.test_ = new java.util.ArrayList<noop.model.proto.Noop.Test>();
+        }
+        super.addAll(values, result.test_);
+        return this;
+      }
+      public Builder clearTest() {
+        result.test_ = java.util.Collections.emptyList();
+        return this;
+      }
     }
     
     static {
       noop.model.proto.Noop.getDescriptor();
-    }
-    
-    static {
-      noop.model.proto.Noop.internalForceInit();
     }
   }
   
@@ -760,27 +943,25 @@ public final class Noop {
       return noop.model.proto.Noop.internal_static_ConcreteClass_descriptor;
     }
     
+    @Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return noop.model.proto.Noop.internal_static_ConcreteClass_fieldAccessorTable;
     }
     
     // required string name = 1;
-    public static final int NAME_FIELD_NUMBER = 1;
     private boolean hasName;
     private java.lang.String name_ = "";
     public boolean hasName() { return hasName; }
     public java.lang.String getName() { return name_; }
     
-    // optional string documentation = 2;
-    public static final int DOCUMENTATION_FIELD_NUMBER = 2;
+    // optional .Documentation documentation = 2;
     private boolean hasDocumentation;
-    private java.lang.String documentation_ = "";
+    private noop.model.proto.Noop.Documentation documentation_ = noop.model.proto.Noop.Documentation.getDefaultInstance();
     public boolean hasDocumentation() { return hasDocumentation; }
-    public java.lang.String getDocumentation() { return documentation_; }
+    public noop.model.proto.Noop.Documentation getDocumentation() { return documentation_; }
     
     // repeated string super_type = 3;
-    public static final int SUPER_TYPE_FIELD_NUMBER = 3;
     private java.util.List<java.lang.String> superType_ =
       java.util.Collections.emptyList();
     public java.util.List<java.lang.String> getSuperTypeList() {
@@ -792,7 +973,6 @@ public final class Noop {
     }
     
     // repeated .Property property = 4;
-    public static final int PROPERTY_FIELD_NUMBER = 4;
     private java.util.List<noop.model.proto.Noop.Property> property_ =
       java.util.Collections.emptyList();
     public java.util.List<noop.model.proto.Noop.Property> getPropertyList() {
@@ -804,7 +984,6 @@ public final class Noop {
     }
     
     // repeated .Method method = 5;
-    public static final int METHOD_FIELD_NUMBER = 5;
     private java.util.List<noop.model.proto.Noop.Method> method_ =
       java.util.Collections.emptyList();
     public java.util.List<noop.model.proto.Noop.Method> getMethodList() {
@@ -816,7 +995,6 @@ public final class Noop {
     }
     
     // repeated .Unittest unittest = 6;
-    public static final int UNITTEST_FIELD_NUMBER = 6;
     private java.util.List<noop.model.proto.Noop.Unittest> unittest_ =
       java.util.Collections.emptyList();
     public java.util.List<noop.model.proto.Noop.Unittest> getUnittestList() {
@@ -827,83 +1005,6 @@ public final class Noop {
       return unittest_.get(index);
     }
     
-    public final boolean isInitialized() {
-      if (!hasName) return false;
-      for (noop.model.proto.Noop.Property element : getPropertyList()) {
-        if (!element.isInitialized()) return false;
-      }
-      for (noop.model.proto.Noop.Method element : getMethodList()) {
-        if (!element.isInitialized()) return false;
-      }
-      for (noop.model.proto.Noop.Unittest element : getUnittestList()) {
-        if (!element.isInitialized()) return false;
-      }
-      return true;
-    }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasName()) {
-        output.writeString(1, getName());
-      }
-      if (hasDocumentation()) {
-        output.writeString(2, getDocumentation());
-      }
-      for (java.lang.String element : getSuperTypeList()) {
-        output.writeString(3, element);
-      }
-      for (noop.model.proto.Noop.Property element : getPropertyList()) {
-        output.writeMessage(4, element);
-      }
-      for (noop.model.proto.Noop.Method element : getMethodList()) {
-        output.writeMessage(5, element);
-      }
-      for (noop.model.proto.Noop.Unittest element : getUnittestList()) {
-        output.writeMessage(6, element);
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasName()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getName());
-      }
-      if (hasDocumentation()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getDocumentation());
-      }
-      {
-        int dataSize = 0;
-        for (java.lang.String element : getSuperTypeList()) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeStringSizeNoTag(element);
-        }
-        size += dataSize;
-        size += 1 * getSuperTypeList().size();
-      }
-      for (noop.model.proto.Noop.Property element : getPropertyList()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, element);
-      }
-      for (noop.model.proto.Noop.Method element : getMethodList()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, element);
-      }
-      for (noop.model.proto.Noop.Unittest element : getUnittestList()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(6, element);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
     public static noop.model.proto.Noop.ConcreteClass parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -911,7 +1012,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.ConcreteClass parseFrom(
         com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -922,7 +1023,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.ConcreteClass parseFrom(
         byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -933,20 +1034,9 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.ConcreteClass parseFrom(
         java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static noop.model.proto.Noop.ConcreteClass parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input).buildParsed();
-    }
-    public static noop.model.proto.Noop.ConcreteClass parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
                .buildParsed();
     }
     public static noop.model.proto.Noop.ConcreteClass parseFrom(
@@ -956,49 +1046,42 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.ConcreteClass parseFrom(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
     
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
     public static Builder newBuilder(noop.model.proto.Noop.ConcreteClass prototype) {
-      return newBuilder().mergeFrom(prototype);
+      return new Builder().mergeFrom(prototype);
     }
-    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private noop.model.proto.Noop.ConcreteClass result;
-      
       // Construct using noop.model.proto.Noop.ConcreteClass.newBuilder()
       private Builder() {}
       
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new noop.model.proto.Noop.ConcreteClass();
-        return builder;
-      }
+      noop.model.proto.Noop.ConcreteClass result = new noop.model.proto.Noop.ConcreteClass();
       
+      @Override
       protected noop.model.proto.Noop.ConcreteClass internalGetResult() {
         return result;
       }
       
+      @Override
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
         result = new noop.model.proto.Noop.ConcreteClass();
         return this;
       }
       
+      @Override
       public Builder clone() {
-        return create().mergeFrom(result);
+        return new Builder().mergeFrom(result);
       }
       
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return noop.model.proto.Noop.ConcreteClass.getDescriptor();
@@ -1008,12 +1091,10 @@ public final class Noop {
         return noop.model.proto.Noop.ConcreteClass.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public noop.model.proto.Noop.ConcreteClass build() {
-        if (result != null && !isInitialized()) {
-          throw newUninitializedMessageException(result);
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
         }
         return buildPartial();
       }
@@ -1021,17 +1102,13 @@ public final class Noop {
       private noop.model.proto.Noop.ConcreteClass buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
         if (!isInitialized()) {
-          throw newUninitializedMessageException(
+          throw new com.google.protobuf.UninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
         return buildPartial();
       }
       
       public noop.model.proto.Noop.ConcreteClass buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
-        }
         if (result.superType_ != java.util.Collections.EMPTY_LIST) {
           result.superType_ =
             java.util.Collections.unmodifiableList(result.superType_);
@@ -1053,106 +1130,6 @@ public final class Noop {
         return returnMe;
       }
       
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof noop.model.proto.Noop.ConcreteClass) {
-          return mergeFrom((noop.model.proto.Noop.ConcreteClass)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(noop.model.proto.Noop.ConcreteClass other) {
-        if (other == noop.model.proto.Noop.ConcreteClass.getDefaultInstance()) return this;
-        if (other.hasName()) {
-          setName(other.getName());
-        }
-        if (other.hasDocumentation()) {
-          setDocumentation(other.getDocumentation());
-        }
-        if (!other.superType_.isEmpty()) {
-          if (result.superType_.isEmpty()) {
-            result.superType_ = new java.util.ArrayList<java.lang.String>();
-          }
-          result.superType_.addAll(other.superType_);
-        }
-        if (!other.property_.isEmpty()) {
-          if (result.property_.isEmpty()) {
-            result.property_ = new java.util.ArrayList<noop.model.proto.Noop.Property>();
-          }
-          result.property_.addAll(other.property_);
-        }
-        if (!other.method_.isEmpty()) {
-          if (result.method_.isEmpty()) {
-            result.method_ = new java.util.ArrayList<noop.model.proto.Noop.Method>();
-          }
-          result.method_.addAll(other.method_);
-        }
-        if (!other.unittest_.isEmpty()) {
-          if (result.unittest_.isEmpty()) {
-            result.unittest_ = new java.util.ArrayList<noop.model.proto.Noop.Unittest>();
-          }
-          result.unittest_.addAll(other.unittest_);
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              setName(input.readString());
-              break;
-            }
-            case 18: {
-              setDocumentation(input.readString());
-              break;
-            }
-            case 26: {
-              addSuperType(input.readString());
-              break;
-            }
-            case 34: {
-              noop.model.proto.Noop.Property.Builder subBuilder = noop.model.proto.Noop.Property.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addProperty(subBuilder.buildPartial());
-              break;
-            }
-            case 42: {
-              noop.model.proto.Noop.Method.Builder subBuilder = noop.model.proto.Noop.Method.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addMethod(subBuilder.buildPartial());
-              break;
-            }
-            case 50: {
-              noop.model.proto.Noop.Unittest.Builder subBuilder = noop.model.proto.Noop.Unittest.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addUnittest(subBuilder.buildPartial());
-              break;
-            }
-          }
-        }
-      }
-      
       
       // required string name = 1;
       public boolean hasName() {
@@ -1162,37 +1139,47 @@ public final class Noop {
         return result.getName();
       }
       public Builder setName(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasName = true;
+        result.hasName = true;
         result.name_ = value;
         return this;
       }
       public Builder clearName() {
         result.hasName = false;
-        result.name_ = getDefaultInstance().getName();
+        result.name_ = "";
         return this;
       }
       
-      // optional string documentation = 2;
+      // optional .Documentation documentation = 2;
       public boolean hasDocumentation() {
         return result.hasDocumentation();
       }
-      public java.lang.String getDocumentation() {
+      public noop.model.proto.Noop.Documentation getDocumentation() {
         return result.getDocumentation();
       }
-      public Builder setDocumentation(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasDocumentation = true;
+      public Builder setDocumentation(noop.model.proto.Noop.Documentation value) {
+        result.hasDocumentation = true;
         result.documentation_ = value;
+        return this;
+      }
+      public Builder setDocumentation(noop.model.proto.Noop.Documentation.Builder builderForValue) {
+        result.hasDocumentation = true;
+        result.documentation_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeDocumentation(noop.model.proto.Noop.Documentation value) {
+        if (result.hasDocumentation() &&
+            result.documentation_ != noop.model.proto.Noop.Documentation.getDefaultInstance()) {
+          result.documentation_ =
+            noop.model.proto.Noop.Documentation.newBuilder(result.documentation_).mergeFrom(value).buildPartial();
+        } else {
+          result.documentation_ = value;
+        }
+        result.hasDocumentation = true;
         return this;
       }
       public Builder clearDocumentation() {
         result.hasDocumentation = false;
-        result.documentation_ = getDefaultInstance().getDocumentation();
+        result.documentation_ = noop.model.proto.Noop.Documentation.getDefaultInstance();
         return this;
       }
       
@@ -1207,17 +1194,11 @@ public final class Noop {
         return result.getSuperType(index);
       }
       public Builder setSuperType(int index, java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.superType_.set(index, value);
+        result.superType_.set(index, value);
         return this;
       }
       public Builder addSuperType(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  if (result.superType_.isEmpty()) {
+        if (result.superType_.isEmpty()) {
           result.superType_ = new java.util.ArrayList<java.lang.String>();
         }
         result.superType_.add(value);
@@ -1247,9 +1228,6 @@ public final class Noop {
         return result.getProperty(index);
       }
       public Builder setProperty(int index, noop.model.proto.Noop.Property value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.property_.set(index, value);
         return this;
       }
@@ -1258,9 +1236,6 @@ public final class Noop {
         return this;
       }
       public Builder addProperty(noop.model.proto.Noop.Property value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         if (result.property_.isEmpty()) {
           result.property_ = new java.util.ArrayList<noop.model.proto.Noop.Property>();
         }
@@ -1298,9 +1273,6 @@ public final class Noop {
         return result.getMethod(index);
       }
       public Builder setMethod(int index, noop.model.proto.Noop.Method value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.method_.set(index, value);
         return this;
       }
@@ -1309,9 +1281,6 @@ public final class Noop {
         return this;
       }
       public Builder addMethod(noop.model.proto.Noop.Method value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         if (result.method_.isEmpty()) {
           result.method_ = new java.util.ArrayList<noop.model.proto.Noop.Method>();
         }
@@ -1349,9 +1318,6 @@ public final class Noop {
         return result.getUnittest(index);
       }
       public Builder setUnittest(int index, noop.model.proto.Noop.Unittest value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.unittest_.set(index, value);
         return this;
       }
@@ -1360,9 +1326,6 @@ public final class Noop {
         return this;
       }
       public Builder addUnittest(noop.model.proto.Noop.Unittest value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         if (result.unittest_.isEmpty()) {
           result.unittest_ = new java.util.ArrayList<noop.model.proto.Noop.Unittest>();
         }
@@ -1393,10 +1356,6 @@ public final class Noop {
     static {
       noop.model.proto.Noop.getDescriptor();
     }
-    
-    static {
-      noop.model.proto.Noop.internalForceInit();
-    }
   }
   
   public static final class Property extends
@@ -1418,27 +1377,25 @@ public final class Noop {
       return noop.model.proto.Noop.internal_static_Property_descriptor;
     }
     
+    @Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return noop.model.proto.Noop.internal_static_Property_fieldAccessorTable;
     }
     
     // required string name = 1;
-    public static final int NAME_FIELD_NUMBER = 1;
     private boolean hasName;
     private java.lang.String name_ = "";
     public boolean hasName() { return hasName; }
     public java.lang.String getName() { return name_; }
     
     // required string type = 2;
-    public static final int TYPE_FIELD_NUMBER = 2;
     private boolean hasType;
     private java.lang.String type_ = "";
     public boolean hasType() { return hasType; }
     public java.lang.String getType() { return type_; }
     
     // repeated .Modifier modifier = 3;
-    public static final int MODIFIER_FIELD_NUMBER = 3;
     private java.util.List<noop.model.proto.Noop.Modifier> modifier_ =
       java.util.Collections.emptyList();
     public java.util.List<noop.model.proto.Noop.Modifier> getModifierList() {
@@ -1449,67 +1406,11 @@ public final class Noop {
       return modifier_.get(index);
     }
     
-    // optional string documentation = 4;
-    public static final int DOCUMENTATION_FIELD_NUMBER = 4;
+    // optional .Documentation documentation = 4;
     private boolean hasDocumentation;
-    private java.lang.String documentation_ = "";
+    private noop.model.proto.Noop.Documentation documentation_ = noop.model.proto.Noop.Documentation.getDefaultInstance();
     public boolean hasDocumentation() { return hasDocumentation; }
-    public java.lang.String getDocumentation() { return documentation_; }
-    
-    public final boolean isInitialized() {
-      if (!hasName) return false;
-      if (!hasType) return false;
-      return true;
-    }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasName()) {
-        output.writeString(1, getName());
-      }
-      if (hasType()) {
-        output.writeString(2, getType());
-      }
-      for (noop.model.proto.Noop.Modifier element : getModifierList()) {
-        output.writeEnum(3, element.getNumber());
-      }
-      if (hasDocumentation()) {
-        output.writeString(4, getDocumentation());
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasName()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getName());
-      }
-      if (hasType()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getType());
-      }
-      {
-        int dataSize = 0;
-        for (noop.model.proto.Noop.Modifier element : getModifierList()) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeEnumSizeNoTag(element.getNumber());
-        }
-        size += dataSize;
-        size += 1 * getModifierList().size();
-      }
-      if (hasDocumentation()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(4, getDocumentation());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
+    public noop.model.proto.Noop.Documentation getDocumentation() { return documentation_; }
     
     public static noop.model.proto.Noop.Property parseFrom(
         com.google.protobuf.ByteString data)
@@ -1518,7 +1419,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Property parseFrom(
         com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -1529,7 +1430,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Property parseFrom(
         byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -1540,20 +1441,9 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Property parseFrom(
         java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static noop.model.proto.Noop.Property parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input).buildParsed();
-    }
-    public static noop.model.proto.Noop.Property parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
                .buildParsed();
     }
     public static noop.model.proto.Noop.Property parseFrom(
@@ -1563,49 +1453,42 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Property parseFrom(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
     
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
     public static Builder newBuilder(noop.model.proto.Noop.Property prototype) {
-      return newBuilder().mergeFrom(prototype);
+      return new Builder().mergeFrom(prototype);
     }
-    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private noop.model.proto.Noop.Property result;
-      
       // Construct using noop.model.proto.Noop.Property.newBuilder()
       private Builder() {}
       
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new noop.model.proto.Noop.Property();
-        return builder;
-      }
+      noop.model.proto.Noop.Property result = new noop.model.proto.Noop.Property();
       
+      @Override
       protected noop.model.proto.Noop.Property internalGetResult() {
         return result;
       }
       
+      @Override
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
         result = new noop.model.proto.Noop.Property();
         return this;
       }
       
+      @Override
       public Builder clone() {
-        return create().mergeFrom(result);
+        return new Builder().mergeFrom(result);
       }
       
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return noop.model.proto.Noop.Property.getDescriptor();
@@ -1615,12 +1498,10 @@ public final class Noop {
         return noop.model.proto.Noop.Property.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public noop.model.proto.Noop.Property build() {
-        if (result != null && !isInitialized()) {
-          throw newUninitializedMessageException(result);
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
         }
         return buildPartial();
       }
@@ -1628,17 +1509,13 @@ public final class Noop {
       private noop.model.proto.Noop.Property buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
         if (!isInitialized()) {
-          throw newUninitializedMessageException(
+          throw new com.google.protobuf.UninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
         return buildPartial();
       }
       
       public noop.model.proto.Noop.Property buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
-        }
         if (result.modifier_ != java.util.Collections.EMPTY_LIST) {
           result.modifier_ =
             java.util.Collections.unmodifiableList(result.modifier_);
@@ -1646,83 +1523,6 @@ public final class Noop {
         noop.model.proto.Noop.Property returnMe = result;
         result = null;
         return returnMe;
-      }
-      
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof noop.model.proto.Noop.Property) {
-          return mergeFrom((noop.model.proto.Noop.Property)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(noop.model.proto.Noop.Property other) {
-        if (other == noop.model.proto.Noop.Property.getDefaultInstance()) return this;
-        if (other.hasName()) {
-          setName(other.getName());
-        }
-        if (other.hasType()) {
-          setType(other.getType());
-        }
-        if (!other.modifier_.isEmpty()) {
-          if (result.modifier_.isEmpty()) {
-            result.modifier_ = new java.util.ArrayList<noop.model.proto.Noop.Modifier>();
-          }
-          result.modifier_.addAll(other.modifier_);
-        }
-        if (other.hasDocumentation()) {
-          setDocumentation(other.getDocumentation());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              setName(input.readString());
-              break;
-            }
-            case 18: {
-              setType(input.readString());
-              break;
-            }
-            case 24: {
-              int rawValue = input.readEnum();
-              noop.model.proto.Noop.Modifier value = noop.model.proto.Noop.Modifier.valueOf(rawValue);
-              if (value == null) {
-                unknownFields.mergeVarintField(3, rawValue);
-              } else {
-                addModifier(value);
-              }
-              break;
-            }
-            case 34: {
-              setDocumentation(input.readString());
-              break;
-            }
-          }
-        }
       }
       
       
@@ -1734,16 +1534,13 @@ public final class Noop {
         return result.getName();
       }
       public Builder setName(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasName = true;
+        result.hasName = true;
         result.name_ = value;
         return this;
       }
       public Builder clearName() {
         result.hasName = false;
-        result.name_ = getDefaultInstance().getName();
+        result.name_ = "";
         return this;
       }
       
@@ -1755,16 +1552,13 @@ public final class Noop {
         return result.getType();
       }
       public Builder setType(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasType = true;
+        result.hasType = true;
         result.type_ = value;
         return this;
       }
       public Builder clearType() {
         result.hasType = false;
-        result.type_ = getDefaultInstance().getType();
+        result.type_ = "";
         return this;
       }
       
@@ -1779,16 +1573,10 @@ public final class Noop {
         return result.getModifier(index);
       }
       public Builder setModifier(int index, noop.model.proto.Noop.Modifier value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.modifier_.set(index, value);
         return this;
       }
       public Builder addModifier(noop.model.proto.Noop.Modifier value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         if (result.modifier_.isEmpty()) {
           result.modifier_ = new java.util.ArrayList<noop.model.proto.Noop.Modifier>();
         }
@@ -1808,34 +1596,43 @@ public final class Noop {
         return this;
       }
       
-      // optional string documentation = 4;
+      // optional .Documentation documentation = 4;
       public boolean hasDocumentation() {
         return result.hasDocumentation();
       }
-      public java.lang.String getDocumentation() {
+      public noop.model.proto.Noop.Documentation getDocumentation() {
         return result.getDocumentation();
       }
-      public Builder setDocumentation(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasDocumentation = true;
+      public Builder setDocumentation(noop.model.proto.Noop.Documentation value) {
+        result.hasDocumentation = true;
         result.documentation_ = value;
+        return this;
+      }
+      public Builder setDocumentation(noop.model.proto.Noop.Documentation.Builder builderForValue) {
+        result.hasDocumentation = true;
+        result.documentation_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeDocumentation(noop.model.proto.Noop.Documentation value) {
+        if (result.hasDocumentation() &&
+            result.documentation_ != noop.model.proto.Noop.Documentation.getDefaultInstance()) {
+          result.documentation_ =
+            noop.model.proto.Noop.Documentation.newBuilder(result.documentation_).mergeFrom(value).buildPartial();
+        } else {
+          result.documentation_ = value;
+        }
+        result.hasDocumentation = true;
         return this;
       }
       public Builder clearDocumentation() {
         result.hasDocumentation = false;
-        result.documentation_ = getDefaultInstance().getDocumentation();
+        result.documentation_ = noop.model.proto.Noop.Documentation.getDefaultInstance();
         return this;
       }
     }
     
     static {
       noop.model.proto.Noop.getDescriptor();
-    }
-    
-    static {
-      noop.model.proto.Noop.internalForceInit();
     }
   }
   
@@ -1858,27 +1655,25 @@ public final class Noop {
       return noop.model.proto.Noop.internal_static_Binding_descriptor;
     }
     
+    @Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return noop.model.proto.Noop.internal_static_Binding_fieldAccessorTable;
     }
     
     // required string name = 1;
-    public static final int NAME_FIELD_NUMBER = 1;
     private boolean hasName;
     private java.lang.String name_ = "";
     public boolean hasName() { return hasName; }
     public java.lang.String getName() { return name_; }
     
-    // optional string documentation = 2;
-    public static final int DOCUMENTATION_FIELD_NUMBER = 2;
+    // optional .Documentation documentation = 2;
     private boolean hasDocumentation;
-    private java.lang.String documentation_ = "";
+    private noop.model.proto.Noop.Documentation documentation_ = noop.model.proto.Noop.Documentation.getDefaultInstance();
     public boolean hasDocumentation() { return hasDocumentation; }
-    public java.lang.String getDocumentation() { return documentation_; }
+    public noop.model.proto.Noop.Documentation getDocumentation() { return documentation_; }
     
     // repeated .Modifier modifier = 3;
-    public static final int MODIFIER_FIELD_NUMBER = 3;
     private java.util.List<noop.model.proto.Noop.Modifier> modifier_ =
       java.util.Collections.emptyList();
     public java.util.List<noop.model.proto.Noop.Modifier> getModifierList() {
@@ -1890,67 +1685,10 @@ public final class Noop {
     }
     
     // required .BindingBlock block = 4;
-    public static final int BLOCK_FIELD_NUMBER = 4;
     private boolean hasBlock;
     private noop.model.proto.Noop.BindingBlock block_ = noop.model.proto.Noop.BindingBlock.getDefaultInstance();
     public boolean hasBlock() { return hasBlock; }
     public noop.model.proto.Noop.BindingBlock getBlock() { return block_; }
-    
-    public final boolean isInitialized() {
-      if (!hasName) return false;
-      if (!hasBlock) return false;
-      if (!getBlock().isInitialized()) return false;
-      return true;
-    }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasName()) {
-        output.writeString(1, getName());
-      }
-      if (hasDocumentation()) {
-        output.writeString(2, getDocumentation());
-      }
-      for (noop.model.proto.Noop.Modifier element : getModifierList()) {
-        output.writeEnum(3, element.getNumber());
-      }
-      if (hasBlock()) {
-        output.writeMessage(4, getBlock());
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasName()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getName());
-      }
-      if (hasDocumentation()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getDocumentation());
-      }
-      {
-        int dataSize = 0;
-        for (noop.model.proto.Noop.Modifier element : getModifierList()) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeEnumSizeNoTag(element.getNumber());
-        }
-        size += dataSize;
-        size += 1 * getModifierList().size();
-      }
-      if (hasBlock()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, getBlock());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
     
     public static noop.model.proto.Noop.Binding parseFrom(
         com.google.protobuf.ByteString data)
@@ -1959,7 +1697,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Binding parseFrom(
         com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -1970,7 +1708,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Binding parseFrom(
         byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -1981,20 +1719,9 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Binding parseFrom(
         java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static noop.model.proto.Noop.Binding parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input).buildParsed();
-    }
-    public static noop.model.proto.Noop.Binding parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
                .buildParsed();
     }
     public static noop.model.proto.Noop.Binding parseFrom(
@@ -2004,49 +1731,42 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Binding parseFrom(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
     
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
     public static Builder newBuilder(noop.model.proto.Noop.Binding prototype) {
-      return newBuilder().mergeFrom(prototype);
+      return new Builder().mergeFrom(prototype);
     }
-    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private noop.model.proto.Noop.Binding result;
-      
       // Construct using noop.model.proto.Noop.Binding.newBuilder()
       private Builder() {}
       
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new noop.model.proto.Noop.Binding();
-        return builder;
-      }
+      noop.model.proto.Noop.Binding result = new noop.model.proto.Noop.Binding();
       
+      @Override
       protected noop.model.proto.Noop.Binding internalGetResult() {
         return result;
       }
       
+      @Override
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
         result = new noop.model.proto.Noop.Binding();
         return this;
       }
       
+      @Override
       public Builder clone() {
-        return create().mergeFrom(result);
+        return new Builder().mergeFrom(result);
       }
       
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return noop.model.proto.Noop.Binding.getDescriptor();
@@ -2056,12 +1776,10 @@ public final class Noop {
         return noop.model.proto.Noop.Binding.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public noop.model.proto.Noop.Binding build() {
-        if (result != null && !isInitialized()) {
-          throw newUninitializedMessageException(result);
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
         }
         return buildPartial();
       }
@@ -2069,17 +1787,13 @@ public final class Noop {
       private noop.model.proto.Noop.Binding buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
         if (!isInitialized()) {
-          throw newUninitializedMessageException(
+          throw new com.google.protobuf.UninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
         return buildPartial();
       }
       
       public noop.model.proto.Noop.Binding buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
-        }
         if (result.modifier_ != java.util.Collections.EMPTY_LIST) {
           result.modifier_ =
             java.util.Collections.unmodifiableList(result.modifier_);
@@ -2087,88 +1801,6 @@ public final class Noop {
         noop.model.proto.Noop.Binding returnMe = result;
         result = null;
         return returnMe;
-      }
-      
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof noop.model.proto.Noop.Binding) {
-          return mergeFrom((noop.model.proto.Noop.Binding)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(noop.model.proto.Noop.Binding other) {
-        if (other == noop.model.proto.Noop.Binding.getDefaultInstance()) return this;
-        if (other.hasName()) {
-          setName(other.getName());
-        }
-        if (other.hasDocumentation()) {
-          setDocumentation(other.getDocumentation());
-        }
-        if (!other.modifier_.isEmpty()) {
-          if (result.modifier_.isEmpty()) {
-            result.modifier_ = new java.util.ArrayList<noop.model.proto.Noop.Modifier>();
-          }
-          result.modifier_.addAll(other.modifier_);
-        }
-        if (other.hasBlock()) {
-          mergeBlock(other.getBlock());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              setName(input.readString());
-              break;
-            }
-            case 18: {
-              setDocumentation(input.readString());
-              break;
-            }
-            case 24: {
-              int rawValue = input.readEnum();
-              noop.model.proto.Noop.Modifier value = noop.model.proto.Noop.Modifier.valueOf(rawValue);
-              if (value == null) {
-                unknownFields.mergeVarintField(3, rawValue);
-              } else {
-                addModifier(value);
-              }
-              break;
-            }
-            case 34: {
-              noop.model.proto.Noop.BindingBlock.Builder subBuilder = noop.model.proto.Noop.BindingBlock.newBuilder();
-              if (hasBlock()) {
-                subBuilder.mergeFrom(getBlock());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setBlock(subBuilder.buildPartial());
-              break;
-            }
-          }
-        }
       }
       
       
@@ -2180,37 +1812,47 @@ public final class Noop {
         return result.getName();
       }
       public Builder setName(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasName = true;
+        result.hasName = true;
         result.name_ = value;
         return this;
       }
       public Builder clearName() {
         result.hasName = false;
-        result.name_ = getDefaultInstance().getName();
+        result.name_ = "";
         return this;
       }
       
-      // optional string documentation = 2;
+      // optional .Documentation documentation = 2;
       public boolean hasDocumentation() {
         return result.hasDocumentation();
       }
-      public java.lang.String getDocumentation() {
+      public noop.model.proto.Noop.Documentation getDocumentation() {
         return result.getDocumentation();
       }
-      public Builder setDocumentation(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasDocumentation = true;
+      public Builder setDocumentation(noop.model.proto.Noop.Documentation value) {
+        result.hasDocumentation = true;
         result.documentation_ = value;
+        return this;
+      }
+      public Builder setDocumentation(noop.model.proto.Noop.Documentation.Builder builderForValue) {
+        result.hasDocumentation = true;
+        result.documentation_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeDocumentation(noop.model.proto.Noop.Documentation value) {
+        if (result.hasDocumentation() &&
+            result.documentation_ != noop.model.proto.Noop.Documentation.getDefaultInstance()) {
+          result.documentation_ =
+            noop.model.proto.Noop.Documentation.newBuilder(result.documentation_).mergeFrom(value).buildPartial();
+        } else {
+          result.documentation_ = value;
+        }
+        result.hasDocumentation = true;
         return this;
       }
       public Builder clearDocumentation() {
         result.hasDocumentation = false;
-        result.documentation_ = getDefaultInstance().getDocumentation();
+        result.documentation_ = noop.model.proto.Noop.Documentation.getDefaultInstance();
         return this;
       }
       
@@ -2225,16 +1867,10 @@ public final class Noop {
         return result.getModifier(index);
       }
       public Builder setModifier(int index, noop.model.proto.Noop.Modifier value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.modifier_.set(index, value);
         return this;
       }
       public Builder addModifier(noop.model.proto.Noop.Modifier value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         if (result.modifier_.isEmpty()) {
           result.modifier_ = new java.util.ArrayList<noop.model.proto.Noop.Modifier>();
         }
@@ -2262,9 +1898,6 @@ public final class Noop {
         return result.getBlock();
       }
       public Builder setBlock(noop.model.proto.Noop.BindingBlock value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.hasBlock = true;
         result.block_ = value;
         return this;
@@ -2295,10 +1928,6 @@ public final class Noop {
     static {
       noop.model.proto.Noop.getDescriptor();
     }
-    
-    static {
-      noop.model.proto.Noop.internalForceInit();
-    }
   }
   
   public static final class Interface extends
@@ -2320,27 +1949,25 @@ public final class Noop {
       return noop.model.proto.Noop.internal_static_Interface_descriptor;
     }
     
+    @Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return noop.model.proto.Noop.internal_static_Interface_fieldAccessorTable;
     }
     
     // required string name = 1;
-    public static final int NAME_FIELD_NUMBER = 1;
     private boolean hasName;
     private java.lang.String name_ = "";
     public boolean hasName() { return hasName; }
     public java.lang.String getName() { return name_; }
     
-    // optional string documentation = 2;
-    public static final int DOCUMENTATION_FIELD_NUMBER = 2;
+    // optional .Documentation documentation = 2;
     private boolean hasDocumentation;
-    private java.lang.String documentation_ = "";
+    private noop.model.proto.Noop.Documentation documentation_ = noop.model.proto.Noop.Documentation.getDefaultInstance();
     public boolean hasDocumentation() { return hasDocumentation; }
-    public java.lang.String getDocumentation() { return documentation_; }
+    public noop.model.proto.Noop.Documentation getDocumentation() { return documentation_; }
     
     // repeated .MethodSignature method = 3;
-    public static final int METHOD_FIELD_NUMBER = 3;
     private java.util.List<noop.model.proto.Noop.MethodSignature> method_ =
       java.util.Collections.emptyList();
     public java.util.List<noop.model.proto.Noop.MethodSignature> getMethodList() {
@@ -2351,51 +1978,6 @@ public final class Noop {
       return method_.get(index);
     }
     
-    public final boolean isInitialized() {
-      if (!hasName) return false;
-      for (noop.model.proto.Noop.MethodSignature element : getMethodList()) {
-        if (!element.isInitialized()) return false;
-      }
-      return true;
-    }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasName()) {
-        output.writeString(1, getName());
-      }
-      if (hasDocumentation()) {
-        output.writeString(2, getDocumentation());
-      }
-      for (noop.model.proto.Noop.MethodSignature element : getMethodList()) {
-        output.writeMessage(3, element);
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasName()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getName());
-      }
-      if (hasDocumentation()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getDocumentation());
-      }
-      for (noop.model.proto.Noop.MethodSignature element : getMethodList()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, element);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
     public static noop.model.proto.Noop.Interface parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -2403,7 +1985,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Interface parseFrom(
         com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -2414,7 +1996,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Interface parseFrom(
         byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -2425,20 +2007,9 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Interface parseFrom(
         java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static noop.model.proto.Noop.Interface parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input).buildParsed();
-    }
-    public static noop.model.proto.Noop.Interface parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
                .buildParsed();
     }
     public static noop.model.proto.Noop.Interface parseFrom(
@@ -2448,49 +2019,42 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Interface parseFrom(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
     
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
     public static Builder newBuilder(noop.model.proto.Noop.Interface prototype) {
-      return newBuilder().mergeFrom(prototype);
+      return new Builder().mergeFrom(prototype);
     }
-    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private noop.model.proto.Noop.Interface result;
-      
       // Construct using noop.model.proto.Noop.Interface.newBuilder()
       private Builder() {}
       
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new noop.model.proto.Noop.Interface();
-        return builder;
-      }
+      noop.model.proto.Noop.Interface result = new noop.model.proto.Noop.Interface();
       
+      @Override
       protected noop.model.proto.Noop.Interface internalGetResult() {
         return result;
       }
       
+      @Override
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
         result = new noop.model.proto.Noop.Interface();
         return this;
       }
       
+      @Override
       public Builder clone() {
-        return create().mergeFrom(result);
+        return new Builder().mergeFrom(result);
       }
       
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return noop.model.proto.Noop.Interface.getDescriptor();
@@ -2500,12 +2064,10 @@ public final class Noop {
         return noop.model.proto.Noop.Interface.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public noop.model.proto.Noop.Interface build() {
-        if (result != null && !isInitialized()) {
-          throw newUninitializedMessageException(result);
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
         }
         return buildPartial();
       }
@@ -2513,17 +2075,13 @@ public final class Noop {
       private noop.model.proto.Noop.Interface buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
         if (!isInitialized()) {
-          throw newUninitializedMessageException(
+          throw new com.google.protobuf.UninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
         return buildPartial();
       }
       
       public noop.model.proto.Noop.Interface buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
-        }
         if (result.method_ != java.util.Collections.EMPTY_LIST) {
           result.method_ =
             java.util.Collections.unmodifiableList(result.method_);
@@ -2531,72 +2089,6 @@ public final class Noop {
         noop.model.proto.Noop.Interface returnMe = result;
         result = null;
         return returnMe;
-      }
-      
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof noop.model.proto.Noop.Interface) {
-          return mergeFrom((noop.model.proto.Noop.Interface)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(noop.model.proto.Noop.Interface other) {
-        if (other == noop.model.proto.Noop.Interface.getDefaultInstance()) return this;
-        if (other.hasName()) {
-          setName(other.getName());
-        }
-        if (other.hasDocumentation()) {
-          setDocumentation(other.getDocumentation());
-        }
-        if (!other.method_.isEmpty()) {
-          if (result.method_.isEmpty()) {
-            result.method_ = new java.util.ArrayList<noop.model.proto.Noop.MethodSignature>();
-          }
-          result.method_.addAll(other.method_);
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              setName(input.readString());
-              break;
-            }
-            case 18: {
-              setDocumentation(input.readString());
-              break;
-            }
-            case 26: {
-              noop.model.proto.Noop.MethodSignature.Builder subBuilder = noop.model.proto.Noop.MethodSignature.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addMethod(subBuilder.buildPartial());
-              break;
-            }
-          }
-        }
       }
       
       
@@ -2608,37 +2100,47 @@ public final class Noop {
         return result.getName();
       }
       public Builder setName(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasName = true;
+        result.hasName = true;
         result.name_ = value;
         return this;
       }
       public Builder clearName() {
         result.hasName = false;
-        result.name_ = getDefaultInstance().getName();
+        result.name_ = "";
         return this;
       }
       
-      // optional string documentation = 2;
+      // optional .Documentation documentation = 2;
       public boolean hasDocumentation() {
         return result.hasDocumentation();
       }
-      public java.lang.String getDocumentation() {
+      public noop.model.proto.Noop.Documentation getDocumentation() {
         return result.getDocumentation();
       }
-      public Builder setDocumentation(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasDocumentation = true;
+      public Builder setDocumentation(noop.model.proto.Noop.Documentation value) {
+        result.hasDocumentation = true;
         result.documentation_ = value;
+        return this;
+      }
+      public Builder setDocumentation(noop.model.proto.Noop.Documentation.Builder builderForValue) {
+        result.hasDocumentation = true;
+        result.documentation_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeDocumentation(noop.model.proto.Noop.Documentation value) {
+        if (result.hasDocumentation() &&
+            result.documentation_ != noop.model.proto.Noop.Documentation.getDefaultInstance()) {
+          result.documentation_ =
+            noop.model.proto.Noop.Documentation.newBuilder(result.documentation_).mergeFrom(value).buildPartial();
+        } else {
+          result.documentation_ = value;
+        }
+        result.hasDocumentation = true;
         return this;
       }
       public Builder clearDocumentation() {
         result.hasDocumentation = false;
-        result.documentation_ = getDefaultInstance().getDocumentation();
+        result.documentation_ = noop.model.proto.Noop.Documentation.getDefaultInstance();
         return this;
       }
       
@@ -2653,9 +2155,6 @@ public final class Noop {
         return result.getMethod(index);
       }
       public Builder setMethod(int index, noop.model.proto.Noop.MethodSignature value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.method_.set(index, value);
         return this;
       }
@@ -2664,9 +2163,6 @@ public final class Noop {
         return this;
       }
       public Builder addMethod(noop.model.proto.Noop.MethodSignature value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         if (result.method_.isEmpty()) {
           result.method_ = new java.util.ArrayList<noop.model.proto.Noop.MethodSignature>();
         }
@@ -2697,10 +2193,6 @@ public final class Noop {
     static {
       noop.model.proto.Noop.getDescriptor();
     }
-    
-    static {
-      noop.model.proto.Noop.internalForceInit();
-    }
   }
   
   public static final class Alias extends
@@ -2722,74 +2214,29 @@ public final class Noop {
       return noop.model.proto.Noop.internal_static_Alias_descriptor;
     }
     
+    @Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return noop.model.proto.Noop.internal_static_Alias_fieldAccessorTable;
     }
     
     // required string name = 1;
-    public static final int NAME_FIELD_NUMBER = 1;
     private boolean hasName;
     private java.lang.String name_ = "";
     public boolean hasName() { return hasName; }
     public java.lang.String getName() { return name_; }
     
-    // optional string documentation = 2;
-    public static final int DOCUMENTATION_FIELD_NUMBER = 2;
+    // optional .Documentation documentation = 2;
     private boolean hasDocumentation;
-    private java.lang.String documentation_ = "";
+    private noop.model.proto.Noop.Documentation documentation_ = noop.model.proto.Noop.Documentation.getDefaultInstance();
     public boolean hasDocumentation() { return hasDocumentation; }
-    public java.lang.String getDocumentation() { return documentation_; }
+    public noop.model.proto.Noop.Documentation getDocumentation() { return documentation_; }
     
     // required string of = 3;
-    public static final int OF_FIELD_NUMBER = 3;
     private boolean hasOf;
     private java.lang.String of_ = "";
     public boolean hasOf() { return hasOf; }
     public java.lang.String getOf() { return of_; }
-    
-    public final boolean isInitialized() {
-      if (!hasName) return false;
-      if (!hasOf) return false;
-      return true;
-    }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasName()) {
-        output.writeString(1, getName());
-      }
-      if (hasDocumentation()) {
-        output.writeString(2, getDocumentation());
-      }
-      if (hasOf()) {
-        output.writeString(3, getOf());
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasName()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getName());
-      }
-      if (hasDocumentation()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getDocumentation());
-      }
-      if (hasOf()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(3, getOf());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
     
     public static noop.model.proto.Noop.Alias parseFrom(
         com.google.protobuf.ByteString data)
@@ -2798,7 +2245,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Alias parseFrom(
         com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -2809,7 +2256,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Alias parseFrom(
         byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -2820,20 +2267,9 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Alias parseFrom(
         java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static noop.model.proto.Noop.Alias parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input).buildParsed();
-    }
-    public static noop.model.proto.Noop.Alias parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
                .buildParsed();
     }
     public static noop.model.proto.Noop.Alias parseFrom(
@@ -2843,49 +2279,42 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Alias parseFrom(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
     
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
     public static Builder newBuilder(noop.model.proto.Noop.Alias prototype) {
-      return newBuilder().mergeFrom(prototype);
+      return new Builder().mergeFrom(prototype);
     }
-    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private noop.model.proto.Noop.Alias result;
-      
       // Construct using noop.model.proto.Noop.Alias.newBuilder()
       private Builder() {}
       
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new noop.model.proto.Noop.Alias();
-        return builder;
-      }
+      noop.model.proto.Noop.Alias result = new noop.model.proto.Noop.Alias();
       
+      @Override
       protected noop.model.proto.Noop.Alias internalGetResult() {
         return result;
       }
       
+      @Override
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
         result = new noop.model.proto.Noop.Alias();
         return this;
       }
       
+      @Override
       public Builder clone() {
-        return create().mergeFrom(result);
+        return new Builder().mergeFrom(result);
       }
       
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return noop.model.proto.Noop.Alias.getDescriptor();
@@ -2895,12 +2324,10 @@ public final class Noop {
         return noop.model.proto.Noop.Alias.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public noop.model.proto.Noop.Alias build() {
-        if (result != null && !isInitialized()) {
-          throw newUninitializedMessageException(result);
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
         }
         return buildPartial();
       }
@@ -2908,81 +2335,16 @@ public final class Noop {
       private noop.model.proto.Noop.Alias buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
         if (!isInitialized()) {
-          throw newUninitializedMessageException(
+          throw new com.google.protobuf.UninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
         return buildPartial();
       }
       
       public noop.model.proto.Noop.Alias buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
-        }
         noop.model.proto.Noop.Alias returnMe = result;
         result = null;
         return returnMe;
-      }
-      
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof noop.model.proto.Noop.Alias) {
-          return mergeFrom((noop.model.proto.Noop.Alias)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(noop.model.proto.Noop.Alias other) {
-        if (other == noop.model.proto.Noop.Alias.getDefaultInstance()) return this;
-        if (other.hasName()) {
-          setName(other.getName());
-        }
-        if (other.hasDocumentation()) {
-          setDocumentation(other.getDocumentation());
-        }
-        if (other.hasOf()) {
-          setOf(other.getOf());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              setName(input.readString());
-              break;
-            }
-            case 18: {
-              setDocumentation(input.readString());
-              break;
-            }
-            case 26: {
-              setOf(input.readString());
-              break;
-            }
-          }
-        }
       }
       
       
@@ -2994,37 +2356,47 @@ public final class Noop {
         return result.getName();
       }
       public Builder setName(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasName = true;
+        result.hasName = true;
         result.name_ = value;
         return this;
       }
       public Builder clearName() {
         result.hasName = false;
-        result.name_ = getDefaultInstance().getName();
+        result.name_ = "";
         return this;
       }
       
-      // optional string documentation = 2;
+      // optional .Documentation documentation = 2;
       public boolean hasDocumentation() {
         return result.hasDocumentation();
       }
-      public java.lang.String getDocumentation() {
+      public noop.model.proto.Noop.Documentation getDocumentation() {
         return result.getDocumentation();
       }
-      public Builder setDocumentation(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasDocumentation = true;
+      public Builder setDocumentation(noop.model.proto.Noop.Documentation value) {
+        result.hasDocumentation = true;
         result.documentation_ = value;
+        return this;
+      }
+      public Builder setDocumentation(noop.model.proto.Noop.Documentation.Builder builderForValue) {
+        result.hasDocumentation = true;
+        result.documentation_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeDocumentation(noop.model.proto.Noop.Documentation value) {
+        if (result.hasDocumentation() &&
+            result.documentation_ != noop.model.proto.Noop.Documentation.getDefaultInstance()) {
+          result.documentation_ =
+            noop.model.proto.Noop.Documentation.newBuilder(result.documentation_).mergeFrom(value).buildPartial();
+        } else {
+          result.documentation_ = value;
+        }
+        result.hasDocumentation = true;
         return this;
       }
       public Builder clearDocumentation() {
         result.hasDocumentation = false;
-        result.documentation_ = getDefaultInstance().getDocumentation();
+        result.documentation_ = noop.model.proto.Noop.Documentation.getDefaultInstance();
         return this;
       }
       
@@ -3036,26 +2408,19 @@ public final class Noop {
         return result.getOf();
       }
       public Builder setOf(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasOf = true;
+        result.hasOf = true;
         result.of_ = value;
         return this;
       }
       public Builder clearOf() {
         result.hasOf = false;
-        result.of_ = getDefaultInstance().getOf();
+        result.of_ = "";
         return this;
       }
     }
     
     static {
       noop.model.proto.Noop.getDescriptor();
-    }
-    
-    static {
-      noop.model.proto.Noop.internalForceInit();
     }
   }
   
@@ -3078,27 +2443,25 @@ public final class Noop {
       return noop.model.proto.Noop.internal_static_MethodSignature_descriptor;
     }
     
+    @Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return noop.model.proto.Noop.internal_static_MethodSignature_fieldAccessorTable;
     }
     
     // required string name = 1;
-    public static final int NAME_FIELD_NUMBER = 1;
     private boolean hasName;
     private java.lang.String name_ = "";
     public boolean hasName() { return hasName; }
     public java.lang.String getName() { return name_; }
     
-    // optional string documentation = 2;
-    public static final int DOCUMENTATION_FIELD_NUMBER = 2;
+    // optional .Documentation documentation = 2;
     private boolean hasDocumentation;
-    private java.lang.String documentation_ = "";
+    private noop.model.proto.Noop.Documentation documentation_ = noop.model.proto.Noop.Documentation.getDefaultInstance();
     public boolean hasDocumentation() { return hasDocumentation; }
-    public java.lang.String getDocumentation() { return documentation_; }
+    public noop.model.proto.Noop.Documentation getDocumentation() { return documentation_; }
     
     // repeated .Modifier modifier = 3;
-    public static final int MODIFIER_FIELD_NUMBER = 3;
     private java.util.List<noop.model.proto.Noop.Modifier> modifier_ =
       java.util.Collections.emptyList();
     public java.util.List<noop.model.proto.Noop.Modifier> getModifierList() {
@@ -3110,7 +2473,6 @@ public final class Noop {
     }
     
     // repeated string return_type = 4;
-    public static final int RETURN_TYPE_FIELD_NUMBER = 4;
     private java.util.List<java.lang.String> returnType_ =
       java.util.Collections.emptyList();
     public java.util.List<java.lang.String> getReturnTypeList() {
@@ -3122,7 +2484,6 @@ public final class Noop {
     }
     
     // repeated .Property argument = 5;
-    public static final int ARGUMENT_FIELD_NUMBER = 5;
     private java.util.List<noop.model.proto.Noop.Property> argument_ =
       java.util.Collections.emptyList();
     public java.util.List<noop.model.proto.Noop.Property> getArgumentList() {
@@ -3133,75 +2494,6 @@ public final class Noop {
       return argument_.get(index);
     }
     
-    public final boolean isInitialized() {
-      if (!hasName) return false;
-      for (noop.model.proto.Noop.Property element : getArgumentList()) {
-        if (!element.isInitialized()) return false;
-      }
-      return true;
-    }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasName()) {
-        output.writeString(1, getName());
-      }
-      if (hasDocumentation()) {
-        output.writeString(2, getDocumentation());
-      }
-      for (noop.model.proto.Noop.Modifier element : getModifierList()) {
-        output.writeEnum(3, element.getNumber());
-      }
-      for (java.lang.String element : getReturnTypeList()) {
-        output.writeString(4, element);
-      }
-      for (noop.model.proto.Noop.Property element : getArgumentList()) {
-        output.writeMessage(5, element);
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasName()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getName());
-      }
-      if (hasDocumentation()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getDocumentation());
-      }
-      {
-        int dataSize = 0;
-        for (noop.model.proto.Noop.Modifier element : getModifierList()) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeEnumSizeNoTag(element.getNumber());
-        }
-        size += dataSize;
-        size += 1 * getModifierList().size();
-      }
-      {
-        int dataSize = 0;
-        for (java.lang.String element : getReturnTypeList()) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeStringSizeNoTag(element);
-        }
-        size += dataSize;
-        size += 1 * getReturnTypeList().size();
-      }
-      for (noop.model.proto.Noop.Property element : getArgumentList()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, element);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
     public static noop.model.proto.Noop.MethodSignature parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3209,7 +2501,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.MethodSignature parseFrom(
         com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -3220,7 +2512,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.MethodSignature parseFrom(
         byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -3231,20 +2523,9 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.MethodSignature parseFrom(
         java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static noop.model.proto.Noop.MethodSignature parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input).buildParsed();
-    }
-    public static noop.model.proto.Noop.MethodSignature parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
                .buildParsed();
     }
     public static noop.model.proto.Noop.MethodSignature parseFrom(
@@ -3254,49 +2535,42 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.MethodSignature parseFrom(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
     
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
     public static Builder newBuilder(noop.model.proto.Noop.MethodSignature prototype) {
-      return newBuilder().mergeFrom(prototype);
+      return new Builder().mergeFrom(prototype);
     }
-    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private noop.model.proto.Noop.MethodSignature result;
-      
       // Construct using noop.model.proto.Noop.MethodSignature.newBuilder()
       private Builder() {}
       
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new noop.model.proto.Noop.MethodSignature();
-        return builder;
-      }
+      noop.model.proto.Noop.MethodSignature result = new noop.model.proto.Noop.MethodSignature();
       
+      @Override
       protected noop.model.proto.Noop.MethodSignature internalGetResult() {
         return result;
       }
       
+      @Override
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
         result = new noop.model.proto.Noop.MethodSignature();
         return this;
       }
       
+      @Override
       public Builder clone() {
-        return create().mergeFrom(result);
+        return new Builder().mergeFrom(result);
       }
       
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return noop.model.proto.Noop.MethodSignature.getDescriptor();
@@ -3306,12 +2580,10 @@ public final class Noop {
         return noop.model.proto.Noop.MethodSignature.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public noop.model.proto.Noop.MethodSignature build() {
-        if (result != null && !isInitialized()) {
-          throw newUninitializedMessageException(result);
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
         }
         return buildPartial();
       }
@@ -3319,17 +2591,13 @@ public final class Noop {
       private noop.model.proto.Noop.MethodSignature buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
         if (!isInitialized()) {
-          throw newUninitializedMessageException(
+          throw new com.google.protobuf.UninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
         return buildPartial();
       }
       
       public noop.model.proto.Noop.MethodSignature buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
-        }
         if (result.modifier_ != java.util.Collections.EMPTY_LIST) {
           result.modifier_ =
             java.util.Collections.unmodifiableList(result.modifier_);
@@ -3347,98 +2615,6 @@ public final class Noop {
         return returnMe;
       }
       
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof noop.model.proto.Noop.MethodSignature) {
-          return mergeFrom((noop.model.proto.Noop.MethodSignature)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(noop.model.proto.Noop.MethodSignature other) {
-        if (other == noop.model.proto.Noop.MethodSignature.getDefaultInstance()) return this;
-        if (other.hasName()) {
-          setName(other.getName());
-        }
-        if (other.hasDocumentation()) {
-          setDocumentation(other.getDocumentation());
-        }
-        if (!other.modifier_.isEmpty()) {
-          if (result.modifier_.isEmpty()) {
-            result.modifier_ = new java.util.ArrayList<noop.model.proto.Noop.Modifier>();
-          }
-          result.modifier_.addAll(other.modifier_);
-        }
-        if (!other.returnType_.isEmpty()) {
-          if (result.returnType_.isEmpty()) {
-            result.returnType_ = new java.util.ArrayList<java.lang.String>();
-          }
-          result.returnType_.addAll(other.returnType_);
-        }
-        if (!other.argument_.isEmpty()) {
-          if (result.argument_.isEmpty()) {
-            result.argument_ = new java.util.ArrayList<noop.model.proto.Noop.Property>();
-          }
-          result.argument_.addAll(other.argument_);
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              setName(input.readString());
-              break;
-            }
-            case 18: {
-              setDocumentation(input.readString());
-              break;
-            }
-            case 24: {
-              int rawValue = input.readEnum();
-              noop.model.proto.Noop.Modifier value = noop.model.proto.Noop.Modifier.valueOf(rawValue);
-              if (value == null) {
-                unknownFields.mergeVarintField(3, rawValue);
-              } else {
-                addModifier(value);
-              }
-              break;
-            }
-            case 34: {
-              addReturnType(input.readString());
-              break;
-            }
-            case 42: {
-              noop.model.proto.Noop.Property.Builder subBuilder = noop.model.proto.Noop.Property.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addArgument(subBuilder.buildPartial());
-              break;
-            }
-          }
-        }
-      }
-      
       
       // required string name = 1;
       public boolean hasName() {
@@ -3448,37 +2624,47 @@ public final class Noop {
         return result.getName();
       }
       public Builder setName(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasName = true;
+        result.hasName = true;
         result.name_ = value;
         return this;
       }
       public Builder clearName() {
         result.hasName = false;
-        result.name_ = getDefaultInstance().getName();
+        result.name_ = "";
         return this;
       }
       
-      // optional string documentation = 2;
+      // optional .Documentation documentation = 2;
       public boolean hasDocumentation() {
         return result.hasDocumentation();
       }
-      public java.lang.String getDocumentation() {
+      public noop.model.proto.Noop.Documentation getDocumentation() {
         return result.getDocumentation();
       }
-      public Builder setDocumentation(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasDocumentation = true;
+      public Builder setDocumentation(noop.model.proto.Noop.Documentation value) {
+        result.hasDocumentation = true;
         result.documentation_ = value;
+        return this;
+      }
+      public Builder setDocumentation(noop.model.proto.Noop.Documentation.Builder builderForValue) {
+        result.hasDocumentation = true;
+        result.documentation_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeDocumentation(noop.model.proto.Noop.Documentation value) {
+        if (result.hasDocumentation() &&
+            result.documentation_ != noop.model.proto.Noop.Documentation.getDefaultInstance()) {
+          result.documentation_ =
+            noop.model.proto.Noop.Documentation.newBuilder(result.documentation_).mergeFrom(value).buildPartial();
+        } else {
+          result.documentation_ = value;
+        }
+        result.hasDocumentation = true;
         return this;
       }
       public Builder clearDocumentation() {
         result.hasDocumentation = false;
-        result.documentation_ = getDefaultInstance().getDocumentation();
+        result.documentation_ = noop.model.proto.Noop.Documentation.getDefaultInstance();
         return this;
       }
       
@@ -3493,16 +2679,10 @@ public final class Noop {
         return result.getModifier(index);
       }
       public Builder setModifier(int index, noop.model.proto.Noop.Modifier value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.modifier_.set(index, value);
         return this;
       }
       public Builder addModifier(noop.model.proto.Noop.Modifier value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         if (result.modifier_.isEmpty()) {
           result.modifier_ = new java.util.ArrayList<noop.model.proto.Noop.Modifier>();
         }
@@ -3533,17 +2713,11 @@ public final class Noop {
         return result.getReturnType(index);
       }
       public Builder setReturnType(int index, java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.returnType_.set(index, value);
+        result.returnType_.set(index, value);
         return this;
       }
       public Builder addReturnType(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  if (result.returnType_.isEmpty()) {
+        if (result.returnType_.isEmpty()) {
           result.returnType_ = new java.util.ArrayList<java.lang.String>();
         }
         result.returnType_.add(value);
@@ -3573,9 +2747,6 @@ public final class Noop {
         return result.getArgument(index);
       }
       public Builder setArgument(int index, noop.model.proto.Noop.Property value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.argument_.set(index, value);
         return this;
       }
@@ -3584,9 +2755,6 @@ public final class Noop {
         return this;
       }
       public Builder addArgument(noop.model.proto.Noop.Property value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         if (result.argument_.isEmpty()) {
           result.argument_ = new java.util.ArrayList<noop.model.proto.Noop.Property>();
         }
@@ -3617,10 +2785,6 @@ public final class Noop {
     static {
       noop.model.proto.Noop.getDescriptor();
     }
-    
-    static {
-      noop.model.proto.Noop.internalForceInit();
-    }
   }
   
   public static final class Method extends
@@ -3642,62 +2806,23 @@ public final class Noop {
       return noop.model.proto.Noop.internal_static_Method_descriptor;
     }
     
+    @Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return noop.model.proto.Noop.internal_static_Method_fieldAccessorTable;
     }
     
     // required .MethodSignature signature = 1;
-    public static final int SIGNATURE_FIELD_NUMBER = 1;
     private boolean hasSignature;
     private noop.model.proto.Noop.MethodSignature signature_ = noop.model.proto.Noop.MethodSignature.getDefaultInstance();
     public boolean hasSignature() { return hasSignature; }
     public noop.model.proto.Noop.MethodSignature getSignature() { return signature_; }
     
     // required .Block block = 2;
-    public static final int BLOCK_FIELD_NUMBER = 2;
     private boolean hasBlock;
     private noop.model.proto.Noop.Block block_ = noop.model.proto.Noop.Block.getDefaultInstance();
     public boolean hasBlock() { return hasBlock; }
     public noop.model.proto.Noop.Block getBlock() { return block_; }
-    
-    public final boolean isInitialized() {
-      if (!hasSignature) return false;
-      if (!hasBlock) return false;
-      if (!getSignature().isInitialized()) return false;
-      if (!getBlock().isInitialized()) return false;
-      return true;
-    }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasSignature()) {
-        output.writeMessage(1, getSignature());
-      }
-      if (hasBlock()) {
-        output.writeMessage(2, getBlock());
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasSignature()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getSignature());
-      }
-      if (hasBlock()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getBlock());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
     
     public static noop.model.proto.Noop.Method parseFrom(
         com.google.protobuf.ByteString data)
@@ -3706,7 +2831,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Method parseFrom(
         com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -3717,7 +2842,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Method parseFrom(
         byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -3728,20 +2853,9 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Method parseFrom(
         java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static noop.model.proto.Noop.Method parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input).buildParsed();
-    }
-    public static noop.model.proto.Noop.Method parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
                .buildParsed();
     }
     public static noop.model.proto.Noop.Method parseFrom(
@@ -3751,49 +2865,42 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Method parseFrom(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
     
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
     public static Builder newBuilder(noop.model.proto.Noop.Method prototype) {
-      return newBuilder().mergeFrom(prototype);
+      return new Builder().mergeFrom(prototype);
     }
-    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private noop.model.proto.Noop.Method result;
-      
       // Construct using noop.model.proto.Noop.Method.newBuilder()
       private Builder() {}
       
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new noop.model.proto.Noop.Method();
-        return builder;
-      }
+      noop.model.proto.Noop.Method result = new noop.model.proto.Noop.Method();
       
+      @Override
       protected noop.model.proto.Noop.Method internalGetResult() {
         return result;
       }
       
+      @Override
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
         result = new noop.model.proto.Noop.Method();
         return this;
       }
       
+      @Override
       public Builder clone() {
-        return create().mergeFrom(result);
+        return new Builder().mergeFrom(result);
       }
       
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return noop.model.proto.Noop.Method.getDescriptor();
@@ -3803,12 +2910,10 @@ public final class Noop {
         return noop.model.proto.Noop.Method.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public noop.model.proto.Noop.Method build() {
-        if (result != null && !isInitialized()) {
-          throw newUninitializedMessageException(result);
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
         }
         return buildPartial();
       }
@@ -3816,84 +2921,16 @@ public final class Noop {
       private noop.model.proto.Noop.Method buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
         if (!isInitialized()) {
-          throw newUninitializedMessageException(
+          throw new com.google.protobuf.UninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
         return buildPartial();
       }
       
       public noop.model.proto.Noop.Method buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
-        }
         noop.model.proto.Noop.Method returnMe = result;
         result = null;
         return returnMe;
-      }
-      
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof noop.model.proto.Noop.Method) {
-          return mergeFrom((noop.model.proto.Noop.Method)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(noop.model.proto.Noop.Method other) {
-        if (other == noop.model.proto.Noop.Method.getDefaultInstance()) return this;
-        if (other.hasSignature()) {
-          mergeSignature(other.getSignature());
-        }
-        if (other.hasBlock()) {
-          mergeBlock(other.getBlock());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              noop.model.proto.Noop.MethodSignature.Builder subBuilder = noop.model.proto.Noop.MethodSignature.newBuilder();
-              if (hasSignature()) {
-                subBuilder.mergeFrom(getSignature());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setSignature(subBuilder.buildPartial());
-              break;
-            }
-            case 18: {
-              noop.model.proto.Noop.Block.Builder subBuilder = noop.model.proto.Noop.Block.newBuilder();
-              if (hasBlock()) {
-                subBuilder.mergeFrom(getBlock());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setBlock(subBuilder.buildPartial());
-              break;
-            }
-          }
-        }
       }
       
       
@@ -3905,9 +2942,6 @@ public final class Noop {
         return result.getSignature();
       }
       public Builder setSignature(noop.model.proto.Noop.MethodSignature value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.hasSignature = true;
         result.signature_ = value;
         return this;
@@ -3942,9 +2976,6 @@ public final class Noop {
         return result.getBlock();
       }
       public Builder setBlock(noop.model.proto.Noop.Block value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.hasBlock = true;
         result.block_ = value;
         return this;
@@ -3975,10 +3006,6 @@ public final class Noop {
     static {
       noop.model.proto.Noop.getDescriptor();
     }
-    
-    static {
-      noop.model.proto.Noop.internalForceInit();
-    }
   }
   
   public static final class BindingBlock extends
@@ -4000,13 +3027,13 @@ public final class Noop {
       return noop.model.proto.Noop.internal_static_BindingBlock_descriptor;
     }
     
+    @Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return noop.model.proto.Noop.internal_static_BindingBlock_fieldAccessorTable;
     }
     
     // repeated .BindOperator bind = 1;
-    public static final int BIND_FIELD_NUMBER = 1;
     private java.util.List<noop.model.proto.Noop.BindOperator> bind_ =
       java.util.Collections.emptyList();
     public java.util.List<noop.model.proto.Noop.BindOperator> getBindList() {
@@ -4017,36 +3044,6 @@ public final class Noop {
       return bind_.get(index);
     }
     
-    public final boolean isInitialized() {
-      for (noop.model.proto.Noop.BindOperator element : getBindList()) {
-        if (!element.isInitialized()) return false;
-      }
-      return true;
-    }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      for (noop.model.proto.Noop.BindOperator element : getBindList()) {
-        output.writeMessage(1, element);
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      for (noop.model.proto.Noop.BindOperator element : getBindList()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, element);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
     public static noop.model.proto.Noop.BindingBlock parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -4054,7 +3051,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.BindingBlock parseFrom(
         com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -4065,7 +3062,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.BindingBlock parseFrom(
         byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -4076,20 +3073,9 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.BindingBlock parseFrom(
         java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static noop.model.proto.Noop.BindingBlock parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input).buildParsed();
-    }
-    public static noop.model.proto.Noop.BindingBlock parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
                .buildParsed();
     }
     public static noop.model.proto.Noop.BindingBlock parseFrom(
@@ -4099,49 +3085,42 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.BindingBlock parseFrom(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
     
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
     public static Builder newBuilder(noop.model.proto.Noop.BindingBlock prototype) {
-      return newBuilder().mergeFrom(prototype);
+      return new Builder().mergeFrom(prototype);
     }
-    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private noop.model.proto.Noop.BindingBlock result;
-      
       // Construct using noop.model.proto.Noop.BindingBlock.newBuilder()
       private Builder() {}
       
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new noop.model.proto.Noop.BindingBlock();
-        return builder;
-      }
+      noop.model.proto.Noop.BindingBlock result = new noop.model.proto.Noop.BindingBlock();
       
+      @Override
       protected noop.model.proto.Noop.BindingBlock internalGetResult() {
         return result;
       }
       
+      @Override
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
         result = new noop.model.proto.Noop.BindingBlock();
         return this;
       }
       
+      @Override
       public Builder clone() {
-        return create().mergeFrom(result);
+        return new Builder().mergeFrom(result);
       }
       
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return noop.model.proto.Noop.BindingBlock.getDescriptor();
@@ -4151,12 +3130,10 @@ public final class Noop {
         return noop.model.proto.Noop.BindingBlock.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public noop.model.proto.Noop.BindingBlock build() {
-        if (result != null && !isInitialized()) {
-          throw newUninitializedMessageException(result);
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
         }
         return buildPartial();
       }
@@ -4164,17 +3141,13 @@ public final class Noop {
       private noop.model.proto.Noop.BindingBlock buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
         if (!isInitialized()) {
-          throw newUninitializedMessageException(
+          throw new com.google.protobuf.UninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
         return buildPartial();
       }
       
       public noop.model.proto.Noop.BindingBlock buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
-        }
         if (result.bind_ != java.util.Collections.EMPTY_LIST) {
           result.bind_ =
             java.util.Collections.unmodifiableList(result.bind_);
@@ -4182,58 +3155,6 @@ public final class Noop {
         noop.model.proto.Noop.BindingBlock returnMe = result;
         result = null;
         return returnMe;
-      }
-      
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof noop.model.proto.Noop.BindingBlock) {
-          return mergeFrom((noop.model.proto.Noop.BindingBlock)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(noop.model.proto.Noop.BindingBlock other) {
-        if (other == noop.model.proto.Noop.BindingBlock.getDefaultInstance()) return this;
-        if (!other.bind_.isEmpty()) {
-          if (result.bind_.isEmpty()) {
-            result.bind_ = new java.util.ArrayList<noop.model.proto.Noop.BindOperator>();
-          }
-          result.bind_.addAll(other.bind_);
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              noop.model.proto.Noop.BindOperator.Builder subBuilder = noop.model.proto.Noop.BindOperator.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addBind(subBuilder.buildPartial());
-              break;
-            }
-          }
-        }
       }
       
       
@@ -4248,9 +3169,6 @@ public final class Noop {
         return result.getBind(index);
       }
       public Builder setBind(int index, noop.model.proto.Noop.BindOperator value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.bind_.set(index, value);
         return this;
       }
@@ -4259,9 +3177,6 @@ public final class Noop {
         return this;
       }
       public Builder addBind(noop.model.proto.Noop.BindOperator value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         if (result.bind_.isEmpty()) {
           result.bind_ = new java.util.ArrayList<noop.model.proto.Noop.BindOperator>();
         }
@@ -4292,10 +3207,6 @@ public final class Noop {
     static {
       noop.model.proto.Noop.getDescriptor();
     }
-    
-    static {
-      noop.model.proto.Noop.internalForceInit();
-    }
   }
   
   public static final class BindOperator extends
@@ -4317,61 +3228,23 @@ public final class Noop {
       return noop.model.proto.Noop.internal_static_BindOperator_descriptor;
     }
     
+    @Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return noop.model.proto.Noop.internal_static_BindOperator_fieldAccessorTable;
     }
     
     // required string type = 1;
-    public static final int TYPE_FIELD_NUMBER = 1;
     private boolean hasType;
     private java.lang.String type_ = "";
     public boolean hasType() { return hasType; }
     public java.lang.String getType() { return type_; }
     
     // required .Expression boundTo = 2;
-    public static final int BOUNDTO_FIELD_NUMBER = 2;
     private boolean hasBoundTo;
     private noop.model.proto.Noop.Expression boundTo_ = noop.model.proto.Noop.Expression.getDefaultInstance();
     public boolean hasBoundTo() { return hasBoundTo; }
     public noop.model.proto.Noop.Expression getBoundTo() { return boundTo_; }
-    
-    public final boolean isInitialized() {
-      if (!hasType) return false;
-      if (!hasBoundTo) return false;
-      if (!getBoundTo().isInitialized()) return false;
-      return true;
-    }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasType()) {
-        output.writeString(1, getType());
-      }
-      if (hasBoundTo()) {
-        output.writeMessage(2, getBoundTo());
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasType()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getType());
-      }
-      if (hasBoundTo()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getBoundTo());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
     
     public static noop.model.proto.Noop.BindOperator parseFrom(
         com.google.protobuf.ByteString data)
@@ -4380,7 +3253,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.BindOperator parseFrom(
         com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -4391,7 +3264,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.BindOperator parseFrom(
         byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -4402,20 +3275,9 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.BindOperator parseFrom(
         java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static noop.model.proto.Noop.BindOperator parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input).buildParsed();
-    }
-    public static noop.model.proto.Noop.BindOperator parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
                .buildParsed();
     }
     public static noop.model.proto.Noop.BindOperator parseFrom(
@@ -4425,49 +3287,42 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.BindOperator parseFrom(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
     
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
     public static Builder newBuilder(noop.model.proto.Noop.BindOperator prototype) {
-      return newBuilder().mergeFrom(prototype);
+      return new Builder().mergeFrom(prototype);
     }
-    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private noop.model.proto.Noop.BindOperator result;
-      
       // Construct using noop.model.proto.Noop.BindOperator.newBuilder()
       private Builder() {}
       
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new noop.model.proto.Noop.BindOperator();
-        return builder;
-      }
+      noop.model.proto.Noop.BindOperator result = new noop.model.proto.Noop.BindOperator();
       
+      @Override
       protected noop.model.proto.Noop.BindOperator internalGetResult() {
         return result;
       }
       
+      @Override
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
         result = new noop.model.proto.Noop.BindOperator();
         return this;
       }
       
+      @Override
       public Builder clone() {
-        return create().mergeFrom(result);
+        return new Builder().mergeFrom(result);
       }
       
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return noop.model.proto.Noop.BindOperator.getDescriptor();
@@ -4477,12 +3332,10 @@ public final class Noop {
         return noop.model.proto.Noop.BindOperator.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public noop.model.proto.Noop.BindOperator build() {
-        if (result != null && !isInitialized()) {
-          throw newUninitializedMessageException(result);
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
         }
         return buildPartial();
       }
@@ -4490,79 +3343,16 @@ public final class Noop {
       private noop.model.proto.Noop.BindOperator buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
         if (!isInitialized()) {
-          throw newUninitializedMessageException(
+          throw new com.google.protobuf.UninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
         return buildPartial();
       }
       
       public noop.model.proto.Noop.BindOperator buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
-        }
         noop.model.proto.Noop.BindOperator returnMe = result;
         result = null;
         return returnMe;
-      }
-      
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof noop.model.proto.Noop.BindOperator) {
-          return mergeFrom((noop.model.proto.Noop.BindOperator)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(noop.model.proto.Noop.BindOperator other) {
-        if (other == noop.model.proto.Noop.BindOperator.getDefaultInstance()) return this;
-        if (other.hasType()) {
-          setType(other.getType());
-        }
-        if (other.hasBoundTo()) {
-          mergeBoundTo(other.getBoundTo());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              setType(input.readString());
-              break;
-            }
-            case 18: {
-              noop.model.proto.Noop.Expression.Builder subBuilder = noop.model.proto.Noop.Expression.newBuilder();
-              if (hasBoundTo()) {
-                subBuilder.mergeFrom(getBoundTo());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setBoundTo(subBuilder.buildPartial());
-              break;
-            }
-          }
-        }
       }
       
       
@@ -4574,16 +3364,13 @@ public final class Noop {
         return result.getType();
       }
       public Builder setType(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasType = true;
+        result.hasType = true;
         result.type_ = value;
         return this;
       }
       public Builder clearType() {
         result.hasType = false;
-        result.type_ = getDefaultInstance().getType();
+        result.type_ = "";
         return this;
       }
       
@@ -4595,9 +3382,6 @@ public final class Noop {
         return result.getBoundTo();
       }
       public Builder setBoundTo(noop.model.proto.Noop.Expression value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.hasBoundTo = true;
         result.boundTo_ = value;
         return this;
@@ -4628,10 +3412,6 @@ public final class Noop {
     static {
       noop.model.proto.Noop.getDescriptor();
     }
-    
-    static {
-      noop.model.proto.Noop.internalForceInit();
-    }
   }
   
   public static final class Block extends
@@ -4653,13 +3433,13 @@ public final class Noop {
       return noop.model.proto.Noop.internal_static_Block_descriptor;
     }
     
+    @Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return noop.model.proto.Noop.internal_static_Block_fieldAccessorTable;
     }
     
     // repeated .Expression expression = 1;
-    public static final int EXPRESSION_FIELD_NUMBER = 1;
     private java.util.List<noop.model.proto.Noop.Expression> expression_ =
       java.util.Collections.emptyList();
     public java.util.List<noop.model.proto.Noop.Expression> getExpressionList() {
@@ -4670,36 +3450,6 @@ public final class Noop {
       return expression_.get(index);
     }
     
-    public final boolean isInitialized() {
-      for (noop.model.proto.Noop.Expression element : getExpressionList()) {
-        if (!element.isInitialized()) return false;
-      }
-      return true;
-    }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      for (noop.model.proto.Noop.Expression element : getExpressionList()) {
-        output.writeMessage(1, element);
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      for (noop.model.proto.Noop.Expression element : getExpressionList()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, element);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
     public static noop.model.proto.Noop.Block parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -4707,7 +3457,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Block parseFrom(
         com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -4718,7 +3468,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Block parseFrom(
         byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -4729,20 +3479,9 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Block parseFrom(
         java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static noop.model.proto.Noop.Block parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input).buildParsed();
-    }
-    public static noop.model.proto.Noop.Block parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
                .buildParsed();
     }
     public static noop.model.proto.Noop.Block parseFrom(
@@ -4752,49 +3491,42 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Block parseFrom(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
     
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
     public static Builder newBuilder(noop.model.proto.Noop.Block prototype) {
-      return newBuilder().mergeFrom(prototype);
+      return new Builder().mergeFrom(prototype);
     }
-    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private noop.model.proto.Noop.Block result;
-      
       // Construct using noop.model.proto.Noop.Block.newBuilder()
       private Builder() {}
       
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new noop.model.proto.Noop.Block();
-        return builder;
-      }
+      noop.model.proto.Noop.Block result = new noop.model.proto.Noop.Block();
       
+      @Override
       protected noop.model.proto.Noop.Block internalGetResult() {
         return result;
       }
       
+      @Override
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
         result = new noop.model.proto.Noop.Block();
         return this;
       }
       
+      @Override
       public Builder clone() {
-        return create().mergeFrom(result);
+        return new Builder().mergeFrom(result);
       }
       
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return noop.model.proto.Noop.Block.getDescriptor();
@@ -4804,12 +3536,10 @@ public final class Noop {
         return noop.model.proto.Noop.Block.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public noop.model.proto.Noop.Block build() {
-        if (result != null && !isInitialized()) {
-          throw newUninitializedMessageException(result);
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
         }
         return buildPartial();
       }
@@ -4817,17 +3547,13 @@ public final class Noop {
       private noop.model.proto.Noop.Block buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
         if (!isInitialized()) {
-          throw newUninitializedMessageException(
+          throw new com.google.protobuf.UninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
         return buildPartial();
       }
       
       public noop.model.proto.Noop.Block buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
-        }
         if (result.expression_ != java.util.Collections.EMPTY_LIST) {
           result.expression_ =
             java.util.Collections.unmodifiableList(result.expression_);
@@ -4835,58 +3561,6 @@ public final class Noop {
         noop.model.proto.Noop.Block returnMe = result;
         result = null;
         return returnMe;
-      }
-      
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof noop.model.proto.Noop.Block) {
-          return mergeFrom((noop.model.proto.Noop.Block)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(noop.model.proto.Noop.Block other) {
-        if (other == noop.model.proto.Noop.Block.getDefaultInstance()) return this;
-        if (!other.expression_.isEmpty()) {
-          if (result.expression_.isEmpty()) {
-            result.expression_ = new java.util.ArrayList<noop.model.proto.Noop.Expression>();
-          }
-          result.expression_.addAll(other.expression_);
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              noop.model.proto.Noop.Expression.Builder subBuilder = noop.model.proto.Noop.Expression.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addExpression(subBuilder.buildPartial());
-              break;
-            }
-          }
-        }
       }
       
       
@@ -4901,9 +3575,6 @@ public final class Noop {
         return result.getExpression(index);
       }
       public Builder setExpression(int index, noop.model.proto.Noop.Expression value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.expression_.set(index, value);
         return this;
       }
@@ -4912,9 +3583,6 @@ public final class Noop {
         return this;
       }
       public Builder addExpression(noop.model.proto.Noop.Expression value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         if (result.expression_.isEmpty()) {
           result.expression_ = new java.util.ArrayList<noop.model.proto.Noop.Expression>();
         }
@@ -4945,10 +3613,6 @@ public final class Noop {
     static {
       noop.model.proto.Noop.getDescriptor();
     }
-    
-    static {
-      noop.model.proto.Noop.internalForceInit();
-    }
   }
   
   public static final class MethodInvocation extends
@@ -4970,27 +3634,25 @@ public final class Noop {
       return noop.model.proto.Noop.internal_static_MethodInvocation_descriptor;
     }
     
+    @Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return noop.model.proto.Noop.internal_static_MethodInvocation_fieldAccessorTable;
     }
     
     // required .Expression lhs = 1;
-    public static final int LHS_FIELD_NUMBER = 1;
     private boolean hasLhs;
     private noop.model.proto.Noop.Expression lhs_ = noop.model.proto.Noop.Expression.getDefaultInstance();
     public boolean hasLhs() { return hasLhs; }
     public noop.model.proto.Noop.Expression getLhs() { return lhs_; }
     
     // required string method = 2;
-    public static final int METHOD_FIELD_NUMBER = 2;
     private boolean hasMethod;
     private java.lang.String method_ = "";
     public boolean hasMethod() { return hasMethod; }
     public java.lang.String getMethod() { return method_; }
     
     // repeated .Expression argument = 3;
-    public static final int ARGUMENT_FIELD_NUMBER = 3;
     private java.util.List<noop.model.proto.Noop.Expression> argument_ =
       java.util.Collections.emptyList();
     public java.util.List<noop.model.proto.Noop.Expression> getArgumentList() {
@@ -5001,53 +3663,6 @@ public final class Noop {
       return argument_.get(index);
     }
     
-    public final boolean isInitialized() {
-      if (!hasLhs) return false;
-      if (!hasMethod) return false;
-      if (!getLhs().isInitialized()) return false;
-      for (noop.model.proto.Noop.Expression element : getArgumentList()) {
-        if (!element.isInitialized()) return false;
-      }
-      return true;
-    }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasLhs()) {
-        output.writeMessage(1, getLhs());
-      }
-      if (hasMethod()) {
-        output.writeString(2, getMethod());
-      }
-      for (noop.model.proto.Noop.Expression element : getArgumentList()) {
-        output.writeMessage(3, element);
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasLhs()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getLhs());
-      }
-      if (hasMethod()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getMethod());
-      }
-      for (noop.model.proto.Noop.Expression element : getArgumentList()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, element);
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
     public static noop.model.proto.Noop.MethodInvocation parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -5055,7 +3670,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.MethodInvocation parseFrom(
         com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -5066,7 +3681,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.MethodInvocation parseFrom(
         byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -5077,20 +3692,9 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.MethodInvocation parseFrom(
         java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static noop.model.proto.Noop.MethodInvocation parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input).buildParsed();
-    }
-    public static noop.model.proto.Noop.MethodInvocation parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
                .buildParsed();
     }
     public static noop.model.proto.Noop.MethodInvocation parseFrom(
@@ -5100,49 +3704,42 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.MethodInvocation parseFrom(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
     
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
     public static Builder newBuilder(noop.model.proto.Noop.MethodInvocation prototype) {
-      return newBuilder().mergeFrom(prototype);
+      return new Builder().mergeFrom(prototype);
     }
-    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private noop.model.proto.Noop.MethodInvocation result;
-      
       // Construct using noop.model.proto.Noop.MethodInvocation.newBuilder()
       private Builder() {}
       
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new noop.model.proto.Noop.MethodInvocation();
-        return builder;
-      }
+      noop.model.proto.Noop.MethodInvocation result = new noop.model.proto.Noop.MethodInvocation();
       
+      @Override
       protected noop.model.proto.Noop.MethodInvocation internalGetResult() {
         return result;
       }
       
+      @Override
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
         result = new noop.model.proto.Noop.MethodInvocation();
         return this;
       }
       
+      @Override
       public Builder clone() {
-        return create().mergeFrom(result);
+        return new Builder().mergeFrom(result);
       }
       
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return noop.model.proto.Noop.MethodInvocation.getDescriptor();
@@ -5152,12 +3749,10 @@ public final class Noop {
         return noop.model.proto.Noop.MethodInvocation.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public noop.model.proto.Noop.MethodInvocation build() {
-        if (result != null && !isInitialized()) {
-          throw newUninitializedMessageException(result);
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
         }
         return buildPartial();
       }
@@ -5165,17 +3760,13 @@ public final class Noop {
       private noop.model.proto.Noop.MethodInvocation buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
         if (!isInitialized()) {
-          throw newUninitializedMessageException(
+          throw new com.google.protobuf.UninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
         return buildPartial();
       }
       
       public noop.model.proto.Noop.MethodInvocation buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
-        }
         if (result.argument_ != java.util.Collections.EMPTY_LIST) {
           result.argument_ =
             java.util.Collections.unmodifiableList(result.argument_);
@@ -5183,77 +3774,6 @@ public final class Noop {
         noop.model.proto.Noop.MethodInvocation returnMe = result;
         result = null;
         return returnMe;
-      }
-      
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof noop.model.proto.Noop.MethodInvocation) {
-          return mergeFrom((noop.model.proto.Noop.MethodInvocation)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(noop.model.proto.Noop.MethodInvocation other) {
-        if (other == noop.model.proto.Noop.MethodInvocation.getDefaultInstance()) return this;
-        if (other.hasLhs()) {
-          mergeLhs(other.getLhs());
-        }
-        if (other.hasMethod()) {
-          setMethod(other.getMethod());
-        }
-        if (!other.argument_.isEmpty()) {
-          if (result.argument_.isEmpty()) {
-            result.argument_ = new java.util.ArrayList<noop.model.proto.Noop.Expression>();
-          }
-          result.argument_.addAll(other.argument_);
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              noop.model.proto.Noop.Expression.Builder subBuilder = noop.model.proto.Noop.Expression.newBuilder();
-              if (hasLhs()) {
-                subBuilder.mergeFrom(getLhs());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setLhs(subBuilder.buildPartial());
-              break;
-            }
-            case 18: {
-              setMethod(input.readString());
-              break;
-            }
-            case 26: {
-              noop.model.proto.Noop.Expression.Builder subBuilder = noop.model.proto.Noop.Expression.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addArgument(subBuilder.buildPartial());
-              break;
-            }
-          }
-        }
       }
       
       
@@ -5265,9 +3785,6 @@ public final class Noop {
         return result.getLhs();
       }
       public Builder setLhs(noop.model.proto.Noop.Expression value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.hasLhs = true;
         result.lhs_ = value;
         return this;
@@ -5302,16 +3819,13 @@ public final class Noop {
         return result.getMethod();
       }
       public Builder setMethod(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasMethod = true;
+        result.hasMethod = true;
         result.method_ = value;
         return this;
       }
       public Builder clearMethod() {
         result.hasMethod = false;
-        result.method_ = getDefaultInstance().getMethod();
+        result.method_ = "";
         return this;
       }
       
@@ -5326,9 +3840,6 @@ public final class Noop {
         return result.getArgument(index);
       }
       public Builder setArgument(int index, noop.model.proto.Noop.Expression value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.argument_.set(index, value);
         return this;
       }
@@ -5337,9 +3848,6 @@ public final class Noop {
         return this;
       }
       public Builder addArgument(noop.model.proto.Noop.Expression value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         if (result.argument_.isEmpty()) {
           result.argument_ = new java.util.ArrayList<noop.model.proto.Noop.Expression>();
         }
@@ -5370,10 +3878,6 @@ public final class Noop {
     static {
       noop.model.proto.Noop.getDescriptor();
     }
-    
-    static {
-      noop.model.proto.Noop.internalForceInit();
-    }
   }
   
   public static final class Expression extends
@@ -5395,13 +3899,13 @@ public final class Noop {
       return noop.model.proto.Noop.internal_static_Expression_descriptor;
     }
     
+    @Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return noop.model.proto.Noop.internal_static_Expression_fieldAccessorTable;
     }
     
-    public enum Type
-        implements com.google.protobuf.ProtocolMessageEnum {
+    public static enum Type {
       EVALUATED(0, 1),
       BOOLEAN_LITERAL(1, 2),
       STRING_LITERAL(2, 3),
@@ -5432,18 +3936,6 @@ public final class Noop {
           default: return null;
         }
       }
-      
-      public static com.google.protobuf.Internal.EnumLiteMap<Type>
-          internalGetValueMap() {
-        return internalValueMap;
-      }
-      private static com.google.protobuf.Internal.EnumLiteMap<Type>
-          internalValueMap =
-            new com.google.protobuf.Internal.EnumLiteMap<Type>() {
-              public Type findValueByNumber(int number) {
-                return Type.valueOf(number)
-      ;        }
-            };
       
       public final com.google.protobuf.Descriptors.EnumValueDescriptor
           getValueDescriptor() {
@@ -5482,132 +3974,46 @@ public final class Noop {
     }
     
     // required .Expression.Type type = 1;
-    public static final int TYPE_FIELD_NUMBER = 1;
     private boolean hasType;
     private noop.model.proto.Noop.Expression.Type type_ = noop.model.proto.Noop.Expression.Type.EVALUATED;
     public boolean hasType() { return hasType; }
     public noop.model.proto.Noop.Expression.Type getType() { return type_; }
     
     // optional bool booleanVal = 2;
-    public static final int BOOLEANVAL_FIELD_NUMBER = 2;
     private boolean hasBooleanVal;
     private boolean booleanVal_ = false;
     public boolean hasBooleanVal() { return hasBooleanVal; }
     public boolean getBooleanVal() { return booleanVal_; }
     
     // optional string stringVal = 3;
-    public static final int STRINGVAL_FIELD_NUMBER = 3;
     private boolean hasStringVal;
     private java.lang.String stringVal_ = "";
     public boolean hasStringVal() { return hasStringVal; }
     public java.lang.String getStringVal() { return stringVal_; }
     
     // optional uint32 numberVal = 4;
-    public static final int NUMBERVAL_FIELD_NUMBER = 4;
     private boolean hasNumberVal;
     private int numberVal_ = 0;
     public boolean hasNumberVal() { return hasNumberVal; }
     public int getNumberVal() { return numberVal_; }
     
     // optional .Expression lhs = 5;
-    public static final int LHS_FIELD_NUMBER = 5;
     private boolean hasLhs;
     private noop.model.proto.Noop.Expression lhs_ = noop.model.proto.Noop.Expression.getDefaultInstance();
     public boolean hasLhs() { return hasLhs; }
     public noop.model.proto.Noop.Expression getLhs() { return lhs_; }
     
     // optional .Expression rhs = 6;
-    public static final int RHS_FIELD_NUMBER = 6;
     private boolean hasRhs;
     private noop.model.proto.Noop.Expression rhs_ = noop.model.proto.Noop.Expression.getDefaultInstance();
     public boolean hasRhs() { return hasRhs; }
     public noop.model.proto.Noop.Expression getRhs() { return rhs_; }
     
     // optional .MethodInvocation methodInvocation = 7;
-    public static final int METHODINVOCATION_FIELD_NUMBER = 7;
     private boolean hasMethodInvocation;
     private noop.model.proto.Noop.MethodInvocation methodInvocation_ = noop.model.proto.Noop.MethodInvocation.getDefaultInstance();
     public boolean hasMethodInvocation() { return hasMethodInvocation; }
     public noop.model.proto.Noop.MethodInvocation getMethodInvocation() { return methodInvocation_; }
-    
-    public final boolean isInitialized() {
-      if (!hasType) return false;
-      if (hasLhs()) {
-        if (!getLhs().isInitialized()) return false;
-      }
-      if (hasRhs()) {
-        if (!getRhs().isInitialized()) return false;
-      }
-      if (hasMethodInvocation()) {
-        if (!getMethodInvocation().isInitialized()) return false;
-      }
-      return true;
-    }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasType()) {
-        output.writeEnum(1, getType().getNumber());
-      }
-      if (hasBooleanVal()) {
-        output.writeBool(2, getBooleanVal());
-      }
-      if (hasStringVal()) {
-        output.writeString(3, getStringVal());
-      }
-      if (hasNumberVal()) {
-        output.writeUInt32(4, getNumberVal());
-      }
-      if (hasLhs()) {
-        output.writeMessage(5, getLhs());
-      }
-      if (hasRhs()) {
-        output.writeMessage(6, getRhs());
-      }
-      if (hasMethodInvocation()) {
-        output.writeMessage(7, getMethodInvocation());
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasType()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(1, getType().getNumber());
-      }
-      if (hasBooleanVal()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(2, getBooleanVal());
-      }
-      if (hasStringVal()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(3, getStringVal());
-      }
-      if (hasNumberVal()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(4, getNumberVal());
-      }
-      if (hasLhs()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, getLhs());
-      }
-      if (hasRhs()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(6, getRhs());
-      }
-      if (hasMethodInvocation()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(7, getMethodInvocation());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
     
     public static noop.model.proto.Noop.Expression parseFrom(
         com.google.protobuf.ByteString data)
@@ -5616,7 +4022,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Expression parseFrom(
         com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -5627,7 +4033,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Expression parseFrom(
         byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -5638,20 +4044,9 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Expression parseFrom(
         java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static noop.model.proto.Noop.Expression parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input).buildParsed();
-    }
-    public static noop.model.proto.Noop.Expression parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
                .buildParsed();
     }
     public static noop.model.proto.Noop.Expression parseFrom(
@@ -5661,49 +4056,42 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Expression parseFrom(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
     
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
     public static Builder newBuilder(noop.model.proto.Noop.Expression prototype) {
-      return newBuilder().mergeFrom(prototype);
+      return new Builder().mergeFrom(prototype);
     }
-    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private noop.model.proto.Noop.Expression result;
-      
       // Construct using noop.model.proto.Noop.Expression.newBuilder()
       private Builder() {}
       
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new noop.model.proto.Noop.Expression();
-        return builder;
-      }
+      noop.model.proto.Noop.Expression result = new noop.model.proto.Noop.Expression();
       
+      @Override
       protected noop.model.proto.Noop.Expression internalGetResult() {
         return result;
       }
       
+      @Override
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
         result = new noop.model.proto.Noop.Expression();
         return this;
       }
       
+      @Override
       public Builder clone() {
-        return create().mergeFrom(result);
+        return new Builder().mergeFrom(result);
       }
       
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return noop.model.proto.Noop.Expression.getDescriptor();
@@ -5713,12 +4101,10 @@ public final class Noop {
         return noop.model.proto.Noop.Expression.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public noop.model.proto.Noop.Expression build() {
-        if (result != null && !isInitialized()) {
-          throw newUninitializedMessageException(result);
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
         }
         return buildPartial();
       }
@@ -5726,130 +4112,16 @@ public final class Noop {
       private noop.model.proto.Noop.Expression buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
         if (!isInitialized()) {
-          throw newUninitializedMessageException(
+          throw new com.google.protobuf.UninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
         return buildPartial();
       }
       
       public noop.model.proto.Noop.Expression buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
-        }
         noop.model.proto.Noop.Expression returnMe = result;
         result = null;
         return returnMe;
-      }
-      
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof noop.model.proto.Noop.Expression) {
-          return mergeFrom((noop.model.proto.Noop.Expression)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(noop.model.proto.Noop.Expression other) {
-        if (other == noop.model.proto.Noop.Expression.getDefaultInstance()) return this;
-        if (other.hasType()) {
-          setType(other.getType());
-        }
-        if (other.hasBooleanVal()) {
-          setBooleanVal(other.getBooleanVal());
-        }
-        if (other.hasStringVal()) {
-          setStringVal(other.getStringVal());
-        }
-        if (other.hasNumberVal()) {
-          setNumberVal(other.getNumberVal());
-        }
-        if (other.hasLhs()) {
-          mergeLhs(other.getLhs());
-        }
-        if (other.hasRhs()) {
-          mergeRhs(other.getRhs());
-        }
-        if (other.hasMethodInvocation()) {
-          mergeMethodInvocation(other.getMethodInvocation());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 8: {
-              int rawValue = input.readEnum();
-              noop.model.proto.Noop.Expression.Type value = noop.model.proto.Noop.Expression.Type.valueOf(rawValue);
-              if (value == null) {
-                unknownFields.mergeVarintField(1, rawValue);
-              } else {
-                setType(value);
-              }
-              break;
-            }
-            case 16: {
-              setBooleanVal(input.readBool());
-              break;
-            }
-            case 26: {
-              setStringVal(input.readString());
-              break;
-            }
-            case 32: {
-              setNumberVal(input.readUInt32());
-              break;
-            }
-            case 42: {
-              noop.model.proto.Noop.Expression.Builder subBuilder = noop.model.proto.Noop.Expression.newBuilder();
-              if (hasLhs()) {
-                subBuilder.mergeFrom(getLhs());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setLhs(subBuilder.buildPartial());
-              break;
-            }
-            case 50: {
-              noop.model.proto.Noop.Expression.Builder subBuilder = noop.model.proto.Noop.Expression.newBuilder();
-              if (hasRhs()) {
-                subBuilder.mergeFrom(getRhs());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setRhs(subBuilder.buildPartial());
-              break;
-            }
-            case 58: {
-              noop.model.proto.Noop.MethodInvocation.Builder subBuilder = noop.model.proto.Noop.MethodInvocation.newBuilder();
-              if (hasMethodInvocation()) {
-                subBuilder.mergeFrom(getMethodInvocation());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setMethodInvocation(subBuilder.buildPartial());
-              break;
-            }
-          }
-        }
       }
       
       
@@ -5861,9 +4133,6 @@ public final class Noop {
         return result.getType();
       }
       public Builder setType(noop.model.proto.Noop.Expression.Type value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.hasType = true;
         result.type_ = value;
         return this;
@@ -5900,16 +4169,13 @@ public final class Noop {
         return result.getStringVal();
       }
       public Builder setStringVal(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasStringVal = true;
+        result.hasStringVal = true;
         result.stringVal_ = value;
         return this;
       }
       public Builder clearStringVal() {
         result.hasStringVal = false;
-        result.stringVal_ = getDefaultInstance().getStringVal();
+        result.stringVal_ = "";
         return this;
       }
       
@@ -5939,9 +4205,6 @@ public final class Noop {
         return result.getLhs();
       }
       public Builder setLhs(noop.model.proto.Noop.Expression value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.hasLhs = true;
         result.lhs_ = value;
         return this;
@@ -5976,9 +4239,6 @@ public final class Noop {
         return result.getRhs();
       }
       public Builder setRhs(noop.model.proto.Noop.Expression value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.hasRhs = true;
         result.rhs_ = value;
         return this;
@@ -6013,9 +4273,6 @@ public final class Noop {
         return result.getMethodInvocation();
       }
       public Builder setMethodInvocation(noop.model.proto.Noop.MethodInvocation value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
         result.hasMethodInvocation = true;
         result.methodInvocation_ = value;
         return this;
@@ -6046,10 +4303,6 @@ public final class Noop {
     static {
       noop.model.proto.Noop.getDescriptor();
     }
-    
-    static {
-      noop.model.proto.Noop.internalForceInit();
-    }
   }
   
   public static final class Unittest extends
@@ -6071,59 +4324,35 @@ public final class Noop {
       return noop.model.proto.Noop.internal_static_Unittest_descriptor;
     }
     
+    @Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return noop.model.proto.Noop.internal_static_Unittest_fieldAccessorTable;
     }
     
     // required string description = 1;
-    public static final int DESCRIPTION_FIELD_NUMBER = 1;
     private boolean hasDescription;
     private java.lang.String description_ = "";
     public boolean hasDescription() { return hasDescription; }
     public java.lang.String getDescription() { return description_; }
     
-    // optional string documentation = 2;
-    public static final int DOCUMENTATION_FIELD_NUMBER = 2;
+    // optional .Documentation documentation = 2;
     private boolean hasDocumentation;
-    private java.lang.String documentation_ = "";
+    private noop.model.proto.Noop.Documentation documentation_ = noop.model.proto.Noop.Documentation.getDefaultInstance();
     public boolean hasDocumentation() { return hasDocumentation; }
-    public java.lang.String getDocumentation() { return documentation_; }
+    public noop.model.proto.Noop.Documentation getDocumentation() { return documentation_; }
     
-    public final boolean isInitialized() {
-      if (!hasDescription) return false;
-      return true;
-    }
+    // optional .BindingBlock local_binding = 3;
+    private boolean hasLocalBinding;
+    private noop.model.proto.Noop.BindingBlock localBinding_ = noop.model.proto.Noop.BindingBlock.getDefaultInstance();
+    public boolean hasLocalBinding() { return hasLocalBinding; }
+    public noop.model.proto.Noop.BindingBlock getLocalBinding() { return localBinding_; }
     
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasDescription()) {
-        output.writeString(1, getDescription());
-      }
-      if (hasDocumentation()) {
-        output.writeString(2, getDocumentation());
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasDescription()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(1, getDescription());
-      }
-      if (hasDocumentation()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeStringSize(2, getDocumentation());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
+    // required .Block block = 4;
+    private boolean hasBlock;
+    private noop.model.proto.Noop.Block block_ = noop.model.proto.Noop.Block.getDefaultInstance();
+    public boolean hasBlock() { return hasBlock; }
+    public noop.model.proto.Noop.Block getBlock() { return block_; }
     
     public static noop.model.proto.Noop.Unittest parseFrom(
         com.google.protobuf.ByteString data)
@@ -6132,7 +4361,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Unittest parseFrom(
         com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -6143,7 +4372,7 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Unittest parseFrom(
         byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
@@ -6154,20 +4383,9 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Unittest parseFrom(
         java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static noop.model.proto.Noop.Unittest parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input).buildParsed();
-    }
-    public static noop.model.proto.Noop.Unittest parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
                .buildParsed();
     }
     public static noop.model.proto.Noop.Unittest parseFrom(
@@ -6177,49 +4395,42 @@ public final class Noop {
     }
     public static noop.model.proto.Noop.Unittest parseFrom(
         com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
     
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
     public static Builder newBuilder(noop.model.proto.Noop.Unittest prototype) {
-      return newBuilder().mergeFrom(prototype);
+      return new Builder().mergeFrom(prototype);
     }
-    public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private noop.model.proto.Noop.Unittest result;
-      
       // Construct using noop.model.proto.Noop.Unittest.newBuilder()
       private Builder() {}
       
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new noop.model.proto.Noop.Unittest();
-        return builder;
-      }
+      noop.model.proto.Noop.Unittest result = new noop.model.proto.Noop.Unittest();
       
+      @Override
       protected noop.model.proto.Noop.Unittest internalGetResult() {
         return result;
       }
       
+      @Override
       public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
         result = new noop.model.proto.Noop.Unittest();
         return this;
       }
       
+      @Override
       public Builder clone() {
-        return create().mergeFrom(result);
+        return new Builder().mergeFrom(result);
       }
       
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return noop.model.proto.Noop.Unittest.getDescriptor();
@@ -6229,12 +4440,10 @@ public final class Noop {
         return noop.model.proto.Noop.Unittest.getDefaultInstance();
       }
       
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
       public noop.model.proto.Noop.Unittest build() {
-        if (result != null && !isInitialized()) {
-          throw newUninitializedMessageException(result);
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
         }
         return buildPartial();
       }
@@ -6242,74 +4451,16 @@ public final class Noop {
       private noop.model.proto.Noop.Unittest buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
         if (!isInitialized()) {
-          throw newUninitializedMessageException(
+          throw new com.google.protobuf.UninitializedMessageException(
             result).asInvalidProtocolBufferException();
         }
         return buildPartial();
       }
       
       public noop.model.proto.Noop.Unittest buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
-        }
         noop.model.proto.Noop.Unittest returnMe = result;
         result = null;
         return returnMe;
-      }
-      
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof noop.model.proto.Noop.Unittest) {
-          return mergeFrom((noop.model.proto.Noop.Unittest)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(noop.model.proto.Noop.Unittest other) {
-        if (other == noop.model.proto.Noop.Unittest.getDefaultInstance()) return this;
-        if (other.hasDescription()) {
-          setDescription(other.getDescription());
-        }
-        if (other.hasDocumentation()) {
-          setDocumentation(other.getDocumentation());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 10: {
-              setDescription(input.readString());
-              break;
-            }
-            case 18: {
-              setDocumentation(input.readString());
-              break;
-            }
-          }
-        }
       }
       
       
@@ -6321,37 +4472,115 @@ public final class Noop {
         return result.getDescription();
       }
       public Builder setDescription(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasDescription = true;
+        result.hasDescription = true;
         result.description_ = value;
         return this;
       }
       public Builder clearDescription() {
         result.hasDescription = false;
-        result.description_ = getDefaultInstance().getDescription();
+        result.description_ = "";
         return this;
       }
       
-      // optional string documentation = 2;
+      // optional .Documentation documentation = 2;
       public boolean hasDocumentation() {
         return result.hasDocumentation();
       }
-      public java.lang.String getDocumentation() {
+      public noop.model.proto.Noop.Documentation getDocumentation() {
         return result.getDocumentation();
       }
-      public Builder setDocumentation(java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  result.hasDocumentation = true;
+      public Builder setDocumentation(noop.model.proto.Noop.Documentation value) {
+        result.hasDocumentation = true;
         result.documentation_ = value;
+        return this;
+      }
+      public Builder setDocumentation(noop.model.proto.Noop.Documentation.Builder builderForValue) {
+        result.hasDocumentation = true;
+        result.documentation_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeDocumentation(noop.model.proto.Noop.Documentation value) {
+        if (result.hasDocumentation() &&
+            result.documentation_ != noop.model.proto.Noop.Documentation.getDefaultInstance()) {
+          result.documentation_ =
+            noop.model.proto.Noop.Documentation.newBuilder(result.documentation_).mergeFrom(value).buildPartial();
+        } else {
+          result.documentation_ = value;
+        }
+        result.hasDocumentation = true;
         return this;
       }
       public Builder clearDocumentation() {
         result.hasDocumentation = false;
-        result.documentation_ = getDefaultInstance().getDocumentation();
+        result.documentation_ = noop.model.proto.Noop.Documentation.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .BindingBlock local_binding = 3;
+      public boolean hasLocalBinding() {
+        return result.hasLocalBinding();
+      }
+      public noop.model.proto.Noop.BindingBlock getLocalBinding() {
+        return result.getLocalBinding();
+      }
+      public Builder setLocalBinding(noop.model.proto.Noop.BindingBlock value) {
+        result.hasLocalBinding = true;
+        result.localBinding_ = value;
+        return this;
+      }
+      public Builder setLocalBinding(noop.model.proto.Noop.BindingBlock.Builder builderForValue) {
+        result.hasLocalBinding = true;
+        result.localBinding_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeLocalBinding(noop.model.proto.Noop.BindingBlock value) {
+        if (result.hasLocalBinding() &&
+            result.localBinding_ != noop.model.proto.Noop.BindingBlock.getDefaultInstance()) {
+          result.localBinding_ =
+            noop.model.proto.Noop.BindingBlock.newBuilder(result.localBinding_).mergeFrom(value).buildPartial();
+        } else {
+          result.localBinding_ = value;
+        }
+        result.hasLocalBinding = true;
+        return this;
+      }
+      public Builder clearLocalBinding() {
+        result.hasLocalBinding = false;
+        result.localBinding_ = noop.model.proto.Noop.BindingBlock.getDefaultInstance();
+        return this;
+      }
+      
+      // required .Block block = 4;
+      public boolean hasBlock() {
+        return result.hasBlock();
+      }
+      public noop.model.proto.Noop.Block getBlock() {
+        return result.getBlock();
+      }
+      public Builder setBlock(noop.model.proto.Noop.Block value) {
+        result.hasBlock = true;
+        result.block_ = value;
+        return this;
+      }
+      public Builder setBlock(noop.model.proto.Noop.Block.Builder builderForValue) {
+        result.hasBlock = true;
+        result.block_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeBlock(noop.model.proto.Noop.Block value) {
+        if (result.hasBlock() &&
+            result.block_ != noop.model.proto.Noop.Block.getDefaultInstance()) {
+          result.block_ =
+            noop.model.proto.Noop.Block.newBuilder(result.block_).mergeFrom(value).buildPartial();
+        } else {
+          result.block_ = value;
+        }
+        result.hasBlock = true;
+        return this;
+      }
+      public Builder clearBlock() {
+        result.hasBlock = false;
+        result.block_ = noop.model.proto.Noop.Block.getDefaultInstance();
         return this;
       }
     }
@@ -6359,12 +4588,307 @@ public final class Noop {
     static {
       noop.model.proto.Noop.getDescriptor();
     }
+  }
+  
+  public static final class Test extends
+      com.google.protobuf.GeneratedMessage {
+    // Use Test.newBuilder() to construct.
+    private Test() {}
+    
+    private static final Test defaultInstance = new Test();
+    public static Test getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Test getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return noop.model.proto.Noop.internal_static_Test_descriptor;
+    }
+    
+    @Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return noop.model.proto.Noop.internal_static_Test_fieldAccessorTable;
+    }
+    
+    // required string description = 1;
+    private boolean hasDescription;
+    private java.lang.String description_ = "";
+    public boolean hasDescription() { return hasDescription; }
+    public java.lang.String getDescription() { return description_; }
+    
+    // optional .Documentation documentation = 2;
+    private boolean hasDocumentation;
+    private noop.model.proto.Noop.Documentation documentation_ = noop.model.proto.Noop.Documentation.getDefaultInstance();
+    public boolean hasDocumentation() { return hasDocumentation; }
+    public noop.model.proto.Noop.Documentation getDocumentation() { return documentation_; }
+    
+    // repeated string tag = 3;
+    private java.util.List<java.lang.String> tag_ =
+      java.util.Collections.emptyList();
+    public java.util.List<java.lang.String> getTagList() {
+      return tag_;
+    }
+    public int getTagCount() { return tag_.size(); }
+    public java.lang.String getTag(int index) {
+      return tag_.get(index);
+    }
+    
+    // required .Block block = 4;
+    private boolean hasBlock;
+    private noop.model.proto.Noop.Block block_ = noop.model.proto.Noop.Block.getDefaultInstance();
+    public boolean hasBlock() { return hasBlock; }
+    public noop.model.proto.Noop.Block getBlock() { return block_; }
+    
+    public static noop.model.proto.Noop.Test parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static noop.model.proto.Noop.Test parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.Noop.Test parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static noop.model.proto.Noop.Test parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.Noop.Test parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static noop.model.proto.Noop.Test parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.Noop.Test parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static noop.model.proto.Noop.Test parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistry extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return new Builder(); }
+    public Builder newBuilderForType() { return new Builder(); }
+    public static Builder newBuilder(noop.model.proto.Noop.Test prototype) {
+      return new Builder().mergeFrom(prototype);
+    }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      // Construct using noop.model.proto.Noop.Test.newBuilder()
+      private Builder() {}
+      
+      noop.model.proto.Noop.Test result = new noop.model.proto.Noop.Test();
+      
+      @Override
+      protected noop.model.proto.Noop.Test internalGetResult() {
+        return result;
+      }
+      
+      @Override
+      public Builder clear() {
+        result = new noop.model.proto.Noop.Test();
+        return this;
+      }
+      
+      @Override
+      public Builder clone() {
+        return new Builder().mergeFrom(result);
+      }
+      
+      @Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return noop.model.proto.Noop.Test.getDescriptor();
+      }
+      
+      public noop.model.proto.Noop.Test getDefaultInstanceForType() {
+        return noop.model.proto.Noop.Test.getDefaultInstance();
+      }
+      
+      public noop.model.proto.Noop.Test build() {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result);
+        }
+        return buildPartial();
+      }
+      
+      private noop.model.proto.Noop.Test buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw new com.google.protobuf.UninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public noop.model.proto.Noop.Test buildPartial() {
+        if (result.tag_ != java.util.Collections.EMPTY_LIST) {
+          result.tag_ =
+            java.util.Collections.unmodifiableList(result.tag_);
+        }
+        noop.model.proto.Noop.Test returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      
+      // required string description = 1;
+      public boolean hasDescription() {
+        return result.hasDescription();
+      }
+      public java.lang.String getDescription() {
+        return result.getDescription();
+      }
+      public Builder setDescription(java.lang.String value) {
+        result.hasDescription = true;
+        result.description_ = value;
+        return this;
+      }
+      public Builder clearDescription() {
+        result.hasDescription = false;
+        result.description_ = "";
+        return this;
+      }
+      
+      // optional .Documentation documentation = 2;
+      public boolean hasDocumentation() {
+        return result.hasDocumentation();
+      }
+      public noop.model.proto.Noop.Documentation getDocumentation() {
+        return result.getDocumentation();
+      }
+      public Builder setDocumentation(noop.model.proto.Noop.Documentation value) {
+        result.hasDocumentation = true;
+        result.documentation_ = value;
+        return this;
+      }
+      public Builder setDocumentation(noop.model.proto.Noop.Documentation.Builder builderForValue) {
+        result.hasDocumentation = true;
+        result.documentation_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeDocumentation(noop.model.proto.Noop.Documentation value) {
+        if (result.hasDocumentation() &&
+            result.documentation_ != noop.model.proto.Noop.Documentation.getDefaultInstance()) {
+          result.documentation_ =
+            noop.model.proto.Noop.Documentation.newBuilder(result.documentation_).mergeFrom(value).buildPartial();
+        } else {
+          result.documentation_ = value;
+        }
+        result.hasDocumentation = true;
+        return this;
+      }
+      public Builder clearDocumentation() {
+        result.hasDocumentation = false;
+        result.documentation_ = noop.model.proto.Noop.Documentation.getDefaultInstance();
+        return this;
+      }
+      
+      // repeated string tag = 3;
+      public java.util.List<java.lang.String> getTagList() {
+        return java.util.Collections.unmodifiableList(result.tag_);
+      }
+      public int getTagCount() {
+        return result.getTagCount();
+      }
+      public java.lang.String getTag(int index) {
+        return result.getTag(index);
+      }
+      public Builder setTag(int index, java.lang.String value) {
+        result.tag_.set(index, value);
+        return this;
+      }
+      public Builder addTag(java.lang.String value) {
+        if (result.tag_.isEmpty()) {
+          result.tag_ = new java.util.ArrayList<java.lang.String>();
+        }
+        result.tag_.add(value);
+        return this;
+      }
+      public Builder addAllTag(
+          java.lang.Iterable<? extends java.lang.String> values) {
+        if (result.tag_.isEmpty()) {
+          result.tag_ = new java.util.ArrayList<java.lang.String>();
+        }
+        super.addAll(values, result.tag_);
+        return this;
+      }
+      public Builder clearTag() {
+        result.tag_ = java.util.Collections.emptyList();
+        return this;
+      }
+      
+      // required .Block block = 4;
+      public boolean hasBlock() {
+        return result.hasBlock();
+      }
+      public noop.model.proto.Noop.Block getBlock() {
+        return result.getBlock();
+      }
+      public Builder setBlock(noop.model.proto.Noop.Block value) {
+        result.hasBlock = true;
+        result.block_ = value;
+        return this;
+      }
+      public Builder setBlock(noop.model.proto.Noop.Block.Builder builderForValue) {
+        result.hasBlock = true;
+        result.block_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeBlock(noop.model.proto.Noop.Block value) {
+        if (result.hasBlock() &&
+            result.block_ != noop.model.proto.Noop.Block.getDefaultInstance()) {
+          result.block_ =
+            noop.model.proto.Noop.Block.newBuilder(result.block_).mergeFrom(value).buildPartial();
+        } else {
+          result.block_ = value;
+        }
+        result.hasBlock = true;
+        return this;
+      }
+      public Builder clearBlock() {
+        result.hasBlock = false;
+        result.block_ = noop.model.proto.Noop.Block.getDefaultInstance();
+        return this;
+      }
+    }
     
     static {
-      noop.model.proto.Noop.internalForceInit();
+      noop.model.proto.Noop.getDescriptor();
     }
   }
   
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_Documentation_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_Documentation_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_Module_descriptor;
   private static
@@ -6435,6 +4959,11 @@ public final class Noop {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_Unittest_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_Test_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_Test_fieldAccessorTable;
   
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -6443,65 +4972,82 @@ public final class Noop {
   private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
-      "\n\036core/src/main/proto/noop.proto\"\246\001\n\006Mod" +
-      "ule\022\014\n\004name\030\001 \002(\t\022\025\n\rdocumentation\030\002 \001(\t" +
-      "\022\031\n\007binding\030\003 \003(\0132\010.Binding\022\025\n\005alias\030\004 \003" +
-      "(\0132\006.Alias\022\035\n\tinterface\030\005 \003(\0132\n.Interfac" +
-      "e\022&\n\016concrete_class\030\006 \003(\0132\016.ConcreteClas" +
-      "s\"\233\001\n\rConcreteClass\022\014\n\004name\030\001 \002(\t\022\025\n\rdoc" +
-      "umentation\030\002 \001(\t\022\022\n\nsuper_type\030\003 \003(\t\022\033\n\010" +
-      "property\030\004 \003(\0132\t.Property\022\027\n\006method\030\005 \003(" +
-      "\0132\007.Method\022\033\n\010unittest\030\006 \003(\0132\t.Unittest\"" +
-      "Z\n\010Property\022\014\n\004name\030\001 \002(\t\022\014\n\004type\030\002 \002(\t\022",
-      "\033\n\010modifier\030\003 \003(\0162\t.Modifier\022\025\n\rdocument" +
-      "ation\030\004 \001(\t\"i\n\007Binding\022\014\n\004name\030\001 \002(\t\022\025\n\r" +
-      "documentation\030\002 \001(\t\022\033\n\010modifier\030\003 \003(\0162\t." +
-      "Modifier\022\034\n\005block\030\004 \002(\0132\r.BindingBlock\"R" +
-      "\n\tInterface\022\014\n\004name\030\001 \002(\t\022\025\n\rdocumentati" +
-      "on\030\002 \001(\t\022 \n\006method\030\003 \003(\0132\020.MethodSignatu" +
-      "re\"8\n\005Alias\022\014\n\004name\030\001 \002(\t\022\025\n\rdocumentati" +
-      "on\030\002 \001(\t\022\n\n\002of\030\003 \002(\t\"\205\001\n\017MethodSignature" +
-      "\022\014\n\004name\030\001 \002(\t\022\025\n\rdocumentation\030\002 \001(\t\022\033\n" +
-      "\010modifier\030\003 \003(\0162\t.Modifier\022\023\n\013return_typ",
-      "e\030\004 \003(\t\022\033\n\010argument\030\005 \003(\0132\t.Property\"D\n\006" +
-      "Method\022#\n\tsignature\030\001 \002(\0132\020.MethodSignat" +
-      "ure\022\025\n\005block\030\002 \002(\0132\006.Block\"+\n\014BindingBlo" +
-      "ck\022\033\n\004bind\030\001 \003(\0132\r.BindOperator\":\n\014BindO" +
-      "perator\022\014\n\004type\030\001 \002(\t\022\034\n\007boundTo\030\002 \002(\0132\013" +
-      ".Expression\"(\n\005Block\022\037\n\nexpression\030\001 \003(\013" +
-      "2\013.Expression\"[\n\020MethodInvocation\022\030\n\003lhs" +
-      "\030\001 \002(\0132\013.Expression\022\016\n\006method\030\002 \002(\t\022\035\n\010a" +
-      "rgument\030\003 \003(\0132\013.Expression\"\374\002\n\nExpressio" +
-      "n\022\036\n\004type\030\001 \002(\0162\020.Expression.Type\022\022\n\nboo",
-      "leanVal\030\002 \001(\010\022\021\n\tstringVal\030\003 \001(\t\022\021\n\tnumb" +
-      "erVal\030\004 \001(\r\022\030\n\003lhs\030\005 \001(\0132\013.Expression\022\030\n" +
-      "\003rhs\030\006 \001(\0132\013.Expression\022+\n\020methodInvocat" +
-      "ion\030\007 \001(\0132\021.MethodInvocation\"\262\001\n\004Type\022\r\n" +
-      "\tEVALUATED\020\001\022\023\n\017BOOLEAN_LITERAL\020\002\022\022\n\016STR" +
-      "ING_LITERAL\020\003\022\022\n\016NUMBER_LITERAL\020\004\022\016\n\nIDE" +
-      "NTIFIER\020\005\022\017\n\013CONDITIONAL\020\006\022\017\n\013DEREFERENC" +
-      "E\020\007\022\t\n\005INDEX\020\010\022\025\n\021METHOD_INVOCATION\020\t\022\n\n" +
-      "\006RETURN\020\n\"6\n\010Unittest\022\023\n\013description\030\001 \002" +
-      "(\t\022\025\n\rdocumentation\030\002 \001(\t*#\n\010Modifier\022\013\n",
-      "\007MUTABLE\020\001\022\n\n\006NATIVE\020\002B\022\n\020noop.model.pro" +
-      "to"
-    };
+    java.lang.String descriptorData =
+      "\n\036core/src/main/proto/noop.proto\"d\n\rDocu" +
+      "mentation\022\017\n\007summary\030\001 \002(\t\022\016\n\006author\030\002 \003" +
+      "(\t\022\021\n\tparameter\030\003 \003(\t\022\016\n\006return\030\004 \003(\t\022\017\n" +
+      "\007details\030\005 \001(\t\"\336\001\n\006Module\022\014\n\004name\030\001 \002(\t\022" +
+      "%\n\rdocumentation\030\002 \001(\0132\016.Documentation\022\021" +
+      "\n\tcopyright\030\003 \001(\t\022\031\n\007binding\030\004 \003(\0132\010.Bin" +
+      "ding\022\025\n\005alias\030\005 \003(\0132\006.Alias\022\035\n\tinterface" +
+      "\030\006 \003(\0132\n.Interface\022&\n\016concrete_class\030\007 \003" +
+      "(\0132\016.ConcreteClass\022\023\n\004test\030\010 \003(\0132\005.Test\"" +
+      "\253\001\n\rConcreteClass\022\014\n\004name\030\001 \002(\t\022%\n\rdocum" +
+      "entation\030\002 \001(\0132\016.Documentation\022\022\n\nsuper_" +
+      "type\030\003 \003(\t\022\033\n\010property\030\004 \003(\0132\t.Property\022" +
+      "\027\n\006method\030\005 \003(\0132\007.Method\022\033\n\010unittest\030\006 \003" +
+      "(\0132\t.Unittest\"j\n\010Property\022\014\n\004name\030\001 \002(\t\022" +
+      "\014\n\004type\030\002 \002(\t\022\033\n\010modifier\030\003 \003(\0162\t.Modifi" +
+      "er\022%\n\rdocumentation\030\004 \001(\0132\016.Documentatio" +
+      "n\"y\n\007Binding\022\014\n\004name\030\001 \002(\t\022%\n\rdocumentat" +
+      "ion\030\002 \001(\0132\016.Documentation\022\033\n\010modifier\030\003 " +
+      "\003(\0162\t.Modifier\022\034\n\005block\030\004 \002(\0132\r.BindingB" +
+      "lock\"b\n\tInterface\022\014\n\004name\030\001 \002(\t\022%\n\rdocum" +
+      "entation\030\002 \001(\0132\016.Documentation\022 \n\006method" +
+      "\030\003 \003(\0132\020.MethodSignature\"H\n\005Alias\022\014\n\004nam" +
+      "e\030\001 \002(\t\022%\n\rdocumentation\030\002 \001(\0132\016.Documen" +
+      "tation\022\n\n\002of\030\003 \002(\t\"\225\001\n\017MethodSignature\022\014" +
+      "\n\004name\030\001 \002(\t\022%\n\rdocumentation\030\002 \001(\0132\016.Do" +
+      "cumentation\022\033\n\010modifier\030\003 \003(\0162\t.Modifier" +
+      "\022\023\n\013return_type\030\004 \003(\t\022\033\n\010argument\030\005 \003(\0132" +
+      "\t.Property\"D\n\006Method\022#\n\tsignature\030\001 \002(\0132" +
+      "\020.MethodSignature\022\025\n\005block\030\002 \002(\0132\006.Block" +
+      "\"+\n\014BindingBlock\022\033\n\004bind\030\001 \003(\0132\r.BindOpe" +
+      "rator\":\n\014BindOperator\022\014\n\004type\030\001 \002(\t\022\034\n\007b" +
+      "oundTo\030\002 \002(\0132\013.Expression\"(\n\005Block\022\037\n\nex" +
+      "pression\030\001 \003(\0132\013.Expression\"[\n\020MethodInv" +
+      "ocation\022\030\n\003lhs\030\001 \002(\0132\013.Expression\022\016\n\006met" +
+      "hod\030\002 \002(\t\022\035\n\010argument\030\003 \003(\0132\013.Expression" +
+      "\"\374\002\n\nExpression\022\036\n\004type\030\001 \002(\0162\020.Expressi" +
+      "on.Type\022\022\n\nbooleanVal\030\002 \001(\010\022\021\n\tstringVal" +
+      "\030\003 \001(\t\022\021\n\tnumberVal\030\004 \001(\r\022\030\n\003lhs\030\005 \001(\0132\013" +
+      ".Expression\022\030\n\003rhs\030\006 \001(\0132\013.Expression\022+\n" +
+      "\020methodInvocation\030\007 \001(\0132\021.MethodInvocati" +
+      "on\"\262\001\n\004Type\022\r\n\tEVALUATED\020\001\022\023\n\017BOOLEAN_LI" +
+      "TERAL\020\002\022\022\n\016STRING_LITERAL\020\003\022\022\n\016NUMBER_LI" +
+      "TERAL\020\004\022\016\n\nIDENTIFIER\020\005\022\017\n\013CONDITIONAL\020\006" +
+      "\022\017\n\013DEREFERENCE\020\007\022\t\n\005INDEX\020\010\022\025\n\021METHOD_I" +
+      "NVOCATION\020\t\022\n\n\006RETURN\020\n\"\203\001\n\010Unittest\022\023\n\013" +
+      "description\030\001 \002(\t\022%\n\rdocumentation\030\002 \001(\013" +
+      "2\016.Documentation\022$\n\rlocal_binding\030\003 \001(\0132" +
+      "\r.BindingBlock\022\025\n\005block\030\004 \002(\0132\006.Block\"f\n" +
+      "\004Test\022\023\n\013description\030\001 \002(\t\022%\n\rdocumentat" +
+      "ion\030\002 \001(\0132\016.Documentation\022\013\n\003tag\030\003 \003(\t\022\025" +
+      "\n\005block\030\004 \002(\0132\006.Block*#\n\010Modifier\022\013\n\007MUT" +
+      "ABLE\020\001\022\n\n\006NATIVE\020\002B\022\n\020noop.model.proto";
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
             com.google.protobuf.Descriptors.FileDescriptor root) {
           descriptor = root;
-          internal_static_Module_descriptor =
+          internal_static_Documentation_descriptor =
             getDescriptor().getMessageTypes().get(0);
+          internal_static_Documentation_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_Documentation_descriptor,
+              new java.lang.String[] { "Summary", "Author", "Parameter", "Return", "Details", },
+              noop.model.proto.Noop.Documentation.class,
+              noop.model.proto.Noop.Documentation.Builder.class);
+          internal_static_Module_descriptor =
+            getDescriptor().getMessageTypes().get(1);
           internal_static_Module_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_Module_descriptor,
-              new java.lang.String[] { "Name", "Documentation", "Binding", "Alias", "Interface", "ConcreteClass", },
+              new java.lang.String[] { "Name", "Documentation", "Copyright", "Binding", "Alias", "Interface", "ConcreteClass", "Test", },
               noop.model.proto.Noop.Module.class,
               noop.model.proto.Noop.Module.Builder.class);
           internal_static_ConcreteClass_descriptor =
-            getDescriptor().getMessageTypes().get(1);
+            getDescriptor().getMessageTypes().get(2);
           internal_static_ConcreteClass_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_ConcreteClass_descriptor,
@@ -6509,7 +5055,7 @@ public final class Noop {
               noop.model.proto.Noop.ConcreteClass.class,
               noop.model.proto.Noop.ConcreteClass.Builder.class);
           internal_static_Property_descriptor =
-            getDescriptor().getMessageTypes().get(2);
+            getDescriptor().getMessageTypes().get(3);
           internal_static_Property_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_Property_descriptor,
@@ -6517,7 +5063,7 @@ public final class Noop {
               noop.model.proto.Noop.Property.class,
               noop.model.proto.Noop.Property.Builder.class);
           internal_static_Binding_descriptor =
-            getDescriptor().getMessageTypes().get(3);
+            getDescriptor().getMessageTypes().get(4);
           internal_static_Binding_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_Binding_descriptor,
@@ -6525,7 +5071,7 @@ public final class Noop {
               noop.model.proto.Noop.Binding.class,
               noop.model.proto.Noop.Binding.Builder.class);
           internal_static_Interface_descriptor =
-            getDescriptor().getMessageTypes().get(4);
+            getDescriptor().getMessageTypes().get(5);
           internal_static_Interface_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_Interface_descriptor,
@@ -6533,7 +5079,7 @@ public final class Noop {
               noop.model.proto.Noop.Interface.class,
               noop.model.proto.Noop.Interface.Builder.class);
           internal_static_Alias_descriptor =
-            getDescriptor().getMessageTypes().get(5);
+            getDescriptor().getMessageTypes().get(6);
           internal_static_Alias_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_Alias_descriptor,
@@ -6541,7 +5087,7 @@ public final class Noop {
               noop.model.proto.Noop.Alias.class,
               noop.model.proto.Noop.Alias.Builder.class);
           internal_static_MethodSignature_descriptor =
-            getDescriptor().getMessageTypes().get(6);
+            getDescriptor().getMessageTypes().get(7);
           internal_static_MethodSignature_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_MethodSignature_descriptor,
@@ -6549,7 +5095,7 @@ public final class Noop {
               noop.model.proto.Noop.MethodSignature.class,
               noop.model.proto.Noop.MethodSignature.Builder.class);
           internal_static_Method_descriptor =
-            getDescriptor().getMessageTypes().get(7);
+            getDescriptor().getMessageTypes().get(8);
           internal_static_Method_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_Method_descriptor,
@@ -6557,7 +5103,7 @@ public final class Noop {
               noop.model.proto.Noop.Method.class,
               noop.model.proto.Noop.Method.Builder.class);
           internal_static_BindingBlock_descriptor =
-            getDescriptor().getMessageTypes().get(8);
+            getDescriptor().getMessageTypes().get(9);
           internal_static_BindingBlock_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_BindingBlock_descriptor,
@@ -6565,7 +5111,7 @@ public final class Noop {
               noop.model.proto.Noop.BindingBlock.class,
               noop.model.proto.Noop.BindingBlock.Builder.class);
           internal_static_BindOperator_descriptor =
-            getDescriptor().getMessageTypes().get(9);
+            getDescriptor().getMessageTypes().get(10);
           internal_static_BindOperator_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_BindOperator_descriptor,
@@ -6573,7 +5119,7 @@ public final class Noop {
               noop.model.proto.Noop.BindOperator.class,
               noop.model.proto.Noop.BindOperator.Builder.class);
           internal_static_Block_descriptor =
-            getDescriptor().getMessageTypes().get(10);
+            getDescriptor().getMessageTypes().get(11);
           internal_static_Block_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_Block_descriptor,
@@ -6581,7 +5127,7 @@ public final class Noop {
               noop.model.proto.Noop.Block.class,
               noop.model.proto.Noop.Block.Builder.class);
           internal_static_MethodInvocation_descriptor =
-            getDescriptor().getMessageTypes().get(11);
+            getDescriptor().getMessageTypes().get(12);
           internal_static_MethodInvocation_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_MethodInvocation_descriptor,
@@ -6589,7 +5135,7 @@ public final class Noop {
               noop.model.proto.Noop.MethodInvocation.class,
               noop.model.proto.Noop.MethodInvocation.Builder.class);
           internal_static_Expression_descriptor =
-            getDescriptor().getMessageTypes().get(12);
+            getDescriptor().getMessageTypes().get(13);
           internal_static_Expression_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_Expression_descriptor,
@@ -6597,13 +5143,21 @@ public final class Noop {
               noop.model.proto.Noop.Expression.class,
               noop.model.proto.Noop.Expression.Builder.class);
           internal_static_Unittest_descriptor =
-            getDescriptor().getMessageTypes().get(13);
+            getDescriptor().getMessageTypes().get(14);
           internal_static_Unittest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_Unittest_descriptor,
-              new java.lang.String[] { "Description", "Documentation", },
+              new java.lang.String[] { "Description", "Documentation", "LocalBinding", "Block", },
               noop.model.proto.Noop.Unittest.class,
               noop.model.proto.Noop.Unittest.Builder.class);
+          internal_static_Test_descriptor =
+            getDescriptor().getMessageTypes().get(15);
+          internal_static_Test_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_Test_descriptor,
+              new java.lang.String[] { "Description", "Documentation", "Tag", "Block", },
+              noop.model.proto.Noop.Test.class,
+              noop.model.proto.Noop.Test.Builder.class);
           return null;
         }
       };
@@ -6612,6 +5166,4 @@ public final class Noop {
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
   }
-  
-  public static void internalForceInit() {}
 }
