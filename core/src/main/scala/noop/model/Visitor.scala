@@ -59,4 +59,6 @@ trait Visitor {
   def visit(conditionalAndExpression: ConditionalAndExpression);
 
   def visit(conditionalOrExpression: ConditionalOrExpression);
+
+  def visit(invokable: Invokable) = { throw new UnsupportedOperationException("should only visit method or test"); }
 }

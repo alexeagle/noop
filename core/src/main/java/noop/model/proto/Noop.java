@@ -4658,20 +4658,20 @@ public final class Noop {
       return noop.model.proto.Noop.internal_static_Block_fieldAccessorTable;
     }
     
-    // repeated .Statement statement = 1;
-    public static final int STATEMENT_FIELD_NUMBER = 1;
-    private java.util.List<noop.model.proto.Noop.Statement> statement_ =
+    // repeated .Expression expression = 1;
+    public static final int EXPRESSION_FIELD_NUMBER = 1;
+    private java.util.List<noop.model.proto.Noop.Expression> expression_ =
       java.util.Collections.emptyList();
-    public java.util.List<noop.model.proto.Noop.Statement> getStatementList() {
-      return statement_;
+    public java.util.List<noop.model.proto.Noop.Expression> getExpressionList() {
+      return expression_;
     }
-    public int getStatementCount() { return statement_.size(); }
-    public noop.model.proto.Noop.Statement getStatement(int index) {
-      return statement_.get(index);
+    public int getExpressionCount() { return expression_.size(); }
+    public noop.model.proto.Noop.Expression getExpression(int index) {
+      return expression_.get(index);
     }
     
     public final boolean isInitialized() {
-      for (noop.model.proto.Noop.Statement element : getStatementList()) {
+      for (noop.model.proto.Noop.Expression element : getExpressionList()) {
         if (!element.isInitialized()) return false;
       }
       return true;
@@ -4679,7 +4679,7 @@ public final class Noop {
     
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      for (noop.model.proto.Noop.Statement element : getStatementList()) {
+      for (noop.model.proto.Noop.Expression element : getExpressionList()) {
         output.writeMessage(1, element);
       }
       getUnknownFields().writeTo(output);
@@ -4691,7 +4691,7 @@ public final class Noop {
       if (size != -1) return size;
     
       size = 0;
-      for (noop.model.proto.Noop.Statement element : getStatementList()) {
+      for (noop.model.proto.Noop.Expression element : getExpressionList()) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, element);
       }
@@ -4828,9 +4828,9 @@ public final class Noop {
           throw new IllegalStateException(
             "build() has already been called on this Builder.");
         }
-        if (result.statement_ != java.util.Collections.EMPTY_LIST) {
-          result.statement_ =
-            java.util.Collections.unmodifiableList(result.statement_);
+        if (result.expression_ != java.util.Collections.EMPTY_LIST) {
+          result.expression_ =
+            java.util.Collections.unmodifiableList(result.expression_);
         }
         noop.model.proto.Noop.Block returnMe = result;
         result = null;
@@ -4848,11 +4848,11 @@ public final class Noop {
       
       public Builder mergeFrom(noop.model.proto.Noop.Block other) {
         if (other == noop.model.proto.Noop.Block.getDefaultInstance()) return this;
-        if (!other.statement_.isEmpty()) {
-          if (result.statement_.isEmpty()) {
-            result.statement_ = new java.util.ArrayList<noop.model.proto.Noop.Statement>();
+        if (!other.expression_.isEmpty()) {
+          if (result.expression_.isEmpty()) {
+            result.expression_ = new java.util.ArrayList<noop.model.proto.Noop.Expression>();
           }
-          result.statement_.addAll(other.statement_);
+          result.expression_.addAll(other.expression_);
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -4880,439 +4880,9 @@ public final class Noop {
               break;
             }
             case 10: {
-              noop.model.proto.Noop.Statement.Builder subBuilder = noop.model.proto.Noop.Statement.newBuilder();
-              input.readMessage(subBuilder, extensionRegistry);
-              addStatement(subBuilder.buildPartial());
-              break;
-            }
-          }
-        }
-      }
-      
-      
-      // repeated .Statement statement = 1;
-      public java.util.List<noop.model.proto.Noop.Statement> getStatementList() {
-        return java.util.Collections.unmodifiableList(result.statement_);
-      }
-      public int getStatementCount() {
-        return result.getStatementCount();
-      }
-      public noop.model.proto.Noop.Statement getStatement(int index) {
-        return result.getStatement(index);
-      }
-      public Builder setStatement(int index, noop.model.proto.Noop.Statement value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        result.statement_.set(index, value);
-        return this;
-      }
-      public Builder setStatement(int index, noop.model.proto.Noop.Statement.Builder builderForValue) {
-        result.statement_.set(index, builderForValue.build());
-        return this;
-      }
-      public Builder addStatement(noop.model.proto.Noop.Statement value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        if (result.statement_.isEmpty()) {
-          result.statement_ = new java.util.ArrayList<noop.model.proto.Noop.Statement>();
-        }
-        result.statement_.add(value);
-        return this;
-      }
-      public Builder addStatement(noop.model.proto.Noop.Statement.Builder builderForValue) {
-        if (result.statement_.isEmpty()) {
-          result.statement_ = new java.util.ArrayList<noop.model.proto.Noop.Statement>();
-        }
-        result.statement_.add(builderForValue.build());
-        return this;
-      }
-      public Builder addAllStatement(
-          java.lang.Iterable<? extends noop.model.proto.Noop.Statement> values) {
-        if (result.statement_.isEmpty()) {
-          result.statement_ = new java.util.ArrayList<noop.model.proto.Noop.Statement>();
-        }
-        super.addAll(values, result.statement_);
-        return this;
-      }
-      public Builder clearStatement() {
-        result.statement_ = java.util.Collections.emptyList();
-        return this;
-      }
-    }
-    
-    static {
-      noop.model.proto.Noop.getDescriptor();
-    }
-    
-    static {
-      noop.model.proto.Noop.internalForceInit();
-    }
-  }
-  
-  public static final class Statement extends
-      com.google.protobuf.GeneratedMessage {
-    // Use Statement.newBuilder() to construct.
-    private Statement() {}
-    
-    private static final Statement defaultInstance = new Statement();
-    public static Statement getDefaultInstance() {
-      return defaultInstance;
-    }
-    
-    public Statement getDefaultInstanceForType() {
-      return defaultInstance;
-    }
-    
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return noop.model.proto.Noop.internal_static_Statement_descriptor;
-    }
-    
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return noop.model.proto.Noop.internal_static_Statement_fieldAccessorTable;
-    }
-    
-    public enum Type
-        implements com.google.protobuf.ProtocolMessageEnum {
-      METHOD_INVOCATION(0, 1),
-      RETURN_STATEMENT(1, 2),
-      ;
-      
-      
-      public final int getNumber() { return value; }
-      
-      public static Type valueOf(int value) {
-        switch (value) {
-          case 1: return METHOD_INVOCATION;
-          case 2: return RETURN_STATEMENT;
-          default: return null;
-        }
-      }
-      
-      public static com.google.protobuf.Internal.EnumLiteMap<Type>
-          internalGetValueMap() {
-        return internalValueMap;
-      }
-      private static com.google.protobuf.Internal.EnumLiteMap<Type>
-          internalValueMap =
-            new com.google.protobuf.Internal.EnumLiteMap<Type>() {
-              public Type findValueByNumber(int number) {
-                return Type.valueOf(number)
-      ;        }
-            };
-      
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor
-          getValueDescriptor() {
-        return getDescriptor().getValues().get(index);
-      }
-      public final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptorForType() {
-        return getDescriptor();
-      }
-      public static final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptor() {
-        return noop.model.proto.Noop.Statement.getDescriptor().getEnumTypes().get(0);
-      }
-      
-      private static final Type[] VALUES = {
-        METHOD_INVOCATION, RETURN_STATEMENT, 
-      };
-      public static Type valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException(
-            "EnumValueDescriptor is not for this type.");
-        }
-        return VALUES[desc.getIndex()];
-      }
-      private final int index;
-      private final int value;
-      private Type(int index, int value) {
-        this.index = index;
-        this.value = value;
-      }
-      
-      static {
-        noop.model.proto.Noop.getDescriptor();
-      }
-    }
-    
-    // required .Statement.Type type = 1;
-    public static final int TYPE_FIELD_NUMBER = 1;
-    private boolean hasType;
-    private noop.model.proto.Noop.Statement.Type type_ = noop.model.proto.Noop.Statement.Type.METHOD_INVOCATION;
-    public boolean hasType() { return hasType; }
-    public noop.model.proto.Noop.Statement.Type getType() { return type_; }
-    
-    // optional .MethodInvocation methodInvocation = 2;
-    public static final int METHODINVOCATION_FIELD_NUMBER = 2;
-    private boolean hasMethodInvocation;
-    private noop.model.proto.Noop.MethodInvocation methodInvocation_ = noop.model.proto.Noop.MethodInvocation.getDefaultInstance();
-    public boolean hasMethodInvocation() { return hasMethodInvocation; }
-    public noop.model.proto.Noop.MethodInvocation getMethodInvocation() { return methodInvocation_; }
-    
-    // optional .Expression returned = 3;
-    public static final int RETURNED_FIELD_NUMBER = 3;
-    private boolean hasReturned;
-    private noop.model.proto.Noop.Expression returned_ = noop.model.proto.Noop.Expression.getDefaultInstance();
-    public boolean hasReturned() { return hasReturned; }
-    public noop.model.proto.Noop.Expression getReturned() { return returned_; }
-    
-    public final boolean isInitialized() {
-      if (!hasType) return false;
-      if (hasMethodInvocation()) {
-        if (!getMethodInvocation().isInitialized()) return false;
-      }
-      if (hasReturned()) {
-        if (!getReturned().isInitialized()) return false;
-      }
-      return true;
-    }
-    
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (hasType()) {
-        output.writeEnum(1, getType().getNumber());
-      }
-      if (hasMethodInvocation()) {
-        output.writeMessage(2, getMethodInvocation());
-      }
-      if (hasReturned()) {
-        output.writeMessage(3, getReturned());
-      }
-      getUnknownFields().writeTo(output);
-    }
-    
-    private int memoizedSerializedSize = -1;
-    public int getSerializedSize() {
-      int size = memoizedSerializedSize;
-      if (size != -1) return size;
-    
-      size = 0;
-      if (hasType()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(1, getType().getNumber());
-      }
-      if (hasMethodInvocation()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getMethodInvocation());
-      }
-      if (hasReturned()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(3, getReturned());
-      }
-      size += getUnknownFields().getSerializedSize();
-      memoizedSerializedSize = size;
-      return size;
-    }
-    
-    public static noop.model.proto.Noop.Statement parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static noop.model.proto.Noop.Statement parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static noop.model.proto.Noop.Statement parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data).buildParsed();
-    }
-    public static noop.model.proto.Noop.Statement parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return newBuilder().mergeFrom(data, extensionRegistry)
-               .buildParsed();
-    }
-    public static noop.model.proto.Noop.Statement parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static noop.model.proto.Noop.Statement parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static noop.model.proto.Noop.Statement parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input).buildParsed();
-    }
-    public static noop.model.proto.Noop.Statement parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    public static noop.model.proto.Noop.Statement parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input).buildParsed();
-    }
-    public static noop.model.proto.Noop.Statement parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return newBuilder().mergeFrom(input, extensionRegistry)
-               .buildParsed();
-    }
-    
-    public static Builder newBuilder() { return Builder.create(); }
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(noop.model.proto.Noop.Statement prototype) {
-      return newBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() { return newBuilder(this); }
-    
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private noop.model.proto.Noop.Statement result;
-      
-      // Construct using noop.model.proto.Noop.Statement.newBuilder()
-      private Builder() {}
-      
-      private static Builder create() {
-        Builder builder = new Builder();
-        builder.result = new noop.model.proto.Noop.Statement();
-        return builder;
-      }
-      
-      protected noop.model.proto.Noop.Statement internalGetResult() {
-        return result;
-      }
-      
-      public Builder clear() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "Cannot call clear() after build().");
-        }
-        result = new noop.model.proto.Noop.Statement();
-        return this;
-      }
-      
-      public Builder clone() {
-        return create().mergeFrom(result);
-      }
-      
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return noop.model.proto.Noop.Statement.getDescriptor();
-      }
-      
-      public noop.model.proto.Noop.Statement getDefaultInstanceForType() {
-        return noop.model.proto.Noop.Statement.getDefaultInstance();
-      }
-      
-      public boolean isInitialized() {
-        return result.isInitialized();
-      }
-      public noop.model.proto.Noop.Statement build() {
-        if (result != null && !isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return buildPartial();
-      }
-      
-      private noop.model.proto.Noop.Statement buildParsed()
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        if (!isInitialized()) {
-          throw newUninitializedMessageException(
-            result).asInvalidProtocolBufferException();
-        }
-        return buildPartial();
-      }
-      
-      public noop.model.proto.Noop.Statement buildPartial() {
-        if (result == null) {
-          throw new IllegalStateException(
-            "build() has already been called on this Builder.");
-        }
-        noop.model.proto.Noop.Statement returnMe = result;
-        result = null;
-        return returnMe;
-      }
-      
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof noop.model.proto.Noop.Statement) {
-          return mergeFrom((noop.model.proto.Noop.Statement)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-      
-      public Builder mergeFrom(noop.model.proto.Noop.Statement other) {
-        if (other == noop.model.proto.Noop.Statement.getDefaultInstance()) return this;
-        if (other.hasType()) {
-          setType(other.getType());
-        }
-        if (other.hasMethodInvocation()) {
-          mergeMethodInvocation(other.getMethodInvocation());
-        }
-        if (other.hasReturned()) {
-          mergeReturned(other.getReturned());
-        }
-        this.mergeUnknownFields(other.getUnknownFields());
-        return this;
-      }
-      
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder(
-            this.getUnknownFields());
-        while (true) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              this.setUnknownFields(unknownFields.build());
-              return this;
-            default: {
-              if (!parseUnknownField(input, unknownFields,
-                                     extensionRegistry, tag)) {
-                this.setUnknownFields(unknownFields.build());
-                return this;
-              }
-              break;
-            }
-            case 8: {
-              int rawValue = input.readEnum();
-              noop.model.proto.Noop.Statement.Type value = noop.model.proto.Noop.Statement.Type.valueOf(rawValue);
-              if (value == null) {
-                unknownFields.mergeVarintField(1, rawValue);
-              } else {
-                setType(value);
-              }
-              break;
-            }
-            case 18: {
-              noop.model.proto.Noop.MethodInvocation.Builder subBuilder = noop.model.proto.Noop.MethodInvocation.newBuilder();
-              if (hasMethodInvocation()) {
-                subBuilder.mergeFrom(getMethodInvocation());
-              }
-              input.readMessage(subBuilder, extensionRegistry);
-              setMethodInvocation(subBuilder.buildPartial());
-              break;
-            }
-            case 26: {
               noop.model.proto.Noop.Expression.Builder subBuilder = noop.model.proto.Noop.Expression.newBuilder();
-              if (hasReturned()) {
-                subBuilder.mergeFrom(getReturned());
-              }
               input.readMessage(subBuilder, extensionRegistry);
-              setReturned(subBuilder.buildPartial());
+              addExpression(subBuilder.buildPartial());
               break;
             }
           }
@@ -5320,98 +4890,54 @@ public final class Noop {
       }
       
       
-      // required .Statement.Type type = 1;
-      public boolean hasType() {
-        return result.hasType();
+      // repeated .Expression expression = 1;
+      public java.util.List<noop.model.proto.Noop.Expression> getExpressionList() {
+        return java.util.Collections.unmodifiableList(result.expression_);
       }
-      public noop.model.proto.Noop.Statement.Type getType() {
-        return result.getType();
+      public int getExpressionCount() {
+        return result.getExpressionCount();
       }
-      public Builder setType(noop.model.proto.Noop.Statement.Type value) {
+      public noop.model.proto.Noop.Expression getExpression(int index) {
+        return result.getExpression(index);
+      }
+      public Builder setExpression(int index, noop.model.proto.Noop.Expression value) {
         if (value == null) {
           throw new NullPointerException();
         }
-        result.hasType = true;
-        result.type_ = value;
+        result.expression_.set(index, value);
         return this;
       }
-      public Builder clearType() {
-        result.hasType = false;
-        result.type_ = noop.model.proto.Noop.Statement.Type.METHOD_INVOCATION;
+      public Builder setExpression(int index, noop.model.proto.Noop.Expression.Builder builderForValue) {
+        result.expression_.set(index, builderForValue.build());
         return this;
       }
-      
-      // optional .MethodInvocation methodInvocation = 2;
-      public boolean hasMethodInvocation() {
-        return result.hasMethodInvocation();
-      }
-      public noop.model.proto.Noop.MethodInvocation getMethodInvocation() {
-        return result.getMethodInvocation();
-      }
-      public Builder setMethodInvocation(noop.model.proto.Noop.MethodInvocation value) {
+      public Builder addExpression(noop.model.proto.Noop.Expression value) {
         if (value == null) {
           throw new NullPointerException();
         }
-        result.hasMethodInvocation = true;
-        result.methodInvocation_ = value;
-        return this;
-      }
-      public Builder setMethodInvocation(noop.model.proto.Noop.MethodInvocation.Builder builderForValue) {
-        result.hasMethodInvocation = true;
-        result.methodInvocation_ = builderForValue.build();
-        return this;
-      }
-      public Builder mergeMethodInvocation(noop.model.proto.Noop.MethodInvocation value) {
-        if (result.hasMethodInvocation() &&
-            result.methodInvocation_ != noop.model.proto.Noop.MethodInvocation.getDefaultInstance()) {
-          result.methodInvocation_ =
-            noop.model.proto.Noop.MethodInvocation.newBuilder(result.methodInvocation_).mergeFrom(value).buildPartial();
-        } else {
-          result.methodInvocation_ = value;
+        if (result.expression_.isEmpty()) {
+          result.expression_ = new java.util.ArrayList<noop.model.proto.Noop.Expression>();
         }
-        result.hasMethodInvocation = true;
+        result.expression_.add(value);
         return this;
       }
-      public Builder clearMethodInvocation() {
-        result.hasMethodInvocation = false;
-        result.methodInvocation_ = noop.model.proto.Noop.MethodInvocation.getDefaultInstance();
-        return this;
-      }
-      
-      // optional .Expression returned = 3;
-      public boolean hasReturned() {
-        return result.hasReturned();
-      }
-      public noop.model.proto.Noop.Expression getReturned() {
-        return result.getReturned();
-      }
-      public Builder setReturned(noop.model.proto.Noop.Expression value) {
-        if (value == null) {
-          throw new NullPointerException();
+      public Builder addExpression(noop.model.proto.Noop.Expression.Builder builderForValue) {
+        if (result.expression_.isEmpty()) {
+          result.expression_ = new java.util.ArrayList<noop.model.proto.Noop.Expression>();
         }
-        result.hasReturned = true;
-        result.returned_ = value;
+        result.expression_.add(builderForValue.build());
         return this;
       }
-      public Builder setReturned(noop.model.proto.Noop.Expression.Builder builderForValue) {
-        result.hasReturned = true;
-        result.returned_ = builderForValue.build();
-        return this;
-      }
-      public Builder mergeReturned(noop.model.proto.Noop.Expression value) {
-        if (result.hasReturned() &&
-            result.returned_ != noop.model.proto.Noop.Expression.getDefaultInstance()) {
-          result.returned_ =
-            noop.model.proto.Noop.Expression.newBuilder(result.returned_).mergeFrom(value).buildPartial();
-        } else {
-          result.returned_ = value;
+      public Builder addAllExpression(
+          java.lang.Iterable<? extends noop.model.proto.Noop.Expression> values) {
+        if (result.expression_.isEmpty()) {
+          result.expression_ = new java.util.ArrayList<noop.model.proto.Noop.Expression>();
         }
-        result.hasReturned = true;
+        super.addAll(values, result.expression_);
         return this;
       }
-      public Builder clearReturned() {
-        result.hasReturned = false;
-        result.returned_ = noop.model.proto.Noop.Expression.getDefaultInstance();
+      public Builder clearExpression() {
+        result.expression_ = java.util.Collections.emptyList();
         return this;
       }
     }
@@ -5884,6 +5410,8 @@ public final class Noop {
       CONDITIONAL(5, 6),
       DEREFERENCE(6, 7),
       INDEX(7, 8),
+      METHOD_INVOCATION(8, 9),
+      RETURN(9, 10),
       ;
       
       
@@ -5899,6 +5427,8 @@ public final class Noop {
           case 6: return CONDITIONAL;
           case 7: return DEREFERENCE;
           case 8: return INDEX;
+          case 9: return METHOD_INVOCATION;
+          case 10: return RETURN;
           default: return null;
         }
       }
@@ -5929,7 +5459,7 @@ public final class Noop {
       }
       
       private static final Type[] VALUES = {
-        EVALUATED, BOOLEAN_LITERAL, STRING_LITERAL, NUMBER_LITERAL, IDENTIFIER, CONDITIONAL, DEREFERENCE, INDEX, 
+        EVALUATED, BOOLEAN_LITERAL, STRING_LITERAL, NUMBER_LITERAL, IDENTIFIER, CONDITIONAL, DEREFERENCE, INDEX, METHOD_INVOCATION, RETURN, 
       };
       public static Type valueOf(
           com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
@@ -5993,6 +5523,13 @@ public final class Noop {
     public boolean hasRhs() { return hasRhs; }
     public noop.model.proto.Noop.Expression getRhs() { return rhs_; }
     
+    // optional .MethodInvocation methodInvocation = 7;
+    public static final int METHODINVOCATION_FIELD_NUMBER = 7;
+    private boolean hasMethodInvocation;
+    private noop.model.proto.Noop.MethodInvocation methodInvocation_ = noop.model.proto.Noop.MethodInvocation.getDefaultInstance();
+    public boolean hasMethodInvocation() { return hasMethodInvocation; }
+    public noop.model.proto.Noop.MethodInvocation getMethodInvocation() { return methodInvocation_; }
+    
     public final boolean isInitialized() {
       if (!hasType) return false;
       if (hasLhs()) {
@@ -6000,6 +5537,9 @@ public final class Noop {
       }
       if (hasRhs()) {
         if (!getRhs().isInitialized()) return false;
+      }
+      if (hasMethodInvocation()) {
+        if (!getMethodInvocation().isInitialized()) return false;
       }
       return true;
     }
@@ -6023,6 +5563,9 @@ public final class Noop {
       }
       if (hasRhs()) {
         output.writeMessage(6, getRhs());
+      }
+      if (hasMethodInvocation()) {
+        output.writeMessage(7, getMethodInvocation());
       }
       getUnknownFields().writeTo(output);
     }
@@ -6056,6 +5599,10 @@ public final class Noop {
       if (hasRhs()) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(6, getRhs());
+      }
+      if (hasMethodInvocation()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(7, getMethodInvocation());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -6224,6 +5771,9 @@ public final class Noop {
         if (other.hasRhs()) {
           mergeRhs(other.getRhs());
         }
+        if (other.hasMethodInvocation()) {
+          mergeMethodInvocation(other.getMethodInvocation());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -6287,6 +5837,15 @@ public final class Noop {
               }
               input.readMessage(subBuilder, extensionRegistry);
               setRhs(subBuilder.buildPartial());
+              break;
+            }
+            case 58: {
+              noop.model.proto.Noop.MethodInvocation.Builder subBuilder = noop.model.proto.Noop.MethodInvocation.newBuilder();
+              if (hasMethodInvocation()) {
+                subBuilder.mergeFrom(getMethodInvocation());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setMethodInvocation(subBuilder.buildPartial());
               break;
             }
           }
@@ -6443,6 +6002,43 @@ public final class Noop {
       public Builder clearRhs() {
         result.hasRhs = false;
         result.rhs_ = noop.model.proto.Noop.Expression.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .MethodInvocation methodInvocation = 7;
+      public boolean hasMethodInvocation() {
+        return result.hasMethodInvocation();
+      }
+      public noop.model.proto.Noop.MethodInvocation getMethodInvocation() {
+        return result.getMethodInvocation();
+      }
+      public Builder setMethodInvocation(noop.model.proto.Noop.MethodInvocation value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasMethodInvocation = true;
+        result.methodInvocation_ = value;
+        return this;
+      }
+      public Builder setMethodInvocation(noop.model.proto.Noop.MethodInvocation.Builder builderForValue) {
+        result.hasMethodInvocation = true;
+        result.methodInvocation_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeMethodInvocation(noop.model.proto.Noop.MethodInvocation value) {
+        if (result.hasMethodInvocation() &&
+            result.methodInvocation_ != noop.model.proto.Noop.MethodInvocation.getDefaultInstance()) {
+          result.methodInvocation_ =
+            noop.model.proto.Noop.MethodInvocation.newBuilder(result.methodInvocation_).mergeFrom(value).buildPartial();
+        } else {
+          result.methodInvocation_ = value;
+        }
+        result.hasMethodInvocation = true;
+        return this;
+      }
+      public Builder clearMethodInvocation() {
+        result.hasMethodInvocation = false;
+        result.methodInvocation_ = noop.model.proto.Noop.MethodInvocation.getDefaultInstance();
         return this;
       }
     }
@@ -6825,11 +6421,6 @@ public final class Noop {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_Block_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_Statement_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_Statement_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_MethodInvocation_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -6878,25 +6469,23 @@ public final class Noop {
       "ure\022\025\n\005block\030\002 \002(\0132\006.Block\"+\n\014BindingBlo" +
       "ck\022\033\n\004bind\030\001 \003(\0132\r.BindOperator\":\n\014BindO" +
       "perator\022\014\n\004type\030\001 \002(\t\022\034\n\007boundTo\030\002 \002(\0132\013" +
-      ".Expression\"&\n\005Block\022\035\n\tstatement\030\001 \003(\0132" +
-      "\n.Statement\"\253\001\n\tStatement\022\035\n\004type\030\001 \002(\0162" +
-      "\017.Statement.Type\022+\n\020methodInvocation\030\002 \001" +
-      "(\0132\021.MethodInvocation\022\035\n\010returned\030\003 \001(\0132" +
-      "\013.Expression\"3\n\004Type\022\025\n\021METHOD_INVOCATIO",
-      "N\020\001\022\024\n\020RETURN_STATEMENT\020\002\"[\n\020MethodInvoc" +
-      "ation\022\030\n\003lhs\030\001 \002(\0132\013.Expression\022\016\n\006metho" +
-      "d\030\002 \002(\t\022\035\n\010argument\030\003 \003(\0132\013.Expression\"\254" +
-      "\002\n\nExpression\022\036\n\004type\030\001 \002(\0162\020.Expression" +
-      ".Type\022\022\n\nbooleanVal\030\002 \001(\010\022\021\n\tstringVal\030\003" +
-      " \001(\t\022\021\n\tnumberVal\030\004 \001(\r\022\030\n\003lhs\030\005 \001(\0132\013.E" +
-      "xpression\022\030\n\003rhs\030\006 \001(\0132\013.Expression\"\217\001\n\004" +
-      "Type\022\r\n\tEVALUATED\020\001\022\023\n\017BOOLEAN_LITERAL\020\002" +
-      "\022\022\n\016STRING_LITERAL\020\003\022\022\n\016NUMBER_LITERAL\020\004" +
-      "\022\016\n\nIDENTIFIER\020\005\022\017\n\013CONDITIONAL\020\006\022\017\n\013DER",
-      "EFERENCE\020\007\022\t\n\005INDEX\020\010\"6\n\010Unittest\022\023\n\013des" +
-      "cription\030\001 \002(\t\022\025\n\rdocumentation\030\002 \001(\t*#\n" +
-      "\010Modifier\022\013\n\007MUTABLE\020\001\022\n\n\006NATIVE\020\002B\022\n\020no" +
-      "op.model.proto"
+      ".Expression\"(\n\005Block\022\037\n\nexpression\030\001 \003(\013" +
+      "2\013.Expression\"[\n\020MethodInvocation\022\030\n\003lhs" +
+      "\030\001 \002(\0132\013.Expression\022\016\n\006method\030\002 \002(\t\022\035\n\010a" +
+      "rgument\030\003 \003(\0132\013.Expression\"\374\002\n\nExpressio" +
+      "n\022\036\n\004type\030\001 \002(\0162\020.Expression.Type\022\022\n\nboo",
+      "leanVal\030\002 \001(\010\022\021\n\tstringVal\030\003 \001(\t\022\021\n\tnumb" +
+      "erVal\030\004 \001(\r\022\030\n\003lhs\030\005 \001(\0132\013.Expression\022\030\n" +
+      "\003rhs\030\006 \001(\0132\013.Expression\022+\n\020methodInvocat" +
+      "ion\030\007 \001(\0132\021.MethodInvocation\"\262\001\n\004Type\022\r\n" +
+      "\tEVALUATED\020\001\022\023\n\017BOOLEAN_LITERAL\020\002\022\022\n\016STR" +
+      "ING_LITERAL\020\003\022\022\n\016NUMBER_LITERAL\020\004\022\016\n\nIDE" +
+      "NTIFIER\020\005\022\017\n\013CONDITIONAL\020\006\022\017\n\013DEREFERENC" +
+      "E\020\007\022\t\n\005INDEX\020\010\022\025\n\021METHOD_INVOCATION\020\t\022\n\n" +
+      "\006RETURN\020\n\"6\n\010Unittest\022\023\n\013description\030\001 \002" +
+      "(\t\022\025\n\rdocumentation\030\002 \001(\t*#\n\010Modifier\022\013\n",
+      "\007MUTABLE\020\001\022\n\n\006NATIVE\020\002B\022\n\020noop.model.pro" +
+      "to"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -6988,19 +6577,11 @@ public final class Noop {
           internal_static_Block_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_Block_descriptor,
-              new java.lang.String[] { "Statement", },
+              new java.lang.String[] { "Expression", },
               noop.model.proto.Noop.Block.class,
               noop.model.proto.Noop.Block.Builder.class);
-          internal_static_Statement_descriptor =
-            getDescriptor().getMessageTypes().get(11);
-          internal_static_Statement_fieldAccessorTable = new
-            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_Statement_descriptor,
-              new java.lang.String[] { "Type", "MethodInvocation", "Returned", },
-              noop.model.proto.Noop.Statement.class,
-              noop.model.proto.Noop.Statement.Builder.class);
           internal_static_MethodInvocation_descriptor =
-            getDescriptor().getMessageTypes().get(12);
+            getDescriptor().getMessageTypes().get(11);
           internal_static_MethodInvocation_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_MethodInvocation_descriptor,
@@ -7008,15 +6589,15 @@ public final class Noop {
               noop.model.proto.Noop.MethodInvocation.class,
               noop.model.proto.Noop.MethodInvocation.Builder.class);
           internal_static_Expression_descriptor =
-            getDescriptor().getMessageTypes().get(13);
+            getDescriptor().getMessageTypes().get(12);
           internal_static_Expression_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_Expression_descriptor,
-              new java.lang.String[] { "Type", "BooleanVal", "StringVal", "NumberVal", "Lhs", "Rhs", },
+              new java.lang.String[] { "Type", "BooleanVal", "StringVal", "NumberVal", "Lhs", "Rhs", "MethodInvocation", },
               noop.model.proto.Noop.Expression.class,
               noop.model.proto.Noop.Expression.Builder.class);
           internal_static_Unittest_descriptor =
-            getDescriptor().getMessageTypes().get(14);
+            getDescriptor().getMessageTypes().get(13);
           internal_static_Unittest_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_Unittest_descriptor,

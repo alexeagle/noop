@@ -21,7 +21,7 @@ import proto.Noop.BindOperator;
  * AST model element which represents a declaration of a binding from a type to an expression.
  * @author alexeagle@google.com (Alex Eagle)
  */
-class BindingDeclaration(val data: BindOperator) extends Expression {
+class BindingDeclaration(data: BindOperator) extends Expression {
 
   def noopType: String = data.getType;
   def boundTo: Expression = ExpressionConverter.fromData(data.getBoundTo);

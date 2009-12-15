@@ -26,11 +26,11 @@ import proto.Noop.{Unittest, Property, Method, ConcreteClass}
  * @author Alex Eagle (alexeagle@google.com)
  */
 
-class ConcreteClassDefinition(val data: ConcreteClass) extends ClassDefinition {
+class ConcreteClassDefinition(data: ConcreteClass) extends ClassDefinition {
   def properties: Seq[Property] = Buffer(data.getPropertyList);
   def name: String = data.getName;
-  def unittests: Seq[Unittest] = Buffer(data.getUnittestList);
-  
+  def unittests: Seq[UnittestDefinition] = Buffer(data.getUnittestList).map(u => new UnittestDefinition(u));
+
   def findMethod(methodName: String): MethodDefinition = {
     val methods: Seq[Method] = Buffer(data.getMethodList());
     methods.find((method: Method) => method.getSignature.getName == methodName) match {

@@ -22,4 +22,6 @@ import proto.Noop.Interface
  * @author Alex Eagle (alexeagle@google.com)
  */
 
-class InterfaceDefinition(val data: Interface) extends ClassDefinition
+class InterfaceDefinition(data: Interface) extends ClassDefinition {
+  def name: String = data.getName;
+}

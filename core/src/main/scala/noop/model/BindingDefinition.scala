@@ -22,6 +22,6 @@ import collection.jcl.Buffer
  * AST element representing a top-level bindings definition
  * @author Alex Eagle (alexeagle@google.com)
  */
-class BindingDefinition(val data: Binding) extends ClassDefinition() {
+class BindingDefinition(data: Binding) {
   def bindings: Seq[BindingDeclaration] = Buffer(data.getBlock.getBindList).map(b => new BindingDeclaration(b));
 }

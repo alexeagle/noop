@@ -6,9 +6,8 @@ import com.google.protobuf.TextFormat.ParseException;
 import noop.model.proto.Noop.*;
 
 import static noop.model.proto.Noop.Expression.Type.IDENTIFIER;
+import static noop.model.proto.Noop.Expression.Type.RETURN;
 import static noop.model.proto.Noop.Expression.Type.STRING_LITERAL;
-import static noop.model.proto.Noop.Statement.Type.METHOD_INVOCATION;
-import static noop.model.proto.Noop.Statement.Type.RETURN_STATEMENT;
 
 /**
  * Utility class used for experimenting with serializing the Noop AST to protocol buffer.
@@ -39,15 +38,14 @@ public class ProtoBufferSpike {
                 .setDocumentation("the entry point of the application")
                 .addReturnType("noop.Int"))
             .setBlock(Block.newBuilder()
-            .addStatement(Statement.newBuilder()
-                .setType(METHOD_INVOCATION)
+            .addExpression(Expression.newBuilder()
                 .setMethodInvocation(MethodInvocation.newBuilder()
                 .setLhs(Expression.newBuilder().setType(IDENTIFIER).setStringVal("console"))
                 .setMethod("println")
                 .addArgument(Expression.newBuilder().setType(STRING_LITERAL).setStringVal("hello"))))
-            .addStatement(Statement.newBuilder()
-            .setType(RETURN_STATEMENT)
-            .setReturned(Expression.newBuilder().setNumberVal(0)))))
+            .addExpression(Expression.newBuilder()
+            .setType(RETURN)
+            .setRhs(Expression.newBuilder().setNumberVal(0)))))
             .addUnittest(Unittest.newBuilder().setDescription("should print the first argument"))
             .addUnittest(Unittest.newBuilder().setDescription("should return zero"))
         ).build();
