@@ -24,7 +24,7 @@ import proto.Noop.{Modifier, Property, Method};
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class MethodDefinition(val data: Method)  {
+class MethodDefinition(data: Method) extends Invokable {
   def name:String = data.getSignature.getName;
   def parameters: Seq[Property] = Buffer(data.getSignature.getArgumentList);
   def modifiers: Seq[Modifier] = Buffer(data.getSignature.getModifierList);

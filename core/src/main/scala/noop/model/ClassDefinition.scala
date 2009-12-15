@@ -18,4 +18,6 @@ package noop.model;
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-trait ClassDefinition
+trait ClassDefinition {
+  def name: String;
+}

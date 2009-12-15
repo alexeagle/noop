@@ -76,20 +76,7 @@ message BindOperator {
 }
 
 message Block {
-  repeated Statement statement = 1;
-}
-
-message Statement {
-  enum Type {
-    METHOD_INVOCATION = 1;
-    RETURN_STATEMENT = 2;
-  }
-  // identifies which sort of statement this is
-  required Type type = 1;
-
-  // only one of the following should be set
-  optional MethodInvocation methodInvocation = 2;
-  optional Expression returned = 3;
+  repeated Expression expression = 1;
 }
 
 message MethodInvocation {
@@ -108,6 +95,8 @@ message Expression {
     CONDITIONAL = 6;
     DEREFERENCE = 7;
     INDEX = 8;
+    METHOD_INVOCATION = 9;
+    RETURN = 10;
   }
   // identifies what sort of expression this is
   required Type type = 1;
@@ -118,6 +107,7 @@ message Expression {
   optional uint32 numberVal = 4; // TODO(alexeagle): need to store floats too
   optional Expression lhs = 5;
   optional Expression rhs = 6;
+  optional MethodInvocation methodInvocation = 7;
 }
 
 message Unittest {

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2009 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,18 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.model
 
-import scala.collection.mutable.{ArrayBuffer, Buffer};
+import proto.Noop.Property
 
 /**
- * A Noop source file.
- *
  * @author alexeagle@google.com (Alex Eagle)
  */
-class SourceFile {
 
-  var namespace: String = "";
-  var imports: Buffer[String] = new ArrayBuffer[String];
-  var classDef: ClassDefinition = null;
+trait Invokable {
+  def name: String;
+  def parameters: Seq[Property];
 }
