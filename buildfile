@@ -68,7 +68,7 @@ define 'noop', :version=>VERSION_NUMBER do
 
   define "interpreter" do
     # TODO - only want examples as a test resource
-    resources.from [_('src/main/noop'), project("examples")._('noop')]
+    resources.from [project("examples")._('noop')]
     package(:jar).with(:manifest=>{'Main-Class' => 'noop.interpreter.InterpreterMain'})
     compile.with [project("core"), ANTLR_RUNTIME, SLF4J, GUICE, PROTO]
     package(:zip).
