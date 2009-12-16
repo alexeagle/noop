@@ -1,0 +1,116 @@
+// Generate the java file with:
+// protoc core/src/main/proto/noop.proto --java_out=core/src/main/java
+// TODO(alexeagle): have buildr run the proto compiler
+
+option java_package = "noop.model.proto";
+
+enum Modifier {
+  MUTABLE = 1;
+  NATIVE = 2;
+}
+
+message Module {
+  required string name = 1;
+  optional string documentation = 2;
+  repeated Binding binding = 3;
+  repeated Alias alias = 4;
+  repeated Interface interface = 5;
+  repeated ConcreteClass concrete_class = 6;
+}
+
+message ConcreteClass {
+  required string name = 1;
+  optional string documentation = 2;
+  repeated string super_type = 3;
+  repeated Property property = 4;
+  repeated Method method = 5;
+  repeated Unittest unittest = 6;
+}
+
+message Property {
+  required string name = 1;
+  required string type = 2;
+  repeated Modifier modifier = 3;
+  optional string documentation = 4;
+}
+
+message Binding {
+  required string name = 1;
+  optional string documentation = 2;
+  repeated Modifier modifier = 3;
+  required BindingBlock block = 4;
+}
+
+message Interface {
+  required string name = 1;
+  optional string documentation = 2;
+  repeated MethodSignature method = 3;
+}
+
+message Alias {
+  required string name = 1;
+  optional string documentation = 2;
+  required string of = 3;
+}
+
+message MethodSignature {
+  required string name = 1;
+  optional string documentation = 2;
+  repeated Modifier modifier = 3;
+  repeated string return_type = 4;
+  repeated Property argument = 5;
+}
+
+message Method {
+  required MethodSignature signature = 1;
+  required Block block = 2;
+}
+
+message BindingBlock {
+  repeated BindOperator bind = 1;
+}
+
+message BindOperator {
+  required string type = 1;
+  required Expression boundTo = 2;
+}
+
+message Block {
+  repeated Expression expression = 1;
+}
+
+message MethodInvocation {
+  required Expression lhs = 1;
+  required string method = 2;
+  repeated Expression argument = 3;
+}
+
+message Expression {
+  enum Type {
+    EVALUATED = 1;
+    BOOLEAN_LITERAL = 2;
+    STRING_LITERAL = 3;
+    NUMBER_LITERAL = 4;
+    IDENTIFIER = 5;
+    CONDITIONAL = 6;
+    DEREFERENCE = 7;
+    INDEX = 8;
+    METHOD_INVOCATION = 9;
+    RETURN = 10;
+  }
+  // identifies what sort of expression this is
+  required Type type = 1;
+
+  // only some of the following should be set, depending on type
+  optional bool booleanVal = 2;
+  optional string stringVal = 3;
+  optional uint32 numberVal = 4; // TODO(alexeagle): need to store floats too
+  optional Expression lhs = 5;
+  optional Expression rhs = 6;
+  optional MethodInvocation methodInvocation = 7;
+}
+
+message Unittest {
+  required string description = 1;
+  optional string documentation = 2;
+}

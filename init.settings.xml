@@ -1,0 +1,29 @@
+<settings>
+  <activeProfiles>
+    <activeProfile>init</activeProfile>
+  </activeProfiles>
+  <profiles>
+    <profile>
+      <id>init</id>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>twdata-m2-repository</id>
+          <name>twdata.org Maven 2 Repository</name>
+          <url>http://twdata-m2-repository.googlecode.com/svn/</url>
+        </pluginRepository>
+        <pluginRepository>
+          <id>scala-tools.org</id>
+          <name>Scala-tools Maven2 Repository</name>
+          <url>http://scala-tools.org/repo-releases</url>
+        </pluginRepository>
+      </pluginRepositories>
+      <repositories>
+        <repository>
+          <id>scala-tools.org</id>
+          <name>Scala-tools Maven2 Repository</name>
+          <url>http://scala-tools.org/repo-releases</url>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+</settings>
