@@ -8,12 +8,14 @@ import noop.model.ConcreteClassDefinition
  * @author alexeagle@google.com (Alex Eagle)
  */
 class StdLibModuleBuilder {
-  def build: Module = {
-    Module.newBuilder
+  def build: Library = {
+    Library.newBuilder
+            .setName("noop.StdLib")
             .addConcreteClass(booleanClass)
             .addConcreteClass(consoleClass)
             .addConcreteClass(intClass)
             .addConcreteClass(objectClass)
+            .addConcreteClass(stringClass)
             .build();
   }
 
@@ -26,7 +28,8 @@ class StdLibModuleBuilder {
           .setSignature(MethodSignature.newBuilder
           .setName("length")
           .addReturnType("noop.Int")
-          .addModifier(Modifier.NATIVE)));
+          .addModifier(Modifier.NATIVE))
+          .setBlock(Block.newBuilder));
   
   def consoleClass = ConcreteClass.newBuilder
             .setName("noop.system.Console")
@@ -35,7 +38,8 @@ class StdLibModuleBuilder {
             .setName("println")
             .addArgument(Property.newBuilder
             .setName("str")
-            .setType("noop.String"))));
+            .setType("noop.String")))
+            .setBlock(Block.newBuilder));
 
   def intClass: ConcreteClass.Builder = {
     val intClass = ConcreteClass.newBuilder.setName("noop.Int");
@@ -48,7 +52,8 @@ class StdLibModuleBuilder {
               .addModifier(Modifier.NATIVE)
               .addArgument(Property.newBuilder
               .setName("other")
-              .setType("noop.Int"))));
+              .setType("noop.Int")))
+              .setBlock(Block.newBuilder));
     }
 
     for (logic <- List("equals", "doesNotEqual", "greaterThan", "lesserThan", "greaterOrEqualThan", "lesserOrEqualThan")) {
@@ -59,7 +64,8 @@ class StdLibModuleBuilder {
               .addModifier(Modifier.NATIVE)
               .addArgument(Property.newBuilder
               .setName("other")
-              .setType("noop.Int"))));
+              .setType("noop.Int")))
+              .setBlock(Block.newBuilder));
     }
 
     intClass.addMethod(toStringMethod);
@@ -71,7 +77,8 @@ class StdLibModuleBuilder {
           .setSignature(MethodSignature.newBuilder
           .setName("toString")
           .addReturnType("noop.String")
-          .addModifier(Modifier.NATIVE));
+          .addModifier(Modifier.NATIVE))
+          .setBlock(Block.newBuilder);
 
   def booleanClass: ConcreteClass.Builder = {
     val booleanClass = ConcreteClass.newBuilder.setName("noop.Boolean");
@@ -84,14 +91,16 @@ class StdLibModuleBuilder {
             .addReturnType("noop.Boolean")
             .addArgument(Property.newBuilder
             .setName("other")
-            .setType("noop.Boolean"))));
+            .setType("noop.Boolean")))
+            .setBlock(Block.newBuilder));
     }
 
     booleanClass.addMethod(Method.newBuilder
           .setSignature(MethodSignature.newBuilder
           .setName("not")
           .addModifier(Modifier.NATIVE)
-          .addReturnType("noop.Boolean")));
+          .addReturnType("noop.Boolean"))
+          .setBlock(Block.newBuilder));
 
     booleanClass.addMethod(toStringMethod);
     return booleanClass;

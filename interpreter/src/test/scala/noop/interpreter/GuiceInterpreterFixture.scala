@@ -15,10 +15,8 @@
  */
 package noop.interpreter
 
-import com.google.inject.util.Modules
-import java.io.File;
 import com.google.inject.{Injector, Guice};
-import types.{StringFactory, NoopTypesModule};
+import noop.types.{StringFactory, NoopTypesModule};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -27,8 +25,7 @@ trait GuiceInterpreterFixture {
   def fixture: Injector = {
     val injector = Guice.createInjector(
       new NoopTypesModule(),
-      Modules.`override`(new InterpreterModule(List())).
-              `with`(new InterpreterTestingModule()));
+      new InterpreterModule(List()));
     val context = injector.getInstance(classOf[Context]);
     val stringFactory = injector.getInstance(classOf[StringFactory]);
     context.addRootFrame(stringFactory.create("aClazz"));

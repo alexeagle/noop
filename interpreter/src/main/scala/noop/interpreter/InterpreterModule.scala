@@ -15,26 +15,28 @@
  */
 package noop.interpreter;
 
+import com.google.protobuf.TextFormat
+import noop.stdlib.StdLibModuleBuilder;
 import noop.model.{Visitor, CompositeVisitor, LoggingAstVisitor}
-import noop.model.persistence.{ClassRepository}
+import noop.inject.{Injector, GuiceBackedInjector}
+import noop.model.proto.Noop.Library
+import java.io.InputStreamReader
+import com.google.inject._;
 
-import noop.inject.{Injector, GuiceBackedInjector};
 
-import com.google.inject.{Guice, Provides, AbstractModule, Singleton};
-import java.io.File;
 import scala.collection.mutable;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-class InterpreterModule(srcRoots: List[String]) extends AbstractModule {
+class InterpreterModule(srcRoots: Seq[String]) extends AbstractModule {
   override def configure() = {
-    bind(classOf[ClassSearch]).to(classOf[SourceFileClassLoader]);
-    bind(classOf[ClassLoader]).to(classOf[SourceFileClassLoader]);
+    bind(classOf[ClassSearch]).to(classOf[RepositoryClassLoader]);
+    bind(classOf[ClassLoader]).to(classOf[RepositoryClassLoader]);
   }
 
-  @Provides @Singleton def getClassLoader(classRepo: ClassRepository) = {
-    new SourceFileClassLoader(classRepo, srcRoots);
+  @Provides @Singleton def getClassRepository(): ClassRepository = {
+    new ClassRepository(List(new StdLibModuleBuilder().build));
   }
 
   @Provides def getInjector(classLoader: ClassLoader): Injector =

@@ -29,9 +29,9 @@ class TestRunner @Inject() (classSearch: ClassSearch, classLoader: ClassLoader, 
 
   def gatherTests(): Buffer[TestHolder] = {
     var tests = new ArrayBuffer[TestHolder];
-    classSearch.eachClass((c:ConcreteClassDefinition) => {
-      for (testMethod <- c.unittests) {
-        tests += new TestHolder(c, new UnittestDefinition(testMethod));
+    classSearch.eachClass((c: ConcreteClassDefinition) => {
+      for (unittest <- c.unittests) {
+        tests += new TestHolder(c, unittest);
       }
     });
     return tests;

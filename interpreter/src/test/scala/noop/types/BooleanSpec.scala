@@ -16,16 +16,16 @@
 package noop.types;
 
 import com.google.inject.Guice
-import inject.{GuiceBackedInjector, Injector}
-import interpreter._
-import java.io.File;
+import noop.inject.{GuiceBackedInjector, Injector}
+import noop.interpreter._
+import java.io.File
+import noop.model.proto.Noop.Modifier
+import noop.model.ConcreteClassDefinition;
 
 import collection.mutable.Stack;
 
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
-
-import model.Modifier;
 
 /**
  * @author Erik Soe Sorensen (eriksoe@gmail.com)
@@ -35,16 +35,16 @@ class BooleanSpec extends Spec with ShouldMatchers {
 
   describe("a Noop Boolean") {
 
-    it("should have a valid class definition parsed from Noop source") {
+    it("should have a valid class definition in the StdLib") {
       val classLoader = fixture.getInstance(classOf[ClassLoader]);
       val classDef = classLoader.findClass("noop.Boolean");
-      classDef.name should be("Boolean");
+      classDef.name should be("noop.Boolean");
     }
 
     it("should have a native implementation of the xor method") {
       val injector = fixture;
       val classLoader = injector.getInstance(classOf[ClassLoader]);
-      val boolClass = classLoader.findClass("noop.Boolean");
+      val boolClass = classLoader.findClass("noop.Boolean").asInstanceOf[ConcreteClassDefinition];
       val booleanFactory = injector.getInstance(classOf[BooleanFactory]);
       val aTrue = booleanFactory.create(true);
       val aFalse = booleanFactory.create(false);
@@ -52,7 +52,7 @@ class BooleanSpec extends Spec with ShouldMatchers {
       val context = injector.getInstance(classOf[Context]);
 
       context.addRootFrame(null);
-      method.modifiers should contain(Modifier.native);
+      method.modifiers should contain(Modifier.NATIVE);
       val frame = new Frame(aTrue, null);
       context.stack.push(frame);
       frame.blockScopes.inScope("boolean test") {

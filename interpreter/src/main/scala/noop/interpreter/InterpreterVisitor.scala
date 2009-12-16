@@ -125,17 +125,17 @@ class InterpreterVisitor @Inject() (val context: Context, injector: Injector,
     evaluationStackSize = -1;
   }
 
-  def visit(method: MethodDefinition) = {
-    if (method.modifiers.contains(Noop.Modifier.NATIVE)) {
+  def visit(invokable: Invokable) = {
+    if (invokable.modifiers.contains(Noop.Modifier.NATIVE)) {
       val obj = context.stack.top.thisRef;
       val arguments = new ArrayBuffer[NoopObject];
-      for (parameter <- method.parameters) {
+      for (parameter <- invokable.parameters) {
         arguments += context.stack.top.blockScopes.getIdentifier(parameter.getName)._2;
       }
-      val returnValue = obj.executeNativeMethod(arguments, method.name);
+      val returnValue = obj.executeNativeMethod(arguments, invokable.name);
       context.stack.top.lastEvaluated += returnValue;
     } else {
-      method.block.accept(this);
+      invokable.block.accept(this);
     }
   }
 
@@ -183,4 +183,6 @@ class InterpreterVisitor @Inject() (val context: Context, injector: Injector,
 
   def visit(conditionalOrExpression: ConditionalOrExpression) = {
   }
+
+  def visit(unittest: UnittestDefinition) = {}
 }

@@ -16,7 +16,7 @@ import static noop.model.proto.Noop.Expression.Type.STRING_LITERAL;
  */
 public class ProtoBufferSpike {
   public static void main(String[] args) throws InvalidProtocolBufferException, ParseException {
-    Module myModule = Module.newBuilder()
+    Library myLibrary = Library.newBuilder()
         .setName("CmdLineExample")
         .setDocumentation("used to read cmd line args")
         .addBinding(Binding.newBuilder()
@@ -49,9 +49,9 @@ public class ProtoBufferSpike {
             .addUnittest(Unittest.newBuilder().setDescription("should print the first argument"))
             .addUnittest(Unittest.newBuilder().setDescription("should return zero"))
         ).build();
-    String serialized = myModule.toString();
-    System.out.println("myModule = " + serialized);
-    Noop.Module.Builder builder = Module.newBuilder();
+    String serialized = myLibrary.toString();
+    System.out.println("myLibrary = " + serialized);
+    Noop.Library.Builder builder = Library.newBuilder();
     TextFormat.merge(serialized, builder);
     System.out.println("builder.build().getName() = " + builder.build().getName());
   }

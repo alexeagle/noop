@@ -72,28 +72,28 @@ public final class Noop {
     }
   }
   
-  public static final class Module extends
+  public static final class Library extends
       com.google.protobuf.GeneratedMessage {
-    // Use Module.newBuilder() to construct.
-    private Module() {}
+    // Use Library.newBuilder() to construct.
+    private Library() {}
     
-    private static final Module defaultInstance = new Module();
-    public static Module getDefaultInstance() {
+    private static final Library defaultInstance = new Library();
+    public static Library getDefaultInstance() {
       return defaultInstance;
     }
     
-    public Module getDefaultInstanceForType() {
+    public Library getDefaultInstanceForType() {
       return defaultInstance;
     }
     
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return noop.model.proto.Noop.internal_static_Module_descriptor;
+      return noop.model.proto.Noop.internal_static_Library_descriptor;
     }
     
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return noop.model.proto.Noop.internal_static_Module_fieldAccessorTable;
+      return noop.model.proto.Noop.internal_static_Library_fieldAccessorTable;
     }
     
     // required string name = 1;
@@ -233,57 +233,57 @@ public final class Noop {
       return size;
     }
     
-    public static noop.model.proto.Noop.Module parseFrom(
+    public static noop.model.proto.Noop.Library parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static noop.model.proto.Noop.Module parseFrom(
+    public static noop.model.proto.Noop.Library parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static noop.model.proto.Noop.Module parseFrom(byte[] data)
+    public static noop.model.proto.Noop.Library parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data).buildParsed();
     }
-    public static noop.model.proto.Noop.Module parseFrom(
+    public static noop.model.proto.Noop.Library parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return newBuilder().mergeFrom(data, extensionRegistry)
                .buildParsed();
     }
-    public static noop.model.proto.Noop.Module parseFrom(java.io.InputStream input)
+    public static noop.model.proto.Noop.Library parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static noop.model.proto.Noop.Module parseFrom(
+    public static noop.model.proto.Noop.Library parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input, extensionRegistry)
                .buildParsed();
     }
-    public static noop.model.proto.Noop.Module parseDelimitedFrom(java.io.InputStream input)
+    public static noop.model.proto.Noop.Library parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return newBuilder().mergeDelimitedFrom(input).buildParsed();
     }
-    public static noop.model.proto.Noop.Module parseDelimitedFrom(
+    public static noop.model.proto.Noop.Library parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
                .buildParsed();
     }
-    public static noop.model.proto.Noop.Module parseFrom(
+    public static noop.model.proto.Noop.Library parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return newBuilder().mergeFrom(input).buildParsed();
     }
-    public static noop.model.proto.Noop.Module parseFrom(
+    public static noop.model.proto.Noop.Library parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -293,25 +293,25 @@ public final class Noop {
     
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(noop.model.proto.Noop.Module prototype) {
+    public static Builder newBuilder(noop.model.proto.Noop.Library prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
     
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> {
-      private noop.model.proto.Noop.Module result;
+      private noop.model.proto.Noop.Library result;
       
-      // Construct using noop.model.proto.Noop.Module.newBuilder()
+      // Construct using noop.model.proto.Noop.Library.newBuilder()
       private Builder() {}
       
       private static Builder create() {
         Builder builder = new Builder();
-        builder.result = new noop.model.proto.Noop.Module();
+        builder.result = new noop.model.proto.Noop.Library();
         return builder;
       }
       
-      protected noop.model.proto.Noop.Module internalGetResult() {
+      protected noop.model.proto.Noop.Library internalGetResult() {
         return result;
       }
       
@@ -320,7 +320,7 @@ public final class Noop {
           throw new IllegalStateException(
             "Cannot call clear() after build().");
         }
-        result = new noop.model.proto.Noop.Module();
+        result = new noop.model.proto.Noop.Library();
         return this;
       }
       
@@ -330,24 +330,24 @@ public final class Noop {
       
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return noop.model.proto.Noop.Module.getDescriptor();
+        return noop.model.proto.Noop.Library.getDescriptor();
       }
       
-      public noop.model.proto.Noop.Module getDefaultInstanceForType() {
-        return noop.model.proto.Noop.Module.getDefaultInstance();
+      public noop.model.proto.Noop.Library getDefaultInstanceForType() {
+        return noop.model.proto.Noop.Library.getDefaultInstance();
       }
       
       public boolean isInitialized() {
         return result.isInitialized();
       }
-      public noop.model.proto.Noop.Module build() {
+      public noop.model.proto.Noop.Library build() {
         if (result != null && !isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return buildPartial();
       }
       
-      private noop.model.proto.Noop.Module buildParsed()
+      private noop.model.proto.Noop.Library buildParsed()
           throws com.google.protobuf.InvalidProtocolBufferException {
         if (!isInitialized()) {
           throw newUninitializedMessageException(
@@ -356,7 +356,7 @@ public final class Noop {
         return buildPartial();
       }
       
-      public noop.model.proto.Noop.Module buildPartial() {
+      public noop.model.proto.Noop.Library buildPartial() {
         if (result == null) {
           throw new IllegalStateException(
             "build() has already been called on this Builder.");
@@ -377,22 +377,22 @@ public final class Noop {
           result.concreteClass_ =
             java.util.Collections.unmodifiableList(result.concreteClass_);
         }
-        noop.model.proto.Noop.Module returnMe = result;
+        noop.model.proto.Noop.Library returnMe = result;
         result = null;
         return returnMe;
       }
       
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof noop.model.proto.Noop.Module) {
-          return mergeFrom((noop.model.proto.Noop.Module)other);
+        if (other instanceof noop.model.proto.Noop.Library) {
+          return mergeFrom((noop.model.proto.Noop.Library)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
       
-      public Builder mergeFrom(noop.model.proto.Noop.Module other) {
-        if (other == noop.model.proto.Noop.Module.getDefaultInstance()) return this;
+      public Builder mergeFrom(noop.model.proto.Noop.Library other) {
+        if (other == noop.model.proto.Noop.Library.getDefaultInstance()) return this;
         if (other.hasName()) {
           setName(other.getName());
         }
@@ -6366,10 +6366,10 @@ public final class Noop {
   }
   
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_Module_descriptor;
+    internal_static_Library_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_Module_fieldAccessorTable;
+      internal_static_Library_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_ConcreteClass_descriptor;
   private static
@@ -6444,62 +6444,62 @@ public final class Noop {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\036core/src/main/proto/noop.proto\"\246\001\n\006Mod" +
-      "ule\022\014\n\004name\030\001 \002(\t\022\025\n\rdocumentation\030\002 \001(\t" +
-      "\022\031\n\007binding\030\003 \003(\0132\010.Binding\022\025\n\005alias\030\004 \003" +
-      "(\0132\006.Alias\022\035\n\tinterface\030\005 \003(\0132\n.Interfac" +
-      "e\022&\n\016concrete_class\030\006 \003(\0132\016.ConcreteClas" +
-      "s\"\233\001\n\rConcreteClass\022\014\n\004name\030\001 \002(\t\022\025\n\rdoc" +
-      "umentation\030\002 \001(\t\022\022\n\nsuper_type\030\003 \003(\t\022\033\n\010" +
-      "property\030\004 \003(\0132\t.Property\022\027\n\006method\030\005 \003(" +
-      "\0132\007.Method\022\033\n\010unittest\030\006 \003(\0132\t.Unittest\"" +
-      "Z\n\010Property\022\014\n\004name\030\001 \002(\t\022\014\n\004type\030\002 \002(\t\022",
-      "\033\n\010modifier\030\003 \003(\0162\t.Modifier\022\025\n\rdocument" +
-      "ation\030\004 \001(\t\"i\n\007Binding\022\014\n\004name\030\001 \002(\t\022\025\n\r" +
-      "documentation\030\002 \001(\t\022\033\n\010modifier\030\003 \003(\0162\t." +
-      "Modifier\022\034\n\005block\030\004 \002(\0132\r.BindingBlock\"R" +
-      "\n\tInterface\022\014\n\004name\030\001 \002(\t\022\025\n\rdocumentati" +
-      "on\030\002 \001(\t\022 \n\006method\030\003 \003(\0132\020.MethodSignatu" +
-      "re\"8\n\005Alias\022\014\n\004name\030\001 \002(\t\022\025\n\rdocumentati" +
-      "on\030\002 \001(\t\022\n\n\002of\030\003 \002(\t\"\205\001\n\017MethodSignature" +
-      "\022\014\n\004name\030\001 \002(\t\022\025\n\rdocumentation\030\002 \001(\t\022\033\n" +
-      "\010modifier\030\003 \003(\0162\t.Modifier\022\023\n\013return_typ",
-      "e\030\004 \003(\t\022\033\n\010argument\030\005 \003(\0132\t.Property\"D\n\006" +
-      "Method\022#\n\tsignature\030\001 \002(\0132\020.MethodSignat" +
-      "ure\022\025\n\005block\030\002 \002(\0132\006.Block\"+\n\014BindingBlo" +
-      "ck\022\033\n\004bind\030\001 \003(\0132\r.BindOperator\":\n\014BindO" +
-      "perator\022\014\n\004type\030\001 \002(\t\022\034\n\007boundTo\030\002 \002(\0132\013" +
-      ".Expression\"(\n\005Block\022\037\n\nexpression\030\001 \003(\013" +
-      "2\013.Expression\"[\n\020MethodInvocation\022\030\n\003lhs" +
-      "\030\001 \002(\0132\013.Expression\022\016\n\006method\030\002 \002(\t\022\035\n\010a" +
-      "rgument\030\003 \003(\0132\013.Expression\"\374\002\n\nExpressio" +
-      "n\022\036\n\004type\030\001 \002(\0162\020.Expression.Type\022\022\n\nboo",
-      "leanVal\030\002 \001(\010\022\021\n\tstringVal\030\003 \001(\t\022\021\n\tnumb" +
-      "erVal\030\004 \001(\r\022\030\n\003lhs\030\005 \001(\0132\013.Expression\022\030\n" +
-      "\003rhs\030\006 \001(\0132\013.Expression\022+\n\020methodInvocat" +
-      "ion\030\007 \001(\0132\021.MethodInvocation\"\262\001\n\004Type\022\r\n" +
-      "\tEVALUATED\020\001\022\023\n\017BOOLEAN_LITERAL\020\002\022\022\n\016STR" +
-      "ING_LITERAL\020\003\022\022\n\016NUMBER_LITERAL\020\004\022\016\n\nIDE" +
-      "NTIFIER\020\005\022\017\n\013CONDITIONAL\020\006\022\017\n\013DEREFERENC" +
-      "E\020\007\022\t\n\005INDEX\020\010\022\025\n\021METHOD_INVOCATION\020\t\022\n\n" +
-      "\006RETURN\020\n\"6\n\010Unittest\022\023\n\013description\030\001 \002" +
-      "(\t\022\025\n\rdocumentation\030\002 \001(\t*#\n\010Modifier\022\013\n",
-      "\007MUTABLE\020\001\022\n\n\006NATIVE\020\002B\022\n\020noop.model.pro" +
-      "to"
+      "\n\036core/src/main/proto/noop.proto\"\247\001\n\007Lib" +
+      "rary\022\014\n\004name\030\001 \002(\t\022\025\n\rdocumentation\030\002 \001(" +
+      "\t\022\031\n\007binding\030\003 \003(\0132\010.Binding\022\025\n\005alias\030\004 " +
+      "\003(\0132\006.Alias\022\035\n\tinterface\030\005 \003(\0132\n.Interfa" +
+      "ce\022&\n\016concrete_class\030\006 \003(\0132\016.ConcreteCla" +
+      "ss\"\233\001\n\rConcreteClass\022\014\n\004name\030\001 \002(\t\022\025\n\rdo" +
+      "cumentation\030\002 \001(\t\022\022\n\nsuper_type\030\003 \003(\t\022\033\n" +
+      "\010property\030\004 \003(\0132\t.Property\022\027\n\006method\030\005 \003" +
+      "(\0132\007.Method\022\033\n\010unittest\030\006 \003(\0132\t.Unittest" +
+      "\"Z\n\010Property\022\014\n\004name\030\001 \002(\t\022\014\n\004type\030\002 \002(\t",
+      "\022\033\n\010modifier\030\003 \003(\0162\t.Modifier\022\025\n\rdocumen" +
+      "tation\030\004 \001(\t\"i\n\007Binding\022\014\n\004name\030\001 \002(\t\022\025\n" +
+      "\rdocumentation\030\002 \001(\t\022\033\n\010modifier\030\003 \003(\0162\t" +
+      ".Modifier\022\034\n\005block\030\004 \002(\0132\r.BindingBlock\"" +
+      "R\n\tInterface\022\014\n\004name\030\001 \002(\t\022\025\n\rdocumentat" +
+      "ion\030\002 \001(\t\022 \n\006method\030\003 \003(\0132\020.MethodSignat" +
+      "ure\"8\n\005Alias\022\014\n\004name\030\001 \002(\t\022\025\n\rdocumentat" +
+      "ion\030\002 \001(\t\022\n\n\002of\030\003 \002(\t\"\205\001\n\017MethodSignatur" +
+      "e\022\014\n\004name\030\001 \002(\t\022\025\n\rdocumentation\030\002 \001(\t\022\033" +
+      "\n\010modifier\030\003 \003(\0162\t.Modifier\022\023\n\013return_ty",
+      "pe\030\004 \003(\t\022\033\n\010argument\030\005 \003(\0132\t.Property\"D\n" +
+      "\006Method\022#\n\tsignature\030\001 \002(\0132\020.MethodSigna" +
+      "ture\022\025\n\005block\030\002 \002(\0132\006.Block\"+\n\014BindingBl" +
+      "ock\022\033\n\004bind\030\001 \003(\0132\r.BindOperator\":\n\014Bind" +
+      "Operator\022\014\n\004type\030\001 \002(\t\022\034\n\007boundTo\030\002 \002(\0132" +
+      "\013.Expression\"(\n\005Block\022\037\n\nexpression\030\001 \003(" +
+      "\0132\013.Expression\"[\n\020MethodInvocation\022\030\n\003lh" +
+      "s\030\001 \002(\0132\013.Expression\022\016\n\006method\030\002 \002(\t\022\035\n\010" +
+      "argument\030\003 \003(\0132\013.Expression\"\374\002\n\nExpressi" +
+      "on\022\036\n\004type\030\001 \002(\0162\020.Expression.Type\022\022\n\nbo",
+      "oleanVal\030\002 \001(\010\022\021\n\tstringVal\030\003 \001(\t\022\021\n\tnum" +
+      "berVal\030\004 \001(\r\022\030\n\003lhs\030\005 \001(\0132\013.Expression\022\030" +
+      "\n\003rhs\030\006 \001(\0132\013.Expression\022+\n\020methodInvoca" +
+      "tion\030\007 \001(\0132\021.MethodInvocation\"\262\001\n\004Type\022\r" +
+      "\n\tEVALUATED\020\001\022\023\n\017BOOLEAN_LITERAL\020\002\022\022\n\016ST" +
+      "RING_LITERAL\020\003\022\022\n\016NUMBER_LITERAL\020\004\022\016\n\nID" +
+      "ENTIFIER\020\005\022\017\n\013CONDITIONAL\020\006\022\017\n\013DEREFEREN" +
+      "CE\020\007\022\t\n\005INDEX\020\010\022\025\n\021METHOD_INVOCATION\020\t\022\n" +
+      "\n\006RETURN\020\n\"6\n\010Unittest\022\023\n\013description\030\001 " +
+      "\002(\t\022\025\n\rdocumentation\030\002 \001(\t*#\n\010Modifier\022\013",
+      "\n\007MUTABLE\020\001\022\n\n\006NATIVE\020\002B\022\n\020noop.model.pr" +
+      "oto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
             com.google.protobuf.Descriptors.FileDescriptor root) {
           descriptor = root;
-          internal_static_Module_descriptor =
+          internal_static_Library_descriptor =
             getDescriptor().getMessageTypes().get(0);
-          internal_static_Module_fieldAccessorTable = new
+          internal_static_Library_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-              internal_static_Module_descriptor,
+              internal_static_Library_descriptor,
               new java.lang.String[] { "Name", "Documentation", "Binding", "Alias", "Interface", "ConcreteClass", },
-              noop.model.proto.Noop.Module.class,
-              noop.model.proto.Noop.Module.Builder.class);
+              noop.model.proto.Noop.Library.class,
+              noop.model.proto.Noop.Library.Builder.class);
           internal_static_ConcreteClass_descriptor =
             getDescriptor().getMessageTypes().get(1);
           internal_static_ConcreteClass_fieldAccessorTable = new

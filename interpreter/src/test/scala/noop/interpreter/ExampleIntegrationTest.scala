@@ -19,7 +19,6 @@ import com.google.inject.Guice
 import java.net.{URL, URLClassLoader}
 
 import java.io.File
-import noop.model.persistence.ClassRepository;
 import noop.model.BindingDefinition;
 import noop.types.NoopTypesModule;
 
@@ -36,7 +35,7 @@ class ExampleIntegrationTest extends Spec with ShouldMatchers with ConsoleTestFi
 
   def createFixture = {
     val injector = Guice.createInjector(new InterpreterModule(List()), new NoopTypesModule());
-    val classLoader = new SourceFileClassLoader(new ClassRepository(), List());
+    val classLoader = new RepositoryClassLoader(new ClassRepository(List()));
     (classLoader, injector.getInstance(classOf[Interpreter]));
   }
 

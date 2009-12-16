@@ -20,8 +20,8 @@ import com.google.inject.Guice;
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import model.{Block, IntLiteralExpression, OperatorExpression, Visitor};
-import types.{IntegerFactory, NoopBoolean, NoopTypesModule};
+import noop.model.{Block, IntLiteralExpression, OperatorExpression, Visitor};
+import noop.types.{IntegerFactory, NoopBoolean, NoopTypesModule};
 
 /**
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
@@ -32,6 +32,8 @@ class ConditionalSpec extends Spec with ShouldMatchers {
     val injector = Guice.createInjector(new InterpreterModule(List()), new NoopTypesModule());
     val context = injector.getInstance(classOf[Context]);
     val visitor = injector.getInstance(classOf[Visitor]);
+    val integerFactory = injector.getInstance(classOf[IntegerFactory]);
+    context.addRootFrame(integerFactory.create(1));
     (injector, context, visitor);
   }
 
@@ -39,9 +41,6 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to true when equals is called and the values are equal") {
       val (injector, context, visitor) = createFixture;
-      val integerFactory = injector.getInstance(classOf[IntegerFactory]);
-
-      context.addRootFrame(integerFactory.create(1));
       val conditional = new OperatorExpression(new IntLiteralExpression(1), "==",
           new IntLiteralExpression(1));
 
@@ -55,9 +54,6 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to false when equals is called and the values are not equal") {
       val (injector, context, visitor) = createFixture;
-      val integerFactory = injector.getInstance(classOf[IntegerFactory]);
-
-      context.addRootFrame(integerFactory.create(1));
       val conditional = new OperatorExpression(new IntLiteralExpression(1), "==",
           new IntLiteralExpression(2));
 
@@ -71,9 +67,6 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to true when doesNotEqual is called and the values are not equal") {
       val (injector, context, visitor) = createFixture;
-      val integerFactory = injector.getInstance(classOf[IntegerFactory]);
-
-      context.addRootFrame(integerFactory.create(1));
       val conditional = new OperatorExpression(new IntLiteralExpression(1), "!=",
           new IntLiteralExpression(2));
 
@@ -87,9 +80,6 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to false when doesNotEqual is called and the values are equal") {
       val (injector, context, visitor) = createFixture;
-      val integerFactory = injector.getInstance(classOf[IntegerFactory]);
-
-      context.addRootFrame(integerFactory.create(1));
       val conditional = new OperatorExpression(new IntLiteralExpression(1), "!=",
           new IntLiteralExpression(1));
 
@@ -103,9 +93,6 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to true when greaterThan is called and the value is greater than the other one") {
       val (injector, context, visitor) = createFixture;
-      val integerFactory = injector.getInstance(classOf[IntegerFactory]);
-
-      context.addRootFrame(integerFactory.create(1));
       val conditional = new OperatorExpression(new IntLiteralExpression(2), ">",
           new IntLiteralExpression(1));
 
@@ -119,9 +106,6 @@ class ConditionalSpec extends Spec with ShouldMatchers {
  
     it("should evaluate to false when greaterThan is called and the value is less than the other one") {
       val (injector, context, visitor) = createFixture;
-      val integerFactory = injector.getInstance(classOf[IntegerFactory]);
-
-      context.addRootFrame(integerFactory.create(1));
       val conditional = new OperatorExpression(new IntLiteralExpression(1), ">",
           new IntLiteralExpression(2));
 
@@ -135,9 +119,6 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to true when lesserThan is called and the value is less than the other one") {
       val (injector, context, visitor) = createFixture;
-      val integerFactory = injector.getInstance(classOf[IntegerFactory]);
-
-      context.addRootFrame(integerFactory.create(1));
       val conditional = new OperatorExpression(new IntLiteralExpression(1), "<",
           new IntLiteralExpression(2));
 
@@ -151,9 +132,6 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to false when lesserThan is called and the value is greater than the other one") {
       val (injector, context, visitor) = createFixture;
-      val integerFactory = injector.getInstance(classOf[IntegerFactory]);
-
-      context.addRootFrame(integerFactory.create(1));
       val conditional = new OperatorExpression(new IntLiteralExpression(3), "<",
           new IntLiteralExpression(2));
 
@@ -167,9 +145,6 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to true when greaterOrEqualThan is called and the value is greater or equal than the other one") {
       val (injector, context, visitor) = createFixture;
-      val integerFactory = injector.getInstance(classOf[IntegerFactory]);
-
-      context.addRootFrame(integerFactory.create(1));
       val conditional = new OperatorExpression(new IntLiteralExpression(3), ">=",
           new IntLiteralExpression(2));
 
@@ -183,9 +158,6 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to false when greaterOrEqualThan is called and the value is lesser than the other one") {
       val (injector, context, visitor) = createFixture;
-      val integerFactory = injector.getInstance(classOf[IntegerFactory]);
-
-      context.addRootFrame(integerFactory.create(1));
       val conditional = new OperatorExpression(new IntLiteralExpression(1), ">=",
           new IntLiteralExpression(2));
 
@@ -199,9 +171,6 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to true when lesserOrEqualThan is called and the value is lesser or equal than the other one") {
       val (injector, context, visitor) = createFixture;
-      val integerFactory = injector.getInstance(classOf[IntegerFactory]);
-
-      context.addRootFrame(integerFactory.create(1));
       val conditional = new OperatorExpression(new IntLiteralExpression(1), "<=",
           new IntLiteralExpression(2));
 
@@ -215,9 +184,6 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to false when lesserOrEqualThan is called and the value is greater than the other one") {
       val (injector, context, visitor) = createFixture;
-      val integerFactory = injector.getInstance(classOf[IntegerFactory]);
-
-      context.addRootFrame(integerFactory.create(1));
       val conditional = new OperatorExpression(new IntLiteralExpression(2), "<=",
           new IntLiteralExpression(1));
 
