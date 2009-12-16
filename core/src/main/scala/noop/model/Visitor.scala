@@ -36,7 +36,7 @@ trait Visitor {
 
   def visit(intLiteralExpression: IntLiteralExpression);
 
-  def visit(method: MethodDefinition);
+  def visit(invokable: Invokable);
 
   def enter(methodInvocationExpression: MethodInvocationExpression);
 
@@ -59,6 +59,4 @@ trait Visitor {
   def visit(conditionalAndExpression: ConditionalAndExpression);
 
   def visit(conditionalOrExpression: ConditionalOrExpression);
-
-  def visit(invokable: Invokable) = { throw new UnsupportedOperationException("should only visit method or test"); }
 }

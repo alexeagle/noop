@@ -69,9 +69,9 @@ class CompositeVisitor(visitors: Seq[Visitor]) extends Visitor {
     }
   }
 
-  def visit(method: MethodDefinition) = {
+  def visit(invokable: Invokable) = {
     for (v <- visitors) {
-      v.visit(method);
+      v.visit(invokable);
     }
   }
 

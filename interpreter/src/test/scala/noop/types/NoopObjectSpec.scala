@@ -16,24 +16,22 @@
 package noop.types;
 
 import java.io.File
-import noop.model.persistence.ClassRepository;
+import noop.stdlib.StdLibModuleBuilder
+import noop.interpreter.{ClassRepository, RepositoryClassLoader};
 
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import noop.interpreter.SourceFileClassLoader;
+
 
 /**
  * @author gabrielh@gmail.com (Gabriel Handford)
  */
 class NoopObjectSpec extends Spec with ShouldMatchers {
 
-  def createFixture = {
-    new SourceFileClassLoader(new ClassRepository(), List())
-  }
+  def createFixture = new RepositoryClassLoader(new ClassRepository(List(new StdLibModuleBuilder().build)));
 
   describe("a Noop Object") {
-
     it ("should throw NoSuchMethodException on missing native method") {
       val classLoader = createFixture;
       val objectClass = classLoader.findClass("noop.Object");

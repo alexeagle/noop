@@ -15,7 +15,7 @@
  */
 package noop.model
 
-import proto.Noop.Property
+import proto.Noop.{Modifier, Property}
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -24,4 +24,6 @@ import proto.Noop.Property
 trait Invokable {
   def name: String;
   def parameters: Seq[Property];
+  def modifiers: Seq[Modifier];
+  def block: Block;
 }

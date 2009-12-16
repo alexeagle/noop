@@ -16,7 +16,8 @@
 package noop.interpreter;
 
 import collection.mutable.Stack
-import noop.model.{ConcreteClassDefinition, MethodInvocationExpression, Visitor};
+import noop.model._
+
 import org.slf4j.LoggerFactory;
 
 
@@ -61,7 +62,10 @@ class MethodInvocationEvaluator(methodInvocationExpression: MethodInvocationExpr
 
           frame.addIdentifier(identifier, new Tuple2[NoopType, NoopObject](null, value));
         }
-        visitor.visit(method);
+        method match {
+          case m: MethodDefinition => visitor.visit(m);
+          case t: UnittestDefinition => visitor.visit(t);
+        }
       }
     } finally {
       removeStackFrame(context);

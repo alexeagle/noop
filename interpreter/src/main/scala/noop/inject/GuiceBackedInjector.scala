@@ -34,15 +34,17 @@ class GuiceBackedInjector(classLoader: ClassLoader, injector: com.google.inject.
   // A pointer to the youngest child injector
   var currentInjector: com.google.inject.Injector = injector;
 
-  def getInstance(classDef: ConcreteClassDefinition): NoopObject = {
+  def getInstance(classDef: ClassDefinition): NoopObject = {
     val obj = classDef.name match {
       case "noop.Console" => new NoopConsole(classLoader.findClass("noop.Console"));
       case _ => new NoopObject(classDef);
     }
-
-    for (property: Property <- classDef.properties) {
-      val propClassDef = classLoader.findClass(property.getType);
-      obj.propertyMap += Pair(property.getName, getInstance(propClassDef.asInstanceOf[ConcreteClassDefinition]));
+    classDef match {
+      case concrete: ConcreteClassDefinition =>
+        for (property: Property <- concrete.properties) {
+          val propClassDef = classLoader.findClass(property.getType);
+          obj.propertyMap += Pair(property.getName, getInstance(propClassDef.asInstanceOf[ConcreteClassDefinition]));
+        }
     }
     return obj;
   }

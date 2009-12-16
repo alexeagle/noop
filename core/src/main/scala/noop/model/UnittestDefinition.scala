@@ -1,6 +1,6 @@
 package noop.model
 
-import proto.Noop.{Property, Unittest}
+import proto.Noop.{Modifier, Property, Unittest}
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -9,4 +9,7 @@ import proto.Noop.{Property, Unittest}
 class UnittestDefinition(val data: Unittest) extends Invokable {
   def parameters: Seq[Property] = List();
   def name: String = data.getDescription;
+  def modifiers: Seq[Modifier] = List();
+  // TODO: wire in real unittest block
+  def block: Block = new Block(null);
 }

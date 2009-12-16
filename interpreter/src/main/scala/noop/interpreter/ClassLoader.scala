@@ -24,6 +24,4 @@ import noop.model.ClassDefinition;
 trait ClassLoader {
 
   def findClass(className: String): ClassDefinition;
-
-  def getClassDefinition(file: File): ClassDefinition;
 }

@@ -39,4 +39,6 @@ class ConcreteClassDefinition(data: ConcreteClass) extends ClassDefinition {
           "Method " + methodName + " is not defined on class " + data.getName);
     }
   }
+
+  override def toString(): String = data.getName;
 }

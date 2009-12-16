@@ -9,7 +9,7 @@ enum Modifier {
   NATIVE = 2;
 }
 
-message Module {
+message Library {
   required string name = 1;
   optional string documentation = 2;
   repeated Binding binding = 3;

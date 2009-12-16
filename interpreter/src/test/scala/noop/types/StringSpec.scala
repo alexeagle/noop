@@ -17,12 +17,13 @@ package noop.types;
 
 import noop.inject.{GuiceBackedInjector, Injector}
 import noop.interpreter._
-import noop.model.Modifier;
 
 import collection.mutable.Stack
 
 import com.google.inject.Guice
-import java.io.File;
+import java.io.File
+import noop.model.proto.Noop.Modifier
+import noop.model.ConcreteClassDefinition;
 
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
@@ -34,23 +35,23 @@ class StringSpec extends Spec with ShouldMatchers {
   def fixture = Guice.createInjector(new InterpreterModule(List()), new NoopTypesModule());
 
   describe("a Noop String") {
-    it("should have a valid class definition parsed from Noop source") {
+    it("should have a valid class definition in the StdLib") {
       val classLoader = fixture.getInstance(classOf[ClassLoader]);
       val classDef = classLoader.findClass("noop.String");
-      classDef.name should be("String");
+      classDef.name should be("noop.String");
     }
 
     it("should have a native implementation of the length method") {
       val injector = fixture;
       val classLoader = injector.getInstance(classOf[ClassLoader]);
-      val stringClass = classLoader.findClass("noop.String");
+      val stringClass = classLoader.findClass("noop.String").asInstanceOf[ConcreteClassDefinition];
 
       val aString = injector.getInstance(classOf[StringFactory]).create("hello");
       val method = stringClass.findMethod("length");
       val context = injector.getInstance(classOf[Context]);
 
       context.addRootFrame(null);
-      method.modifiers should contain(Modifier.native);
+      method.modifiers should contain(Modifier.NATIVE);
 
       context.stack.push(new Frame(aString, null));
       injector.getInstance(classOf[InterpreterVisitor]).visit(method);
