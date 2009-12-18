@@ -15,10 +15,9 @@
  */
 package noop.grammar;
 
-import org.scalatest.matchers.ShouldMatchers;
+import org.scalatest.matchers.ShouldMatchers
+import noop.model.{ExpressionWrapper, BooleanLiteralExpression, WhileLoop};
 import org.scalatest.Spec;
-
-import model.{BooleanLiteralExpression, WhileLoop};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -35,7 +34,8 @@ class LoopSpec extends Spec with ShouldMatchers {
       val block = parser.buildTreeParser(parser.parseBlock(source)).block();
       block.statements(0).getClass() should be (classOf[WhileLoop]);
       val whileLoop = block.statements(0).asInstanceOf[WhileLoop];
-      whileLoop.continueCondition.asInstanceOf[BooleanLiteralExpression].value should be(true);
+      val typedExpression = whileLoop.continueCondition.asInstanceOf[ExpressionWrapper].getTypedExpression
+      typedExpression.asInstanceOf[BooleanLiteralExpression].value should be(true);
     }
   }
 

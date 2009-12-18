@@ -15,11 +15,15 @@
  */
 package noop.model;
 
+import noop.model.proto.NoopAst.IntLiteral;
+
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class IntLiteralExpression(val value: Int) extends Expression {
+class IntLiteralExpression(data: IntLiteral) extends Expression {
+
+  def value: Int = data.getValue;
 
   def accept(visitor: Visitor) = {
     visitor.visit(this);

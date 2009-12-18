@@ -17,7 +17,7 @@ package noop.grammar
 
 
 import org.scalatest.matchers.ShouldMatchers
-import noop.model.{BindingDefinition, StringLiteralExpression, IdentifierExpression};
+import noop.model.{ExpressionWrapper, BindingDefinition, StringLiteralExpression, IdentifierExpression}
 import org.scalatest.Spec;
 
 /**
@@ -104,8 +104,8 @@ class BindingSpec extends Spec with ShouldMatchers {
       method.block.anonymousBindings should have length(1);
       val firstBinding = method.block.anonymousBindings.first;
       firstBinding.noopType should be("String");
-      firstBinding.boundTo.getClass() should be(classOf[StringLiteralExpression]);
-      firstBinding.boundTo.asInstanceOf[StringLiteralExpression].value should be ("foo");
+      val typedExpression = firstBinding.boundTo.asInstanceOf[ExpressionWrapper].getTypedExpression;
+      typedExpression.asInstanceOf[StringLiteralExpression].value should be ("foo");
     }
   }
 
