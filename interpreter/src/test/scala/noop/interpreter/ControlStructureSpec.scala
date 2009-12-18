@@ -15,19 +15,22 @@
  */
 package noop.interpreter;
 
-import inject.Injector
+import noop.model.proto.NoopAst.BooleanLiteral;
+import noop.model.proto.NoopAst.StringLiteral;
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import model.{IdentifierExpression, AssignmentExpression, Block, BooleanLiteralExpression, Expression,
+import noop.model.{IdentifierExpression, AssignmentExpression, Block, BooleanLiteralExpression, Expression,
     IdentifierDeclarationExpression, ReturnExpression, StringLiteralExpression, Visitor, WhileLoop};
-import types.{NoopString};
+import noop.types.{NoopString};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class ControlStructureSpec extends Spec with ShouldMatchers with GuiceInterpreterFixture {
+
+  val falseExpr = BooleanLiteral.newBuilder.setValue(false).build;
 
   def interpreterFixture = {
     val injector = fixture;
@@ -40,7 +43,7 @@ class ControlStructureSpec extends Spec with ShouldMatchers with GuiceInterprete
 
     def accept(visitor: Visitor) = {
       called += 1;
-      new BooleanLiteralExpression(called <= timesToReturnTrue).accept(visitor);
+      new BooleanLiteralExpression(BooleanLiteral.newBuilder.setValue(called <= timesToReturnTrue).build).accept(visitor);
     }
   }
 
@@ -62,7 +65,7 @@ class ControlStructureSpec extends Spec with ShouldMatchers with GuiceInterprete
       val expression: MockExpression = new MockExpression();
       block.statements += expression;
 
-      val whileLoop = new WhileLoop(new BooleanLiteralExpression(false), block);
+      val whileLoop = new WhileLoop(new BooleanLiteralExpression(falseExpr), block);
 
       whileLoop.accept(visitor);
       expression.timesCalled should be(0);
@@ -92,7 +95,7 @@ class ControlStructureSpec extends Spec with ShouldMatchers with GuiceInterprete
       val enclosingBlock = new Block();
       enclosingBlock.statements += block;
       enclosingBlock.statements += new AssignmentExpression(
-          new IdentifierExpression("s"), new StringLiteralExpression("s"));
+          new IdentifierExpression("s"), new StringLiteralExpression(StringLiteral.newBuilder.setValue("s").build));
       new WhileLoop(new TrueThenFalseExpression(1), enclosingBlock).accept(visitor);
     }
   }
@@ -101,7 +104,7 @@ class ControlStructureSpec extends Spec with ShouldMatchers with GuiceInterprete
 
     it("should exit the current block and return the supplied value") {
       val (context, block, visitor) = interpreterFixture;
-      val returnMe = new ReturnExpression(new StringLiteralExpression("to return"));
+      val returnMe = new ReturnExpression(new StringLiteralExpression(StringLiteral.newBuilder.setValue("to return").build));
 
       block.statements += returnMe;
       val dontRunMe = new MockExpression((c: Context) => fail());

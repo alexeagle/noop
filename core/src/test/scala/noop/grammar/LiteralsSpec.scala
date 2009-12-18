@@ -15,10 +15,9 @@
  */
 package noop.grammar;
 
-import org.scalatest.matchers.ShouldMatchers;
+import org.scalatest.matchers.ShouldMatchers
+import noop.model.{ExpressionWrapper, BooleanLiteralExpression, IdentifierDeclarationExpression};
 import org.scalatest.Spec;
-
-import model.{BooleanLiteralExpression, IdentifierDeclarationExpression};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -61,8 +60,7 @@ class LiteralsSpec extends Spec with ShouldMatchers {
           .asInstanceOf[IdentifierDeclarationExpression];
       statement.initialValue match {
         case Some(b) => {
-          b.getClass() should be (classOf[BooleanLiteralExpression]);
-          b.asInstanceOf[BooleanLiteralExpression].value should be (true);
+          b.asInstanceOf[ExpressionWrapper].getTypedExpression.asInstanceOf[BooleanLiteralExpression].value should be (true);
         }
         case None => fail();
       }
