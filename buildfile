@@ -41,12 +41,17 @@ define 'noop', :version=>VERSION_NUMBER do
   manifest["Implementation-Vendor"] = COPYRIGHT
 
   define "core" do
+    compile.with [SLF4J, PROTO]
+    package :jar
+  end
+
+  define "grammar" do
     antlr = antlr([_('src/main/antlr3/noop/grammar/antlr/Doc.g'), \
                    _('src/main/antlr3/noop/grammar/antlr/Noop.g'), \
                    _('src/main/antlr3/noop/grammar/antlr/NoopAST.g')],
         :in_package=>'noop.grammar.antlr')
     compile.from(antlr).
-      with [ANTLR, SLF4J, PROTO]
+      with [project("core"), ANTLR, SLF4J, PROTO]
     package :jar
   end
 
@@ -64,7 +69,7 @@ define 'noop', :version=>VERSION_NUMBER do
     # TODO - only want examples as a test resource
     resources.from [_('src/main/noop'), project("examples")._('noop')]
     package(:jar).with(:manifest=>{'Main-Class' => 'noop.interpreter.InterpreterMain'})
-    compile.with [project("core"), ANTLR_RUNTIME, SLF4J, GUICE, PROTO]
+    compile.with [project("core"), project("grammar"), ANTLR_RUNTIME, SLF4J, GUICE, PROTO]
     package(:zip).
       include(compile.dependencies, :path=>'lib').
       include(_("target/#{id}-#{version}.jar"), :path=>'lib').

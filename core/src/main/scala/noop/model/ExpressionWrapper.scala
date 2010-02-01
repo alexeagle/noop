@@ -1,6 +1,5 @@
 package noop.model
 
-import noop.model.proto.NoopAst
 import proto.NoopAst.Expr;
 import noop.model.proto.NoopAst.Expr.Type;
 
