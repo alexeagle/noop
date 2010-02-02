@@ -1,0 +1,111 @@
+// Copyright 2009 Google Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// Defines the data model which stores Noop programs.
+
+// Generate the java file with:
+// protoc core/src/main/proto/noop_ast.proto --java_out=core/src/main/java
+// TODO(alexeagle): have buildr run the proto compiler - https://issues.apache.org/jira/browse/BUILDR-368
+
+option java_package = "noop.model.proto";
+
+message Stmt {
+  enum Type {
+    RETURN = 1;
+    SHOULD = 2;
+    EXPRESSION = 3;
+  }
+
+  // identifies what sort of statement this is
+  required Type type = 1;
+
+  optional ReturnStatement return = 2;
+  optional ShouldStatement should = 3;
+  optional Expr expression = 4;
+}
+
+message ReturnStatement {
+  required Expr returned = 1;
+}
+
+message ShouldStatement {
+  required Expr lhs = 1;
+  required Expr rhs = 2;
+}
+
+message Expr {
+  enum Type {
+    BOOLEAN_LITERAL = 1;
+    STRING_LITERAL = 2;
+    INT_LITERAL = 3;
+    DEREFERENCE = 4;
+    METHOD_INVOCATION = 5;
+    ASSIGNMENT = 6;
+    OPERATION = 7;
+    IDENTIFIER = 8;
+    CONDITIONAL = 9;
+  }
+  // identifies what sort of expression this is
+  required Type type = 1;
+
+  optional BooleanLiteral boolean_literal = 2;
+  optional StringLiteral string_literal = 3;
+  optional IntLiteral int_literal = 4;
+  optional Dereference deref = 5;
+  optional MethodInvocation method_invocation = 6;
+  optional Assignment assignment = 7;
+  optional Operation operation = 8;
+  optional string identifier = 9;
+  optional Conditional conditional = 10;
+}
+
+message Conditional {
+  required Expr lhs = 1;
+  required string operator = 2;
+  required Expr rhs = 3;
+}
+
+message Operation {
+  required Expr lhs = 1;
+  required string operator = 2;
+  required Expr rhs = 3;
+}
+
+message Assignment {
+  required Expr lhs = 1;
+  required Expr rhs = 2;
+}
+
+message MethodInvocation {
+  required Expr target = 1;
+  required string method_name = 2;
+  repeated Expr argument = 3;
+}
+
+message Dereference {
+  required Expr lhs = 1;
+  required Expr rhs = 2;
+}
+
+message IntLiteral {
+  required sint32 value = 1;
+}
+
+message StringLiteral {
+  required string value = 1;
+}
+
+message BooleanLiteral {
+  required bool value = 1;
+}
