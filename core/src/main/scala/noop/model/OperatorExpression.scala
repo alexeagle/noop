@@ -13,14 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.model
+
+import proto.NoopAst.{Operation, MethodInvocation}
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class OperatorExpression(val left: Expression, val operator: String, val right: Expression)
-    extends Expression {
+class OperatorExpression(val data: Operation) extends Expression {
+  def left = new ExpressionWrapper(data.getLhs)
+  def right = new ExpressionWrapper(data.getRhs)
+  def operator = data.getOperator
 
   def accept(visitor: Visitor) = {
     val methodName = operator match {
@@ -37,7 +41,12 @@ class OperatorExpression(val left: Expression, val operator: String, val right: 
       case "<=" => "lesserOrEqualThan";
     }
 
-    new MethodInvocationExpression(left, methodName, List(right)).accept(visitor);
+    new MethodInvocationExpression(MethodInvocation.newBuilder()
+            .setTarget(data.getLhs)
+            .setMethodName(data.getOperator)
+            .addArgument(data.getRhs)
+            .build())
+            .accept(visitor);
     visitor.visit(this);
   }
 }

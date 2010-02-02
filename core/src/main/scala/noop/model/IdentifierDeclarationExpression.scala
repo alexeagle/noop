@@ -13,18 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.model
+
+import proto.NoopAst.Expr;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class IdentifierDeclarationExpression(val noopType: String, val name: String) extends Expression {
-  var initialValue: Option[Expression] = None;
+  var initialValue: Option[Expr] = None;
 
   def accept(visitor: Visitor) = {
     val value = initialValue match {
-      case Some(v) => v;
+      case Some(v) => new ExpressionWrapper(v);
       case None => new EvaluatedExpression(null);
     }
     value.accept(visitor);

@@ -16,8 +16,10 @@
 package noop.grammar;
 
 import org.scalatest.matchers.ShouldMatchers
-import noop.model.{ExpressionWrapper, OperatorExpression, IntLiteralExpression, IdentifierDeclarationExpression};
-import org.scalatest.Spec;
+import noop.model.{ExpressionWrapper, OperatorExpression, IntLiteralExpression, IdentifierDeclarationExpression}
+import org.scalatest.Spec
+import noop.model.proto.NoopAst.{IntLiteral, Operation, Expr};
+import noop.model.proto.NoopAst.Expr.Type.{OPERATION,INT_LITERAL}
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -43,12 +45,13 @@ class ExpressionsSpec extends Spec with ShouldMatchers {
       block.statements(0).getClass should be(classOf[IdentifierDeclarationExpression]);
       val declaration = block.statements(0).asInstanceOf[IdentifierDeclarationExpression];
       declaration.initialValue should be ('defined);
-      val expression1 = declaration.initialValue.get().asInstanceOf[OperatorExpression];
-      expression1.operator should be ("+");
-      val typedExpression = expression1.left.asInstanceOf[ExpressionWrapper].getTypedExpression
-      typedExpression.asInstanceOf[IntLiteralExpression].value should be (3);
-      val expression2 = expression1.asInstanceOf[OperatorExpression].right;
-      expression2.asInstanceOf[OperatorExpression].operator should be ("%");
+      val expr:Expr = declaration.initialValue.get().asInstanceOf[Expr];
+      expr.getType should be (OPERATION);
+      expr.getOperation.getLhs.getType should be (INT_LITERAL);
+      expr.getOperation.getLhs.getIntLiteral.getValue should be (3);
+      expr.getOperation.getOperator should be ("+");
+      expr.getOperation.getRhs.getType should be (OPERATION);
+      expr.getOperation.getRhs.getOperation.getOperator should be ("%")
     }
   }
 }

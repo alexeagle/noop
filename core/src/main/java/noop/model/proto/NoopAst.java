@@ -7,6 +7,1199 @@ public final class NoopAst {
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
   }
+  public static final class Stmt extends
+      com.google.protobuf.GeneratedMessage {
+    // Use Stmt.newBuilder() to construct.
+    private Stmt() {}
+    
+    private static final Stmt defaultInstance = new Stmt();
+    public static Stmt getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Stmt getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return noop.model.proto.NoopAst.internal_static_Stmt_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return noop.model.proto.NoopAst.internal_static_Stmt_fieldAccessorTable;
+    }
+    
+    public enum Type
+        implements com.google.protobuf.ProtocolMessageEnum {
+      RETURN(0, 1),
+      SHOULD(1, 2),
+      EXPRESSION(2, 3),
+      ;
+      
+      
+      public final int getNumber() { return value; }
+      
+      public static Type valueOf(int value) {
+        switch (value) {
+          case 1: return RETURN;
+          case 2: return SHOULD;
+          case 3: return EXPRESSION;
+          default: return null;
+        }
+      }
+      
+      public static com.google.protobuf.Internal.EnumLiteMap<Type>
+          internalGetValueMap() {
+        return internalValueMap;
+      }
+      private static com.google.protobuf.Internal.EnumLiteMap<Type>
+          internalValueMap =
+            new com.google.protobuf.Internal.EnumLiteMap<Type>() {
+              public Type findValueByNumber(int number) {
+                return Type.valueOf(number)
+      ;        }
+            };
+      
+      public final com.google.protobuf.Descriptors.EnumValueDescriptor
+          getValueDescriptor() {
+        return getDescriptor().getValues().get(index);
+      }
+      public final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptorForType() {
+        return getDescriptor();
+      }
+      public static final com.google.protobuf.Descriptors.EnumDescriptor
+          getDescriptor() {
+        return noop.model.proto.NoopAst.Stmt.getDescriptor().getEnumTypes().get(0);
+      }
+      
+      private static final Type[] VALUES = {
+        RETURN, SHOULD, EXPRESSION, 
+      };
+      public static Type valueOf(
+          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+        if (desc.getType() != getDescriptor()) {
+          throw new java.lang.IllegalArgumentException(
+            "EnumValueDescriptor is not for this type.");
+        }
+        return VALUES[desc.getIndex()];
+      }
+      private final int index;
+      private final int value;
+      private Type(int index, int value) {
+        this.index = index;
+        this.value = value;
+      }
+      
+      static {
+        noop.model.proto.NoopAst.getDescriptor();
+      }
+    }
+    
+    // required .Stmt.Type type = 1;
+    public static final int TYPE_FIELD_NUMBER = 1;
+    private boolean hasType;
+    private noop.model.proto.NoopAst.Stmt.Type type_ = noop.model.proto.NoopAst.Stmt.Type.RETURN;
+    public boolean hasType() { return hasType; }
+    public noop.model.proto.NoopAst.Stmt.Type getType() { return type_; }
+    
+    // optional .ReturnStatement return = 2;
+    public static final int RETURN_FIELD_NUMBER = 2;
+    private boolean hasReturn;
+    private noop.model.proto.NoopAst.ReturnStatement return_ = noop.model.proto.NoopAst.ReturnStatement.getDefaultInstance();
+    public boolean hasReturn() { return hasReturn; }
+    public noop.model.proto.NoopAst.ReturnStatement getReturn() { return return_; }
+    
+    // optional .ShouldStatement should = 3;
+    public static final int SHOULD_FIELD_NUMBER = 3;
+    private boolean hasShould;
+    private noop.model.proto.NoopAst.ShouldStatement should_ = noop.model.proto.NoopAst.ShouldStatement.getDefaultInstance();
+    public boolean hasShould() { return hasShould; }
+    public noop.model.proto.NoopAst.ShouldStatement getShould() { return should_; }
+    
+    // optional .Expr expression = 4;
+    public static final int EXPRESSION_FIELD_NUMBER = 4;
+    private boolean hasExpression;
+    private noop.model.proto.NoopAst.Expr expression_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+    public boolean hasExpression() { return hasExpression; }
+    public noop.model.proto.NoopAst.Expr getExpression() { return expression_; }
+    
+    public final boolean isInitialized() {
+      if (!hasType) return false;
+      if (hasReturn()) {
+        if (!getReturn().isInitialized()) return false;
+      }
+      if (hasShould()) {
+        if (!getShould().isInitialized()) return false;
+      }
+      if (hasExpression()) {
+        if (!getExpression().isInitialized()) return false;
+      }
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (hasType()) {
+        output.writeEnum(1, getType().getNumber());
+      }
+      if (hasReturn()) {
+        output.writeMessage(2, getReturn());
+      }
+      if (hasShould()) {
+        output.writeMessage(3, getShould());
+      }
+      if (hasExpression()) {
+        output.writeMessage(4, getExpression());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasType()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(1, getType().getNumber());
+      }
+      if (hasReturn()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, getReturn());
+      }
+      if (hasShould()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, getShould());
+      }
+      if (hasExpression()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, getExpression());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static noop.model.proto.NoopAst.Stmt parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Stmt parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Stmt parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Stmt parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Stmt parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Stmt parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Stmt parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Stmt parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Stmt parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Stmt parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(noop.model.proto.NoopAst.Stmt prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private noop.model.proto.NoopAst.Stmt result;
+      
+      // Construct using noop.model.proto.NoopAst.Stmt.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new noop.model.proto.NoopAst.Stmt();
+        return builder;
+      }
+      
+      protected noop.model.proto.NoopAst.Stmt internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new noop.model.proto.NoopAst.Stmt();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return noop.model.proto.NoopAst.Stmt.getDescriptor();
+      }
+      
+      public noop.model.proto.NoopAst.Stmt getDefaultInstanceForType() {
+        return noop.model.proto.NoopAst.Stmt.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public noop.model.proto.NoopAst.Stmt build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private noop.model.proto.NoopAst.Stmt buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public noop.model.proto.NoopAst.Stmt buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        noop.model.proto.NoopAst.Stmt returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof noop.model.proto.NoopAst.Stmt) {
+          return mergeFrom((noop.model.proto.NoopAst.Stmt)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(noop.model.proto.NoopAst.Stmt other) {
+        if (other == noop.model.proto.NoopAst.Stmt.getDefaultInstance()) return this;
+        if (other.hasType()) {
+          setType(other.getType());
+        }
+        if (other.hasReturn()) {
+          mergeReturn(other.getReturn());
+        }
+        if (other.hasShould()) {
+          mergeShould(other.getShould());
+        }
+        if (other.hasExpression()) {
+          mergeExpression(other.getExpression());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 8: {
+              int rawValue = input.readEnum();
+              noop.model.proto.NoopAst.Stmt.Type value = noop.model.proto.NoopAst.Stmt.Type.valueOf(rawValue);
+              if (value == null) {
+                unknownFields.mergeVarintField(1, rawValue);
+              } else {
+                setType(value);
+              }
+              break;
+            }
+            case 18: {
+              noop.model.proto.NoopAst.ReturnStatement.Builder subBuilder = noop.model.proto.NoopAst.ReturnStatement.newBuilder();
+              if (hasReturn()) {
+                subBuilder.mergeFrom(getReturn());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setReturn(subBuilder.buildPartial());
+              break;
+            }
+            case 26: {
+              noop.model.proto.NoopAst.ShouldStatement.Builder subBuilder = noop.model.proto.NoopAst.ShouldStatement.newBuilder();
+              if (hasShould()) {
+                subBuilder.mergeFrom(getShould());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setShould(subBuilder.buildPartial());
+              break;
+            }
+            case 34: {
+              noop.model.proto.NoopAst.Expr.Builder subBuilder = noop.model.proto.NoopAst.Expr.newBuilder();
+              if (hasExpression()) {
+                subBuilder.mergeFrom(getExpression());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setExpression(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // required .Stmt.Type type = 1;
+      public boolean hasType() {
+        return result.hasType();
+      }
+      public noop.model.proto.NoopAst.Stmt.Type getType() {
+        return result.getType();
+      }
+      public Builder setType(noop.model.proto.NoopAst.Stmt.Type value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasType = true;
+        result.type_ = value;
+        return this;
+      }
+      public Builder clearType() {
+        result.hasType = false;
+        result.type_ = noop.model.proto.NoopAst.Stmt.Type.RETURN;
+        return this;
+      }
+      
+      // optional .ReturnStatement return = 2;
+      public boolean hasReturn() {
+        return result.hasReturn();
+      }
+      public noop.model.proto.NoopAst.ReturnStatement getReturn() {
+        return result.getReturn();
+      }
+      public Builder setReturn(noop.model.proto.NoopAst.ReturnStatement value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasReturn = true;
+        result.return_ = value;
+        return this;
+      }
+      public Builder setReturn(noop.model.proto.NoopAst.ReturnStatement.Builder builderForValue) {
+        result.hasReturn = true;
+        result.return_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeReturn(noop.model.proto.NoopAst.ReturnStatement value) {
+        if (result.hasReturn() &&
+            result.return_ != noop.model.proto.NoopAst.ReturnStatement.getDefaultInstance()) {
+          result.return_ =
+            noop.model.proto.NoopAst.ReturnStatement.newBuilder(result.return_).mergeFrom(value).buildPartial();
+        } else {
+          result.return_ = value;
+        }
+        result.hasReturn = true;
+        return this;
+      }
+      public Builder clearReturn() {
+        result.hasReturn = false;
+        result.return_ = noop.model.proto.NoopAst.ReturnStatement.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .ShouldStatement should = 3;
+      public boolean hasShould() {
+        return result.hasShould();
+      }
+      public noop.model.proto.NoopAst.ShouldStatement getShould() {
+        return result.getShould();
+      }
+      public Builder setShould(noop.model.proto.NoopAst.ShouldStatement value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasShould = true;
+        result.should_ = value;
+        return this;
+      }
+      public Builder setShould(noop.model.proto.NoopAst.ShouldStatement.Builder builderForValue) {
+        result.hasShould = true;
+        result.should_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeShould(noop.model.proto.NoopAst.ShouldStatement value) {
+        if (result.hasShould() &&
+            result.should_ != noop.model.proto.NoopAst.ShouldStatement.getDefaultInstance()) {
+          result.should_ =
+            noop.model.proto.NoopAst.ShouldStatement.newBuilder(result.should_).mergeFrom(value).buildPartial();
+        } else {
+          result.should_ = value;
+        }
+        result.hasShould = true;
+        return this;
+      }
+      public Builder clearShould() {
+        result.hasShould = false;
+        result.should_ = noop.model.proto.NoopAst.ShouldStatement.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .Expr expression = 4;
+      public boolean hasExpression() {
+        return result.hasExpression();
+      }
+      public noop.model.proto.NoopAst.Expr getExpression() {
+        return result.getExpression();
+      }
+      public Builder setExpression(noop.model.proto.NoopAst.Expr value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasExpression = true;
+        result.expression_ = value;
+        return this;
+      }
+      public Builder setExpression(noop.model.proto.NoopAst.Expr.Builder builderForValue) {
+        result.hasExpression = true;
+        result.expression_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeExpression(noop.model.proto.NoopAst.Expr value) {
+        if (result.hasExpression() &&
+            result.expression_ != noop.model.proto.NoopAst.Expr.getDefaultInstance()) {
+          result.expression_ =
+            noop.model.proto.NoopAst.Expr.newBuilder(result.expression_).mergeFrom(value).buildPartial();
+        } else {
+          result.expression_ = value;
+        }
+        result.hasExpression = true;
+        return this;
+      }
+      public Builder clearExpression() {
+        result.hasExpression = false;
+        result.expression_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+        return this;
+      }
+    }
+    
+    static {
+      noop.model.proto.NoopAst.getDescriptor();
+    }
+    
+    static {
+      noop.model.proto.NoopAst.internalForceInit();
+    }
+  }
+  
+  public static final class ReturnStatement extends
+      com.google.protobuf.GeneratedMessage {
+    // Use ReturnStatement.newBuilder() to construct.
+    private ReturnStatement() {}
+    
+    private static final ReturnStatement defaultInstance = new ReturnStatement();
+    public static ReturnStatement getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public ReturnStatement getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return noop.model.proto.NoopAst.internal_static_ReturnStatement_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return noop.model.proto.NoopAst.internal_static_ReturnStatement_fieldAccessorTable;
+    }
+    
+    // required .Expr returned = 1;
+    public static final int RETURNED_FIELD_NUMBER = 1;
+    private boolean hasReturned;
+    private noop.model.proto.NoopAst.Expr returned_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+    public boolean hasReturned() { return hasReturned; }
+    public noop.model.proto.NoopAst.Expr getReturned() { return returned_; }
+    
+    public final boolean isInitialized() {
+      if (!hasReturned) return false;
+      if (!getReturned().isInitialized()) return false;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (hasReturned()) {
+        output.writeMessage(1, getReturned());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasReturned()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getReturned());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static noop.model.proto.NoopAst.ReturnStatement parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.ReturnStatement parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.ReturnStatement parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.ReturnStatement parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.ReturnStatement parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.ReturnStatement parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.ReturnStatement parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.ReturnStatement parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.ReturnStatement parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.ReturnStatement parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(noop.model.proto.NoopAst.ReturnStatement prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private noop.model.proto.NoopAst.ReturnStatement result;
+      
+      // Construct using noop.model.proto.NoopAst.ReturnStatement.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new noop.model.proto.NoopAst.ReturnStatement();
+        return builder;
+      }
+      
+      protected noop.model.proto.NoopAst.ReturnStatement internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new noop.model.proto.NoopAst.ReturnStatement();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return noop.model.proto.NoopAst.ReturnStatement.getDescriptor();
+      }
+      
+      public noop.model.proto.NoopAst.ReturnStatement getDefaultInstanceForType() {
+        return noop.model.proto.NoopAst.ReturnStatement.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public noop.model.proto.NoopAst.ReturnStatement build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private noop.model.proto.NoopAst.ReturnStatement buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public noop.model.proto.NoopAst.ReturnStatement buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        noop.model.proto.NoopAst.ReturnStatement returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof noop.model.proto.NoopAst.ReturnStatement) {
+          return mergeFrom((noop.model.proto.NoopAst.ReturnStatement)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(noop.model.proto.NoopAst.ReturnStatement other) {
+        if (other == noop.model.proto.NoopAst.ReturnStatement.getDefaultInstance()) return this;
+        if (other.hasReturned()) {
+          mergeReturned(other.getReturned());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              noop.model.proto.NoopAst.Expr.Builder subBuilder = noop.model.proto.NoopAst.Expr.newBuilder();
+              if (hasReturned()) {
+                subBuilder.mergeFrom(getReturned());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setReturned(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // required .Expr returned = 1;
+      public boolean hasReturned() {
+        return result.hasReturned();
+      }
+      public noop.model.proto.NoopAst.Expr getReturned() {
+        return result.getReturned();
+      }
+      public Builder setReturned(noop.model.proto.NoopAst.Expr value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasReturned = true;
+        result.returned_ = value;
+        return this;
+      }
+      public Builder setReturned(noop.model.proto.NoopAst.Expr.Builder builderForValue) {
+        result.hasReturned = true;
+        result.returned_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeReturned(noop.model.proto.NoopAst.Expr value) {
+        if (result.hasReturned() &&
+            result.returned_ != noop.model.proto.NoopAst.Expr.getDefaultInstance()) {
+          result.returned_ =
+            noop.model.proto.NoopAst.Expr.newBuilder(result.returned_).mergeFrom(value).buildPartial();
+        } else {
+          result.returned_ = value;
+        }
+        result.hasReturned = true;
+        return this;
+      }
+      public Builder clearReturned() {
+        result.hasReturned = false;
+        result.returned_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+        return this;
+      }
+    }
+    
+    static {
+      noop.model.proto.NoopAst.getDescriptor();
+    }
+    
+    static {
+      noop.model.proto.NoopAst.internalForceInit();
+    }
+  }
+  
+  public static final class ShouldStatement extends
+      com.google.protobuf.GeneratedMessage {
+    // Use ShouldStatement.newBuilder() to construct.
+    private ShouldStatement() {}
+    
+    private static final ShouldStatement defaultInstance = new ShouldStatement();
+    public static ShouldStatement getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public ShouldStatement getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return noop.model.proto.NoopAst.internal_static_ShouldStatement_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return noop.model.proto.NoopAst.internal_static_ShouldStatement_fieldAccessorTable;
+    }
+    
+    // required .Expr lhs = 1;
+    public static final int LHS_FIELD_NUMBER = 1;
+    private boolean hasLhs;
+    private noop.model.proto.NoopAst.Expr lhs_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+    public boolean hasLhs() { return hasLhs; }
+    public noop.model.proto.NoopAst.Expr getLhs() { return lhs_; }
+    
+    // required .Expr rhs = 2;
+    public static final int RHS_FIELD_NUMBER = 2;
+    private boolean hasRhs;
+    private noop.model.proto.NoopAst.Expr rhs_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+    public boolean hasRhs() { return hasRhs; }
+    public noop.model.proto.NoopAst.Expr getRhs() { return rhs_; }
+    
+    public final boolean isInitialized() {
+      if (!hasLhs) return false;
+      if (!hasRhs) return false;
+      if (!getLhs().isInitialized()) return false;
+      if (!getRhs().isInitialized()) return false;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (hasLhs()) {
+        output.writeMessage(1, getLhs());
+      }
+      if (hasRhs()) {
+        output.writeMessage(2, getRhs());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasLhs()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getLhs());
+      }
+      if (hasRhs()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, getRhs());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static noop.model.proto.NoopAst.ShouldStatement parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.ShouldStatement parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.ShouldStatement parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.ShouldStatement parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.ShouldStatement parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.ShouldStatement parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.ShouldStatement parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.ShouldStatement parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.ShouldStatement parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.ShouldStatement parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(noop.model.proto.NoopAst.ShouldStatement prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private noop.model.proto.NoopAst.ShouldStatement result;
+      
+      // Construct using noop.model.proto.NoopAst.ShouldStatement.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new noop.model.proto.NoopAst.ShouldStatement();
+        return builder;
+      }
+      
+      protected noop.model.proto.NoopAst.ShouldStatement internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new noop.model.proto.NoopAst.ShouldStatement();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return noop.model.proto.NoopAst.ShouldStatement.getDescriptor();
+      }
+      
+      public noop.model.proto.NoopAst.ShouldStatement getDefaultInstanceForType() {
+        return noop.model.proto.NoopAst.ShouldStatement.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public noop.model.proto.NoopAst.ShouldStatement build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private noop.model.proto.NoopAst.ShouldStatement buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public noop.model.proto.NoopAst.ShouldStatement buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        noop.model.proto.NoopAst.ShouldStatement returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof noop.model.proto.NoopAst.ShouldStatement) {
+          return mergeFrom((noop.model.proto.NoopAst.ShouldStatement)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(noop.model.proto.NoopAst.ShouldStatement other) {
+        if (other == noop.model.proto.NoopAst.ShouldStatement.getDefaultInstance()) return this;
+        if (other.hasLhs()) {
+          mergeLhs(other.getLhs());
+        }
+        if (other.hasRhs()) {
+          mergeRhs(other.getRhs());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              noop.model.proto.NoopAst.Expr.Builder subBuilder = noop.model.proto.NoopAst.Expr.newBuilder();
+              if (hasLhs()) {
+                subBuilder.mergeFrom(getLhs());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setLhs(subBuilder.buildPartial());
+              break;
+            }
+            case 18: {
+              noop.model.proto.NoopAst.Expr.Builder subBuilder = noop.model.proto.NoopAst.Expr.newBuilder();
+              if (hasRhs()) {
+                subBuilder.mergeFrom(getRhs());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setRhs(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // required .Expr lhs = 1;
+      public boolean hasLhs() {
+        return result.hasLhs();
+      }
+      public noop.model.proto.NoopAst.Expr getLhs() {
+        return result.getLhs();
+      }
+      public Builder setLhs(noop.model.proto.NoopAst.Expr value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasLhs = true;
+        result.lhs_ = value;
+        return this;
+      }
+      public Builder setLhs(noop.model.proto.NoopAst.Expr.Builder builderForValue) {
+        result.hasLhs = true;
+        result.lhs_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeLhs(noop.model.proto.NoopAst.Expr value) {
+        if (result.hasLhs() &&
+            result.lhs_ != noop.model.proto.NoopAst.Expr.getDefaultInstance()) {
+          result.lhs_ =
+            noop.model.proto.NoopAst.Expr.newBuilder(result.lhs_).mergeFrom(value).buildPartial();
+        } else {
+          result.lhs_ = value;
+        }
+        result.hasLhs = true;
+        return this;
+      }
+      public Builder clearLhs() {
+        result.hasLhs = false;
+        result.lhs_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+        return this;
+      }
+      
+      // required .Expr rhs = 2;
+      public boolean hasRhs() {
+        return result.hasRhs();
+      }
+      public noop.model.proto.NoopAst.Expr getRhs() {
+        return result.getRhs();
+      }
+      public Builder setRhs(noop.model.proto.NoopAst.Expr value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasRhs = true;
+        result.rhs_ = value;
+        return this;
+      }
+      public Builder setRhs(noop.model.proto.NoopAst.Expr.Builder builderForValue) {
+        result.hasRhs = true;
+        result.rhs_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeRhs(noop.model.proto.NoopAst.Expr value) {
+        if (result.hasRhs() &&
+            result.rhs_ != noop.model.proto.NoopAst.Expr.getDefaultInstance()) {
+          result.rhs_ =
+            noop.model.proto.NoopAst.Expr.newBuilder(result.rhs_).mergeFrom(value).buildPartial();
+        } else {
+          result.rhs_ = value;
+        }
+        result.hasRhs = true;
+        return this;
+      }
+      public Builder clearRhs() {
+        result.hasRhs = false;
+        result.rhs_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+        return this;
+      }
+    }
+    
+    static {
+      noop.model.proto.NoopAst.getDescriptor();
+    }
+    
+    static {
+      noop.model.proto.NoopAst.internalForceInit();
+    }
+  }
+  
   public static final class Expr extends
       com.google.protobuf.GeneratedMessage {
     // Use Expr.newBuilder() to construct.
@@ -36,6 +1229,12 @@ public final class NoopAst {
       BOOLEAN_LITERAL(0, 1),
       STRING_LITERAL(1, 2),
       INT_LITERAL(2, 3),
+      DEREFERENCE(3, 4),
+      METHOD_INVOCATION(4, 5),
+      ASSIGNMENT(5, 6),
+      OPERATION(6, 7),
+      IDENTIFIER(7, 8),
+      CONDITIONAL(8, 9),
       ;
       
       
@@ -46,6 +1245,12 @@ public final class NoopAst {
           case 1: return BOOLEAN_LITERAL;
           case 2: return STRING_LITERAL;
           case 3: return INT_LITERAL;
+          case 4: return DEREFERENCE;
+          case 5: return METHOD_INVOCATION;
+          case 6: return ASSIGNMENT;
+          case 7: return OPERATION;
+          case 8: return IDENTIFIER;
+          case 9: return CONDITIONAL;
           default: return null;
         }
       }
@@ -76,7 +1281,7 @@ public final class NoopAst {
       }
       
       private static final Type[] VALUES = {
-        BOOLEAN_LITERAL, STRING_LITERAL, INT_LITERAL, 
+        BOOLEAN_LITERAL, STRING_LITERAL, INT_LITERAL, DEREFERENCE, METHOD_INVOCATION, ASSIGNMENT, OPERATION, IDENTIFIER, CONDITIONAL, 
       };
       public static Type valueOf(
           com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
@@ -105,26 +1310,68 @@ public final class NoopAst {
     public boolean hasType() { return hasType; }
     public noop.model.proto.NoopAst.Expr.Type getType() { return type_; }
     
-    // optional .BooleanLiteral booleanLiteral = 2;
-    public static final int BOOLEANLITERAL_FIELD_NUMBER = 2;
+    // optional .BooleanLiteral boolean_literal = 2;
+    public static final int BOOLEAN_LITERAL_FIELD_NUMBER = 2;
     private boolean hasBooleanLiteral;
     private noop.model.proto.NoopAst.BooleanLiteral booleanLiteral_ = noop.model.proto.NoopAst.BooleanLiteral.getDefaultInstance();
     public boolean hasBooleanLiteral() { return hasBooleanLiteral; }
     public noop.model.proto.NoopAst.BooleanLiteral getBooleanLiteral() { return booleanLiteral_; }
     
-    // optional .StringLiteral stringLiteral = 3;
-    public static final int STRINGLITERAL_FIELD_NUMBER = 3;
+    // optional .StringLiteral string_literal = 3;
+    public static final int STRING_LITERAL_FIELD_NUMBER = 3;
     private boolean hasStringLiteral;
     private noop.model.proto.NoopAst.StringLiteral stringLiteral_ = noop.model.proto.NoopAst.StringLiteral.getDefaultInstance();
     public boolean hasStringLiteral() { return hasStringLiteral; }
     public noop.model.proto.NoopAst.StringLiteral getStringLiteral() { return stringLiteral_; }
     
-    // optional .IntLiteral intLiteral = 4;
-    public static final int INTLITERAL_FIELD_NUMBER = 4;
+    // optional .IntLiteral int_literal = 4;
+    public static final int INT_LITERAL_FIELD_NUMBER = 4;
     private boolean hasIntLiteral;
     private noop.model.proto.NoopAst.IntLiteral intLiteral_ = noop.model.proto.NoopAst.IntLiteral.getDefaultInstance();
     public boolean hasIntLiteral() { return hasIntLiteral; }
     public noop.model.proto.NoopAst.IntLiteral getIntLiteral() { return intLiteral_; }
+    
+    // optional .Dereference deref = 5;
+    public static final int DEREF_FIELD_NUMBER = 5;
+    private boolean hasDeref;
+    private noop.model.proto.NoopAst.Dereference deref_ = noop.model.proto.NoopAst.Dereference.getDefaultInstance();
+    public boolean hasDeref() { return hasDeref; }
+    public noop.model.proto.NoopAst.Dereference getDeref() { return deref_; }
+    
+    // optional .MethodInvocation method_invocation = 6;
+    public static final int METHOD_INVOCATION_FIELD_NUMBER = 6;
+    private boolean hasMethodInvocation;
+    private noop.model.proto.NoopAst.MethodInvocation methodInvocation_ = noop.model.proto.NoopAst.MethodInvocation.getDefaultInstance();
+    public boolean hasMethodInvocation() { return hasMethodInvocation; }
+    public noop.model.proto.NoopAst.MethodInvocation getMethodInvocation() { return methodInvocation_; }
+    
+    // optional .Assignment assignment = 7;
+    public static final int ASSIGNMENT_FIELD_NUMBER = 7;
+    private boolean hasAssignment;
+    private noop.model.proto.NoopAst.Assignment assignment_ = noop.model.proto.NoopAst.Assignment.getDefaultInstance();
+    public boolean hasAssignment() { return hasAssignment; }
+    public noop.model.proto.NoopAst.Assignment getAssignment() { return assignment_; }
+    
+    // optional .Operation operation = 8;
+    public static final int OPERATION_FIELD_NUMBER = 8;
+    private boolean hasOperation;
+    private noop.model.proto.NoopAst.Operation operation_ = noop.model.proto.NoopAst.Operation.getDefaultInstance();
+    public boolean hasOperation() { return hasOperation; }
+    public noop.model.proto.NoopAst.Operation getOperation() { return operation_; }
+    
+    // optional string identifier = 9;
+    public static final int IDENTIFIER_FIELD_NUMBER = 9;
+    private boolean hasIdentifier;
+    private java.lang.String identifier_ = "";
+    public boolean hasIdentifier() { return hasIdentifier; }
+    public java.lang.String getIdentifier() { return identifier_; }
+    
+    // optional .Conditional conditional = 10;
+    public static final int CONDITIONAL_FIELD_NUMBER = 10;
+    private boolean hasConditional;
+    private noop.model.proto.NoopAst.Conditional conditional_ = noop.model.proto.NoopAst.Conditional.getDefaultInstance();
+    public boolean hasConditional() { return hasConditional; }
+    public noop.model.proto.NoopAst.Conditional getConditional() { return conditional_; }
     
     public final boolean isInitialized() {
       if (!hasType) return false;
@@ -136,6 +1383,21 @@ public final class NoopAst {
       }
       if (hasIntLiteral()) {
         if (!getIntLiteral().isInitialized()) return false;
+      }
+      if (hasDeref()) {
+        if (!getDeref().isInitialized()) return false;
+      }
+      if (hasMethodInvocation()) {
+        if (!getMethodInvocation().isInitialized()) return false;
+      }
+      if (hasAssignment()) {
+        if (!getAssignment().isInitialized()) return false;
+      }
+      if (hasOperation()) {
+        if (!getOperation().isInitialized()) return false;
+      }
+      if (hasConditional()) {
+        if (!getConditional().isInitialized()) return false;
       }
       return true;
     }
@@ -153,6 +1415,24 @@ public final class NoopAst {
       }
       if (hasIntLiteral()) {
         output.writeMessage(4, getIntLiteral());
+      }
+      if (hasDeref()) {
+        output.writeMessage(5, getDeref());
+      }
+      if (hasMethodInvocation()) {
+        output.writeMessage(6, getMethodInvocation());
+      }
+      if (hasAssignment()) {
+        output.writeMessage(7, getAssignment());
+      }
+      if (hasOperation()) {
+        output.writeMessage(8, getOperation());
+      }
+      if (hasIdentifier()) {
+        output.writeString(9, getIdentifier());
+      }
+      if (hasConditional()) {
+        output.writeMessage(10, getConditional());
       }
       getUnknownFields().writeTo(output);
     }
@@ -178,6 +1458,30 @@ public final class NoopAst {
       if (hasIntLiteral()) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(4, getIntLiteral());
+      }
+      if (hasDeref()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(5, getDeref());
+      }
+      if (hasMethodInvocation()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(6, getMethodInvocation());
+      }
+      if (hasAssignment()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(7, getAssignment());
+      }
+      if (hasOperation()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(8, getOperation());
+      }
+      if (hasIdentifier()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(9, getIdentifier());
+      }
+      if (hasConditional()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(10, getConditional());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -340,6 +1644,24 @@ public final class NoopAst {
         if (other.hasIntLiteral()) {
           mergeIntLiteral(other.getIntLiteral());
         }
+        if (other.hasDeref()) {
+          mergeDeref(other.getDeref());
+        }
+        if (other.hasMethodInvocation()) {
+          mergeMethodInvocation(other.getMethodInvocation());
+        }
+        if (other.hasAssignment()) {
+          mergeAssignment(other.getAssignment());
+        }
+        if (other.hasOperation()) {
+          mergeOperation(other.getOperation());
+        }
+        if (other.hasIdentifier()) {
+          setIdentifier(other.getIdentifier());
+        }
+        if (other.hasConditional()) {
+          mergeConditional(other.getConditional());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -402,6 +1724,55 @@ public final class NoopAst {
               setIntLiteral(subBuilder.buildPartial());
               break;
             }
+            case 42: {
+              noop.model.proto.NoopAst.Dereference.Builder subBuilder = noop.model.proto.NoopAst.Dereference.newBuilder();
+              if (hasDeref()) {
+                subBuilder.mergeFrom(getDeref());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setDeref(subBuilder.buildPartial());
+              break;
+            }
+            case 50: {
+              noop.model.proto.NoopAst.MethodInvocation.Builder subBuilder = noop.model.proto.NoopAst.MethodInvocation.newBuilder();
+              if (hasMethodInvocation()) {
+                subBuilder.mergeFrom(getMethodInvocation());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setMethodInvocation(subBuilder.buildPartial());
+              break;
+            }
+            case 58: {
+              noop.model.proto.NoopAst.Assignment.Builder subBuilder = noop.model.proto.NoopAst.Assignment.newBuilder();
+              if (hasAssignment()) {
+                subBuilder.mergeFrom(getAssignment());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setAssignment(subBuilder.buildPartial());
+              break;
+            }
+            case 66: {
+              noop.model.proto.NoopAst.Operation.Builder subBuilder = noop.model.proto.NoopAst.Operation.newBuilder();
+              if (hasOperation()) {
+                subBuilder.mergeFrom(getOperation());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setOperation(subBuilder.buildPartial());
+              break;
+            }
+            case 74: {
+              setIdentifier(input.readString());
+              break;
+            }
+            case 82: {
+              noop.model.proto.NoopAst.Conditional.Builder subBuilder = noop.model.proto.NoopAst.Conditional.newBuilder();
+              if (hasConditional()) {
+                subBuilder.mergeFrom(getConditional());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setConditional(subBuilder.buildPartial());
+              break;
+            }
           }
         }
       }
@@ -428,7 +1799,7 @@ public final class NoopAst {
         return this;
       }
       
-      // optional .BooleanLiteral booleanLiteral = 2;
+      // optional .BooleanLiteral boolean_literal = 2;
       public boolean hasBooleanLiteral() {
         return result.hasBooleanLiteral();
       }
@@ -465,7 +1836,7 @@ public final class NoopAst {
         return this;
       }
       
-      // optional .StringLiteral stringLiteral = 3;
+      // optional .StringLiteral string_literal = 3;
       public boolean hasStringLiteral() {
         return result.hasStringLiteral();
       }
@@ -502,7 +1873,7 @@ public final class NoopAst {
         return this;
       }
       
-      // optional .IntLiteral intLiteral = 4;
+      // optional .IntLiteral int_literal = 4;
       public boolean hasIntLiteral() {
         return result.hasIntLiteral();
       }
@@ -536,6 +1907,2155 @@ public final class NoopAst {
       public Builder clearIntLiteral() {
         result.hasIntLiteral = false;
         result.intLiteral_ = noop.model.proto.NoopAst.IntLiteral.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .Dereference deref = 5;
+      public boolean hasDeref() {
+        return result.hasDeref();
+      }
+      public noop.model.proto.NoopAst.Dereference getDeref() {
+        return result.getDeref();
+      }
+      public Builder setDeref(noop.model.proto.NoopAst.Dereference value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasDeref = true;
+        result.deref_ = value;
+        return this;
+      }
+      public Builder setDeref(noop.model.proto.NoopAst.Dereference.Builder builderForValue) {
+        result.hasDeref = true;
+        result.deref_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeDeref(noop.model.proto.NoopAst.Dereference value) {
+        if (result.hasDeref() &&
+            result.deref_ != noop.model.proto.NoopAst.Dereference.getDefaultInstance()) {
+          result.deref_ =
+            noop.model.proto.NoopAst.Dereference.newBuilder(result.deref_).mergeFrom(value).buildPartial();
+        } else {
+          result.deref_ = value;
+        }
+        result.hasDeref = true;
+        return this;
+      }
+      public Builder clearDeref() {
+        result.hasDeref = false;
+        result.deref_ = noop.model.proto.NoopAst.Dereference.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .MethodInvocation method_invocation = 6;
+      public boolean hasMethodInvocation() {
+        return result.hasMethodInvocation();
+      }
+      public noop.model.proto.NoopAst.MethodInvocation getMethodInvocation() {
+        return result.getMethodInvocation();
+      }
+      public Builder setMethodInvocation(noop.model.proto.NoopAst.MethodInvocation value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasMethodInvocation = true;
+        result.methodInvocation_ = value;
+        return this;
+      }
+      public Builder setMethodInvocation(noop.model.proto.NoopAst.MethodInvocation.Builder builderForValue) {
+        result.hasMethodInvocation = true;
+        result.methodInvocation_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeMethodInvocation(noop.model.proto.NoopAst.MethodInvocation value) {
+        if (result.hasMethodInvocation() &&
+            result.methodInvocation_ != noop.model.proto.NoopAst.MethodInvocation.getDefaultInstance()) {
+          result.methodInvocation_ =
+            noop.model.proto.NoopAst.MethodInvocation.newBuilder(result.methodInvocation_).mergeFrom(value).buildPartial();
+        } else {
+          result.methodInvocation_ = value;
+        }
+        result.hasMethodInvocation = true;
+        return this;
+      }
+      public Builder clearMethodInvocation() {
+        result.hasMethodInvocation = false;
+        result.methodInvocation_ = noop.model.proto.NoopAst.MethodInvocation.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .Assignment assignment = 7;
+      public boolean hasAssignment() {
+        return result.hasAssignment();
+      }
+      public noop.model.proto.NoopAst.Assignment getAssignment() {
+        return result.getAssignment();
+      }
+      public Builder setAssignment(noop.model.proto.NoopAst.Assignment value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasAssignment = true;
+        result.assignment_ = value;
+        return this;
+      }
+      public Builder setAssignment(noop.model.proto.NoopAst.Assignment.Builder builderForValue) {
+        result.hasAssignment = true;
+        result.assignment_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeAssignment(noop.model.proto.NoopAst.Assignment value) {
+        if (result.hasAssignment() &&
+            result.assignment_ != noop.model.proto.NoopAst.Assignment.getDefaultInstance()) {
+          result.assignment_ =
+            noop.model.proto.NoopAst.Assignment.newBuilder(result.assignment_).mergeFrom(value).buildPartial();
+        } else {
+          result.assignment_ = value;
+        }
+        result.hasAssignment = true;
+        return this;
+      }
+      public Builder clearAssignment() {
+        result.hasAssignment = false;
+        result.assignment_ = noop.model.proto.NoopAst.Assignment.getDefaultInstance();
+        return this;
+      }
+      
+      // optional .Operation operation = 8;
+      public boolean hasOperation() {
+        return result.hasOperation();
+      }
+      public noop.model.proto.NoopAst.Operation getOperation() {
+        return result.getOperation();
+      }
+      public Builder setOperation(noop.model.proto.NoopAst.Operation value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasOperation = true;
+        result.operation_ = value;
+        return this;
+      }
+      public Builder setOperation(noop.model.proto.NoopAst.Operation.Builder builderForValue) {
+        result.hasOperation = true;
+        result.operation_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeOperation(noop.model.proto.NoopAst.Operation value) {
+        if (result.hasOperation() &&
+            result.operation_ != noop.model.proto.NoopAst.Operation.getDefaultInstance()) {
+          result.operation_ =
+            noop.model.proto.NoopAst.Operation.newBuilder(result.operation_).mergeFrom(value).buildPartial();
+        } else {
+          result.operation_ = value;
+        }
+        result.hasOperation = true;
+        return this;
+      }
+      public Builder clearOperation() {
+        result.hasOperation = false;
+        result.operation_ = noop.model.proto.NoopAst.Operation.getDefaultInstance();
+        return this;
+      }
+      
+      // optional string identifier = 9;
+      public boolean hasIdentifier() {
+        return result.hasIdentifier();
+      }
+      public java.lang.String getIdentifier() {
+        return result.getIdentifier();
+      }
+      public Builder setIdentifier(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasIdentifier = true;
+        result.identifier_ = value;
+        return this;
+      }
+      public Builder clearIdentifier() {
+        result.hasIdentifier = false;
+        result.identifier_ = getDefaultInstance().getIdentifier();
+        return this;
+      }
+      
+      // optional .Conditional conditional = 10;
+      public boolean hasConditional() {
+        return result.hasConditional();
+      }
+      public noop.model.proto.NoopAst.Conditional getConditional() {
+        return result.getConditional();
+      }
+      public Builder setConditional(noop.model.proto.NoopAst.Conditional value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasConditional = true;
+        result.conditional_ = value;
+        return this;
+      }
+      public Builder setConditional(noop.model.proto.NoopAst.Conditional.Builder builderForValue) {
+        result.hasConditional = true;
+        result.conditional_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeConditional(noop.model.proto.NoopAst.Conditional value) {
+        if (result.hasConditional() &&
+            result.conditional_ != noop.model.proto.NoopAst.Conditional.getDefaultInstance()) {
+          result.conditional_ =
+            noop.model.proto.NoopAst.Conditional.newBuilder(result.conditional_).mergeFrom(value).buildPartial();
+        } else {
+          result.conditional_ = value;
+        }
+        result.hasConditional = true;
+        return this;
+      }
+      public Builder clearConditional() {
+        result.hasConditional = false;
+        result.conditional_ = noop.model.proto.NoopAst.Conditional.getDefaultInstance();
+        return this;
+      }
+    }
+    
+    static {
+      noop.model.proto.NoopAst.getDescriptor();
+    }
+    
+    static {
+      noop.model.proto.NoopAst.internalForceInit();
+    }
+  }
+  
+  public static final class Conditional extends
+      com.google.protobuf.GeneratedMessage {
+    // Use Conditional.newBuilder() to construct.
+    private Conditional() {}
+    
+    private static final Conditional defaultInstance = new Conditional();
+    public static Conditional getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Conditional getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return noop.model.proto.NoopAst.internal_static_Conditional_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return noop.model.proto.NoopAst.internal_static_Conditional_fieldAccessorTable;
+    }
+    
+    // required .Expr lhs = 1;
+    public static final int LHS_FIELD_NUMBER = 1;
+    private boolean hasLhs;
+    private noop.model.proto.NoopAst.Expr lhs_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+    public boolean hasLhs() { return hasLhs; }
+    public noop.model.proto.NoopAst.Expr getLhs() { return lhs_; }
+    
+    // required string operator = 2;
+    public static final int OPERATOR_FIELD_NUMBER = 2;
+    private boolean hasOperator;
+    private java.lang.String operator_ = "";
+    public boolean hasOperator() { return hasOperator; }
+    public java.lang.String getOperator() { return operator_; }
+    
+    // required .Expr rhs = 3;
+    public static final int RHS_FIELD_NUMBER = 3;
+    private boolean hasRhs;
+    private noop.model.proto.NoopAst.Expr rhs_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+    public boolean hasRhs() { return hasRhs; }
+    public noop.model.proto.NoopAst.Expr getRhs() { return rhs_; }
+    
+    public final boolean isInitialized() {
+      if (!hasLhs) return false;
+      if (!hasOperator) return false;
+      if (!hasRhs) return false;
+      if (!getLhs().isInitialized()) return false;
+      if (!getRhs().isInitialized()) return false;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (hasLhs()) {
+        output.writeMessage(1, getLhs());
+      }
+      if (hasOperator()) {
+        output.writeString(2, getOperator());
+      }
+      if (hasRhs()) {
+        output.writeMessage(3, getRhs());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasLhs()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getLhs());
+      }
+      if (hasOperator()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(2, getOperator());
+      }
+      if (hasRhs()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, getRhs());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static noop.model.proto.NoopAst.Conditional parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Conditional parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Conditional parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Conditional parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Conditional parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Conditional parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Conditional parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Conditional parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Conditional parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Conditional parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(noop.model.proto.NoopAst.Conditional prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private noop.model.proto.NoopAst.Conditional result;
+      
+      // Construct using noop.model.proto.NoopAst.Conditional.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new noop.model.proto.NoopAst.Conditional();
+        return builder;
+      }
+      
+      protected noop.model.proto.NoopAst.Conditional internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new noop.model.proto.NoopAst.Conditional();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return noop.model.proto.NoopAst.Conditional.getDescriptor();
+      }
+      
+      public noop.model.proto.NoopAst.Conditional getDefaultInstanceForType() {
+        return noop.model.proto.NoopAst.Conditional.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public noop.model.proto.NoopAst.Conditional build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private noop.model.proto.NoopAst.Conditional buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public noop.model.proto.NoopAst.Conditional buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        noop.model.proto.NoopAst.Conditional returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof noop.model.proto.NoopAst.Conditional) {
+          return mergeFrom((noop.model.proto.NoopAst.Conditional)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(noop.model.proto.NoopAst.Conditional other) {
+        if (other == noop.model.proto.NoopAst.Conditional.getDefaultInstance()) return this;
+        if (other.hasLhs()) {
+          mergeLhs(other.getLhs());
+        }
+        if (other.hasOperator()) {
+          setOperator(other.getOperator());
+        }
+        if (other.hasRhs()) {
+          mergeRhs(other.getRhs());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              noop.model.proto.NoopAst.Expr.Builder subBuilder = noop.model.proto.NoopAst.Expr.newBuilder();
+              if (hasLhs()) {
+                subBuilder.mergeFrom(getLhs());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setLhs(subBuilder.buildPartial());
+              break;
+            }
+            case 18: {
+              setOperator(input.readString());
+              break;
+            }
+            case 26: {
+              noop.model.proto.NoopAst.Expr.Builder subBuilder = noop.model.proto.NoopAst.Expr.newBuilder();
+              if (hasRhs()) {
+                subBuilder.mergeFrom(getRhs());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setRhs(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // required .Expr lhs = 1;
+      public boolean hasLhs() {
+        return result.hasLhs();
+      }
+      public noop.model.proto.NoopAst.Expr getLhs() {
+        return result.getLhs();
+      }
+      public Builder setLhs(noop.model.proto.NoopAst.Expr value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasLhs = true;
+        result.lhs_ = value;
+        return this;
+      }
+      public Builder setLhs(noop.model.proto.NoopAst.Expr.Builder builderForValue) {
+        result.hasLhs = true;
+        result.lhs_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeLhs(noop.model.proto.NoopAst.Expr value) {
+        if (result.hasLhs() &&
+            result.lhs_ != noop.model.proto.NoopAst.Expr.getDefaultInstance()) {
+          result.lhs_ =
+            noop.model.proto.NoopAst.Expr.newBuilder(result.lhs_).mergeFrom(value).buildPartial();
+        } else {
+          result.lhs_ = value;
+        }
+        result.hasLhs = true;
+        return this;
+      }
+      public Builder clearLhs() {
+        result.hasLhs = false;
+        result.lhs_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+        return this;
+      }
+      
+      // required string operator = 2;
+      public boolean hasOperator() {
+        return result.hasOperator();
+      }
+      public java.lang.String getOperator() {
+        return result.getOperator();
+      }
+      public Builder setOperator(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasOperator = true;
+        result.operator_ = value;
+        return this;
+      }
+      public Builder clearOperator() {
+        result.hasOperator = false;
+        result.operator_ = getDefaultInstance().getOperator();
+        return this;
+      }
+      
+      // required .Expr rhs = 3;
+      public boolean hasRhs() {
+        return result.hasRhs();
+      }
+      public noop.model.proto.NoopAst.Expr getRhs() {
+        return result.getRhs();
+      }
+      public Builder setRhs(noop.model.proto.NoopAst.Expr value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasRhs = true;
+        result.rhs_ = value;
+        return this;
+      }
+      public Builder setRhs(noop.model.proto.NoopAst.Expr.Builder builderForValue) {
+        result.hasRhs = true;
+        result.rhs_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeRhs(noop.model.proto.NoopAst.Expr value) {
+        if (result.hasRhs() &&
+            result.rhs_ != noop.model.proto.NoopAst.Expr.getDefaultInstance()) {
+          result.rhs_ =
+            noop.model.proto.NoopAst.Expr.newBuilder(result.rhs_).mergeFrom(value).buildPartial();
+        } else {
+          result.rhs_ = value;
+        }
+        result.hasRhs = true;
+        return this;
+      }
+      public Builder clearRhs() {
+        result.hasRhs = false;
+        result.rhs_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+        return this;
+      }
+    }
+    
+    static {
+      noop.model.proto.NoopAst.getDescriptor();
+    }
+    
+    static {
+      noop.model.proto.NoopAst.internalForceInit();
+    }
+  }
+  
+  public static final class Operation extends
+      com.google.protobuf.GeneratedMessage {
+    // Use Operation.newBuilder() to construct.
+    private Operation() {}
+    
+    private static final Operation defaultInstance = new Operation();
+    public static Operation getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Operation getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return noop.model.proto.NoopAst.internal_static_Operation_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return noop.model.proto.NoopAst.internal_static_Operation_fieldAccessorTable;
+    }
+    
+    // required .Expr lhs = 1;
+    public static final int LHS_FIELD_NUMBER = 1;
+    private boolean hasLhs;
+    private noop.model.proto.NoopAst.Expr lhs_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+    public boolean hasLhs() { return hasLhs; }
+    public noop.model.proto.NoopAst.Expr getLhs() { return lhs_; }
+    
+    // required string operator = 2;
+    public static final int OPERATOR_FIELD_NUMBER = 2;
+    private boolean hasOperator;
+    private java.lang.String operator_ = "";
+    public boolean hasOperator() { return hasOperator; }
+    public java.lang.String getOperator() { return operator_; }
+    
+    // required .Expr rhs = 3;
+    public static final int RHS_FIELD_NUMBER = 3;
+    private boolean hasRhs;
+    private noop.model.proto.NoopAst.Expr rhs_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+    public boolean hasRhs() { return hasRhs; }
+    public noop.model.proto.NoopAst.Expr getRhs() { return rhs_; }
+    
+    public final boolean isInitialized() {
+      if (!hasLhs) return false;
+      if (!hasOperator) return false;
+      if (!hasRhs) return false;
+      if (!getLhs().isInitialized()) return false;
+      if (!getRhs().isInitialized()) return false;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (hasLhs()) {
+        output.writeMessage(1, getLhs());
+      }
+      if (hasOperator()) {
+        output.writeString(2, getOperator());
+      }
+      if (hasRhs()) {
+        output.writeMessage(3, getRhs());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasLhs()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getLhs());
+      }
+      if (hasOperator()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(2, getOperator());
+      }
+      if (hasRhs()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, getRhs());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static noop.model.proto.NoopAst.Operation parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Operation parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Operation parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Operation parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Operation parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Operation parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Operation parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Operation parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Operation parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Operation parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(noop.model.proto.NoopAst.Operation prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private noop.model.proto.NoopAst.Operation result;
+      
+      // Construct using noop.model.proto.NoopAst.Operation.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new noop.model.proto.NoopAst.Operation();
+        return builder;
+      }
+      
+      protected noop.model.proto.NoopAst.Operation internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new noop.model.proto.NoopAst.Operation();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return noop.model.proto.NoopAst.Operation.getDescriptor();
+      }
+      
+      public noop.model.proto.NoopAst.Operation getDefaultInstanceForType() {
+        return noop.model.proto.NoopAst.Operation.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public noop.model.proto.NoopAst.Operation build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private noop.model.proto.NoopAst.Operation buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public noop.model.proto.NoopAst.Operation buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        noop.model.proto.NoopAst.Operation returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof noop.model.proto.NoopAst.Operation) {
+          return mergeFrom((noop.model.proto.NoopAst.Operation)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(noop.model.proto.NoopAst.Operation other) {
+        if (other == noop.model.proto.NoopAst.Operation.getDefaultInstance()) return this;
+        if (other.hasLhs()) {
+          mergeLhs(other.getLhs());
+        }
+        if (other.hasOperator()) {
+          setOperator(other.getOperator());
+        }
+        if (other.hasRhs()) {
+          mergeRhs(other.getRhs());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              noop.model.proto.NoopAst.Expr.Builder subBuilder = noop.model.proto.NoopAst.Expr.newBuilder();
+              if (hasLhs()) {
+                subBuilder.mergeFrom(getLhs());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setLhs(subBuilder.buildPartial());
+              break;
+            }
+            case 18: {
+              setOperator(input.readString());
+              break;
+            }
+            case 26: {
+              noop.model.proto.NoopAst.Expr.Builder subBuilder = noop.model.proto.NoopAst.Expr.newBuilder();
+              if (hasRhs()) {
+                subBuilder.mergeFrom(getRhs());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setRhs(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // required .Expr lhs = 1;
+      public boolean hasLhs() {
+        return result.hasLhs();
+      }
+      public noop.model.proto.NoopAst.Expr getLhs() {
+        return result.getLhs();
+      }
+      public Builder setLhs(noop.model.proto.NoopAst.Expr value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasLhs = true;
+        result.lhs_ = value;
+        return this;
+      }
+      public Builder setLhs(noop.model.proto.NoopAst.Expr.Builder builderForValue) {
+        result.hasLhs = true;
+        result.lhs_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeLhs(noop.model.proto.NoopAst.Expr value) {
+        if (result.hasLhs() &&
+            result.lhs_ != noop.model.proto.NoopAst.Expr.getDefaultInstance()) {
+          result.lhs_ =
+            noop.model.proto.NoopAst.Expr.newBuilder(result.lhs_).mergeFrom(value).buildPartial();
+        } else {
+          result.lhs_ = value;
+        }
+        result.hasLhs = true;
+        return this;
+      }
+      public Builder clearLhs() {
+        result.hasLhs = false;
+        result.lhs_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+        return this;
+      }
+      
+      // required string operator = 2;
+      public boolean hasOperator() {
+        return result.hasOperator();
+      }
+      public java.lang.String getOperator() {
+        return result.getOperator();
+      }
+      public Builder setOperator(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasOperator = true;
+        result.operator_ = value;
+        return this;
+      }
+      public Builder clearOperator() {
+        result.hasOperator = false;
+        result.operator_ = getDefaultInstance().getOperator();
+        return this;
+      }
+      
+      // required .Expr rhs = 3;
+      public boolean hasRhs() {
+        return result.hasRhs();
+      }
+      public noop.model.proto.NoopAst.Expr getRhs() {
+        return result.getRhs();
+      }
+      public Builder setRhs(noop.model.proto.NoopAst.Expr value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasRhs = true;
+        result.rhs_ = value;
+        return this;
+      }
+      public Builder setRhs(noop.model.proto.NoopAst.Expr.Builder builderForValue) {
+        result.hasRhs = true;
+        result.rhs_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeRhs(noop.model.proto.NoopAst.Expr value) {
+        if (result.hasRhs() &&
+            result.rhs_ != noop.model.proto.NoopAst.Expr.getDefaultInstance()) {
+          result.rhs_ =
+            noop.model.proto.NoopAst.Expr.newBuilder(result.rhs_).mergeFrom(value).buildPartial();
+        } else {
+          result.rhs_ = value;
+        }
+        result.hasRhs = true;
+        return this;
+      }
+      public Builder clearRhs() {
+        result.hasRhs = false;
+        result.rhs_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+        return this;
+      }
+    }
+    
+    static {
+      noop.model.proto.NoopAst.getDescriptor();
+    }
+    
+    static {
+      noop.model.proto.NoopAst.internalForceInit();
+    }
+  }
+  
+  public static final class Assignment extends
+      com.google.protobuf.GeneratedMessage {
+    // Use Assignment.newBuilder() to construct.
+    private Assignment() {}
+    
+    private static final Assignment defaultInstance = new Assignment();
+    public static Assignment getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Assignment getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return noop.model.proto.NoopAst.internal_static_Assignment_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return noop.model.proto.NoopAst.internal_static_Assignment_fieldAccessorTable;
+    }
+    
+    // required .Expr lhs = 1;
+    public static final int LHS_FIELD_NUMBER = 1;
+    private boolean hasLhs;
+    private noop.model.proto.NoopAst.Expr lhs_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+    public boolean hasLhs() { return hasLhs; }
+    public noop.model.proto.NoopAst.Expr getLhs() { return lhs_; }
+    
+    // required .Expr rhs = 2;
+    public static final int RHS_FIELD_NUMBER = 2;
+    private boolean hasRhs;
+    private noop.model.proto.NoopAst.Expr rhs_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+    public boolean hasRhs() { return hasRhs; }
+    public noop.model.proto.NoopAst.Expr getRhs() { return rhs_; }
+    
+    public final boolean isInitialized() {
+      if (!hasLhs) return false;
+      if (!hasRhs) return false;
+      if (!getLhs().isInitialized()) return false;
+      if (!getRhs().isInitialized()) return false;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (hasLhs()) {
+        output.writeMessage(1, getLhs());
+      }
+      if (hasRhs()) {
+        output.writeMessage(2, getRhs());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasLhs()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getLhs());
+      }
+      if (hasRhs()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, getRhs());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static noop.model.proto.NoopAst.Assignment parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Assignment parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Assignment parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Assignment parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Assignment parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Assignment parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Assignment parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Assignment parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Assignment parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Assignment parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(noop.model.proto.NoopAst.Assignment prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private noop.model.proto.NoopAst.Assignment result;
+      
+      // Construct using noop.model.proto.NoopAst.Assignment.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new noop.model.proto.NoopAst.Assignment();
+        return builder;
+      }
+      
+      protected noop.model.proto.NoopAst.Assignment internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new noop.model.proto.NoopAst.Assignment();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return noop.model.proto.NoopAst.Assignment.getDescriptor();
+      }
+      
+      public noop.model.proto.NoopAst.Assignment getDefaultInstanceForType() {
+        return noop.model.proto.NoopAst.Assignment.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public noop.model.proto.NoopAst.Assignment build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private noop.model.proto.NoopAst.Assignment buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public noop.model.proto.NoopAst.Assignment buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        noop.model.proto.NoopAst.Assignment returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof noop.model.proto.NoopAst.Assignment) {
+          return mergeFrom((noop.model.proto.NoopAst.Assignment)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(noop.model.proto.NoopAst.Assignment other) {
+        if (other == noop.model.proto.NoopAst.Assignment.getDefaultInstance()) return this;
+        if (other.hasLhs()) {
+          mergeLhs(other.getLhs());
+        }
+        if (other.hasRhs()) {
+          mergeRhs(other.getRhs());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              noop.model.proto.NoopAst.Expr.Builder subBuilder = noop.model.proto.NoopAst.Expr.newBuilder();
+              if (hasLhs()) {
+                subBuilder.mergeFrom(getLhs());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setLhs(subBuilder.buildPartial());
+              break;
+            }
+            case 18: {
+              noop.model.proto.NoopAst.Expr.Builder subBuilder = noop.model.proto.NoopAst.Expr.newBuilder();
+              if (hasRhs()) {
+                subBuilder.mergeFrom(getRhs());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setRhs(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // required .Expr lhs = 1;
+      public boolean hasLhs() {
+        return result.hasLhs();
+      }
+      public noop.model.proto.NoopAst.Expr getLhs() {
+        return result.getLhs();
+      }
+      public Builder setLhs(noop.model.proto.NoopAst.Expr value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasLhs = true;
+        result.lhs_ = value;
+        return this;
+      }
+      public Builder setLhs(noop.model.proto.NoopAst.Expr.Builder builderForValue) {
+        result.hasLhs = true;
+        result.lhs_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeLhs(noop.model.proto.NoopAst.Expr value) {
+        if (result.hasLhs() &&
+            result.lhs_ != noop.model.proto.NoopAst.Expr.getDefaultInstance()) {
+          result.lhs_ =
+            noop.model.proto.NoopAst.Expr.newBuilder(result.lhs_).mergeFrom(value).buildPartial();
+        } else {
+          result.lhs_ = value;
+        }
+        result.hasLhs = true;
+        return this;
+      }
+      public Builder clearLhs() {
+        result.hasLhs = false;
+        result.lhs_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+        return this;
+      }
+      
+      // required .Expr rhs = 2;
+      public boolean hasRhs() {
+        return result.hasRhs();
+      }
+      public noop.model.proto.NoopAst.Expr getRhs() {
+        return result.getRhs();
+      }
+      public Builder setRhs(noop.model.proto.NoopAst.Expr value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasRhs = true;
+        result.rhs_ = value;
+        return this;
+      }
+      public Builder setRhs(noop.model.proto.NoopAst.Expr.Builder builderForValue) {
+        result.hasRhs = true;
+        result.rhs_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeRhs(noop.model.proto.NoopAst.Expr value) {
+        if (result.hasRhs() &&
+            result.rhs_ != noop.model.proto.NoopAst.Expr.getDefaultInstance()) {
+          result.rhs_ =
+            noop.model.proto.NoopAst.Expr.newBuilder(result.rhs_).mergeFrom(value).buildPartial();
+        } else {
+          result.rhs_ = value;
+        }
+        result.hasRhs = true;
+        return this;
+      }
+      public Builder clearRhs() {
+        result.hasRhs = false;
+        result.rhs_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+        return this;
+      }
+    }
+    
+    static {
+      noop.model.proto.NoopAst.getDescriptor();
+    }
+    
+    static {
+      noop.model.proto.NoopAst.internalForceInit();
+    }
+  }
+  
+  public static final class MethodInvocation extends
+      com.google.protobuf.GeneratedMessage {
+    // Use MethodInvocation.newBuilder() to construct.
+    private MethodInvocation() {}
+    
+    private static final MethodInvocation defaultInstance = new MethodInvocation();
+    public static MethodInvocation getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public MethodInvocation getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return noop.model.proto.NoopAst.internal_static_MethodInvocation_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return noop.model.proto.NoopAst.internal_static_MethodInvocation_fieldAccessorTable;
+    }
+    
+    // required .Expr target = 1;
+    public static final int TARGET_FIELD_NUMBER = 1;
+    private boolean hasTarget;
+    private noop.model.proto.NoopAst.Expr target_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+    public boolean hasTarget() { return hasTarget; }
+    public noop.model.proto.NoopAst.Expr getTarget() { return target_; }
+    
+    // required string method_name = 2;
+    public static final int METHOD_NAME_FIELD_NUMBER = 2;
+    private boolean hasMethodName;
+    private java.lang.String methodName_ = "";
+    public boolean hasMethodName() { return hasMethodName; }
+    public java.lang.String getMethodName() { return methodName_; }
+    
+    // repeated .Expr argument = 3;
+    public static final int ARGUMENT_FIELD_NUMBER = 3;
+    private java.util.List<noop.model.proto.NoopAst.Expr> argument_ =
+      java.util.Collections.emptyList();
+    public java.util.List<noop.model.proto.NoopAst.Expr> getArgumentList() {
+      return argument_;
+    }
+    public int getArgumentCount() { return argument_.size(); }
+    public noop.model.proto.NoopAst.Expr getArgument(int index) {
+      return argument_.get(index);
+    }
+    
+    public final boolean isInitialized() {
+      if (!hasTarget) return false;
+      if (!hasMethodName) return false;
+      if (!getTarget().isInitialized()) return false;
+      for (noop.model.proto.NoopAst.Expr element : getArgumentList()) {
+        if (!element.isInitialized()) return false;
+      }
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (hasTarget()) {
+        output.writeMessage(1, getTarget());
+      }
+      if (hasMethodName()) {
+        output.writeString(2, getMethodName());
+      }
+      for (noop.model.proto.NoopAst.Expr element : getArgumentList()) {
+        output.writeMessage(3, element);
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasTarget()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getTarget());
+      }
+      if (hasMethodName()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeStringSize(2, getMethodName());
+      }
+      for (noop.model.proto.NoopAst.Expr element : getArgumentList()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, element);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static noop.model.proto.NoopAst.MethodInvocation parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.MethodInvocation parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.MethodInvocation parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.MethodInvocation parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.MethodInvocation parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.MethodInvocation parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.MethodInvocation parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.MethodInvocation parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.MethodInvocation parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.MethodInvocation parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(noop.model.proto.NoopAst.MethodInvocation prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private noop.model.proto.NoopAst.MethodInvocation result;
+      
+      // Construct using noop.model.proto.NoopAst.MethodInvocation.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new noop.model.proto.NoopAst.MethodInvocation();
+        return builder;
+      }
+      
+      protected noop.model.proto.NoopAst.MethodInvocation internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new noop.model.proto.NoopAst.MethodInvocation();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return noop.model.proto.NoopAst.MethodInvocation.getDescriptor();
+      }
+      
+      public noop.model.proto.NoopAst.MethodInvocation getDefaultInstanceForType() {
+        return noop.model.proto.NoopAst.MethodInvocation.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public noop.model.proto.NoopAst.MethodInvocation build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private noop.model.proto.NoopAst.MethodInvocation buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public noop.model.proto.NoopAst.MethodInvocation buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        if (result.argument_ != java.util.Collections.EMPTY_LIST) {
+          result.argument_ =
+            java.util.Collections.unmodifiableList(result.argument_);
+        }
+        noop.model.proto.NoopAst.MethodInvocation returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof noop.model.proto.NoopAst.MethodInvocation) {
+          return mergeFrom((noop.model.proto.NoopAst.MethodInvocation)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(noop.model.proto.NoopAst.MethodInvocation other) {
+        if (other == noop.model.proto.NoopAst.MethodInvocation.getDefaultInstance()) return this;
+        if (other.hasTarget()) {
+          mergeTarget(other.getTarget());
+        }
+        if (other.hasMethodName()) {
+          setMethodName(other.getMethodName());
+        }
+        if (!other.argument_.isEmpty()) {
+          if (result.argument_.isEmpty()) {
+            result.argument_ = new java.util.ArrayList<noop.model.proto.NoopAst.Expr>();
+          }
+          result.argument_.addAll(other.argument_);
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              noop.model.proto.NoopAst.Expr.Builder subBuilder = noop.model.proto.NoopAst.Expr.newBuilder();
+              if (hasTarget()) {
+                subBuilder.mergeFrom(getTarget());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setTarget(subBuilder.buildPartial());
+              break;
+            }
+            case 18: {
+              setMethodName(input.readString());
+              break;
+            }
+            case 26: {
+              noop.model.proto.NoopAst.Expr.Builder subBuilder = noop.model.proto.NoopAst.Expr.newBuilder();
+              input.readMessage(subBuilder, extensionRegistry);
+              addArgument(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // required .Expr target = 1;
+      public boolean hasTarget() {
+        return result.hasTarget();
+      }
+      public noop.model.proto.NoopAst.Expr getTarget() {
+        return result.getTarget();
+      }
+      public Builder setTarget(noop.model.proto.NoopAst.Expr value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasTarget = true;
+        result.target_ = value;
+        return this;
+      }
+      public Builder setTarget(noop.model.proto.NoopAst.Expr.Builder builderForValue) {
+        result.hasTarget = true;
+        result.target_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeTarget(noop.model.proto.NoopAst.Expr value) {
+        if (result.hasTarget() &&
+            result.target_ != noop.model.proto.NoopAst.Expr.getDefaultInstance()) {
+          result.target_ =
+            noop.model.proto.NoopAst.Expr.newBuilder(result.target_).mergeFrom(value).buildPartial();
+        } else {
+          result.target_ = value;
+        }
+        result.hasTarget = true;
+        return this;
+      }
+      public Builder clearTarget() {
+        result.hasTarget = false;
+        result.target_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+        return this;
+      }
+      
+      // required string method_name = 2;
+      public boolean hasMethodName() {
+        return result.hasMethodName();
+      }
+      public java.lang.String getMethodName() {
+        return result.getMethodName();
+      }
+      public Builder setMethodName(java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  result.hasMethodName = true;
+        result.methodName_ = value;
+        return this;
+      }
+      public Builder clearMethodName() {
+        result.hasMethodName = false;
+        result.methodName_ = getDefaultInstance().getMethodName();
+        return this;
+      }
+      
+      // repeated .Expr argument = 3;
+      public java.util.List<noop.model.proto.NoopAst.Expr> getArgumentList() {
+        return java.util.Collections.unmodifiableList(result.argument_);
+      }
+      public int getArgumentCount() {
+        return result.getArgumentCount();
+      }
+      public noop.model.proto.NoopAst.Expr getArgument(int index) {
+        return result.getArgument(index);
+      }
+      public Builder setArgument(int index, noop.model.proto.NoopAst.Expr value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.argument_.set(index, value);
+        return this;
+      }
+      public Builder setArgument(int index, noop.model.proto.NoopAst.Expr.Builder builderForValue) {
+        result.argument_.set(index, builderForValue.build());
+        return this;
+      }
+      public Builder addArgument(noop.model.proto.NoopAst.Expr value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        if (result.argument_.isEmpty()) {
+          result.argument_ = new java.util.ArrayList<noop.model.proto.NoopAst.Expr>();
+        }
+        result.argument_.add(value);
+        return this;
+      }
+      public Builder addArgument(noop.model.proto.NoopAst.Expr.Builder builderForValue) {
+        if (result.argument_.isEmpty()) {
+          result.argument_ = new java.util.ArrayList<noop.model.proto.NoopAst.Expr>();
+        }
+        result.argument_.add(builderForValue.build());
+        return this;
+      }
+      public Builder addAllArgument(
+          java.lang.Iterable<? extends noop.model.proto.NoopAst.Expr> values) {
+        if (result.argument_.isEmpty()) {
+          result.argument_ = new java.util.ArrayList<noop.model.proto.NoopAst.Expr>();
+        }
+        super.addAll(values, result.argument_);
+        return this;
+      }
+      public Builder clearArgument() {
+        result.argument_ = java.util.Collections.emptyList();
+        return this;
+      }
+    }
+    
+    static {
+      noop.model.proto.NoopAst.getDescriptor();
+    }
+    
+    static {
+      noop.model.proto.NoopAst.internalForceInit();
+    }
+  }
+  
+  public static final class Dereference extends
+      com.google.protobuf.GeneratedMessage {
+    // Use Dereference.newBuilder() to construct.
+    private Dereference() {}
+    
+    private static final Dereference defaultInstance = new Dereference();
+    public static Dereference getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public Dereference getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return noop.model.proto.NoopAst.internal_static_Dereference_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return noop.model.proto.NoopAst.internal_static_Dereference_fieldAccessorTable;
+    }
+    
+    // required .Expr lhs = 1;
+    public static final int LHS_FIELD_NUMBER = 1;
+    private boolean hasLhs;
+    private noop.model.proto.NoopAst.Expr lhs_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+    public boolean hasLhs() { return hasLhs; }
+    public noop.model.proto.NoopAst.Expr getLhs() { return lhs_; }
+    
+    // required .Expr rhs = 2;
+    public static final int RHS_FIELD_NUMBER = 2;
+    private boolean hasRhs;
+    private noop.model.proto.NoopAst.Expr rhs_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+    public boolean hasRhs() { return hasRhs; }
+    public noop.model.proto.NoopAst.Expr getRhs() { return rhs_; }
+    
+    public final boolean isInitialized() {
+      if (!hasLhs) return false;
+      if (!hasRhs) return false;
+      if (!getLhs().isInitialized()) return false;
+      if (!getRhs().isInitialized()) return false;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (hasLhs()) {
+        output.writeMessage(1, getLhs());
+      }
+      if (hasRhs()) {
+        output.writeMessage(2, getRhs());
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      if (hasLhs()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getLhs());
+      }
+      if (hasRhs()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, getRhs());
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    public static noop.model.proto.NoopAst.Dereference parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Dereference parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Dereference parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Dereference parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Dereference parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Dereference parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Dereference parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Dereference parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeDelimitedFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Dereference parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static noop.model.proto.NoopAst.Dereference parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(noop.model.proto.NoopAst.Dereference prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> {
+      private noop.model.proto.NoopAst.Dereference result;
+      
+      // Construct using noop.model.proto.NoopAst.Dereference.newBuilder()
+      private Builder() {}
+      
+      private static Builder create() {
+        Builder builder = new Builder();
+        builder.result = new noop.model.proto.NoopAst.Dereference();
+        return builder;
+      }
+      
+      protected noop.model.proto.NoopAst.Dereference internalGetResult() {
+        return result;
+      }
+      
+      public Builder clear() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "Cannot call clear() after build().");
+        }
+        result = new noop.model.proto.NoopAst.Dereference();
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(result);
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return noop.model.proto.NoopAst.Dereference.getDescriptor();
+      }
+      
+      public noop.model.proto.NoopAst.Dereference getDefaultInstanceForType() {
+        return noop.model.proto.NoopAst.Dereference.getDefaultInstance();
+      }
+      
+      public boolean isInitialized() {
+        return result.isInitialized();
+      }
+      public noop.model.proto.NoopAst.Dereference build() {
+        if (result != null && !isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return buildPartial();
+      }
+      
+      private noop.model.proto.NoopAst.Dereference buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        if (!isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return buildPartial();
+      }
+      
+      public noop.model.proto.NoopAst.Dereference buildPartial() {
+        if (result == null) {
+          throw new IllegalStateException(
+            "build() has already been called on this Builder.");
+        }
+        noop.model.proto.NoopAst.Dereference returnMe = result;
+        result = null;
+        return returnMe;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof noop.model.proto.NoopAst.Dereference) {
+          return mergeFrom((noop.model.proto.NoopAst.Dereference)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(noop.model.proto.NoopAst.Dereference other) {
+        if (other == noop.model.proto.NoopAst.Dereference.getDefaultInstance()) return this;
+        if (other.hasLhs()) {
+          mergeLhs(other.getLhs());
+        }
+        if (other.hasRhs()) {
+          mergeRhs(other.getRhs());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              noop.model.proto.NoopAst.Expr.Builder subBuilder = noop.model.proto.NoopAst.Expr.newBuilder();
+              if (hasLhs()) {
+                subBuilder.mergeFrom(getLhs());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setLhs(subBuilder.buildPartial());
+              break;
+            }
+            case 18: {
+              noop.model.proto.NoopAst.Expr.Builder subBuilder = noop.model.proto.NoopAst.Expr.newBuilder();
+              if (hasRhs()) {
+                subBuilder.mergeFrom(getRhs());
+              }
+              input.readMessage(subBuilder, extensionRegistry);
+              setRhs(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      
+      // required .Expr lhs = 1;
+      public boolean hasLhs() {
+        return result.hasLhs();
+      }
+      public noop.model.proto.NoopAst.Expr getLhs() {
+        return result.getLhs();
+      }
+      public Builder setLhs(noop.model.proto.NoopAst.Expr value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasLhs = true;
+        result.lhs_ = value;
+        return this;
+      }
+      public Builder setLhs(noop.model.proto.NoopAst.Expr.Builder builderForValue) {
+        result.hasLhs = true;
+        result.lhs_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeLhs(noop.model.proto.NoopAst.Expr value) {
+        if (result.hasLhs() &&
+            result.lhs_ != noop.model.proto.NoopAst.Expr.getDefaultInstance()) {
+          result.lhs_ =
+            noop.model.proto.NoopAst.Expr.newBuilder(result.lhs_).mergeFrom(value).buildPartial();
+        } else {
+          result.lhs_ = value;
+        }
+        result.hasLhs = true;
+        return this;
+      }
+      public Builder clearLhs() {
+        result.hasLhs = false;
+        result.lhs_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
+        return this;
+      }
+      
+      // required .Expr rhs = 2;
+      public boolean hasRhs() {
+        return result.hasRhs();
+      }
+      public noop.model.proto.NoopAst.Expr getRhs() {
+        return result.getRhs();
+      }
+      public Builder setRhs(noop.model.proto.NoopAst.Expr value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        result.hasRhs = true;
+        result.rhs_ = value;
+        return this;
+      }
+      public Builder setRhs(noop.model.proto.NoopAst.Expr.Builder builderForValue) {
+        result.hasRhs = true;
+        result.rhs_ = builderForValue.build();
+        return this;
+      }
+      public Builder mergeRhs(noop.model.proto.NoopAst.Expr value) {
+        if (result.hasRhs() &&
+            result.rhs_ != noop.model.proto.NoopAst.Expr.getDefaultInstance()) {
+          result.rhs_ =
+            noop.model.proto.NoopAst.Expr.newBuilder(result.rhs_).mergeFrom(value).buildPartial();
+        } else {
+          result.rhs_ = value;
+        }
+        result.hasRhs = true;
+        return this;
+      }
+      public Builder clearRhs() {
+        result.hasRhs = false;
+        result.rhs_ = noop.model.proto.NoopAst.Expr.getDefaultInstance();
         return this;
       }
     }
@@ -1357,10 +4877,50 @@ public final class NoopAst {
   }
   
   private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_Stmt_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_Stmt_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_ReturnStatement_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_ReturnStatement_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_ShouldStatement_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_ShouldStatement_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_Expr_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_Expr_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_Conditional_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_Conditional_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_Operation_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_Operation_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_Assignment_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_Assignment_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_MethodInvocation_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_MethodInvocation_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_Dereference_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_Dereference_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_IntLiteral_descriptor;
   private static
@@ -1385,32 +4945,119 @@ public final class NoopAst {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\"core/src/main/proto/noop_ast.proto\"\323\001\n" +
-      "\004Expr\022\030\n\004type\030\001 \002(\0162\n.Expr.Type\022\'\n\016boole" +
-      "anLiteral\030\002 \001(\0132\017.BooleanLiteral\022%\n\rstri" +
-      "ngLiteral\030\003 \001(\0132\016.StringLiteral\022\037\n\nintLi" +
-      "teral\030\004 \001(\0132\013.IntLiteral\"@\n\004Type\022\023\n\017BOOL" +
-      "EAN_LITERAL\020\001\022\022\n\016STRING_LITERAL\020\002\022\017\n\013INT" +
-      "_LITERAL\020\003\"\033\n\nIntLiteral\022\r\n\005value\030\001 \002(\021\"" +
-      "\036\n\rStringLiteral\022\r\n\005value\030\001 \002(\t\"\037\n\016Boole" +
-      "anLiteral\022\r\n\005value\030\001 \002(\010B\022\n\020noop.model.p" +
-      "roto"
+      "\n\"core/src/main/proto/noop_ast.proto\"\257\001\n" +
+      "\004Stmt\022\030\n\004type\030\001 \002(\0162\n.Stmt.Type\022 \n\006retur" +
+      "n\030\002 \001(\0132\020.ReturnStatement\022 \n\006should\030\003 \001(" +
+      "\0132\020.ShouldStatement\022\031\n\nexpression\030\004 \001(\0132" +
+      "\005.Expr\".\n\004Type\022\n\n\006RETURN\020\001\022\n\n\006SHOULD\020\002\022\016" +
+      "\n\nEXPRESSION\020\003\"*\n\017ReturnStatement\022\027\n\010ret" +
+      "urned\030\001 \002(\0132\005.Expr\"9\n\017ShouldStatement\022\022\n" +
+      "\003lhs\030\001 \002(\0132\005.Expr\022\022\n\003rhs\030\002 \002(\0132\005.Expr\"\201\004" +
+      "\n\004Expr\022\030\n\004type\030\001 \002(\0162\n.Expr.Type\022(\n\017bool" +
+      "ean_literal\030\002 \001(\0132\017.BooleanLiteral\022&\n\016st",
+      "ring_literal\030\003 \001(\0132\016.StringLiteral\022 \n\013in" +
+      "t_literal\030\004 \001(\0132\013.IntLiteral\022\033\n\005deref\030\005 " +
+      "\001(\0132\014.Dereference\022,\n\021method_invocation\030\006" +
+      " \001(\0132\021.MethodInvocation\022\037\n\nassignment\030\007 " +
+      "\001(\0132\013.Assignment\022\035\n\toperation\030\010 \001(\0132\n.Op" +
+      "eration\022\022\n\nidentifier\030\t \001(\t\022!\n\013condition" +
+      "al\030\n \001(\0132\014.Conditional\"\250\001\n\004Type\022\023\n\017BOOLE" +
+      "AN_LITERAL\020\001\022\022\n\016STRING_LITERAL\020\002\022\017\n\013INT_" +
+      "LITERAL\020\003\022\017\n\013DEREFERENCE\020\004\022\025\n\021METHOD_INV" +
+      "OCATION\020\005\022\016\n\nASSIGNMENT\020\006\022\r\n\tOPERATION\020\007",
+      "\022\016\n\nIDENTIFIER\020\010\022\017\n\013CONDITIONAL\020\t\"G\n\013Con" +
+      "ditional\022\022\n\003lhs\030\001 \002(\0132\005.Expr\022\020\n\010operator" +
+      "\030\002 \002(\t\022\022\n\003rhs\030\003 \002(\0132\005.Expr\"E\n\tOperation\022" +
+      "\022\n\003lhs\030\001 \002(\0132\005.Expr\022\020\n\010operator\030\002 \002(\t\022\022\n" +
+      "\003rhs\030\003 \002(\0132\005.Expr\"4\n\nAssignment\022\022\n\003lhs\030\001" +
+      " \002(\0132\005.Expr\022\022\n\003rhs\030\002 \002(\0132\005.Expr\"W\n\020Metho" +
+      "dInvocation\022\025\n\006target\030\001 \002(\0132\005.Expr\022\023\n\013me" +
+      "thod_name\030\002 \002(\t\022\027\n\010argument\030\003 \003(\0132\005.Expr" +
+      "\"5\n\013Dereference\022\022\n\003lhs\030\001 \002(\0132\005.Expr\022\022\n\003r" +
+      "hs\030\002 \002(\0132\005.Expr\"\033\n\nIntLiteral\022\r\n\005value\030\001",
+      " \002(\021\"\036\n\rStringLiteral\022\r\n\005value\030\001 \002(\t\"\037\n\016" +
+      "BooleanLiteral\022\r\n\005value\030\001 \002(\010B\022\n\020noop.mo" +
+      "del.proto"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
         public com.google.protobuf.ExtensionRegistry assignDescriptors(
             com.google.protobuf.Descriptors.FileDescriptor root) {
           descriptor = root;
-          internal_static_Expr_descriptor =
+          internal_static_Stmt_descriptor =
             getDescriptor().getMessageTypes().get(0);
+          internal_static_Stmt_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_Stmt_descriptor,
+              new java.lang.String[] { "Type", "Return", "Should", "Expression", },
+              noop.model.proto.NoopAst.Stmt.class,
+              noop.model.proto.NoopAst.Stmt.Builder.class);
+          internal_static_ReturnStatement_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_ReturnStatement_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_ReturnStatement_descriptor,
+              new java.lang.String[] { "Returned", },
+              noop.model.proto.NoopAst.ReturnStatement.class,
+              noop.model.proto.NoopAst.ReturnStatement.Builder.class);
+          internal_static_ShouldStatement_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_ShouldStatement_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_ShouldStatement_descriptor,
+              new java.lang.String[] { "Lhs", "Rhs", },
+              noop.model.proto.NoopAst.ShouldStatement.class,
+              noop.model.proto.NoopAst.ShouldStatement.Builder.class);
+          internal_static_Expr_descriptor =
+            getDescriptor().getMessageTypes().get(3);
           internal_static_Expr_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_Expr_descriptor,
-              new java.lang.String[] { "Type", "BooleanLiteral", "StringLiteral", "IntLiteral", },
+              new java.lang.String[] { "Type", "BooleanLiteral", "StringLiteral", "IntLiteral", "Deref", "MethodInvocation", "Assignment", "Operation", "Identifier", "Conditional", },
               noop.model.proto.NoopAst.Expr.class,
               noop.model.proto.NoopAst.Expr.Builder.class);
+          internal_static_Conditional_descriptor =
+            getDescriptor().getMessageTypes().get(4);
+          internal_static_Conditional_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_Conditional_descriptor,
+              new java.lang.String[] { "Lhs", "Operator", "Rhs", },
+              noop.model.proto.NoopAst.Conditional.class,
+              noop.model.proto.NoopAst.Conditional.Builder.class);
+          internal_static_Operation_descriptor =
+            getDescriptor().getMessageTypes().get(5);
+          internal_static_Operation_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_Operation_descriptor,
+              new java.lang.String[] { "Lhs", "Operator", "Rhs", },
+              noop.model.proto.NoopAst.Operation.class,
+              noop.model.proto.NoopAst.Operation.Builder.class);
+          internal_static_Assignment_descriptor =
+            getDescriptor().getMessageTypes().get(6);
+          internal_static_Assignment_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_Assignment_descriptor,
+              new java.lang.String[] { "Lhs", "Rhs", },
+              noop.model.proto.NoopAst.Assignment.class,
+              noop.model.proto.NoopAst.Assignment.Builder.class);
+          internal_static_MethodInvocation_descriptor =
+            getDescriptor().getMessageTypes().get(7);
+          internal_static_MethodInvocation_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_MethodInvocation_descriptor,
+              new java.lang.String[] { "Target", "MethodName", "Argument", },
+              noop.model.proto.NoopAst.MethodInvocation.class,
+              noop.model.proto.NoopAst.MethodInvocation.Builder.class);
+          internal_static_Dereference_descriptor =
+            getDescriptor().getMessageTypes().get(8);
+          internal_static_Dereference_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_Dereference_descriptor,
+              new java.lang.String[] { "Lhs", "Rhs", },
+              noop.model.proto.NoopAst.Dereference.class,
+              noop.model.proto.NoopAst.Dereference.Builder.class);
           internal_static_IntLiteral_descriptor =
-            getDescriptor().getMessageTypes().get(1);
+            getDescriptor().getMessageTypes().get(9);
           internal_static_IntLiteral_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_IntLiteral_descriptor,
@@ -1418,7 +5065,7 @@ public final class NoopAst {
               noop.model.proto.NoopAst.IntLiteral.class,
               noop.model.proto.NoopAst.IntLiteral.Builder.class);
           internal_static_StringLiteral_descriptor =
-            getDescriptor().getMessageTypes().get(2);
+            getDescriptor().getMessageTypes().get(10);
           internal_static_StringLiteral_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_StringLiteral_descriptor,
@@ -1426,7 +5073,7 @@ public final class NoopAst {
               noop.model.proto.NoopAst.StringLiteral.class,
               noop.model.proto.NoopAst.StringLiteral.Builder.class);
           internal_static_BooleanLiteral_descriptor =
-            getDescriptor().getMessageTypes().get(3);
+            getDescriptor().getMessageTypes().get(11);
           internal_static_BooleanLiteral_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_BooleanLiteral_descriptor,

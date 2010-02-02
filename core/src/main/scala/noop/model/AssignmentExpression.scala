@@ -13,16 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.model
+
+import proto.NoopAst.Assignment
+import proto.NoopAst.Expr.Type;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class AssignmentExpression(val lhs: Expression, val rhs: Expression) extends Expression {
+class AssignmentExpression(val data: Assignment) extends Expression {
+
+  def lhs = new ExpressionWrapper(data.getLhs)
+  def rhs = new ExpressionWrapper(data.getRhs)
 
   def accept(visitor: Visitor) = {
-	if (!lhs.isInstanceOf[IdentifierExpression]) {
+	  if (data.getLhs.getType != Type.IDENTIFIER) {
       throw new RuntimeException("Oops, I only know how to assign to identifiers");
     }
     lhs.accept(visitor);

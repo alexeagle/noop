@@ -33,9 +33,12 @@ scope Block {
   import noop.model.*;
   import noop.model.proto.NoopAst;
   import noop.model.proto.NoopAst.*;
+  import static noop.model.proto.NoopAst.Expr.Type.*;
+  import static noop.model.proto.NoopAst.Stmt.Type.*;
   import scala.Enumeration;
   import scala.collection.mutable.Buffer;
   import scala.collection.mutable.ArrayBuffer;
+  import java.util.LinkedList;
 }
 
 @members {
@@ -276,19 +279,25 @@ statement
 	{ $Block::block.statements().\$plus\$eq($w.exp); }
 	| identifierDeclaration
 	| should=shouldStatement
-	{ $Block::block.statements().\$plus\$eq($should.exp); }
+	{ $Block::block.statements().\$plus\$eq(new StatementWrapper($should.stmt)); }
 	| exp=expression
-	{ $Block::block.statements().\$plus\$eq($exp.exp); }
+	{ $Block::block.statements().\$plus\$eq(new ExpressionWrapper($exp.exp)); }
 	;
 
-shouldStatement returns [Expression exp]
+shouldStatement returns [Stmt stmt]
 	:	^('should' left=expression right=expression)
-	{ $exp = new ShouldExpression($left.exp, $right.exp); }
+	{ $stmt = Stmt.newBuilder()
+	           .setType(SHOULD)
+	           .setShould(ShouldStatement.newBuilder()
+	             .setLhs($left.exp)
+	             .setRhs($right.exp))
+	           .build();
+	}
 	;
 
 whileStatement returns [Expression exp]
 	: ^(WHILE term=expression b=block)
-	{ $exp = new WhileLoop($term.exp, $b.block); }
+	{ $exp = new WhileLoop(new ExpressionWrapper($term.exp), $b.block); }
 	;
 
 returnStatement
@@ -306,14 +315,9 @@ identifierDeclaration
   }
 	;
 
-assignment returns [Expression exp]
-	: ^('=' lhs=expression rhs=expression)
-	{ $exp = new AssignmentExpression($lhs.exp, $rhs.exp); }
-	;
-
-expression returns [Expression exp]
+expression returns [Expr exp]
   :	l=literal
-  { $exp = new ExpressionWrapper($l.exp); }
+  { $exp = $l.exp; }
   |	d=dereference
   { $exp = $d.exp; }
   | o=operatorExpression
@@ -324,68 +328,112 @@ expression returns [Expression exp]
   { $exp = $c.exp; }
   | right=(VariableIdentifier|TypeIdentifier) a=arguments?
   { if ($a.args != null) {
-        Expression left = new IdentifierExpression("this");
-	    $exp = new MethodInvocationExpression(left, $right.text, $a.args);
+      Expr left = Expr.newBuilder()
+                    .setType(IDENTIFIER)
+                    .setIdentifier("this").build();
+	    $exp = Expr.newBuilder()
+	             .setType(METHOD_INVOCATION)
+	             .setMethodInvocation(MethodInvocation.newBuilder()
+	               .setTarget(left)
+	               .setMethodName($right.text)
+	               .addAllArgument($a.args))
+	             .build();
 	  } else {
-	    $exp = new IdentifierExpression($right.text);
+	    $exp = Expr.newBuilder()
+               .setType(IDENTIFIER)
+               .setIdentifier($right.text)
+               .build();
 	  }
   }
   ;
 
-conditionalExpression returns [Expression exp]
+assignment returns [Expr exp]
+	: ^('=' lhs=expression rhs=expression)
+	{ $exp = Expr.newBuilder()
+	          .setType(ASSIGNMENT)
+	          .setAssignment(Assignment.newBuilder()
+	            .setLhs($lhs.exp)
+	            .setRhs($rhs.exp))
+	          .build(); }
+	;
+
+conditionalExpression returns [Expr exp]
   : ^(cond=('||' | '&&') left=expression right=expression)
   {
-    if ($cond.text.equals("||")) {
-      $exp = new ConditionalOrExpression($left.exp, $right.exp);
-    } else if ($cond.text.equals("&&")) {
-      $exp = new ConditionalAndExpression($left.exp, $right.exp);
-    }
+    $exp = Expr.newBuilder()
+             .setType(CONDITIONAL)
+             .setConditional(Conditional.newBuilder()
+               .setLhs($left.exp)
+               .setOperator($cond.text)
+               .setRhs($right.exp))
+             .build();
   }
   ;
   
-operatorExpression returns [Expression exp]
+operatorExpression returns [Expr exp]
 	: ^(op=('+' | '-' | '*' | '/' | '%' | '==' | '!=' | '>' | '<' | '>=' | '<=') left=expression right=expression)
-	{ $exp = new OperatorExpression($left.exp, $op.text, $right.exp); }
+	{ $exp = Expr.newBuilder()
+	           .setType(OPERATION)
+	           .setOperation(Operation.newBuilder()
+	             .setLhs($left.exp)
+	             .setOperator($op.text)
+	             .setRhs($right.exp))
+	           .build(); }
 	;
 
-dereference returns [Expression exp]
+dereference returns [Expr exp]
 	: ^('.' left=expression right=VariableIdentifier a=arguments?)
 	{
 	  if ($a.args != null) {
-	    $exp = new MethodInvocationExpression($left.exp, $right.text, $a.args);
+	    $exp = Expr.newBuilder()
+	             .setType(Expr.Type.METHOD_INVOCATION)
+	             .setMethodInvocation(MethodInvocation.newBuilder()
+	               .setTarget($left.exp)
+	               .setMethodName($right.text)
+	               .addAllArgument($a.args)
+	               )
+	             .build();
 	  } else {
-	    $exp = new DereferenceExpression($left.exp, new IdentifierExpression($right.text));
+	    $exp = Expr.newBuilder()
+	             .setType(Expr.Type.DEREFERENCE)
+	             .setDeref(Dereference.newBuilder()
+	               .setLhs($left.exp)
+	               .setRhs(Expr.newBuilder().setType(IDENTIFIER).setIdentifier($right.text)))
+	             .build();
 	  }
 	}
 	;
 
-arguments returns [Buffer<Expression> args]
-@init { $args = new ArrayBuffer<Expression>(); }
+arguments returns [List<Expr> args]
+@init { $args = new LinkedList<Expr>(); }
 	: ^(ARGS argument[args]*)
 	;
 
-argument[Buffer<Expression> args]
+argument[List<Expr> args]
   : exp=expression
   {
-    $args.\$plus\$eq($exp.exp);
+    $args.add($exp.exp);
   }
   ;
 
 literal returns [Expr exp]
 	: i=INT
 	{ $exp = Expr.newBuilder()
-	           .setType(Expr.Type.INT_LITERAL)
-	           .setIntLiteral(IntLiteral.newBuilder().setValue(Integer.valueOf($i.text)))
+	           .setType(INT_LITERAL)
+	           .setIntLiteral(IntLiteral.newBuilder()
+	             .setValue(Integer.valueOf($i.text)))
 	           .build(); }
 	| s=StringLiteral
 	{ $exp = Expr.newBuilder()
-	           .setType(Expr.Type.STRING_LITERAL)
-	           .setStringLiteral(NoopAst.StringLiteral.newBuilder().setValue(stripQuotes($s.text)))
+	           .setType(STRING_LITERAL)
+	           .setStringLiteral(NoopAst.StringLiteral.newBuilder()
+	             .setValue(stripQuotes($s.text)))
 	           .build(); }
 	| b=('true' | 'false')
 	{ $exp = Expr.newBuilder()
-	           .setType(Expr.Type.BOOLEAN_LITERAL)
-	           .setBooleanLiteral(NoopAst.BooleanLiteral.newBuilder().setValue(Boolean.valueOf($b.text)))
+	           .setType(BOOLEAN_LITERAL)
+	           .setBooleanLiteral(NoopAst.BooleanLiteral.newBuilder()
+	             .setValue(Boolean.valueOf($b.text)))
 	           .build(); }
 	;
 

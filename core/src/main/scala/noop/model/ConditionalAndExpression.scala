@@ -13,12 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.model
+
+import proto.NoopAst.Conditional;
 
 /**
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class ConditionalAndExpression(val lhs: Expression, val rhs: Expression) extends Expression {
+class ConditionalAndExpression(val data: Conditional) extends Expression {
+  def lhs = new ExpressionWrapper(data.getLhs)
+  def rhs = new ExpressionWrapper(data.getRhs)
 
   def accept(visitor: Visitor) = {
     lhs.accept(visitor);

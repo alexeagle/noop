@@ -15,10 +15,12 @@
  */
 package noop.grammar;
 
-import org.scalatest.matchers.ShouldMatchers;
+import org.scalatest.matchers.ShouldMatchers
+import noop.model.{StatementWrapper, ShouldExpression}
+import noop.model.proto.NoopAst.Stmt;
 import org.scalatest.Spec;
 
-import model.ShouldExpression;
+
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -84,7 +86,8 @@ class TestSpec extends Spec with ShouldMatchers {
       val source = "{ 1 should equal(1); }";
       parser.parseBlock(source).toStringTree() should be("(should 1 equal (ARGS 1))");
       val statement = parser.buildTreeParser(parser.parseBlock(source)).block().statements(0);
-      statement.getClass() should be(classOf[ShouldExpression]);
+      statement.getClass() should be(classOf[StatementWrapper]);
+      statement.asInstanceOf[StatementWrapper].getTypedExpression.getClass should be (classOf[ShouldExpression])
     }
   }
 }

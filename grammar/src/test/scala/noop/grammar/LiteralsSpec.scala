@@ -16,8 +16,10 @@
 package noop.grammar;
 
 import org.scalatest.matchers.ShouldMatchers
-import noop.model.{ExpressionWrapper, BooleanLiteralExpression, IdentifierDeclarationExpression};
-import org.scalatest.Spec;
+import noop.model.{ExpressionWrapper, BooleanLiteralExpression, IdentifierDeclarationExpression}
+import org.scalatest.Spec
+import noop.model.proto.NoopAst.Expr.Type.BOOLEAN_LITERAL
+import noop.model.proto.NoopAst.{Expr, BooleanLiteral};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -56,14 +58,14 @@ class LiteralsSpec extends Spec with ShouldMatchers {
     it("should parse boolean literals") {
       val source = "{ Boolean a = true; }";
       parser.parseBlock(source).toStringTree() should equal ("(VAR Boolean (= a true))");
-      val statement = parser.buildTreeParser(parser.parseBlock(source)).block().statements(0)
-          .asInstanceOf[IdentifierDeclarationExpression];
-      statement.initialValue match {
-        case Some(b) => {
-          b.asInstanceOf[ExpressionWrapper].getTypedExpression.asInstanceOf[BooleanLiteralExpression].value should be (true);
-        }
-        case None => fail();
-      }
+      val statement: IdentifierDeclarationExpression =
+          parser.buildTreeParser(parser.parseBlock(source)).block().statements(0).asInstanceOf[IdentifierDeclarationExpression];
+      statement.initialValue should be('defined);
+      statement.initialValue.get should be (Expr.newBuilder
+              .setType(BOOLEAN_LITERAL)
+              .setBooleanLiteral(BooleanLiteral.newBuilder
+                .setValue(true))
+              .build());
     }
   }
 }

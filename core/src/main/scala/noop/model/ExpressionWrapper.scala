@@ -7,7 +7,7 @@ import noop.model.proto.NoopAst.Expr.Type;
  * Converts proto buffer "inheritance", which is done by enum, into typed expressions.
  * @author alexeagle@google.com (Alex Eagle)
  */
-class ExpressionWrapper(data: Expr) extends Expression {
+class ExpressionWrapper(val data: Expr) extends Expression {
   def accept(visitor: Visitor): Unit = {
     getTypedExpression.accept(visitor);
   }
@@ -22,6 +22,27 @@ class ExpressionWrapper(data: Expr) extends Expression {
       }
       case Type.BOOLEAN_LITERAL => {
         new BooleanLiteralExpression(data.getBooleanLiteral)
+      }
+      case Type.ASSIGNMENT => {
+        new AssignmentExpression(data.getAssignment)
+      }
+      case Type.IDENTIFIER => {
+        new IdentifierExpression(data.getIdentifier)
+      }
+      case Type.CONDITIONAL => {
+        data.getConditional.getOperator match {
+          case "||" => new ConditionalOrExpression(data.getConditional)
+          case "&&" => new ConditionalAndExpression(data.getConditional)
+        }
+      }
+      case Type.DEREFERENCE => {
+        new DereferenceExpression(data.getDeref)
+      }
+      case Type.METHOD_INVOCATION => {
+        new MethodInvocationExpression(data.getMethodInvocation)
+      }
+      case Type.OPERATION => {
+        new OperatorExpression(data.getOperation)
       }
     }
   }

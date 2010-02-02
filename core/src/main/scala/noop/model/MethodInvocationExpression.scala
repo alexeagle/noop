@@ -13,14 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.model
+
+import proto.NoopAst.MethodInvocation
+import collection.jcl.Buffer;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class MethodInvocationExpression(val left: Expression, val name: String,
-    val arguments: Seq[Expression]) extends Expression {
+class MethodInvocationExpression(val data: MethodInvocation) extends Expression {
+
+  def left = new ExpressionWrapper(data.getTarget)
+  def name = data.getMethodName
+  def arguments: Seq[Expression] = Buffer(data.getArgumentList) map (new ExpressionWrapper(_))
 
   def accept(visitor: Visitor) = {
     left.accept(visitor);

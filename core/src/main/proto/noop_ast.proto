@@ -16,22 +16,86 @@
 
 // Generate the java file with:
 // protoc core/src/main/proto/noop_ast.proto --java_out=core/src/main/java
-// TODO(alexeagle): have buildr run the proto compiler
+// TODO(alexeagle): have buildr run the proto compiler - https://issues.apache.org/jira/browse/BUILDR-368
 
 option java_package = "noop.model.proto";
+
+message Stmt {
+  enum Type {
+    RETURN = 1;
+    SHOULD = 2;
+    EXPRESSION = 3;
+  }
+
+  // identifies what sort of statement this is
+  required Type type = 1;
+
+  optional ReturnStatement return = 2;
+  optional ShouldStatement should = 3;
+  optional Expr expression = 4;
+}
+
+message ReturnStatement {
+  required Expr returned = 1;
+}
+
+message ShouldStatement {
+  required Expr lhs = 1;
+  required Expr rhs = 2;
+}
 
 message Expr {
   enum Type {
     BOOLEAN_LITERAL = 1;
     STRING_LITERAL = 2;
     INT_LITERAL = 3;
+    DEREFERENCE = 4;
+    METHOD_INVOCATION = 5;
+    ASSIGNMENT = 6;
+    OPERATION = 7;
+    IDENTIFIER = 8;
+    CONDITIONAL = 9;
   }
   // identifies what sort of expression this is
   required Type type = 1;
 
-  optional BooleanLiteral booleanLiteral = 2;
-  optional StringLiteral stringLiteral = 3;
-  optional IntLiteral intLiteral = 4;
+  optional BooleanLiteral boolean_literal = 2;
+  optional StringLiteral string_literal = 3;
+  optional IntLiteral int_literal = 4;
+  optional Dereference deref = 5;
+  optional MethodInvocation method_invocation = 6;
+  optional Assignment assignment = 7;
+  optional Operation operation = 8;
+  optional string identifier = 9;
+  optional Conditional conditional = 10;
+}
+
+message Conditional {
+  required Expr lhs = 1;
+  required string operator = 2;
+  required Expr rhs = 3;
+}
+
+message Operation {
+  required Expr lhs = 1;
+  required string operator = 2;
+  required Expr rhs = 3;
+}
+
+message Assignment {
+  required Expr lhs = 1;
+  required Expr rhs = 2;
+}
+
+message MethodInvocation {
+  required Expr target = 1;
+  required string method_name = 2;
+  repeated Expr argument = 3;
+}
+
+message Dereference {
+  required Expr lhs = 1;
+  required Expr rhs = 2;
 }
 
 message IntLiteral {

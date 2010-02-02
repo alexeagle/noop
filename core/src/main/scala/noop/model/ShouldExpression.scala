@@ -13,13 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.model
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class ShouldExpression(left: Expression, right: Expression) extends Expression {
+class ShouldExpression(data: proto.NoopAst.ShouldStatement) extends Expression {
+
+  def left = new ExpressionWrapper(data.getLhs)
+  def right = new ExpressionWrapper(data.getRhs)
 
   def accept(visitor: Visitor) = {
     left.accept(visitor);

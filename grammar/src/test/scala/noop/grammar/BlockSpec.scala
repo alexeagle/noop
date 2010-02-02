@@ -16,10 +16,12 @@
 
 package noop.grammar;
 
-import collection.mutable.ArrayBuffer;
-
-import org.scalatest.matchers.ShouldMatchers;
-import org.scalatest.Spec;
+import collection.mutable.ArrayBuffer
+import org.scalatest.matchers.ShouldMatchers
+import java.io.InputStream
+import org.scalatest.Spec
+import noop.model.proto.NoopAst._
+import noop.model.proto.NoopAst.Expr.Type._
 
 import noop.model._;
 
@@ -42,9 +44,10 @@ class BlockSpec extends Spec with ShouldMatchers {
       block.statements(0).getClass() should be(classOf[ReturnExpression]);
       val returnExpression = block.statements(0).asInstanceOf[ReturnExpression];
 
-      val typedExpression = returnExpression.expr.asInstanceOf[ExpressionWrapper].getTypedExpression
-      typedExpression.getClass should be(classOf[IntLiteralExpression]);
-      typedExpression.asInstanceOf[IntLiteralExpression].value should be(0);
+      returnExpression.expr should be(Expr.newBuilder
+              .setType(INT_LITERAL)
+              .setIntLiteral(IntLiteral.newBuilder
+              .setValue(0)).build());
     }
 
     it("should allow chained property access on properties") {
@@ -55,17 +58,15 @@ class BlockSpec extends Spec with ShouldMatchers {
       val block = parser.buildTreeParser(blockAst).block();
 
       block.statements.size should be(1);
-      block.statements(0).getClass() should be(classOf[DereferenceExpression]);
-      val deref1 = block.statements(0).asInstanceOf[DereferenceExpression];
-      deref1.left.getClass() should be(classOf[DereferenceExpression]);
-      deref1.right.getClass() should be(classOf[IdentifierExpression]);
-      deref1.right.asInstanceOf[IdentifierExpression].identifier should be("d");
-
-      val deref2 = deref1.left.asInstanceOf[DereferenceExpression];
-      deref2.left.getClass() should be(classOf[IdentifierExpression]);
-      deref2.right.getClass() should be(classOf[IdentifierExpression]);
-      deref2.left.asInstanceOf[IdentifierExpression].identifier should be("b");
-      deref2.right.asInstanceOf[IdentifierExpression].identifier should be("c");
+      val expectedExpr: Expr = block.statements(0).asInstanceOf[ExpressionWrapper].data;
+      expectedExpr.getType should be (DEREFERENCE);
+      expectedExpr.getDeref.getRhs.getType should be (IDENTIFIER);
+      expectedExpr.getDeref.getRhs.getIdentifier should be ("d");
+      expectedExpr.getDeref.getLhs.getType should be (DEREFERENCE);
+      expectedExpr.getDeref.getLhs.getDeref.getLhs.getType should be (IDENTIFIER);
+      expectedExpr.getDeref.getLhs.getDeref.getLhs.getIdentifier should be ("b");
+      expectedExpr.getDeref.getLhs.getDeref.getRhs.getType should be (IDENTIFIER);
+      expectedExpr.getDeref.getLhs.getDeref.getRhs.getIdentifier should be ("c");
     }
 
     it("should allow a method call on implicit 'this'") {
@@ -75,12 +76,14 @@ class BlockSpec extends Spec with ShouldMatchers {
       blockAst.toStringTree() should be ("a ARGS");
       val block = parser.buildTreeParser(blockAst).block();
       block.statements.size should be(1);
-      block.statements(0).getClass() should be(classOf[MethodInvocationExpression]);
-      val methodInvocation = block.statements(0).asInstanceOf[MethodInvocationExpression];      
-      methodInvocation.left.getClass() should be(classOf[IdentifierExpression]);
-      methodInvocation.left.asInstanceOf[IdentifierExpression].identifier should be("this");
-      methodInvocation.name should be("a");
-      methodInvocation.arguments should be ('empty);
+      block.statements(0).asInstanceOf[ExpressionWrapper].data should be
+        (Expr.newBuilder
+                .setType(Expr.Type.METHOD_INVOCATION)
+                .setMethodInvocation(MethodInvocation.newBuilder
+                  .setTarget(Expr.newBuilder
+                    .setType(Expr.Type.IDENTIFIER)
+                    .setIdentifier("this"))
+                  .setMethodName("a")).build());
     }
 
     it("should allow calling a method on an identifier") {
@@ -91,13 +94,14 @@ class BlockSpec extends Spec with ShouldMatchers {
       val block = parser.buildTreeParser(blockAst).block();
       block.statements.size should be(1);
 
-      block.statements(0).getClass() should be(classOf[MethodInvocationExpression]);
-      val methodInvocation = block.statements(0).asInstanceOf[MethodInvocationExpression];
-      methodInvocation.left.getClass() should be(classOf[IdentifierExpression]);
-      methodInvocation.left.asInstanceOf[IdentifierExpression].identifier should be("a");
-      methodInvocation.name should be("b");
-      methodInvocation.arguments should be(new ArrayBuffer[Expression]);
-      methodInvocation.arguments.isEmpty should be (true);
+      val methodInvocation = block.statements(0).asInstanceOf[ExpressionWrapper].data;
+      methodInvocation should be (Expr.newBuilder
+              .setType(METHOD_INVOCATION)
+              .setMethodInvocation(MethodInvocation.newBuilder
+                .setTarget(Expr.newBuilder
+                  .setType(IDENTIFIER)
+                  .setIdentifier("a"))
+                .setMethodName("b")).build())
     }
 
     it("should allow method chaining") {
@@ -108,17 +112,18 @@ class BlockSpec extends Spec with ShouldMatchers {
       val block = parser.buildTreeParser(blockAst).block();
       block.statements should have length (1);
 
-      val method1 = block.statements(0).asInstanceOf[MethodInvocationExpression];
-      method1.left.getClass() should be(classOf[MethodInvocationExpression]);
-      val method2 = method1.left.asInstanceOf[MethodInvocationExpression];
-
-      method2.left.getClass() should be(classOf[IdentifierExpression]);
-      method2.left.asInstanceOf[IdentifierExpression].identifier should be("a");
-      method2.name should be("b");
-      method2.arguments should be ('empty);
-
-      method1.name should be("c");
-      method1.arguments should be('empty);
+      val method = block.statements(0).asInstanceOf[ExpressionWrapper];
+      method.data should be (Expr.newBuilder
+              .setType(METHOD_INVOCATION)
+              .setMethodInvocation(MethodInvocation.newBuilder
+                .setTarget(Expr.newBuilder
+                  .setType(METHOD_INVOCATION)
+                  .setMethodInvocation(MethodInvocation.newBuilder
+                    .setTarget(Expr.newBuilder
+                      .setType(IDENTIFIER)
+                      .setIdentifier("a"))
+                    .setMethodName("b")))
+                .setMethodName("c")).build());
     }
 
     it("should allow a method call on a property") {
@@ -129,17 +134,20 @@ class BlockSpec extends Spec with ShouldMatchers {
       val block = parser.buildTreeParser(blockAst).block();
       block.statements should have length (1);
 
-      val method = block.statements(0).asInstanceOf[MethodInvocationExpression];
-      method.left.getClass() should be(classOf[DereferenceExpression]);
-      val deref = method.left.asInstanceOf[DereferenceExpression];
-
-      deref.left.getClass() should be(classOf[IdentifierExpression]);
-      deref.left.asInstanceOf[IdentifierExpression].identifier should be("a");
-      deref.right.getClass() should be(classOf[IdentifierExpression]);
-      deref.right.asInstanceOf[IdentifierExpression].identifier should be("b");
-
-      method.name should be("c");
-      method.arguments should be('empty);
+      val method = block.statements(0).asInstanceOf[ExpressionWrapper];
+      method.data should be(Expr.newBuilder
+              .setType(METHOD_INVOCATION)
+              .setMethodInvocation(MethodInvocation.newBuilder
+                .setTarget(Expr.newBuilder
+                  .setType(DEREFERENCE)
+                  .setDeref(Dereference.newBuilder
+                    .setLhs(Expr.newBuilder
+                      .setType(IDENTIFIER)
+                      .setIdentifier("a"))
+                    .setRhs(Expr.newBuilder
+                      .setType(IDENTIFIER)
+                      .setIdentifier("b"))))
+                .setMethodName("c")).build());
     }
 
     it("should allow a method call with arguments") {
@@ -151,16 +159,20 @@ class BlockSpec extends Spec with ShouldMatchers {
       val block = parser.buildTreeParser(blockAst).block();
       block.statements.size should be(1);
 
-      val methodInvocation = block.statements(0).asInstanceOf[MethodInvocationExpression];
-      methodInvocation.left.getClass() should be(classOf[IdentifierExpression]);
-      methodInvocation.left.asInstanceOf[IdentifierExpression].identifier should be("a");
-      methodInvocation.name should be("b");
-      methodInvocation.arguments should have length(2);
-      methodInvocation.arguments(0).getClass() should be(classOf[IdentifierExpression]);
-      methodInvocation.arguments(0).asInstanceOf[IdentifierExpression].identifier should be("c");
-      val typedExpression = methodInvocation.arguments(1).asInstanceOf[ExpressionWrapper].getTypedExpression
-      typedExpression.getClass() should be(classOf[StringLiteralExpression]);
-      typedExpression.asInstanceOf[StringLiteralExpression].value should be ("d");
+      val methodInvocation = block.statements(0).asInstanceOf[ExpressionWrapper].data;
+      methodInvocation should be(Expr.newBuilder
+              .setType(METHOD_INVOCATION)
+              .setMethodInvocation(MethodInvocation.newBuilder
+                .setTarget(Expr.newBuilder
+                  .setType(IDENTIFIER)
+                  .setIdentifier("a"))
+                .setMethodName("b")
+                .addArgument(Expr.newBuilder
+                  .setType(IDENTIFIER)
+                  .setIdentifier("c"))
+                .addArgument(Expr.newBuilder
+                  .setType(STRING_LITERAL)
+                  .setStringLiteral(StringLiteral.newBuilder.setValue("d")))).build());
     }
   }
 }

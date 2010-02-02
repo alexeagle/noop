@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.model
+
+import proto.NoopAst.Dereference;
 
 /**
  * An AST model element for a dereference, expressed syntactically as a dot.
@@ -23,7 +25,10 @@ package noop.model;
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class DereferenceExpression(val left: Expression, val right: Expression) extends Expression {
+class DereferenceExpression(val data: Dereference) extends Expression {
+
+  def left = new ExpressionWrapper(data.getLhs)
+  def right = new ExpressionWrapper(data.getRhs)
 
   def accept(visitor: Visitor) = {
     left.accept(visitor);

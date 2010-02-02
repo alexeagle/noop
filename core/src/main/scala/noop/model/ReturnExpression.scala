@@ -13,16 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.model
+
+import proto.NoopAst.Expr;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class ReturnExpression(val expr: Expression) extends Expression {
+class ReturnExpression(val expr: Expr) extends Expression {
 
   def accept(visitor: Visitor) = {
-    expr.accept(visitor);
+    new ExpressionWrapper(expr).accept(visitor);
     visitor.visit(this);
   }
 }
