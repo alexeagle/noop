@@ -19,16 +19,15 @@ import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
 
 /**
- * NOTE: this test relies on the working directory being the project root when tests are run.
  * @author alexeagle@google.com (Alex Eagle)
  */
-class InterpreterSystemTest extends Spec with ShouldMatchers with ConsoleTestFixture {
+class InterpreterSystemTest extends Spec with ShouldMatchers with ConsoleTestFixture with TempFileFixture {
   InterpreterMain.disableSystemExitForTesting;
 
   describe("the interpreter") {
     it("should run successfully") {
       withRedirectedStandardOut { (output) => {
-        InterpreterMain.main(List("helloworld.HelloWorld", "examples/noop").toArray);
+        InterpreterMain.main(List("helloworld.HelloWorldBinding", "examples/noop").toArray);
         InterpreterMain.exitCodeForTesting should be(0);
       }}
     }
@@ -43,8 +42,12 @@ class InterpreterSystemTest extends Spec with ShouldMatchers with ConsoleTestFix
 
     it("should use the working directory as a source root") {
       withRedirectedStandardOut { (output) => {
-        InterpreterMain.main(List("examples.noop.helloworld.HelloWorld").toArray);
-        InterpreterMain.exitCodeForTesting should be(0);
+        withTempFile("Test.noop", "binding Test { Application -> TestApp; }") {
+          withTempFile("TestApp.noop", "class TestApp() { Int main() {} }") {
+            InterpreterMain.main(List("Test").toArray);
+            InterpreterMain.exitCodeForTesting should be(0);
+          }
+        }
       }}
     }
   }

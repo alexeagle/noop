@@ -31,6 +31,8 @@ scope Block {
   package noop.grammar.antlr;
 
   import noop.model.*;
+  import noop.model.proto.NoopAst;
+  import noop.model.proto.NoopAst.*;
   import scala.Enumeration;
   import scala.collection.mutable.Buffer;
   import scala.collection.mutable.ArrayBuffer;
@@ -120,7 +122,7 @@ classDefinition
 	          classBlock[methodCollector, unittestCollector]? 
 	          d=doc?)
 	{
-	ClassDefinition classDef = new ClassDefinition($t.text, $SourceFile::file.namespace(), $d.doc);
+	ConcreteClassDefinition classDef = new ConcreteClassDefinition($t.text, $SourceFile::file.namespace(), $d.doc);
 	classDef.imports().\$plus\$plus\$eq($SourceFile::file.imports());
 	classDef.methods().\$plus\$plus\$eq(methodCollector);
 	classDef.unittests().\$plus\$plus\$eq(unittestCollector);
@@ -138,7 +140,7 @@ classDefinition
 interfaceDefinition
 	: ^(INTERFACE m=modifiers? t=TypeIdentifier d=doc?)
 	{
-	ClassDefinition classDef = new ClassDefinition($t.text, $SourceFile::file.namespace(), $d.doc);
+	InterfaceDefinition classDef = new InterfaceDefinition($t.text, $SourceFile::file.namespace(), $d.doc);
   if ($m.modifiers != null) {
 	  classDef.modifiers().\$plus\$plus\$eq($m.modifiers);
 	}
@@ -227,8 +229,9 @@ type [Buffer<String> types]
 bindingsDefinition
   : ^(BINDING t=TypeIdentifier d=doc? b=bindings)
 	{
-		ClassDefinition classDef = new ClassDefinition($t.text, $SourceFile::file.namespace(), $d.doc);
-		classDef.bindings().\$plus\$plus\$eq($b.bindings);
+	  BindingDefinition classDef = new BindingDefinition($t.text, $SourceFile::file.namespace(), $d.doc);
+	  classDef.bindings().\$plus\$plus\$eq($b.bindings);
+	  classDef.imports().\$plus\$plus\$eq($SourceFile::file.imports());
 	  $SourceFile::file.classDef_\$eq(classDef);
 	}
 	;
@@ -313,25 +316,38 @@ assignment returns [Expression exp]
 
 expression returns [Expression exp]
   :	l=literal
-  { $exp = $l.exp; }
+  { $exp = new ExpressionWrapper($l.exp); }
   |	d=dereference
   { $exp = $d.exp; }
   | o=operatorExpression
   { $exp = $o.exp; }
   | ass=assignment
   { $exp = $ass.exp; }
+  | c=conditionalExpression
+  { $exp = $c.exp; }
   | right=(VariableIdentifier|TypeIdentifier) a=arguments?
-  { Expression left = new IdentifierExpression("this");
-    if ($a.args != null) {
+  { if ($a.args != null) {
+        Expression left = new IdentifierExpression("this");
 	    $exp = new MethodInvocationExpression(left, $right.text, $a.args);
 	  } else {
 	    $exp = new IdentifierExpression($right.text);
 	  }
   }
   ;
+
+conditionalExpression returns [Expression exp]
+  : ^(cond=('||' | '&&') left=expression right=expression)
+  {
+    if ($cond.text.equals("||")) {
+      $exp = new ConditionalOrExpression($left.exp, $right.exp);
+    } else if ($cond.text.equals("&&")) {
+      $exp = new ConditionalAndExpression($left.exp, $right.exp);
+    }
+  }
+  ;
   
 operatorExpression returns [Expression exp]
-	: ^(op=('+'|'-'|'*'|'/'|'%') left=expression right=expression)
+	: ^(op=('+' | '-' | '*' | '/' | '%' | '==' | '!=' | '>' | '<' | '>=' | '<=') left=expression right=expression)
 	{ $exp = new OperatorExpression($left.exp, $op.text, $right.exp); }
 	;
 
@@ -356,15 +372,24 @@ argument[Buffer<Expression> args]
   {
     $args.\$plus\$eq($exp.exp);
   }
-	;
+  ;
 
-literal returns [Expression exp]
+literal returns [Expr exp]
 	: i=INT
-	{ $exp = new IntLiteralExpression(Integer.valueOf($i.text)); }
+	{ $exp = Expr.newBuilder()
+	           .setType(Expr.Type.INT_LITERAL)
+	           .setIntLiteral(IntLiteral.newBuilder().setValue(Integer.valueOf($i.text)))
+	           .build(); }
 	| s=StringLiteral
-	{ $exp = new StringLiteralExpression(stripQuotes($s.text)); }
+	{ $exp = Expr.newBuilder()
+	           .setType(Expr.Type.STRING_LITERAL)
+	           .setStringLiteral(NoopAst.StringLiteral.newBuilder().setValue(stripQuotes($s.text)))
+	           .build(); }
 	| b=('true' | 'false')
-	{ $exp = new BooleanLiteralExpression(Boolean.valueOf($b.text)); }
+	{ $exp = Expr.newBuilder()
+	           .setType(Expr.Type.BOOLEAN_LITERAL)
+	           .setBooleanLiteral(NoopAst.BooleanLiteral.newBuilder().setValue(Boolean.valueOf($b.text)))
+	           .build(); }
 	;
 
 doc returns [String doc]

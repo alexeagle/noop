@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model
+package noop.model;
 
 import org.slf4j.LoggerFactory;
 
@@ -95,6 +95,14 @@ class LoggingAstVisitor extends Visitor {
   }
 
   def visit(bindingDeclaration: BindingDeclaration) = {
-    logger.info("binding {} to {}", bindingDeclaration.noopType, bindingDeclaration.binding);
+    logger.info("binding {} to {}", bindingDeclaration.noopType, bindingDeclaration.boundTo);
+  }
+
+  def visit(conditionalAndExpression: ConditionalAndExpression) = {
+    logger.info("and conditional expression");
+  }
+
+  def visit(conditionalOrExpression: ConditionalOrExpression) = {
+    logger.info("or conditional expression");
   }
 }

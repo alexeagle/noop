@@ -16,7 +16,10 @@
 package noop.interpreter;
 
 import com.google.inject.Guice
-import java.io.File
+import java.net.{URL, URLClassLoader}
+
+import java.io.File;
+import noop.model.BindingDefinition;
 import noop.types.NoopTypesModule;
 
 import org.scalatest.matchers.ShouldMatchers;
@@ -31,44 +34,47 @@ import noop.grammar.Parser;
  */
 class ExampleIntegrationTest extends Spec with ShouldMatchers with ConsoleTestFixture {
 
-  def createInjector() = {
-    Guice.createInjector(new InterpreterModule(List()), new NoopTypesModule());
-  }
-
   def createFixture = {
-    val sourcePaths = List(
-        new File(getClass().getResource("/helloworld").toURI).getAbsolutePath(),
-        new File(getClass().getResource("/controlFlow").toURI).getAbsolutePath(),
-        new File(getClass().getResource("/arithmetic").toURI).getAbsolutePath());
-    new SourceFileClassLoader(new Parser(), sourcePaths);
+    val injector = Guice.createInjector(new InterpreterModule(List()), new NoopTypesModule());
+    val classLoader = new SourceFileClassLoader(new Parser(), List());
+    (classLoader, injector.getInstance(classOf[Interpreter]));
   }
 
   it("should run the hello world program") {
     withRedirectedStandardOut { (output) => {
-      val classLoader = createFixture;
-      val mainClass = classLoader.findClass("HelloWorld");
+      val (classLoader, interpreter) = createFixture;
+      val mainClass = classLoader.findClass("helloworld.HelloWorldBinding").asInstanceOf[BindingDefinition];
       mainClass should not be(null);
 
-      createInjector().getInstance(classOf[Interpreter]).runApplication(mainClass);
+      interpreter.runApplication(mainClass);
       output.toString() should include("Hello World!");
     }}
   }
 
   it("should run while loop") {
     withRedirectedStandardOut { (output) => {
-      val classLoader = createFixture;
-      val mainClass = classLoader.findClass("WhileLoop");
-      createInjector().getInstance(classOf[Interpreter]).runApplication(mainClass);
+      val (classLoader, interpreter) = createFixture;
+      val mainClass = classLoader.findClass("controlFlow.WhileLoopBinding").asInstanceOf[BindingDefinition];
+      interpreter.runApplication(mainClass);
       output.toString() should equal("Hello World!\n");
     }}
   }
 
   it("should run the arithmetic program") {
     withRedirectedStandardOut { (output) => {
-      val classLoader = createFixture;
-      val mainClass = classLoader.findClass("Arithmetic");
-      createInjector().getInstance(classOf[Interpreter]).runApplication(mainClass);
+      val (classLoader, interpreter) = createFixture;
+      val mainClass = classLoader.findClass("arithmetic.ArithmeticBinding").asInstanceOf[BindingDefinition];
+      interpreter.runApplication(mainClass);
       output.toString() should include("3");
     }}
+  }
+
+  it("should pass command line arguments to the commandLine program") {
+    withRedirectedStandardOut { (output) =>
+      val (classLoader, interpreter) = createFixture;
+      val mainClass = classLoader.findClass("commandLine.CommandLineExample").asInstanceOf[BindingDefinition];
+      interpreter.runApplication(mainClass);
+      // output.toString() should include("argument1");
+    }
   }
 }

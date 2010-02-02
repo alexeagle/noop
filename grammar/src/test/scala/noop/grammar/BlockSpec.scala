@@ -21,7 +21,7 @@ import collection.mutable.ArrayBuffer;
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import model._;
+import noop.model._;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -42,8 +42,9 @@ class BlockSpec extends Spec with ShouldMatchers {
       block.statements(0).getClass() should be(classOf[ReturnExpression]);
       val returnExpression = block.statements(0).asInstanceOf[ReturnExpression];
 
-      returnExpression.expr.getClass() should be(classOf[IntLiteralExpression]);
-      returnExpression.expr.asInstanceOf[IntLiteralExpression].value should be(0);
+      val typedExpression = returnExpression.expr.asInstanceOf[ExpressionWrapper].getTypedExpression
+      typedExpression.getClass should be(classOf[IntLiteralExpression]);
+      typedExpression.asInstanceOf[IntLiteralExpression].value should be(0);
     }
 
     it("should allow chained property access on properties") {
@@ -157,8 +158,9 @@ class BlockSpec extends Spec with ShouldMatchers {
       methodInvocation.arguments should have length(2);
       methodInvocation.arguments(0).getClass() should be(classOf[IdentifierExpression]);
       methodInvocation.arguments(0).asInstanceOf[IdentifierExpression].identifier should be("c");
-      methodInvocation.arguments(1).getClass() should be(classOf[StringLiteralExpression]);
-      methodInvocation.arguments(1).asInstanceOf[StringLiteralExpression].value should be ("d");
+      val typedExpression = methodInvocation.arguments(1).asInstanceOf[ExpressionWrapper].getTypedExpression
+      typedExpression.getClass() should be(classOf[StringLiteralExpression]);
+      typedExpression.asInstanceOf[StringLiteralExpression].value should be ("d");
     }
   }
 }

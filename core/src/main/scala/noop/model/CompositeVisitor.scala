@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model
+package noop.model;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * TODO(alex): looks like we could have a single visit(Expression) method
  */
-
 class CompositeVisitor(visitors: Seq[Visitor]) extends Visitor {
+
   def visit(assignmentExpression: AssignmentExpression) {
     for (v <- visitors) {
       v.visit(assignmentExpression);
@@ -126,6 +126,18 @@ class CompositeVisitor(visitors: Seq[Visitor]) extends Visitor {
   def visit(bindingDeclaration: BindingDeclaration) = {
     for (v <- visitors) {
       v.visit(bindingDeclaration);
+    }
+  }
+
+  def visit(conditionalAndExpression: ConditionalAndExpression) = {
+    for (v <- visitors) {
+      v.visit(conditionalAndExpression);
+    }
+  }
+
+  def visit(conditionalOrExpression: ConditionalOrExpression) = {
+    for (v <- visitors) {
+      v.visit(conditionalOrExpression);
     }
   }
 }

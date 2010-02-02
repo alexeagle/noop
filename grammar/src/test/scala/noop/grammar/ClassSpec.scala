@@ -15,10 +15,11 @@
  */
 package noop.grammar;
 
-import org.scalatest.matchers.ShouldMatchers;
+import org.scalatest.matchers.ShouldMatchers
+import noop.model.{ConcreteClassDefinition, Modifier};
 import org.scalatest.Spec;
 
-import noop.model.Modifier;
+
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -52,8 +53,9 @@ class ClassSpec extends Spec with ShouldMatchers {
 
       val file = parser.file(source);
       file.classDef.name should be ("Bar");
-      file.classDef.parameters(0).name should be ("a");
-      file.classDef.parameters(0).noopType should be ("String");
+      val concreteClass = file.classDef.asInstanceOf[ConcreteClassDefinition];
+      concreteClass.parameters(0).name should be ("a");
+      concreteClass.parameters(0).noopType should be ("String");
     }
 
     it("should parse a class with a fully-qualified type in a parameter") {
@@ -63,7 +65,8 @@ class ClassSpec extends Spec with ShouldMatchers {
       commonTree.toStringTree() should equal ("(CLASS Bar (PARAMS (PARAM noop String a)))");
 
       val file = parser.file(source);
-      file.classDef.parameters(0).noopType should be ("noop.String");
+      val concreteClass = file.classDef.asInstanceOf[ConcreteClassDefinition];
+      concreteClass.parameters(0).noopType should be ("noop.String");
     }
 
     it("should parse a class with multiple parameters") {
@@ -105,9 +108,10 @@ class ClassSpec extends Spec with ShouldMatchers {
           "(CLASS Foo (IMPL A) (IMPL a b C) (IMPL d E))");
       val file = parser.file(source);
       file.classDef.name should be ("Foo");
-      file.classDef.interfaces(0) should be("A");
-      file.classDef.interfaces(1) should be ("a.b.C");
-      file.classDef.interfaces(2) should be ("d.E");
+      val concreteDef = file.classDef.asInstanceOf[ConcreteClassDefinition];
+      concreteDef.interfaces(0) should be("A");
+      concreteDef.interfaces(1) should be ("a.b.C");
+      concreteDef.interfaces(2) should be ("d.E");
     }
 
     it("should allow the native modifier on a class") {
