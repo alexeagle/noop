@@ -29,6 +29,12 @@ class OperatorExpression(val left: Expression, val operator: String, val right: 
       case "*" => "multiply";
       case "/" => "divide";
       case "%" => "modulo";
+      case "==" => "equals";
+      case "!=" => "doesNotEqual";
+      case ">" => "greaterThan";
+      case "<" => "lesserThan";
+      case ">=" => "greaterOrEqualThan";
+      case "<=" => "lesserOrEqualThan";
     }
 
     new MethodInvocationExpression(left, methodName, List(right)).accept(visitor);

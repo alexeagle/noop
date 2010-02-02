@@ -15,12 +15,16 @@
  */
 package noop.model;
 
+import noop.model.proto.NoopAst.BooleanLiteral;
+
 /**
  * @author Erik Soe Sorensen (eriksoe@gmail.com)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class BooleanLiteralExpression(val value: Boolean) extends Expression {
+class BooleanLiteralExpression(data: BooleanLiteral) extends Expression {
 
+  def value = data.getValue;
+  
   def accept(visitor: Visitor) = {
     visitor.visit(this);
   }

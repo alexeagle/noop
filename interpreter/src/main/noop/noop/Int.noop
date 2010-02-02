@@ -20,5 +20,11 @@ class Int() {
   native Int multiply(Int other) {}
   native Int divide(Int other) {}
   native Int modulo(Int other) {}
+  native Boolean equals(Object other) {}
+  native Boolean doesNotEqual(Object other) {}
+  native Boolean greaterThan(Object other) {}
+  native Boolean lesserThan(Object other) {}
+  native Boolean greaterOrEqualThan(Object other) {}
+  native Boolean lesserOrEqualThan(Object other) {}
   native String toString() {}
 }

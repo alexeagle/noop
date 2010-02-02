@@ -15,12 +15,12 @@
  */
 package noop.interpreter;
 
-import inject.Injector
-import model.{Visitor, StringLiteralExpression, IdentifierDeclarationExpression}
+import noop.model.proto.NoopAst.StringLiteral;
+import noop.model.{Visitor, StringLiteralExpression, IdentifierDeclarationExpression}
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import types.{NoopString};
+import noop.types.{NoopString};
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -37,7 +37,8 @@ class IdentifierDeclarationSpec extends Spec with ShouldMatchers with GuiceInter
     it("should add an identifier to the map of identifiers on the current stack frame") {
       val identifierDeclaration = new IdentifierDeclarationExpression("type", "myString");
 
-      identifierDeclaration.initialValue = Some(new StringLiteralExpression("hello world"));
+      identifierDeclaration.initialValue = Some(new StringLiteralExpression(
+          StringLiteral.newBuilder.setValue("hello world").build));
 
       val (context, visitor) = myFixture;
 
