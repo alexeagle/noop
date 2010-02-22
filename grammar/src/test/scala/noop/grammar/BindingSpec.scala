@@ -19,8 +19,6 @@ package noop.grammar
 import org.scalatest.matchers.ShouldMatchers
 import noop.model.{ExpressionWrapper, BindingDefinition, StringLiteralExpression, IdentifierExpression}
 import org.scalatest.Spec
-import noop.model.proto.NoopAst.Expr;
-import Expr.Type.IDENTIFIER;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -42,8 +40,8 @@ class BindingSpec extends Spec with ShouldMatchers {
       val bindingDef = file.classDef.asInstanceOf[BindingDefinition];
       bindingDef.bindings should have length(3);
       bindingDef.bindings.first.noopType should be("BankService");
-      val expectedBoundTo = Expr.newBuilder().setType(IDENTIFIER).setIdentifier("BankServiceImpl").build();
-      bindingDef.bindings.first.boundTo should be(expectedBoundTo);
+      bindingDef.bindings.first.boundTo.getClass() should be(classOf[IdentifierExpression]);
+      bindingDef.bindings.first.boundTo.asInstanceOf[IdentifierExpression].identifier should be ("BankServiceImpl");
     }
 
     it("can appear as an anonymous binding block") {
@@ -56,7 +54,8 @@ class BindingSpec extends Spec with ShouldMatchers {
       method.block.namedBinding should be(None);
       val firstBinding = method.block.anonymousBindings.first;
       firstBinding.noopType should be("A");
-      firstBinding.boundTo should be(Expr.newBuilder().setType(IDENTIFIER).setIdentifier("B").build());
+      firstBinding.boundTo.getClass() should be(classOf[IdentifierExpression]);
+      firstBinding.boundTo.asInstanceOf[IdentifierExpression].identifier should be ("B");
     }
 
     it("can appear as a named binding block") {
@@ -104,8 +103,8 @@ class BindingSpec extends Spec with ShouldMatchers {
       method.block.anonymousBindings should have length(1);
       val firstBinding = method.block.anonymousBindings.first;
       firstBinding.noopType should be("String");
-      val typedExpression = new ExpressionWrapper(firstBinding.boundTo.asInstanceOf[Expr]).getTypedExpression;
-      typedExpression.asInstanceOf[StringLiteralExpression].value should be ("foo");
+      firstBinding.boundTo.getClass() should be(classOf[StringLiteralExpression]);
+      firstBinding.boundTo.asInstanceOf[StringLiteralExpression].value should be ("foo");
     }
   }
 

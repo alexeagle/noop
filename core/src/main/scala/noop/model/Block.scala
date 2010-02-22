@@ -27,7 +27,7 @@ class Block extends Expression {
   val anonymousBindings: Buffer[BindingDeclaration] = new ArrayBuffer[BindingDeclaration];
   var namedBinding: Option[String] = None;
 
-  def accept(visitor: Visitor): Unit = {
+  override def accept(visitor: Visitor): Unit = {
     for (anonBinding <- anonymousBindings) {
       anonBinding.accept(visitor);
     }

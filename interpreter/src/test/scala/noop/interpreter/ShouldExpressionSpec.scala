@@ -16,7 +16,6 @@
 package noop.interpreter
 
 import noop.interpreter.testing.{TestFailedException};
-import noop.model.proto.NoopAst.StringLiteral;
 import noop.model.{ShouldExpression, Visitor, MethodInvocationExpression, StringLiteralExpression};
 
 import org.scalatest.matchers.ShouldMatchers;
@@ -27,14 +26,10 @@ import org.scalatest.Spec;
  */
 
 class ShouldExpressionSpec extends Spec with ShouldMatchers with GuiceInterpreterFixture {
-  val hello = StringLiteral.newBuilder.setValue("hello").build;
-  val goodbye = StringLiteral.newBuilder.setValue("goodbye").build;
-
    describe("the 'should' operator") {
-
     it("should be silent if the lefthand side matches an equals matcher") {
-      val matcher = new MethodInvocationExpression(null, "equal", List(new StringLiteralExpression(hello)));
-      val shouldExpr = new ShouldExpression(new StringLiteralExpression(hello), matcher);
+      val matcher = new MethodInvocationExpression(null, "equal", List(new StringLiteralExpression("hello")));
+      val shouldExpr = new ShouldExpression(new StringLiteralExpression("hello"), matcher);
       val injector = fixture;
       val visitor = injector.getInstance(classOf[Visitor]);
       val context = injector.getInstance(classOf[Context]);
@@ -46,8 +41,8 @@ class ShouldExpressionSpec extends Spec with ShouldMatchers with GuiceInterprete
     }
 
     it("should throw a test failed exception if an equals matcher is not satisfied") {
-      val matcher = new MethodInvocationExpression(null, "equal", List(new StringLiteralExpression(goodbye)));
-      val shouldExpr = new ShouldExpression(new StringLiteralExpression(hello), matcher);
+      val matcher = new MethodInvocationExpression(null, "equal", List(new StringLiteralExpression("goodbye")));
+      val shouldExpr = new ShouldExpression(new StringLiteralExpression("hello"), matcher);
       val injector = fixture;
       val visitor = injector.getInstance(classOf[Visitor]);
 

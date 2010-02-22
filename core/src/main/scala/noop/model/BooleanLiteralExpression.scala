@@ -18,14 +18,23 @@ package noop.model;
 import noop.model.proto.NoopAst.BooleanLiteral;
 
 /**
+ * A boolean literal, either true or false.
+ *
  * @author Erik Soe Sorensen (eriksoe@gmail.com)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class BooleanLiteralExpression(data: BooleanLiteral) extends Expression {
+class BooleanLiteralExpression(val value: Boolean) extends Expression {
 
-  def value = data.getValue;
+  // Proto-based constructor
+  def this(data: BooleanLiteral) = this(data.getValue);
   
   def accept(visitor: Visitor) = {
     visitor.visit(this);
+  }
+
+  override def hashCode = value.hashCode;
+  override def equals(other: Any) = other match {
+    case that: BooleanLiteralExpression => that.value.equals(value);
+    case _ => false;
   }
 }

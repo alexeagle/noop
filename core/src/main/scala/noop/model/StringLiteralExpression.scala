@@ -21,11 +21,12 @@ import noop.model.proto.NoopAst.StringLiteral;
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class StringLiteralExpression(data: StringLiteral) extends Expression {
+class StringLiteralExpression(val value: String) extends Expression {
 
-  def value = data.getValue;
+  // Proto-based constructor
+  def this(data: StringLiteral) = this(data.getValue);
 
-  def accept(visitor: Visitor) = {
+  override def accept(visitor: Visitor) = {
     visitor.visit(this);
   }
 }

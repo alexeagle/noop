@@ -46,4 +46,6 @@ class ExpressionWrapper(val data: Expr) extends Expression {
       }
     }
   }
+
+  override def toString = getTypedExpression.toString;
 }

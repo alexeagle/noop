@@ -18,15 +18,19 @@ package noop.model
 import proto.NoopAst.{Operation, MethodInvocation}
 
 /**
+ * An expression with a binary operator, like + , with two operands.
+ * This is sugar for the named method on the left operand, with the right operand as the argument.
+ *
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class OperatorExpression(val data: Operation) extends Expression {
-  def left = new ExpressionWrapper(data.getLhs)
-  def right = new ExpressionWrapper(data.getRhs)
-  def operator = data.getOperator
+class OperatorExpression(val left: Expression, val operator: String, val right: Expression) extends Expression {
+  // Proto-based constructor
+  def this(data: Operation) =
+    this(new ExpressionWrapper(data.getLhs).getTypedExpression,
+      data.getOperator, new ExpressionWrapper(data.getRhs).getTypedExpression);
 
-  def accept(visitor: Visitor) = {
+  override def accept(visitor: Visitor) = {
     val methodName = operator match {
       case "+" => "plus";
       case "-" => "minus";
@@ -41,12 +45,7 @@ class OperatorExpression(val data: Operation) extends Expression {
       case "<=" => "lesserOrEqualThan";
     }
 
-    new MethodInvocationExpression(MethodInvocation.newBuilder()
-            .setTarget(data.getLhs)
-            .setMethodName(data.getOperator)
-            .addArgument(data.getRhs)
-            .build())
-            .accept(visitor);
+    new MethodInvocationExpression(left, methodName, List(right)).accept(visitor);
     visitor.visit(this);
   }
 }

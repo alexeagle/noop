@@ -84,15 +84,15 @@ class ClassSpec extends Spec with ShouldMatchers {
           "(PARAM (MOD mutable delegate) C c)))");
       val file = parser.file(source);
       file.classDef.name should be("Bar");
-      file.classDef.parameters should have length(3);
-      file.classDef.parameters(0).modifiers should have length(1);
-      file.classDef.parameters(0).modifiers should contain(Modifier.mutable);
-      file.classDef.parameters(1).modifiers should have length(1);
-      file.classDef.parameters(1).modifiers should contain(Modifier.delegate);
-      file.classDef.parameters(2).modifiers should have length(2);
-      file.classDef.parameters(2).modifiers should contain(Modifier.mutable);
-      file.classDef.parameters(2).modifiers should contain(Modifier.delegate);
-
+      val parameters = file.classDef.asInstanceOf[ConcreteClassDefinition].parameters;
+      parameters should have length(3);
+      parameters(0).modifiers should have length(1);
+      parameters(0).modifiers should contain(Modifier.mutable);
+      parameters(1).modifiers should have length(1);
+      parameters(1).modifiers should contain(Modifier.delegate);
+      parameters(2).modifiers should have length(2);
+      parameters(2).modifiers should contain(Modifier.mutable);
+      parameters(2).modifiers should contain(Modifier.delegate);
     }
 
     it("should allow an implements clause with one interface") {

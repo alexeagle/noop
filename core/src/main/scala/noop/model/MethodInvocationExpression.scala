@@ -22,13 +22,15 @@ import collection.jcl.Buffer;
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class MethodInvocationExpression(val data: MethodInvocation) extends Expression {
+class MethodInvocationExpression(val left: Expression, val name: String, val arguments: Seq[Expression])
+    extends Expression {
 
-  def left = new ExpressionWrapper(data.getTarget)
-  def name = data.getMethodName
-  def arguments: Seq[Expression] = Buffer(data.getArgumentList) map (new ExpressionWrapper(_))
+  // Proto-based constructor
+  def this(data: MethodInvocation) =
+    this(new ExpressionWrapper(data.getTarget).getTypedExpression, data.getMethodName,
+         Buffer(data.getArgumentList) map (new ExpressionWrapper(_).getTypedExpression));
 
-  def accept(visitor: Visitor) = {
+  override def accept(visitor: Visitor) = {
     left.accept(visitor);
     visitor.enter(this);
     arguments.foreach(arg => {

@@ -15,8 +15,6 @@
  */
 package noop.interpreter;
 
-import noop.model.proto.NoopAst.IntLiteral;
-import noop.model.proto.NoopAst.StringLiteral;
 import noop.model._
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
@@ -28,8 +26,6 @@ import noop.types.{NoopString, NoopObject};
  */
 class MethodInvocationSpec extends Spec with ShouldMatchers with GuiceInterpreterFixture {
 
-  val aString = StringLiteral.newBuilder.setValue("aString").build;
-
   def interpreterFixture = {
     val injector = fixture;
     (injector.getInstance(classOf[Context]), injector.getInstance(classOf[Visitor]));
@@ -39,7 +35,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with GuiceInterprete
 
     it("should throw an exception if the method doesn't exist on the type") {
       val (context, visitor) = interpreterFixture;
-      val target = new StringLiteralExpression(aString);
+      val target = new StringLiteralExpression("aString");
       val expr = new MethodInvocationExpression(target, "noSuchMethodSorry", List());
       val exception = intercept[NoSuchMethodException] (
         expr.accept(visitor)
@@ -58,7 +54,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with GuiceInterprete
       val myMethod = new Method("length", block, null);
       myMethod.returnTypes += "Int";
       context.classLoader.findClass("noop.String").methods += myMethod;
-      val target = new StringLiteralExpression(aString);
+      val target = new StringLiteralExpression("aString");
       val expr = new MethodInvocationExpression(target, "length", List());
       expr.accept(visitor);
     }
@@ -80,9 +76,9 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with GuiceInterprete
 
       myMethod.parameters += new Parameter(paramName, "String");
       context.classLoader.findClass("noop.String").methods += myMethod;
-      val target = new StringLiteralExpression(aString);
+      val target = new StringLiteralExpression("aString");
       val expr = new MethodInvocationExpression(target, "plus",
-          List(new StringLiteralExpression(StringLiteral.newBuilder.setValue(arg).build)));
+          List(new StringLiteralExpression(arg)));
       expr.accept(visitor);
     }
 
@@ -93,7 +89,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with GuiceInterprete
 
       myMethod.parameters += new Parameter("other", "String");
       context.classLoader.findClass("noop.String").methods += myMethod;
-      val target = new StringLiteralExpression(aString);
+      val target = new StringLiteralExpression("aString");
       val expr = new MethodInvocationExpression(target, "plus", List());
 
       intercept[RuntimeException] {
@@ -108,9 +104,8 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with GuiceInterprete
 
       myMethod.parameters += new Parameter("other", "String");
       context.classLoader.findClass("noop.String").methods += myMethod;
-      val target = new StringLiteralExpression(aString);
-      val expr = new MethodInvocationExpression(target, "plus",
-          List(new IntLiteralExpression(IntLiteral.newBuilder.setValue(1).build)));
+      val target = new StringLiteralExpression("aString");
+      val expr = new MethodInvocationExpression(target, "plus", List(new IntLiteralExpression(1)));
 
       intercept[RuntimeException] {
         expr.accept(visitor);
@@ -123,7 +118,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with GuiceInterprete
       myMethod.returnTypes += "Void";
 
       context.classLoader.findClass("noop.String").methods += myMethod;
-      val target = new StringLiteralExpression(aString);
+      val target = new StringLiteralExpression("aString");
       val expr = new MethodInvocationExpression(target, "plus", List());
       val currentFrame = new Frame(null, null);
 
@@ -144,7 +139,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with GuiceInterprete
       myMethod.parameters += new Parameter(paramName, "String");
       context.classLoader.findClass("noop.String").methods += myMethod;
 
-      val target = new StringLiteralExpression(aString);
+      val target = new StringLiteralExpression("aString");
       val expr = new MethodInvocationExpression(target, "plus", List(new MockExpression()));
 
       intercept[RuntimeException] {
@@ -154,7 +149,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with GuiceInterprete
 
     it("should be aware of the 'this' identifier and dispatch the method on thisRef") {
       val (context, visitor) = interpreterFixture;
-      new StringLiteralExpression(aString).accept(visitor);
+      new StringLiteralExpression("aString").accept(visitor);
       val thisRef: NoopObject = context.stack.top.lastEvaluated(0);
 
       thisRef should not be (null);

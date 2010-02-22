@@ -15,18 +15,22 @@
  */
 package noop.model
 
-import proto.NoopAst.Expr;
+import proto.NoopAst.Expr
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class IdentifierDeclarationExpression(val noopType: String, val name: String) extends Expression {
-  var initialValue: Option[Expr] = None;
+  var initialValue: Option[Expression] = None;
 
-  def accept(visitor: Visitor) = {
+  def setInitialValueProto(expr: Expr) = {
+    initialValue = Some(new ExpressionWrapper(expr).getTypedExpression);
+  }
+
+  override def accept(visitor: Visitor) = {
     val value = initialValue match {
-      case Some(v) => new ExpressionWrapper(v);
+      case Some(v) => v;
       case None => new EvaluatedExpression(null);
     }
     value.accept(visitor);

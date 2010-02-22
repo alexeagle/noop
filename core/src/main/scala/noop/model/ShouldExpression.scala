@@ -19,12 +19,13 @@ package noop.model
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class ShouldExpression(data: proto.NoopAst.ShouldStatement) extends Expression {
+class ShouldExpression(val left: Expression, val right: Expression) extends Expression {
 
-  def left = new ExpressionWrapper(data.getLhs)
-  def right = new ExpressionWrapper(data.getRhs)
+  // Proto-based constructor
+  def this(data: proto.NoopAst.ShouldStatement) =
+    this(new ExpressionWrapper(data.getLhs), new ExpressionWrapper(data.getRhs));
 
-  def accept(visitor: Visitor) = {
+  override def accept(visitor: Visitor) = {
     left.accept(visitor);
     if (!right.isInstanceOf[MethodInvocationExpression]) {
       throw new RuntimeException("right-hand side of should must be a matcher");

@@ -15,16 +15,20 @@
  */
 package noop.model
 
-import proto.NoopAst.Expr;
+import proto.NoopAst.Expr
 
 /**
  * AST model element which represents a declaration of a binding from a type to an expression.
  * @author alexeagle@google.com (Alex Eagle)
  */
-class BindingDeclaration(val noopType: String, val boundTo: Expr) extends Expression {
+class BindingDeclaration(val noopType: String, val boundTo: Expression) extends Expression {
 
-  def accept(visitor: Visitor) = {
-    new ExpressionWrapper(boundTo).accept(visitor);
+  // Proto-based constructor
+  def this(noopType: String, boundData: Expr) =
+    this(noopType, new ExpressionWrapper(boundData).getTypedExpression);
+
+  override def accept(visitor: Visitor) = {
+    boundTo.accept(visitor);
     visitor.visit(this);
   }
 

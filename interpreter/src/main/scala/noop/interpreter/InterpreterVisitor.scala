@@ -15,20 +15,21 @@
  */
 package noop.interpreter;
 
-import com.google.inject.Inject;
-import inject.Injector;
-import org.slf4j.LoggerFactory;
+import com.google.inject.Inject
+import org.slf4j.{Logger, LoggerFactory}
 
-import scala.collection.mutable.ArrayBuffer;
+import scala.collection.mutable.ArrayBuffer
 
-import interpreter.testing.TestFailedException;
-import model.{AssignmentExpression, BindingDeclaration, Block, BooleanLiteralExpression,
+import noop.inject.Injector
+import noop.model.ExpressionWrapper;
+import noop.interpreter.testing.TestFailedException
+import noop.model.{AssignmentExpression, BindingDeclaration, Block, BooleanLiteralExpression,
     ConditionalAndExpression, ConditionalOrExpression, DereferenceExpression,
     EvaluatedExpression, IdentifierDeclarationExpression, IdentifierExpression,
     IntLiteralExpression, Method, MethodInvocationExpression, Modifier,
     OperatorExpression, ReturnExpression, ShouldExpression, StringLiteralExpression,
-    Visitor, WhileLoop};
-import types._;
+    Visitor, WhileLoop}
+import noop.types._
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -38,11 +39,15 @@ class InterpreterVisitor @Inject() (val context: Context, injector: Injector,
     booleanFactory: BooleanFactory, stringFactory: StringFactory, integerFactory: IntegerFactory)
     extends Visitor {
 
-  val logger = LoggerFactory.getLogger(this.getClass());
+  val logger: Logger = LoggerFactory.getLogger(this.getClass());
 
   def visit(assignmentExpression: AssignmentExpression) = {
     val currentFrame = context.stack.top;
-    val identifier = assignmentExpression.lhs.asInstanceOf[IdentifierExpression].identifier;
+    logger.info("lastEvaluated " + currentFrame.lastEvaluated);
+    val identifier = assignmentExpression.lhs match {
+      case idExp: IdentifierExpression => idExp.identifier;
+      case wrapped: ExpressionWrapper => wrapped.getTypedExpression.asInstanceOf[IdentifierExpression].identifier;
+    }
     val obj = currentFrame.lastEvaluated(1);
 
     currentFrame.lastEvaluated.clear();
