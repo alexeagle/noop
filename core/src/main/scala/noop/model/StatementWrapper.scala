@@ -6,7 +6,6 @@ import proto.NoopAst.Stmt.Type
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-
 class StatementWrapper(data: Stmt) extends Expression {
   def accept(visitor: Visitor): Unit = {
     getTypedExpression.accept(visitor);

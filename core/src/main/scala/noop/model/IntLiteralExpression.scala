@@ -18,14 +18,22 @@ package noop.model;
 import noop.model.proto.NoopAst.IntLiteral;
 
 /**
+ * An integer literal, like 4.
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class IntLiteralExpression(data: IntLiteral) extends Expression {
+class IntLiteralExpression(val value: Int) extends Expression {
 
-  def value: Int = data.getValue;
+  // Proto-based constructor
+  def this(data: IntLiteral) = this(data.getValue);
 
-  def accept(visitor: Visitor) = {
+  override def accept(visitor: Visitor) = {
     visitor.visit(this);
+  }
+
+  override def hashCode() = value.hashCode;
+  override def equals(other: Any) = other match {
+    case that: IntLiteralExpression => that.value.equals(value);
+    case _ => false;
   }
 }

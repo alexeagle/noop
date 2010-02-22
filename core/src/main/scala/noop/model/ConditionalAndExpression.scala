@@ -20,11 +20,11 @@ import proto.NoopAst.Conditional;
 /**
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class ConditionalAndExpression(val data: Conditional) extends Expression {
-  def lhs = new ExpressionWrapper(data.getLhs)
-  def rhs = new ExpressionWrapper(data.getRhs)
+class ConditionalAndExpression(val lhs: Expression, val rhs: Expression) extends Expression {
+  def this(data: Conditional) =
+    this(new ExpressionWrapper(data.getLhs), new ExpressionWrapper(data.getRhs));
 
-  def accept(visitor: Visitor) = {
+  override def accept(visitor: Visitor) = {
     lhs.accept(visitor);
     visitor.visit(this);
     rhs.accept(visitor);

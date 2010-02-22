@@ -30,6 +30,7 @@ SLF4J = ["org.slf4j:slf4j-api:jar:1.5.6", "org.slf4j:slf4j-simple:jar:1.5.6"]
 GUICE = ["aopalliance:aopalliance:jar:1.0",
          "com.google.inject:guice:jar:2.0", "com.google.inject.extensions:guice-assisted-inject:jar:2.0" ]
 PROTO = ["com.google.protobuf:protobuf-java:jar:2.2.0"]
+JMOCK = ["org.hamcrest:hamcrest-core:jar:1.1", "org.hamcrest:hamcrest-library:jar:1.1", "org.jmock:jmock:jar:2.5.1"]
 
 # Force Buildr Antlr integration to use the version we specify
 Buildr::ANTLR::REQUIRES.clear
@@ -51,7 +52,7 @@ define 'noop', :version=>VERSION_NUMBER do
                    _('src/main/antlr3/noop/grammar/antlr/NoopAST.g')],
         :in_package=>'noop.grammar.antlr')
     compile.from(antlr).
-      with [project("core"), ANTLR, SLF4J, PROTO]
+      with [project("core"), ANTLR, SLF4J, PROTO, JMOCK]
     package :jar
   end
 

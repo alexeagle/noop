@@ -15,11 +15,11 @@
  */
 package noop.grammar;
 
+import org.jmock.Mockery;
+import org.jmock.Expectations;
 import org.scalatest.matchers.ShouldMatchers
-import noop.model.{ExpressionWrapper, BooleanLiteralExpression, IdentifierDeclarationExpression}
 import org.scalatest.Spec
-import noop.model.proto.NoopAst.Expr.Type.BOOLEAN_LITERAL
-import noop.model.proto.NoopAst.{Expr, BooleanLiteral};
+import noop.model._
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -28,6 +28,7 @@ import noop.model.proto.NoopAst.{Expr, BooleanLiteral};
 class LiteralsSpec extends Spec with ShouldMatchers {
 
   val parser = new Parser();
+  val mockery = new Mockery();
 
   describe("the parser") {
 
@@ -61,11 +62,18 @@ class LiteralsSpec extends Spec with ShouldMatchers {
       val statement: IdentifierDeclarationExpression =
           parser.buildTreeParser(parser.parseBlock(source)).block().statements(0).asInstanceOf[IdentifierDeclarationExpression];
       statement.initialValue should be('defined);
-      statement.initialValue.get should be (Expr.newBuilder
-              .setType(BOOLEAN_LITERAL)
-              .setBooleanLiteral(BooleanLiteral.newBuilder
-                .setValue(true))
-              .build());
+      statement.initialValue match {
+        case Some(boolean: Expression) => {
+
+          val visitor = mockery.mock(classOf[Visitor]);
+          mockery.checking(new Expectations() {{
+            oneOf(visitor).visit(new BooleanLiteralExpression(true));
+          }});
+          boolean.asInstanceOf[Expression].accept(visitor);
+          mockery.assertIsSatisfied();
+        }
+        case None => fail();
+      }
     }
   }
 }

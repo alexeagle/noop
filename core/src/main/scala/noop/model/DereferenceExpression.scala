@@ -25,12 +25,13 @@ import proto.NoopAst.Dereference;
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class DereferenceExpression(val data: Dereference) extends Expression {
+class DereferenceExpression(val left: Expression, val right: Expression) extends Expression {
 
-  def left = new ExpressionWrapper(data.getLhs)
-  def right = new ExpressionWrapper(data.getRhs)
+  // Proto-based constructor
+  def this(data: Dereference) = this(new ExpressionWrapper(data.getLhs).getTypedExpression,
+    new ExpressionWrapper(data.getRhs).getTypedExpression);
 
-  def accept(visitor: Visitor) = {
+  override def accept(visitor: Visitor) = {
     left.accept(visitor);
     right.accept(visitor);
     visitor.visit(this);

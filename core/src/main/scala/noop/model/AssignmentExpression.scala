@@ -16,21 +16,21 @@
 package noop.model
 
 import proto.NoopAst.Assignment
-import proto.NoopAst.Expr.Type;
 
 /**
+ * An assignment evaluates the left-hand side, which must evaluate to an identifier.
+ * The identifier is then assigned the value of evaluating the right-hand side.
+ *
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class AssignmentExpression(val data: Assignment) extends Expression {
+class AssignmentExpression(val lhs: Expression, val rhs: Expression) extends Expression {
 
-  def lhs = new ExpressionWrapper(data.getLhs)
-  def rhs = new ExpressionWrapper(data.getRhs)
+  // Proto-based constructor
+  def this(data: Assignment) =
+    this(new ExpressionWrapper(data.getLhs), new ExpressionWrapper(data.getRhs));
 
-  def accept(visitor: Visitor) = {
-	  if (data.getLhs.getType != Type.IDENTIFIER) {
-      throw new RuntimeException("Oops, I only know how to assign to identifiers");
-    }
+  override def accept(visitor: Visitor) = {
     lhs.accept(visitor);
     rhs.accept(visitor);
     visitor.visit(this);

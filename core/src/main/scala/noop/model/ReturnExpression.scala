@@ -21,10 +21,13 @@ import proto.NoopAst.Expr;
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class ReturnExpression(val expr: Expr) extends Expression {
+class ReturnExpression(val expr: Expression) extends Expression {
+
+  // Proto-based constructor
+  def this(data: Expr) = this(new ExpressionWrapper(data).getTypedExpression);
 
   def accept(visitor: Visitor) = {
-    new ExpressionWrapper(expr).accept(visitor);
+    expr.accept(visitor);
     visitor.visit(this);
   }
 }

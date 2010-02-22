@@ -284,7 +284,7 @@ statement
 	| should=shouldStatement
 	{ $Block::block.statements().\$plus\$eq(new StatementWrapper($should.stmt)); }
 	| exp=expression
-	{ $Block::block.statements().\$plus\$eq(new ExpressionWrapper($exp.exp)); }
+	{ $Block::block.statements().\$plus\$eq(new ExpressionWrapper($exp.exp).getTypedExpression()); }
 	;
 
 shouldStatement returns [Stmt stmt]
@@ -313,7 +313,7 @@ identifierDeclaration
 	{ IdentifierDeclarationExpression identifierDeclaration = new IdentifierDeclarationExpression($t.text, $v.text);
 		$Block::block.statements().\$plus\$eq(identifierDeclaration);
 	  if ($exp.exp != null) {
-	    identifierDeclaration.initialValue_\$eq(new scala.Some($exp.exp));
+	    identifierDeclaration.setInitialValueProto($exp.exp);
 	  }
   }
 	;
@@ -389,7 +389,7 @@ dereference returns [Expr exp]
 	{
 	  if ($a.args != null) {
 	    $exp = Expr.newBuilder()
-	             .setType(Expr.Type.METHOD_INVOCATION)
+	             .setType(METHOD_INVOCATION)
 	             .setMethodInvocation(MethodInvocation.newBuilder()
 	               .setTarget($left.exp)
 	               .setMethodName($right.text)
@@ -398,7 +398,7 @@ dereference returns [Expr exp]
 	             .build();
 	  } else {
 	    $exp = Expr.newBuilder()
-	             .setType(Expr.Type.DEREFERENCE)
+	             .setType(DEREFERENCE)
 	             .setDeref(Dereference.newBuilder()
 	               .setLhs($left.exp)
 	               .setRhs(Expr.newBuilder().setType(IDENTIFIER).setIdentifier($right.text)))

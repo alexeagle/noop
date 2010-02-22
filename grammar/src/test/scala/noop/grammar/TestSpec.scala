@@ -17,7 +17,6 @@ package noop.grammar;
 
 import org.scalatest.matchers.ShouldMatchers
 import noop.model.{StatementWrapper, ShouldExpression}
-import noop.model.proto.NoopAst.Stmt;
 import org.scalatest.Spec;
 
 
