@@ -31,8 +31,6 @@ scope Block {
   package noop.grammar.antlr;
 
   import noop.model.*;
-  import noop.model.proto.NoopAst;
-  import noop.model.proto.NoopAst.*;
   import scala.Enumeration;
   import scala.collection.mutable.Buffer;
   import scala.collection.mutable.ArrayBuffer;
@@ -313,7 +311,7 @@ assignment returns [Expression exp]
 
 expression returns [Expression exp]
   :	l=literal
-  { $exp = new ExpressionWrapper($l.exp); }
+  { $exp = $l.exp; }
   |	d=dereference
   { $exp = $d.exp; }
   | o=operatorExpression
@@ -371,22 +369,13 @@ argument[Buffer<Expression> args]
   }
   ;
 
-literal returns [Expr exp]
+literal returns [Expression exp]
 	: i=INT
-	{ $exp = Expr.newBuilder()
-	           .setType(Expr.Type.INT_LITERAL)
-	           .setIntLiteral(IntLiteral.newBuilder().setValue(Integer.valueOf($i.text)))
-	           .build(); }
+	{ $exp = new IntLiteralExpression(Integer.valueOf($i.text)); }
 	| s=StringLiteral
-	{ $exp = Expr.newBuilder()
-	           .setType(Expr.Type.STRING_LITERAL)
-	           .setStringLiteral(NoopAst.StringLiteral.newBuilder().setValue(stripQuotes($s.text)))
-	           .build(); }
+	{ $exp = new StringLiteralExpression(stripQuotes($s.text)); }
 	| b=('true' | 'false')
-	{ $exp = Expr.newBuilder()
-	           .setType(Expr.Type.BOOLEAN_LITERAL)
-	           .setBooleanLiteral(NoopAst.BooleanLiteral.newBuilder().setValue(Boolean.valueOf($b.text)))
-	           .build(); }
+	{ $exp = new BooleanLiteralExpression(Boolean.valueOf($b.text)); }
 	;
 
 doc returns [String doc]

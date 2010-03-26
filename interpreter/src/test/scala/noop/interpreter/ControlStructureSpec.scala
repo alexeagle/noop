@@ -15,8 +15,6 @@
  */
 package noop.interpreter;
 
-import noop.model.proto.NoopAst.BooleanLiteral;
-import noop.model.proto.NoopAst.StringLiteral;
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
@@ -30,8 +28,6 @@ import noop.types.{NoopString};
  */
 class ControlStructureSpec extends Spec with ShouldMatchers with GuiceInterpreterFixture {
 
-  val falseExpr = BooleanLiteral.newBuilder.setValue(false).build;
-
   def interpreterFixture = {
     val injector = fixture;
     val block = new Block();
@@ -43,7 +39,7 @@ class ControlStructureSpec extends Spec with ShouldMatchers with GuiceInterprete
 
     def accept(visitor: Visitor) = {
       called += 1;
-      new BooleanLiteralExpression(BooleanLiteral.newBuilder.setValue(called <= timesToReturnTrue).build).accept(visitor);
+      new BooleanLiteralExpression(called <= timesToReturnTrue).accept(visitor);
     }
   }
 
@@ -65,7 +61,7 @@ class ControlStructureSpec extends Spec with ShouldMatchers with GuiceInterprete
       val expression: MockExpression = new MockExpression();
       block.statements += expression;
 
-      val whileLoop = new WhileLoop(new BooleanLiteralExpression(falseExpr), block);
+      val whileLoop = new WhileLoop(new BooleanLiteralExpression(false), block);
 
       whileLoop.accept(visitor);
       expression.timesCalled should be(0);
@@ -95,7 +91,7 @@ class ControlStructureSpec extends Spec with ShouldMatchers with GuiceInterprete
       val enclosingBlock = new Block();
       enclosingBlock.statements += block;
       enclosingBlock.statements += new AssignmentExpression(
-          new IdentifierExpression("s"), new StringLiteralExpression(StringLiteral.newBuilder.setValue("s").build));
+          new IdentifierExpression("s"), new StringLiteralExpression("s"));
       new WhileLoop(new TrueThenFalseExpression(1), enclosingBlock).accept(visitor);
     }
   }
@@ -104,7 +100,7 @@ class ControlStructureSpec extends Spec with ShouldMatchers with GuiceInterprete
 
     it("should exit the current block and return the supplied value") {
       val (context, block, visitor) = interpreterFixture;
-      val returnMe = new ReturnExpression(new StringLiteralExpression(StringLiteral.newBuilder.setValue("to return").build));
+      val returnMe = new ReturnExpression(new StringLiteralExpression("to return"));
 
       block.statements += returnMe;
       val dontRunMe = new MockExpression((c: Context) => fail());

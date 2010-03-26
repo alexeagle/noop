@@ -20,7 +20,6 @@ import com.google.inject.Guice;
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
 
-import noop.model.proto.NoopAst.IntLiteral;
 import noop.model.{Block, IntLiteralExpression, OperatorExpression, Visitor};
 import noop.types.{IntegerFactory, NoopBoolean, NoopTypesModule};
 
@@ -28,10 +27,6 @@ import noop.types.{IntegerFactory, NoopBoolean, NoopTypesModule};
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class ConditionalSpec extends Spec with ShouldMatchers {
-
-  val one = IntLiteral.newBuilder.setValue(1).build;
-  val two = IntLiteral.newBuilder.setValue(2).build;
-  val three = IntLiteral.newBuilder.setValue(3).build;
 
   def createFixture = {
     val injector = Guice.createInjector(new InterpreterModule(List()), new NoopTypesModule());
@@ -47,8 +42,8 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to true when equals is called and the values are equal") {
       val (injector, context, visitor) = createFixture;
-      val conditional = new OperatorExpression(new IntLiteralExpression(one), "==",
-          new IntLiteralExpression(one));
+      val conditional = new OperatorExpression(new IntLiteralExpression(1), "==",
+          new IntLiteralExpression(1));
 
       conditional.accept(visitor);
       context.stack.top.lastEvaluated should have size(1);
@@ -60,8 +55,8 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to false when equals is called and the values are not equal") {
       val (injector, context, visitor) = createFixture;
-      val conditional = new OperatorExpression(new IntLiteralExpression(one), "==",
-          new IntLiteralExpression(two));
+      val conditional = new OperatorExpression(new IntLiteralExpression(1), "==",
+          new IntLiteralExpression(2));
 
       conditional.accept(visitor);
       context.stack.top.lastEvaluated should have size(1);
@@ -73,8 +68,8 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to true when doesNotEqual is called and the values are not equal") {
       val (injector, context, visitor) = createFixture;
-      val conditional = new OperatorExpression(new IntLiteralExpression(one), "!=",
-          new IntLiteralExpression(two));
+      val conditional = new OperatorExpression(new IntLiteralExpression(1), "!=",
+          new IntLiteralExpression(2));
 
       conditional.accept(visitor);
       context.stack.top.lastEvaluated should have size(1);
@@ -86,8 +81,8 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to false when doesNotEqual is called and the values are equal") {
       val (injector, context, visitor) = createFixture;
-      val conditional = new OperatorExpression(new IntLiteralExpression(one), "!=",
-          new IntLiteralExpression(one));
+      val conditional = new OperatorExpression(new IntLiteralExpression(1), "!=",
+          new IntLiteralExpression(1));
 
       conditional.accept(visitor);
       context.stack.top.lastEvaluated should have size(1);
@@ -99,8 +94,8 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to true when greaterThan is called and the value is greater than the other one") {
       val (injector, context, visitor) = createFixture;
-      val conditional = new OperatorExpression(new IntLiteralExpression(two), ">",
-          new IntLiteralExpression(one));
+      val conditional = new OperatorExpression(new IntLiteralExpression(2), ">",
+          new IntLiteralExpression(1));
 
       conditional.accept(visitor);
       context.stack.top.lastEvaluated should have size(1);
@@ -112,8 +107,8 @@ class ConditionalSpec extends Spec with ShouldMatchers {
  
     it("should evaluate to false when greaterThan is called and the value is less than the other one") {
       val (injector, context, visitor) = createFixture;
-      val conditional = new OperatorExpression(new IntLiteralExpression(one), ">",
-          new IntLiteralExpression(two));
+      val conditional = new OperatorExpression(new IntLiteralExpression(1), ">",
+          new IntLiteralExpression(2));
 
       conditional.accept(visitor);
       context.stack.top.lastEvaluated should have size(1);
@@ -125,8 +120,8 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to true when lesserThan is called and the value is less than the other one") {
       val (injector, context, visitor) = createFixture;
-      val conditional = new OperatorExpression(new IntLiteralExpression(one), "<",
-          new IntLiteralExpression(two));
+      val conditional = new OperatorExpression(new IntLiteralExpression(1), "<",
+          new IntLiteralExpression(2));
 
       conditional.accept(visitor);
       context.stack.top.lastEvaluated should have size(1);
@@ -138,8 +133,8 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to false when lesserThan is called and the value is greater than the other one") {
       val (injector, context, visitor) = createFixture;
-      val conditional = new OperatorExpression(new IntLiteralExpression(three), "<",
-          new IntLiteralExpression(two));
+      val conditional = new OperatorExpression(new IntLiteralExpression(3), "<",
+          new IntLiteralExpression(2));
 
       conditional.accept(visitor);
       context.stack.top.lastEvaluated should have size(1);
@@ -151,8 +146,8 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to true when greaterOrEqualThan is called and the value is greater or equal than the other one") {
       val (injector, context, visitor) = createFixture;
-      val conditional = new OperatorExpression(new IntLiteralExpression(three), ">=",
-          new IntLiteralExpression(two));
+      val conditional = new OperatorExpression(new IntLiteralExpression(3), ">=",
+          new IntLiteralExpression(2));
 
       conditional.accept(visitor);
       context.stack.top.lastEvaluated should have size(1);
@@ -164,8 +159,8 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to false when greaterOrEqualThan is called and the value is lesser than the other one") {
       val (injector, context, visitor) = createFixture;
-      val conditional = new OperatorExpression(new IntLiteralExpression(one), ">=",
-          new IntLiteralExpression(two));
+      val conditional = new OperatorExpression(new IntLiteralExpression(1), ">=",
+          new IntLiteralExpression(2));
 
       conditional.accept(visitor);
       context.stack.top.lastEvaluated should have size(1);
@@ -177,8 +172,8 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to true when lesserOrEqualThan is called and the value is lesser or equal than the other one") {
       val (injector, context, visitor) = createFixture;
-      val conditional = new OperatorExpression(new IntLiteralExpression(one), "<=",
-          new IntLiteralExpression(two));
+      val conditional = new OperatorExpression(new IntLiteralExpression(1), "<=",
+          new IntLiteralExpression(2));
 
       conditional.accept(visitor);
       context.stack.top.lastEvaluated should have size(1);
@@ -190,8 +185,8 @@ class ConditionalSpec extends Spec with ShouldMatchers {
 
     it("should evaluate to false when lesserOrEqualThan is called and the value is greater than the other one") {
       val (injector, context, visitor) = createFixture;
-      val conditional = new OperatorExpression(new IntLiteralExpression(two), "<=",
-          new IntLiteralExpression(one));
+      val conditional = new OperatorExpression(new IntLiteralExpression(2), "<=",
+          new IntLiteralExpression(1));
 
       conditional.accept(visitor);
       context.stack.top.lastEvaluated should have size(1);

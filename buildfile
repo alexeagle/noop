@@ -29,7 +29,6 @@ ANTLR_RUNTIME = ["org.antlr:antlr-runtime:jar:3.1.1"]
 SLF4J = ["org.slf4j:slf4j-api:jar:1.5.6", "org.slf4j:slf4j-simple:jar:1.5.6"]
 GUICE = ["aopalliance:aopalliance:jar:1.0",
          "com.google.inject:guice:jar:2.0", "com.google.inject.extensions:guice-assisted-inject:jar:2.0" ]
-PROTO = ["com.google.protobuf:protobuf-java:jar:2.2.0"]
 
 # Force Buildr Antlr integration to use the version we specify
 Buildr::ANTLR::REQUIRES.clear
@@ -41,7 +40,7 @@ define 'noop', :version=>VERSION_NUMBER do
   manifest["Implementation-Vendor"] = COPYRIGHT
 
   define "core" do
-    compile.with [SLF4J, PROTO]
+    compile.with [SLF4J]
     package :jar
   end
 
@@ -51,7 +50,7 @@ define 'noop', :version=>VERSION_NUMBER do
                    _('src/main/antlr3/noop/grammar/antlr/NoopAST.g')],
         :in_package=>'noop.grammar.antlr')
     compile.from(antlr).
-      with [project("core"), ANTLR, SLF4J, PROTO]
+      with [project("core"), ANTLR, SLF4J]
     package :jar
   end
 
@@ -69,7 +68,7 @@ define 'noop', :version=>VERSION_NUMBER do
     # TODO - only want examples as a test resource
     resources.from [_('src/main/noop'), project("examples")._('noop')]
     package(:jar).with(:manifest=>{'Main-Class' => 'noop.interpreter.InterpreterMain'})
-    compile.with [project("core"), project("grammar"), ANTLR_RUNTIME, SLF4J, GUICE, PROTO]
+    compile.with [project("core"), project("grammar"), ANTLR_RUNTIME, SLF4J, GUICE]
     package(:zip).
       include(compile.dependencies, :path=>'lib').
       include(_("target/#{id}-#{version}.jar"), :path=>'lib').
