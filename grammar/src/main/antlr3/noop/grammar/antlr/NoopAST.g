@@ -34,6 +34,7 @@ scope Block {
   import scala.Enumeration;
   import scala.collection.mutable.Buffer;
   import scala.collection.mutable.ArrayBuffer;
+  import java.util.LinkedList;
 }
 
 @members {
@@ -151,9 +152,12 @@ parameters returns [Buffer<Parameter> parameters = new ArrayBuffer<Parameter>() 
 	;
 
 parameter [Buffer<Parameter> parameters]
-	:	^(PARAM modifiers? t=qualifiedType v=VariableIdentifier)
+	:	^(PARAM m=modifiers? t=qualifiedType v=VariableIdentifier)
 
 	{ Parameter param = new Parameter($v.text, $t.text);
+	  if ($m.modifiers != null) {
+	    param.modifiers().\$plus\$plus\$eq($m.modifiers);
+	  }
 	  $parameters.\$plus\$eq(param);
 	}
 	;

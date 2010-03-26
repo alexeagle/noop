@@ -13,12 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.model
+
+import collection.mutable.{ArrayBuffer, Buffer}
+
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class Parameter(val name:String, var noopType: String) {
+  val modifiers: Buffer[Modifier.Value] = new ArrayBuffer[Modifier.Value];
+
   override def toString() = String.format("Param[%s %s]", noopType, name);
 }

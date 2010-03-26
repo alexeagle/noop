@@ -74,7 +74,7 @@ class BlockSpec extends Spec with ShouldMatchers {
       val block = parser.buildTreeParser(blockAst).block();
       block.statements.size should be(1);
       block.statements(0).getClass() should be(classOf[MethodInvocationExpression]);
-      val methodInvocation = block.statements(0).asInstanceOf[MethodInvocationExpression];      
+      val methodInvocation = block.statements(0).asInstanceOf[MethodInvocationExpression];
       methodInvocation.left.getClass() should be(classOf[IdentifierExpression]);
       methodInvocation.left.asInstanceOf[IdentifierExpression].identifier should be("this");
       methodInvocation.name should be("a");
@@ -89,12 +89,10 @@ class BlockSpec extends Spec with ShouldMatchers {
       val block = parser.buildTreeParser(blockAst).block();
       block.statements.size should be(1);
 
-      block.statements(0).getClass() should be(classOf[MethodInvocationExpression]);
       val methodInvocation = block.statements(0).asInstanceOf[MethodInvocationExpression];
       methodInvocation.left.getClass() should be(classOf[IdentifierExpression]);
       methodInvocation.left.asInstanceOf[IdentifierExpression].identifier should be("a");
       methodInvocation.name should be("b");
-      methodInvocation.arguments should be(new ArrayBuffer[Expression]);
       methodInvocation.arguments.isEmpty should be (true);
     }
 

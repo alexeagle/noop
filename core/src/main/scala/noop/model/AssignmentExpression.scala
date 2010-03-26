@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.model
 
 /**
+ * An assignment evaluates the left-hand side, which must evaluate to an identifier.
+ * The identifier is then assigned the value of evaluating the right-hand side.
+ *
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class AssignmentExpression(val lhs: Expression, val rhs: Expression) extends Expression {
 
-  def accept(visitor: Visitor) = {
-	if (!lhs.isInstanceOf[IdentifierExpression]) {
-      throw new RuntimeException("Oops, I only know how to assign to identifiers");
-    }
+  override def accept(visitor: Visitor) = {
     lhs.accept(visitor);
     rhs.accept(visitor);
     visitor.visit(this);

@@ -15,20 +15,15 @@
  */
 package noop.interpreter;
 
-import com.google.inject.Inject;
-import inject.Injector;
-import org.slf4j.LoggerFactory;
+import com.google.inject.Inject
+import org.slf4j.{Logger, LoggerFactory}
 
-import scala.collection.mutable.ArrayBuffer;
+import scala.collection.mutable.ArrayBuffer
 
-import interpreter.testing.TestFailedException;
-import model.{AssignmentExpression, BindingDeclaration, Block, BooleanLiteralExpression,
-    ConditionalAndExpression, ConditionalOrExpression, DereferenceExpression,
-    EvaluatedExpression, IdentifierDeclarationExpression, IdentifierExpression,
-    IntLiteralExpression, Method, MethodInvocationExpression, Modifier,
-    OperatorExpression, ReturnExpression, ShouldExpression, StringLiteralExpression,
-    Visitor, WhileLoop};
-import types._;
+import noop.inject.Injector
+import noop.interpreter.testing.TestFailedException
+import noop.model._
+import noop.types._
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -38,7 +33,7 @@ class InterpreterVisitor @Inject() (val context: Context, injector: Injector,
     booleanFactory: BooleanFactory, stringFactory: StringFactory, integerFactory: IntegerFactory)
     extends Visitor {
 
-  val logger = LoggerFactory.getLogger(this.getClass());
+  val logger: Logger = LoggerFactory.getLogger(this.getClass());
 
   def visit(assignmentExpression: AssignmentExpression) = {
     val currentFrame = context.stack.top;

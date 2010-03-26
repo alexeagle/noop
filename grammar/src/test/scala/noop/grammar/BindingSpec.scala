@@ -56,7 +56,6 @@ class BindingSpec extends Spec with ShouldMatchers {
       firstBinding.noopType should be("A");
       firstBinding.boundTo.getClass() should be(classOf[IdentifierExpression]);
       firstBinding.boundTo.asInstanceOf[IdentifierExpression].identifier should be ("B");
-
     }
 
     it("can appear as a named binding block") {

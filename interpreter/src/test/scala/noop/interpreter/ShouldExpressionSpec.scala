@@ -26,9 +26,7 @@ import org.scalatest.Spec;
  */
 
 class ShouldExpressionSpec extends Spec with ShouldMatchers with GuiceInterpreterFixture {
-
    describe("the 'should' operator") {
-
     it("should be silent if the lefthand side matches an equals matcher") {
       val matcher = new MethodInvocationExpression(null, "equal", List(new StringLiteralExpression("hello")));
       val shouldExpr = new ShouldExpression(new StringLiteralExpression("hello"), matcher);

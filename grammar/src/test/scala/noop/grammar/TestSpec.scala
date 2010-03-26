@@ -17,8 +17,7 @@ package noop.grammar;
 
 import org.scalatest.matchers.ShouldMatchers;
 import org.scalatest.Spec;
-
-import model.ShouldExpression;
+import noop.model.ShouldExpression;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)

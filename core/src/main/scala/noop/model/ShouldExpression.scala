@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.model
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class ShouldExpression(left: Expression, right: Expression) extends Expression {
+class ShouldExpression(val left: Expression, val right: Expression) extends Expression {
 
-  def accept(visitor: Visitor) = {
+  override def accept(visitor: Visitor) = {
     left.accept(visitor);
     if (!right.isInstanceOf[MethodInvocationExpression]) {
       throw new RuntimeException("right-hand side of should must be a matcher");
