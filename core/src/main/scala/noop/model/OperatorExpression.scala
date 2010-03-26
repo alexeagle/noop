@@ -13,16 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.model
+
 
 /**
+ * An expression with a binary operator, like + , with two operands.
+ * This is sugar for the named method on the left operand, with the right operand as the argument.
+ *
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
-class OperatorExpression(val left: Expression, val operator: String, val right: Expression)
-    extends Expression {
+class OperatorExpression(val left: Expression, val operator: String, val right: Expression) extends Expression {
 
-  def accept(visitor: Visitor) = {
+  override def accept(visitor: Visitor) = {
     val methodName = operator match {
       case "+" => "plus";
       case "-" => "minus";

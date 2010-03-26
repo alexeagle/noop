@@ -56,8 +56,9 @@ class LiteralsSpec extends Spec with ShouldMatchers {
     it("should parse boolean literals") {
       val source = "{ Boolean a = true; }";
       parser.parseBlock(source).toStringTree() should equal ("(VAR Boolean (= a true))");
-      val statement = parser.buildTreeParser(parser.parseBlock(source)).block().statements(0)
-          .asInstanceOf[IdentifierDeclarationExpression];
+      val statement: IdentifierDeclarationExpression =
+          parser.buildTreeParser(parser.parseBlock(source)).block().statements(0).asInstanceOf[IdentifierDeclarationExpression];
+      statement.initialValue should be('defined);
       statement.initialValue match {
         case Some(bool) => {
           bool match {

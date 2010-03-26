@@ -21,7 +21,7 @@ package noop.model;
  */
 class StringLiteralExpression(val value: String) extends Expression {
 
-  def accept(visitor: Visitor) = {
+  override def accept(visitor: Visitor) = {
     visitor.visit(this);
   }
 }

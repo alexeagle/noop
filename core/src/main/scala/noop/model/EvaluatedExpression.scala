@@ -23,7 +23,7 @@ import types.NoopObject;
  */
 class EvaluatedExpression(val value: NoopObject) extends Expression {
 
-  def accept(visitor: Visitor) = {
+  override def accept(visitor: Visitor) = {
     visitor.visit(this);
   }
 }

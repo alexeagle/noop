@@ -42,8 +42,7 @@ class InterpreterSpec extends Spec with ShouldMatchers {
 
     it("should evaluate simple arithmetic") {
       val (context, visitor) = createFixture;
-      val expr = new OperatorExpression(
-        new IntLiteralExpression(2), "+", new IntLiteralExpression(3));
+      val expr = new OperatorExpression(new IntLiteralExpression(2), "+", new IntLiteralExpression(3));
 
       expr.accept(visitor);
       val result = context.stack.top.lastEvaluated(0);

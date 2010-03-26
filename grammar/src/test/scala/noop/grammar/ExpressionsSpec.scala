@@ -18,6 +18,7 @@ package noop.grammar;
 import org.scalatest.matchers.ShouldMatchers
 import noop.model.{OperatorExpression, IntLiteralExpression, IdentifierDeclarationExpression};
 import org.scalatest.Spec;
+import noop.model._
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -43,14 +44,15 @@ class ExpressionsSpec extends Spec with ShouldMatchers {
       block.statements(0).getClass should be(classOf[IdentifierDeclarationExpression]);
       val declaration = block.statements(0).asInstanceOf[IdentifierDeclarationExpression];
       declaration.initialValue should be ('defined);
-      val expression1 = declaration.initialValue.get().asInstanceOf[OperatorExpression];
-      expression1.operator should be ("+");
-      expression1.left match {
-        case e: IntLiteralExpression => e.value should be(3);
-        case _ => fail("expression of wrong type");
+      declaration.initialValue match {
+        case Some(expression1: OperatorExpression) => {
+          expression1.operator should be ("+");
+          expression1.left.asInstanceOf[IntLiteralExpression].value should be (3);
+          val expression2 = expression1.asInstanceOf[OperatorExpression].right;
+          expression2.asInstanceOf[OperatorExpression].operator should be ("%");
+        }
+        case _ => fail();
       }
-      val expression2 = expression1.asInstanceOf[OperatorExpression].right;
-      expression2.asInstanceOf[OperatorExpression].operator should be ("%");
     }
   }
 }

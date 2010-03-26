@@ -105,8 +105,7 @@ class MethodInvocationSpec extends Spec with ShouldMatchers with GuiceInterprete
       myMethod.parameters += new Parameter("other", "String");
       context.classLoader.findClass("noop.String").methods += myMethod;
       val target = new StringLiteralExpression("aString");
-      val expr = new MethodInvocationExpression(target, "plus",
-          List(new IntLiteralExpression(1)));
+      val expr = new MethodInvocationExpression(target, "plus", List(new IntLiteralExpression(1)));
 
       intercept[RuntimeException] {
         expr.accept(visitor);

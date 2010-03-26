@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.model
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -22,7 +22,7 @@ package noop.model;
 class IdentifierDeclarationExpression(val noopType: String, val name: String) extends Expression {
   var initialValue: Option[Expression] = None;
 
-  def accept(visitor: Visitor) = {
+  override def accept(visitor: Visitor) = {
     val value = initialValue match {
       case Some(v) => v;
       case None => new EvaluatedExpression(null);

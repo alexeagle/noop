@@ -16,12 +16,19 @@
 package noop.model;
 
 /**
+ * An integer literal, like 4.
  * @author alexeagle@google.com (Alex Eagle)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class IntLiteralExpression(val value: Int) extends Expression {
 
-  def accept(visitor: Visitor) = {
+  override def accept(visitor: Visitor) = {
     visitor.visit(this);
+  }
+
+  override def hashCode() = value.hashCode;
+  override def equals(other: Any) = other match {
+    case that: IntLiteralExpression => that.value.equals(value);
+    case _ => false;
   }
 }

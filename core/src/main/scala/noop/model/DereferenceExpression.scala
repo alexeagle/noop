@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.model
 
 /**
  * An AST model element for a dereference, expressed syntactically as a dot.
@@ -25,7 +25,7 @@ package noop.model;
  */
 class DereferenceExpression(val left: Expression, val right: Expression) extends Expression {
 
-  def accept(visitor: Visitor) = {
+  override def accept(visitor: Visitor) = {
     left.accept(visitor);
     right.accept(visitor);
     visitor.visit(this);

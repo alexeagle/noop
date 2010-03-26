@@ -16,6 +16,8 @@
 package noop.model;
 
 /**
+ * A boolean literal, either true or false.
+ *
  * @author Erik Soe Sorensen (eriksoe@gmail.com)
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
@@ -23,5 +25,11 @@ class BooleanLiteralExpression(val value: Boolean) extends Expression {
 
   def accept(visitor: Visitor) = {
     visitor.visit(this);
+  }
+
+  override def hashCode = value.hashCode;
+  override def equals(other: Any) = other match {
+    case that: BooleanLiteralExpression => that.value.equals(value);
+    case _ => false;
   }
 }

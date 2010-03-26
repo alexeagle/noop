@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package noop.model;
+package noop.model
 
 /**
  * @author tocman@gmail.com (Jeremie Lenfant-Engelmann)
  */
 class ConditionalAndExpression(val lhs: Expression, val rhs: Expression) extends Expression {
 
-  def accept(visitor: Visitor) = {
+  override def accept(visitor: Visitor) = {
     lhs.accept(visitor);
     visitor.visit(this);
     rhs.accept(visitor);
