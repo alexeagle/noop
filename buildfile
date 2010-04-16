@@ -16,7 +16,7 @@
 ENV['JAVA_OPTS'] ||= '-Xmx512m -XX:MaxPermSize=256m'
 
 require 'buildr/antlr'
-require 'buildr/scala'
+# require 'buildr/scala'
 
 VERSION_NUMBER = "0.1.0-SNAPSHOT"
 GROUP = "com.google"
@@ -29,6 +29,9 @@ ANTLR_RUNTIME = ["org.antlr:antlr-runtime:jar:3.1.1"]
 SLF4J = ["org.slf4j:slf4j-api:jar:1.5.6", "org.slf4j:slf4j-simple:jar:1.5.6"]
 GUICE = ["aopalliance:aopalliance:jar:1.0",
          "com.google.inject:guice:jar:2.0", "com.google.inject.extensions:guice-assisted-inject:jar:2.0" ]
+GCOLLECT = ["com.google.collections:google-collections:jar:1.0"]
+JUNIT = ["junit:junit:jar:4.7"]
+COMMONS_LANG = ["commons-lang:commons-lang:jar:2.4"]
 
 # Force Buildr Antlr integration to use the version we specify
 Buildr::ANTLR::REQUIRES.clear
@@ -40,7 +43,7 @@ define 'noop', :version=>VERSION_NUMBER do
   manifest["Implementation-Vendor"] = COPYRIGHT
 
   define "core" do
-    compile.with [SLF4J]
+    compile.with [SLF4J, GCOLLECT, JUNIT, COMMONS_LANG]
     package :jar
   end
 
