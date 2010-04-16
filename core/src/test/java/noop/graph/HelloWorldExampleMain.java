@@ -96,5 +96,4 @@ public class HelloWorldExampleMain {
     controller.applyAll(new NewNodeOperation(zero, sayHello, TYPEOF, intClazz),
                         new NewNodeOperation(new Return(zero), sayHello));
   }
-
 }
