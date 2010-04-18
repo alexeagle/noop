@@ -18,9 +18,11 @@ package noop.graph;
 
 import noop.graph.Edge;
 import noop.graph.Edge.EdgeType;
+import noop.model.Clazz;
 import noop.model.LanguageElement;
 import noop.graph.Workspace;
 import noop.operations.EditNodeOperation;
+import noop.operations.MutationOperation;
 import noop.operations.NewNodeOperation;
 
 import java.util.Map.Entry;
@@ -47,19 +49,28 @@ public class Controller {
   }
 
   private void addEdge(int newNodeId, LanguageElement destElement, EdgeType edgeType, boolean backwards) {
-    int destId = workspace.elements.indexOf(destElement);
+    int destId = destElement == null ? 0 : workspace.elements.indexOf(destElement);
     if (destId < 0) {
-      throw new IllegalStateException(String.format("Cannot add edge [%s -> %s] due to non-existant dest",
-          newNodeId, destId));
+      throw new IllegalStateException(String.format("Cannot add edge [%s -> %s] due to non-existant dest %s",
+          newNodeId, destId, destElement));
     }
     Edge newEdge = backwards ? new Edge(destId, edgeType, newNodeId) : new Edge(newNodeId, edgeType, destId);
     workspace.edges.add(newEdge);
   }
 
-  public void applyAll(NewNodeOperation... operations) {
-    for (NewNodeOperation operation : operations) {
+  public void applyAll(Iterable<? extends MutationOperation> operations) {
+    for (MutationOperation operation : operations) {
       apply(operation);
     }
+  }
+
+  private void apply(MutationOperation operation) {
+    if (operation instanceof NewNodeOperation) {
+      apply((NewNodeOperation)operation);
+    } else if (operation instanceof EditNodeOperation) {
+      apply((EditNodeOperation)operation);
+    }
+
   }
 
   public void apply(EditNodeOperation operation) {
