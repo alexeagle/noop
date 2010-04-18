@@ -25,6 +25,7 @@
   </scm>
   <modules>
     <module>core</module>
+    <module>translator</module>
   </modules>
 
   <properties>
