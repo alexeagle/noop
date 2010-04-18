@@ -18,11 +18,14 @@ package noop.graph;
 
 import noop.model.*;
 import noop.operations.NewNodeOperation;
+import noop.stdlib.StandardLibraryBuilder;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 
 import static noop.graph.Edge.EdgeType.*;
 
@@ -30,47 +33,30 @@ import static noop.graph.Edge.EdgeType.*;
  * @author alexeagle@google.com (Alex Eagle)
  */
 public class HelloWorldExampleMain {
-  private static Clazz stringClazz;
-  private static Clazz consoleClazz;
-  private static Clazz intClazz;
-  private static Block printMethod;
+  private Controller controller;
+  private Workspace workspace;
+  private StandardLibraryBuilder stdLib;
+  private final PrintStream out;
+
+  public HelloWorldExampleMain(PrintStream out) {
+    this.out = out;
+  }
 
   public static void main(String[] args) throws FileNotFoundException {
-    Workspace workspace = new Workspace();
-    Controller controller = new Controller(workspace);
-    createNoopStdLib(workspace, controller);
-    createHelloWorldProgram(workspace, controller);
-    PrintStream out = new PrintStream(new FileOutputStream(new File(args[0])));
+    new HelloWorldExampleMain(new PrintStream(new FileOutputStream(new File(args[0])))).run();
+  }
+
+  private void run() {
+    workspace = new Workspace();
+    controller = new Controller(workspace);
+    stdLib = new StandardLibraryBuilder();
+    System.out.println("stdLib = " + stdLib);
+    controller.applyAll(stdLib.build());
+    createHelloWorldProgram();
     workspace.accept(new DotGraphPrintingVisitor(workspace, out));
   }
 
-  public static void createNoopStdLib(Workspace workspace, Controller controller) {
-    Project project = new Project("Noop", "com.google.noop", "Apache 2");
-    controller.apply(new NewNodeOperation(project, workspace));
-
-    Library lang = new Library("lang");
-    controller.apply(new NewNodeOperation(lang, project));
-
-    stringClazz = new Clazz("String");
-    controller.apply(new NewNodeOperation(stringClazz, lang));
-
-    Library io = new Library("io");
-    controller.apply(new NewNodeOperation(io, project));
-
-    consoleClazz = new Clazz("Console");
-    controller.apply(new NewNodeOperation(consoleClazz, io));
-
-    printMethod = new Block("print", null);
-    controller.apply(new NewNodeOperation(printMethod, consoleClazz));
-
-    Parameter printArg = new Parameter("s");
-    controller.apply(new NewNodeOperation(printArg, printMethod, TYPEOF, stringClazz));
-
-    intClazz = new Clazz("Integer");
-    controller.apply(new NewNodeOperation(intClazz, lang));
-  }
-
-  public static void createHelloWorldProgram(Workspace workspace, Controller controller) {
+  public void createHelloWorldProgram() {
     Project project = new Project("Hello World", "com.example", "Copyright 2010\nExample Co.");
     controller.apply(new NewNodeOperation(project, workspace));
 
@@ -79,21 +65,21 @@ public class HelloWorldExampleMain {
 
     Parameter consoleDep = new Parameter("console");
 
-    Block sayHello = new Block("say hello", intClazz, consoleDep);
-    controller.applyAll(new NewNodeOperation(sayHello, library),
-                        new NewNodeOperation(consoleDep, sayHello, TYPEOF, consoleClazz));
+    Block sayHello = new Block("say hello", stdLib.intClazz, consoleDep);
+    controller.applyAll(Arrays.asList(new NewNodeOperation(sayHello, library),
+                        new NewNodeOperation(consoleDep, sayHello, TYPEOF, stdLib.consoleClazz)));
 
     Documentation sayHelloDoc = new Documentation("This is the entry point for the Hello World app");
     controller.apply(new NewNodeOperation(sayHelloDoc, sayHello));
 
     StringLiteral helloWorld = new StringLiteral("Hello, World!");
-    controller.apply(new NewNodeOperation(helloWorld, sayHello, TYPEOF, stringClazz));
+    controller.apply(new NewNodeOperation(helloWorld, sayHello, TYPEOF, stdLib.stringClazz));
 
     Expression printHello = new MethodInvocation(helloWorld);
-    controller.apply(new NewNodeOperation(printHello, sayHello,  TARGET, consoleDep, INVOKE, printMethod));
+    controller.apply(new NewNodeOperation(printHello, sayHello,  TARGET, consoleDep, INVOKE, stdLib.printMethod));
 
     IntegerLiteral zero = new IntegerLiteral(0);
-    controller.applyAll(new NewNodeOperation(zero, sayHello, TYPEOF, intClazz),
-                        new NewNodeOperation(new Return(zero), sayHello));
+    controller.applyAll(Arrays.asList(new NewNodeOperation(zero, sayHello, TYPEOF, stdLib.intClazz),
+                        new NewNodeOperation(new Return(zero), sayHello)));
   }
 }

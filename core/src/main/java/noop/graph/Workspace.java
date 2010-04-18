@@ -18,8 +18,6 @@ package noop.graph;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import noop.graph.Edge;
-import noop.graph.ModelVisitor;
 import noop.model.LanguageElement;
 
 import java.util.List;
