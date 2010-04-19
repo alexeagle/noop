@@ -1,5 +1,6 @@
 package noop.graph;
 
+import noop.graph.HelloWorldExampleMain.Output;
 import org.junit.Test;
 
 /**
@@ -8,7 +9,12 @@ import org.junit.Test;
 public class HelloWorldExampleTest {
 
   @Test
-  public void shouldRunSuccessfully() {
-    new HelloWorldExampleMain(System.out);
+  public void shouldCreateDotSuccessfully() {
+    new HelloWorldExampleMain(Output.DOT, System.out).run();
+  }
+
+  @Test
+  public void shouldCreateOutlineSuccessfully() {
+    new HelloWorldExampleMain(Output.OUTLINE, System.out).run();
   }
 }

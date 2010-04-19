@@ -22,6 +22,22 @@ import noop.graph.ModelVisitor;
  * @author alexeagle@google.com (Alex Eagle)
  */
 public class IdentifierDeclaration extends Expression<IdentifierDeclaration> {
+  public final String name;
+  private Expression initialValue;
+
+  public IdentifierDeclaration(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public boolean adoptChild(LanguageElement child) {
+    if (child instanceof Expression) {
+      initialValue = (Expression) child;
+      return true;
+    }
+    return false;
+  }
+
   @Override
   public void accept(ModelVisitor v) {
     v.visit(this);

@@ -32,4 +32,9 @@ public class Parameter extends LanguageElement<Parameter> {
   public void accept(ModelVisitor v) {
     v.visit(this);
   }
+
+  @Override
+  public String toString() {
+    return "Parameter " + name;
+  }
 }

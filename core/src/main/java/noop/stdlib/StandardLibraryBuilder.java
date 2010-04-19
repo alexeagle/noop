@@ -1,7 +1,6 @@
 package noop.stdlib;
 
 import com.google.common.collect.Lists;
-import noop.graph.Controller;
 import noop.model.*;
 import noop.operations.MutationOperation;
 import noop.operations.NewNodeOperation;
@@ -9,6 +8,7 @@ import noop.operations.NewNodeOperation;
 import java.util.List;
 
 import static noop.graph.Edge.EdgeType.TYPEOF;
+import static noop.model.Block.method;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -17,6 +17,7 @@ public class StandardLibraryBuilder {
   public Clazz intClazz;
   public Clazz consoleClazz;
   public Clazz stringClazz;
+  public Clazz voidClazz;
   public Block printMethod;
 
   public List<MutationOperation> build() {
@@ -31,13 +32,16 @@ public class StandardLibraryBuilder {
     stringClazz = new Clazz("String");
     result.add(new NewNodeOperation(stringClazz, lang));
 
+    voidClazz = new Clazz("Void");
+    result.add(new NewNodeOperation(voidClazz, lang));
+
     Library io = new Library("io");
     result.add(new NewNodeOperation(io, project));
 
     consoleClazz = new Clazz("Console");
     result.add(new NewNodeOperation(consoleClazz, io));
 
-    printMethod = new Block("print", null);
+    printMethod = method("print", voidClazz);
     result.add(new NewNodeOperation(printMethod, consoleClazz));
 
     Parameter printArg = new Parameter("s");

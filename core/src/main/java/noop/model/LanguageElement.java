@@ -16,15 +16,18 @@
 
 package noop.model;
 
+import com.google.common.collect.Sets;
 import noop.graph.ModelVisitor;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
 public abstract class LanguageElement<T> implements Serializable {
+  protected Documentation documentation;
+  protected Set<Block> unitTests = Sets.newHashSet();
   protected T previousVersion;
   public abstract void accept(ModelVisitor v);
   public T getPreviousVersion() {
@@ -32,5 +35,19 @@ public abstract class LanguageElement<T> implements Serializable {
   }
   public void setPreviousVersion(T previousVersion) {
     this.previousVersion = previousVersion;
+  }
+  public boolean adoptChild(LanguageElement child) {
+    if (child instanceof Documentation) {
+      this.documentation = (Documentation) child;
+      return true;
+    }
+    if (child instanceof Block) {
+      Block block = (Block) child;
+      if (block.isTest()) {
+        unitTests.add(block);
+        return true;
+      }
+    }
+    return false;
   }
 }

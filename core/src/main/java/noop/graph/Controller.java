@@ -37,25 +37,42 @@ public class Controller {
     this.workspace = workspace;
   }
 
-  public void apply(NewNodeOperation operation) {
-    workspace.elements.add(operation.newElement);
-    int newNodeId = workspace.elements.size() - 1;
-    addEdge(newNodeId, operation.container, EdgeType.CONTAIN, true);
-    for (Entry<EdgeType, LanguageElement> edgeTypeLanguageNodeEntry : operation.edges.entries()) {
-      LanguageElement destElement = edgeTypeLanguageNodeEntry.getValue();
-      EdgeType edgeType = edgeTypeLanguageNodeEntry.getKey();
-      addEdge(newNodeId, destElement, edgeType, false);
-    }
-  }
-
   private void addEdge(int newNodeId, LanguageElement destElement, EdgeType edgeType, boolean backwards) {
-    int destId = destElement == null ? 0 : workspace.elements.indexOf(destElement);
+    int destId = workspace.elements.indexOf(destElement);
     if (destId < 0) {
       throw new IllegalStateException(String.format("Cannot add edge [%s -> %s] due to non-existant dest %s",
           newNodeId, destId, destElement));
     }
     Edge newEdge = backwards ? new Edge(destId, edgeType, newNodeId) : new Edge(newNodeId, edgeType, destId);
     workspace.edges.add(newEdge);
+  }
+
+  public void apply(NewNodeOperation operation) {
+    int nextNodeId = workspace.elements.size();
+    LanguageElement container = operation.container == null ? workspace : operation.container;
+
+    if (!container.adoptChild(operation.newElement)) {
+      throw new IllegalArgumentException("Element " + operation.newElement
+          + " not allowed as child of " + container);
+    }
+    addEdge(nextNodeId, container, EdgeType.CONTAIN, true);
+    workspace.elements.add(operation.newElement);
+    for (Entry<EdgeType, LanguageElement> edgeTypeLanguageNodeEntry : operation.edges.entries()) {
+      LanguageElement destElement = edgeTypeLanguageNodeEntry.getValue();
+      EdgeType edgeType = edgeTypeLanguageNodeEntry.getKey();
+      addEdge(nextNodeId, destElement, edgeType, false);
+    }
+  }
+
+  public void apply(EditNodeOperation operation) {
+    LanguageElement currentValue = workspace.elements.get(operation.id);
+    if (currentValue.getClass() != operation.newValue.getClass()) {
+      throw new IllegalArgumentException(String.format("Cannot edit node %d with %s because the current type is %s",
+          operation.id, operation.newValue, currentValue.getClass()));
+    }
+
+    operation.newValue.setPreviousVersion(currentValue);
+    workspace.elements.set(operation.id, operation.newValue);
   }
 
   public void applyAll(Iterable<? extends MutationOperation> operations) {
@@ -71,16 +88,5 @@ public class Controller {
       apply((EditNodeOperation)operation);
     }
 
-  }
-
-  public void apply(EditNodeOperation operation) {
-    LanguageElement currentValue = workspace.elements.get(operation.id);
-    if (currentValue.getClass() != operation.newValue.getClass()) {
-      throw new IllegalArgumentException(String.format("Cannot edit node %d with %s because the current type is %s",
-          operation.id, operation.newValue, currentValue.getClass()));
-    }
-    
-    operation.newValue.setPreviousVersion(currentValue);
-    workspace.elements.set(operation.id, operation.newValue);
   }
 }

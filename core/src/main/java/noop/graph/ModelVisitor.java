@@ -22,6 +22,10 @@ import noop.model.*;
  * @author alexeagle@google.com (Alex Eagle)
  */
 public abstract class ModelVisitor {
+  public void enter(LanguageElement element) {}
+  
+  public void leave(LanguageElement element) {}
+
   public void visit(Edge edge) {}
 
   public void visit(Workspace workspace) {}
@@ -37,8 +41,6 @@ public abstract class ModelVisitor {
   public void visit(Library library) {}
 
   public void visit(Clazz clazz) {}
-
-  public void leave(Workspace workspace) {}
 
   public void visit(StringLiteral stringLiteral) {}
 
