@@ -50,7 +50,6 @@ public class HelloWorldExampleMain {
     workspace = new Workspace();
     controller = new Controller(workspace);
     stdLib = new StandardLibraryBuilder();
-    System.out.println("stdLib = " + stdLib);
     controller.applyAll(stdLib.build());
     createHelloWorldProgram();
     workspace.accept(new DotGraphPrintingVisitor(workspace, out));
@@ -58,7 +57,7 @@ public class HelloWorldExampleMain {
 
   public void createHelloWorldProgram() {
     Project project = new Project("Hello World", "com.example", "Copyright 2010\nExample Co.");
-    controller.apply(new NewNodeOperation(project, workspace));
+    controller.apply(new NewNodeOperation(project));
 
     Library library = new Library("hello");
     controller.apply(new NewNodeOperation(library, project));

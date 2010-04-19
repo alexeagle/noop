@@ -22,6 +22,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 import noop.model.LanguageElement;
+import noop.model.Project;
 
 import java.util.Collection;
 import java.util.List;
@@ -41,9 +42,23 @@ public class NewNodeOperation implements MutationOperation {
     }
   });
 
+  /**
+   * Create a new node with the given parent
+   * @param newElement any language element
+   * @param container the containing element
+   */
   public NewNodeOperation(LanguageElement newElement, LanguageElement container) {
     this.newElement = newElement;
     this.container = container;
+  }
+
+  /**
+   * Create a new node whose parent is the workspace.
+   * This may create orphaned elements, but is appropriate for projects
+   * @param newElement the element
+   */
+  public NewNodeOperation(LanguageElement newElement) {
+    this(newElement, null);
   }
 
   public NewNodeOperation(LanguageElement newElement, LanguageElement container,
