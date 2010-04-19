@@ -23,7 +23,7 @@ public class StandardLibraryBuilder {
     List<MutationOperation> result = Lists.newArrayList();
 
     Project project = new Project("Noop", "com.google.noop", "Apache 2");
-    result.add(new NewNodeOperation(project, null));
+    result.add(new NewNodeOperation(project));
 
     Library lang = new Library("lang");
     result.add(new NewNodeOperation(lang, project));
