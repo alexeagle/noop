@@ -16,8 +16,10 @@
 
 package noop.model;
 
+import com.google.common.collect.Lists;
 import noop.graph.ModelVisitor;
 
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -29,26 +31,69 @@ import static java.util.Collections.emptyList;
 public class Block extends LanguageElement<Block> {
   public final String name;
   public final Clazz returnType;
-  public final List<Parameter> parameters;
+  public final List<Parameter> parameters = Lists.newArrayList();
+  private final List<Expression> statements = Lists.newArrayList();
+  public final boolean test;
+  public final boolean instance;
 
-  public Block(String name, Clazz returnType, Parameter... parameters) {
+  private Block(String name, Clazz returnType, boolean isTest, boolean instance) {
     this.name = name;
     this.returnType = returnType;
-    this.parameters = asList(parameters);
+    this.test = isTest;
+    this.instance = instance;
   }
 
-  public Block() {
-    this.name = null;
-    this.returnType = null;
-    this.parameters = emptyList();
+  @Override
+  public boolean adoptChild(LanguageElement child) {
+    if (child instanceof Parameter) {
+      parameters.add((Parameter) child);
+      return true;
+    }
+    if (child instanceof Expression) {
+      statements.add((Expression) child);
+      return true;
+    }
+    return super.adoptChild(child);
+  }
+
+  public static Block unitTest(String name) {
+    return new Block(name, null, true, false);
+  }
+
+  public static Block function(String name, Clazz returnType) {
+    return new Block(name, returnType, false, false);
+  }
+
+  public static Block method(String name, Clazz returnType) {
+    // TODO: should hold a reference to the instance clazz?
+    return new Block(name, returnType, false, true);
   }
 
   @Override
   public void accept(ModelVisitor v) {
     v.visit(this);
+    for (Parameter parameter : parameters) {
+      v.enter(parameter);
+      parameter.accept(v);
+      v.leave(parameter);
+    }
+    for (Expression statement : statements) {
+      v.enter(statement);
+      statement.accept(v);
+      v.leave(statement);
+    }
   }
 
-  public boolean isMethod() {
-    return name != null;
+  @Override
+  public String toString() {
+    return "Block " + name;
+  }
+
+  public boolean isFunction() {
+    return !instance;
+  }
+
+  public boolean isTest() {
+    return test;
   }
 }

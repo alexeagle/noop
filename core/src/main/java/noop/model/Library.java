@@ -16,23 +16,51 @@
 
 package noop.model;
 
+import com.google.common.collect.Lists;
 import noop.graph.ModelVisitor;
+
+import java.util.List;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
 public class Library extends LanguageElement<Library> {
   public final String name;
-  public String copyright;
+  private final List<Clazz> classes = Lists.newArrayList();
+  private final List<Block> functions = Lists.newArrayList();
+
+  public Library(String name) {
+    this.name = name;
+  }
+
+  @Override
+  public boolean adoptChild(LanguageElement child) {
+    if (child instanceof Clazz) {
+      classes.add((Clazz) child);
+      return true;
+    }
+    if (child instanceof Block) {
+      Block block = (Block) child;
+      if (block.isFunction()) {
+        functions.add(block);
+        return true;
+      }
+    }
+    return super.adoptChild(child);
+  }
 
   @Override
   public void accept(ModelVisitor v) {
     v.visit(this);
-  }
-
-  public Library(String name) {
-    this.name = name;
-
-
+    for (Block function : functions) {
+      v.enter(function);
+      function.accept(v);
+      v.leave(function);
+    }
+    for (Clazz clazz : classes) {
+      v.enter(clazz);
+      clazz.accept(v);
+      v.leave(clazz);
+    }
   }
 }

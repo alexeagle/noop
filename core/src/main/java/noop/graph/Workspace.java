@@ -16,9 +16,13 @@
 
 package noop.graph;
 
+import com.google.common.base.Nullable;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import noop.model.LanguageElement;
+import noop.model.Project;
 
 import java.util.List;
 import java.util.Set;
@@ -29,18 +33,40 @@ import java.util.Set;
 public class Workspace extends LanguageElement<Workspace> {
   public final Set<Edge> edges = Sets.newHashSet();
   public final List<LanguageElement> elements = Lists.<LanguageElement>newArrayList(this);
+  private List<Project> projects = Lists.newArrayList();
+  private List<LanguageElement> orphans = Lists.newArrayList();
+
+  @Override
+  public boolean adoptChild(LanguageElement child) {
+    if (child instanceof Project) {
+      projects.add((Project) child);
+    } else {
+      orphans.add(child);
+    }
+    return true;
+  }
 
   @Override
   public void accept(ModelVisitor v) {
+    v.enter(this);
     v.visit(this);
-    for (LanguageElement element : elements) {
-      if (element != this) {
-        element.accept(v);
-      }
+    for (Project project : projects) {
+      v.enter(project);
+      project.accept(v);
+      v.leave(project);
     }
     for (Edge edge : edges) {
       edge.accept(v);
     }
     v.leave(this);
+  }
+
+  public Iterable<Edge> edgesFrom(final int id) {
+    return Iterables.filter(edges, new Predicate<Edge>() {
+      @Override
+      public boolean apply(@Nullable Edge input) {
+        return input.src == id;
+      }
+    });
   }
 }

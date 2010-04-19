@@ -25,21 +25,16 @@ import static java.lang.System.identityHashCode;
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-public class DotGraphPrintingVisitor extends ModelVisitor {
-  private final Workspace workspace;
+public class DotGraphPrintingVisitor extends PrintingVisitor {
   private final PrintStream out;
 
-  public DotGraphPrintingVisitor(Workspace workspace, PrintStream out) {
-    this.workspace = workspace;
+  public DotGraphPrintingVisitor(PrintStream out) {
     this.out = out;
-  }
-
-  private int idFor(LanguageElement element) {
-    return workspace.elements.indexOf(element);
   }
 
   @Override
   public void visit(Workspace workspace) {
+    this.workspace = workspace;
     out.format("digraph workspace\n{\n");
     out.format("%s [label=\"%s\", shape=house]\n", idFor(workspace), "Workspace");
   }
@@ -73,6 +68,12 @@ public class DotGraphPrintingVisitor extends ModelVisitor {
   }
 
   @Override
+  public void visit(IdentifierDeclaration identifierDeclaration) {
+    out.format("%s [label=\"%s\"]\n", idFor(identifierDeclaration), identifierDeclaration.name);
+
+  }
+
+  @Override
   public void visit(Return aReturn) {
     out.format("%s [label=\"%s\"]\n", idFor(aReturn), "[return]");
     out.format("%s -> %s [label=arg, style=dotted]\n",
@@ -103,8 +104,12 @@ public class DotGraphPrintingVisitor extends ModelVisitor {
     out.format("%s [label=\"%s\", shape=none]\n", idFor(documentation), escape(documentation.summary));
   }
 
-  private String escape(String value) {
-    return value.replaceAll("\n", "\\\\n");
+  protected String escape(String value) {
+    String escaped = super.escape(value);
+    if (escaped.length() > 15) {
+      escaped = escaped.substring(0, 12) + "...";
+    }
+    return escaped;
   }
 
   @Override
@@ -118,8 +123,11 @@ public class DotGraphPrintingVisitor extends ModelVisitor {
   }
 
   @Override
-  public void leave(Workspace workspace) {
-    out.println("}");
+  public void leave(LanguageElement element) {
+    super.leave(element);
+    if (currentDepth == 0) {
+      out.println("}");
+    }
   }
 
   @Override

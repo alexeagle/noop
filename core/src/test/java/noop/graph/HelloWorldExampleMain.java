@@ -19,7 +19,6 @@ package noop.graph;
 import noop.model.*;
 import noop.operations.NewNodeOperation;
 import noop.stdlib.StandardLibraryBuilder;
-import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,6 +27,8 @@ import java.io.PrintStream;
 import java.util.Arrays;
 
 import static noop.graph.Edge.EdgeType.*;
+import static noop.model.Block.function;
+import static noop.model.Block.unitTest;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -36,23 +37,41 @@ public class HelloWorldExampleMain {
   private Controller controller;
   private Workspace workspace;
   private StandardLibraryBuilder stdLib;
+  private final Output output;
   private final PrintStream out;
 
-  public HelloWorldExampleMain(PrintStream out) {
+  public HelloWorldExampleMain(Output output, PrintStream out) {
+    this.output = output;
     this.out = out;
   }
 
-  public static void main(String[] args) throws FileNotFoundException {
-    new HelloWorldExampleMain(new PrintStream(new FileOutputStream(new File(args[0])))).run();
+  public enum Output {
+    OUTLINE, DOT
   }
 
-  private void run() {
+  public static void main(String[] args) throws FileNotFoundException {
+    new HelloWorldExampleMain(Output.valueOf(args[0].toUpperCase()),
+        new PrintStream(new FileOutputStream(new File(args[1])))).run();
+  }
+
+  public void run() {
     workspace = new Workspace();
     controller = new Controller(workspace);
     stdLib = new StandardLibraryBuilder();
     controller.applyAll(stdLib.build());
     createHelloWorldProgram();
-    workspace.accept(new DotGraphPrintingVisitor(workspace, out));
+    PrintingVisitor graphPrintingVisitor;
+    switch (output) {
+      case DOT:
+        graphPrintingVisitor = new DotGraphPrintingVisitor(out);
+        break;
+      case OUTLINE:
+        graphPrintingVisitor = new OutlinePrintingVisitor(out);
+        break;
+      default:
+        throw new RuntimeException("unknown output type " + output);
+    }
+    workspace.accept(graphPrintingVisitor);
   }
 
   public void createHelloWorldProgram() {
@@ -64,9 +83,10 @@ public class HelloWorldExampleMain {
 
     Parameter consoleDep = new Parameter("console");
 
-    Block sayHello = new Block("say hello", stdLib.intClazz, consoleDep);
-    controller.applyAll(Arrays.asList(new NewNodeOperation(sayHello, library),
-                        new NewNodeOperation(consoleDep, sayHello, TYPEOF, stdLib.consoleClazz)));
+    Block sayHello = function("Say hello", stdLib.intClazz);
+    controller.applyAll(Arrays.asList(
+        new NewNodeOperation(sayHello, library),
+        new NewNodeOperation(consoleDep, sayHello, TYPEOF, stdLib.consoleClazz)));
 
     Documentation sayHelloDoc = new Documentation("This is the entry point for the Hello World app");
     controller.apply(new NewNodeOperation(sayHelloDoc, sayHello));
@@ -80,5 +100,17 @@ public class HelloWorldExampleMain {
     IntegerLiteral zero = new IntegerLiteral(0);
     controller.applyAll(Arrays.asList(new NewNodeOperation(zero, sayHello, TYPEOF, stdLib.intClazz),
                         new NewNodeOperation(new Return(zero), sayHello)));
+
+    Block unitTest = unitTest("Should say hello");
+    controller.apply(new NewNodeOperation(unitTest, sayHello));
+
+    IdentifierDeclaration resultDecl = new IdentifierDeclaration("result");
+    controller.apply(new NewNodeOperation(resultDecl, unitTest, TYPEOF, stdLib.intClazz));
+
+    Expression callMain = new MethodInvocation();
+    controller.apply(new NewNodeOperation(callMain, resultDecl, INVOKE, sayHello));
+
+    Expression assertion = new MethodInvocation();
+    controller.apply(new NewNodeOperation(assertion, unitTest));
   }
 }

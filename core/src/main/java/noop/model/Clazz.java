@@ -16,20 +16,38 @@
 
 package noop.model;
 
+import com.google.common.collect.Sets;
 import noop.graph.ModelVisitor;
+
+import java.util.Set;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
 public class Clazz extends LanguageElement<Clazz> {
   public final String name;
+  private final Set<Block> blocks = Sets.newHashSet();
 
   public Clazz(String name) {
     this.name = name;
   }
 
   @Override
+  public boolean adoptChild(LanguageElement child) {
+    if (child instanceof Block) {
+      blocks.add((Block) child);
+      return true;
+    }
+    return super.adoptChild(child);
+  }
+
+  @Override
   public void accept(ModelVisitor v) {
     v.visit(this);
+    for (Block block : blocks) {
+      v.enter(block);
+      block.accept(v);
+      v.leave(block);
+    }
   }
 }

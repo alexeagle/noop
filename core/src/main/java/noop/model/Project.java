@@ -16,9 +16,12 @@
 
 package noop.model;
 
+import com.google.common.collect.Lists;
 import noop.graph.ModelVisitor;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+
+import java.util.List;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -27,6 +30,7 @@ public class Project extends LanguageElement<Project> {
   private final String name;
   private final String namespace;
   private final String copyright;
+  private final List<Library> libraries = Lists.newArrayList();
 
   public String getCopyright() {
     return copyright;
@@ -44,6 +48,15 @@ public class Project extends LanguageElement<Project> {
     this.name = name;
     this.namespace = namespace;
     this.copyright = copyright;
+  }
+
+  @Override
+  public boolean adoptChild(LanguageElement child) {
+    if (child instanceof Library) {
+      libraries.add((Library) child);
+      return true;
+    }
+    return super.adoptChild(child);
   }
 
   @Override
@@ -71,5 +84,10 @@ public class Project extends LanguageElement<Project> {
   @Override
   public void accept(ModelVisitor v) {
     v.visit(this);
+    for (Library library : libraries) {
+      v.enter(library);
+      library.accept(v);
+      v.leave(library);
+    }
   }
 }
