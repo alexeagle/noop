@@ -16,11 +16,15 @@
 
 package noop.graph;
 
+import noop.graph.Edge.EdgeType;
 import noop.model.*;
 
 import java.io.PrintStream;
 
+import static com.google.common.base.Join.join;
+import static com.google.common.collect.Iterables.filter;
 import static java.lang.System.identityHashCode;
+import static noop.graph.Edge.notContain;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -36,14 +40,24 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
   public void visit(Workspace workspace) {
     this.workspace = workspace;
     out.format("digraph workspace\n{\n");
-    out.format("%s [label=\"%s\", shape=house]\n", idFor(workspace), "Workspace");
+    print(workspace, "Workspace", "shape=house");
+  }
+
+  private void print(LanguageElement element, String label, String... additional) {
+    String attrs = join(",", additional);
+    if (additional.length > 0) {
+      attrs = ", " + attrs;
+    }
+    out.format("%s [label=\"%s\"%s]\n", idFor(element), label, attrs);
+    for (Edge edge : filter(workspace.edgesFrom(idFor(element)), notContain())) {
+      out.format("%d -> %d ", edge.src, edge.dest);
+      out.println("[label=\"" + edge.type.name().toLowerCase() + "\", style=dashed]");
+    }
   }
 
   @Override
   public void visit(Project project) {
-    out.format("%s [label=\"%s (%s)\", shape=box]\n",
-        idFor(project), project.getName(), project.getNamespace());
-
+    print(project, String.format("%s -> %s", project.getNamespace(), project.getName()), "shape=box");
     out.format("%s [label=\"%s\", shape=none]\n", identityHashCode(project.getCopyright()),
         escape(project.getCopyright()));
     out.format("%s -> %s\n", idFor(project), identityHashCode(project.getCopyright()));
@@ -51,57 +65,58 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
 
   @Override
   public void visit(Library library) {
-    out.format("%s [label=\"%s\", shape=hexagon]\n", idFor(library), library.name);
+    print(library, library.name, "shape=hexagon");
   }
 
   @Override
-  public void visit(Block block) {
-    out.format("%s [label=\"%s {}\"]\n", idFor(block), block.name);
-    for (Parameter parameter : block.parameters) {
-      out.format("%s -> %s [label=param, style=dotted]\n",
-          idFor(block), idFor(parameter));
-    }
-    if (block.returnType != null) {
-      out.format("%s -> %s [label=return, style=dotted]\n",
-          idFor(block), idFor(block.returnType));
-    }
+  public void visit(Method method) {
+    print(method, method.name + "{}");
+  }
+
+  @Override
+  public void visit(Function function) {
+    print(function, function.name + "{}");
+  }
+
+  @Override
+  public void visit(UnitTest unitTest) {
+    print(unitTest, "test: " + unitTest.name);
+  }
+
+  @Override
+  public void visit(Assignment assignment) {
+    print(assignment, "assign");
   }
 
   @Override
   public void visit(IdentifierDeclaration identifierDeclaration) {
-    out.format("%s [label=\"%s\"]\n", idFor(identifierDeclaration), identifierDeclaration.name);
+    print(identifierDeclaration, identifierDeclaration.name);
 
   }
 
   @Override
   public void visit(Return aReturn) {
-    out.format("%s [label=\"%s\"]\n", idFor(aReturn), "[return]");
-    out.format("%s -> %s [label=arg, style=dotted]\n",
-          idFor(aReturn), idFor(aReturn.returned));
+    print(aReturn, "[return]");
   }
 
   @Override
   public void visit(IntegerLiteral integerLiteral) {
-    out.format("%s [label=\"%s\"]\n", idFor(integerLiteral), integerLiteral.value);        
+    print(integerLiteral, String.valueOf(integerLiteral.value));
   }
 
   @Override
   public void visit(Parameter parameter) {
-    out.format("%s [label=\"%s\"]\n", idFor(parameter), parameter.name);    
+    print(parameter, parameter.name);
   }
 
   @Override
   public void visit(MethodInvocation methodInvocation) {
-    out.format("%s [label=\"%s\"]\n", idFor(methodInvocation), "[invoke]");
-    for (Expression argument : methodInvocation.arguments) {
-      out.format("%s -> %s [label=arg, style=dotted]\n",
-          idFor(methodInvocation), idFor(argument));
-    }
+    print(methodInvocation, "[invoke]");
   }
 
   @Override
   public void visit(Documentation documentation) {
-    out.format("%s [label=\"%s\", shape=none]\n", idFor(documentation), escape(documentation.summary));
+    print(documentation, escape(documentation.summary), "shape=none");
   }
 
   protected String escape(String value) {
@@ -114,12 +129,12 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
 
   @Override
   public void visit(StringLiteral stringLiteral) {
-    out.format("%s [label=\"\\\"%s\\\"\"]\n", idFor(stringLiteral), stringLiteral.value);
+    print(stringLiteral, "\\\"" + stringLiteral.value + "\\\"");
   }
 
   @Override
   public void visit(Clazz clazz) {
-    out.format("%s [label=\"%s\"]\n", idFor(clazz), clazz.name);
+    print(clazz, clazz.name);
   }
 
   @Override
@@ -132,14 +147,8 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
 
   @Override
   public void visit(Edge edge) {
-    out.format("%d -> %d ", edge.src, edge.dest);
-    switch (edge.type) {
-      case CONTAIN:
-        out.print("\n");
-        break;
-      default:
-        out.println("[label=\"" + edge.type.name().toLowerCase() + "\", style=dashed]");
-        break;
+    if (edge.type == EdgeType.CONTAIN) {
+      out.format("%d -> %d\n", edge.src, edge.dest);
     }
   }
 }

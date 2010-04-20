@@ -18,6 +18,7 @@ package noop.graph;
 
 import noop.model.*;
 import noop.operations.EditNodeOperation;
+import noop.operations.NewEdgeOperation;
 import noop.operations.NewNodeOperation;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,7 +53,8 @@ public class ControllerTest {
     controller.apply(new NewNodeOperation(stringType, workspace));
 
     LanguageElement newNode = new StringLiteral("yes");
-    controller.apply(new NewNodeOperation(newNode, workspace, TYPEOF, stringType));
+    controller.apply(new NewNodeOperation(newNode, workspace));
+    controller.apply(new NewEdgeOperation(newNode, TYPEOF, stringType));
     assertEquals(3, workspace.edges.size());
     assertTrue(workspace.edges.contains(new Edge(0, CONTAIN, 1)));
     assertTrue(workspace.edges.contains(new Edge(0, CONTAIN, 2)));

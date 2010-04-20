@@ -18,24 +18,16 @@ package noop.model;
 
 import noop.graph.ModelVisitor;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
 public class MethodInvocation extends Expression<MethodInvocation> {
-  public final List<Expression> arguments;
-
-  public MethodInvocation(Expression... arguments) {
-    this.arguments = Arrays.asList(arguments);
+  public MethodInvocation() {
   }
 
   @Override
   public void accept(ModelVisitor v) {
     v.visit(this);
-    for (Expression argument : arguments) {
-      argument.accept(v);
-    }
+    super.accept(v);
   }
 }

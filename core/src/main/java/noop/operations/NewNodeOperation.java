@@ -16,18 +16,7 @@
 
 package noop.operations;
 
-import com.google.common.base.Supplier;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
 import noop.model.LanguageElement;
-import noop.model.Project;
-
-import java.util.Collection;
-import java.util.List;
-
-import static noop.graph.Edge.EdgeType;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -35,12 +24,6 @@ import static noop.graph.Edge.EdgeType;
 public class NewNodeOperation implements MutationOperation {
   public final LanguageElement newElement;
   public final LanguageElement container;
-  public final Multimap<EdgeType, LanguageElement> edges = Multimaps.newListMultimap(
-      Maps.<EdgeType, Collection<LanguageElement>>newHashMap(), new Supplier<List<LanguageElement>>() {
-    public List<LanguageElement> get() {
-      return Lists.newArrayList();
-    }
-  });
 
   /**
    * Create a new node with the given parent
@@ -59,18 +42,5 @@ public class NewNodeOperation implements MutationOperation {
    */
   public NewNodeOperation(LanguageElement newElement) {
     this(newElement, null);
-  }
-
-  public NewNodeOperation(LanguageElement newElement, LanguageElement container,
-                          EdgeType edgeType, LanguageElement dest) {
-    this(newElement, container);
-    edges.put(edgeType, dest);
-  }
-
-  public NewNodeOperation(LanguageElement newElement, LanguageElement container,
-                          EdgeType edgeType, LanguageElement dest,
-                          EdgeType edge2Type, LanguageElement dest2) {
-    this(newElement, container, edgeType, dest);
-    edges.put(edge2Type, dest2);
   }
 }

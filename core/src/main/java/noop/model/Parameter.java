@@ -31,6 +31,7 @@ public class Parameter extends LanguageElement<Parameter> {
   @Override
   public void accept(ModelVisitor v) {
     v.visit(this);
+    super.accept(v);
   }
 
   @Override

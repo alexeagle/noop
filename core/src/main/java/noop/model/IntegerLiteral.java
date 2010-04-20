@@ -31,5 +31,6 @@ public class IntegerLiteral extends Expression<IntegerLiteral> {
   @Override
   public void accept(ModelVisitor v) {
     v.visit(this);
+    super.accept(v);
   }
 }

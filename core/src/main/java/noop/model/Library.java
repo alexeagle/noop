@@ -39,12 +39,10 @@ public class Library extends LanguageElement<Library> {
       classes.add((Clazz) child);
       return true;
     }
-    if (child instanceof Block) {
-      Block block = (Block) child;
-      if (block.isFunction()) {
-        functions.add(block);
-        return true;
-      }
+    if (child instanceof Function) {
+      Function block = (Function) child;
+      functions.add(block);
+      return true;
     }
     return super.adoptChild(child);
   }
@@ -62,5 +60,6 @@ public class Library extends LanguageElement<Library> {
       clazz.accept(v);
       v.leave(clazz);
     }
+    super.accept(v);
   }
 }

@@ -49,5 +49,6 @@ public class Clazz extends LanguageElement<Clazz> {
       block.accept(v);
       v.leave(block);
     }
+    super.accept(v);
   }
 }

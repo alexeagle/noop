@@ -89,5 +89,6 @@ public class Project extends LanguageElement<Project> {
       library.accept(v);
       v.leave(library);
     }
+    super.accept(v);
   }
 }

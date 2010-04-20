@@ -19,28 +19,20 @@ package noop.model;
 import com.google.common.collect.Lists;
 import noop.graph.ModelVisitor;
 
-import java.util.Collections;
 import java.util.List;
-
-import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-public class Block extends LanguageElement<Block> {
+public abstract class Block<T> extends LanguageElement<T> {
   public final String name;
   public final Clazz returnType;
-  public final List<Parameter> parameters = Lists.newArrayList();
-  private final List<Expression> statements = Lists.newArrayList();
-  public final boolean test;
-  public final boolean instance;
+  protected final List<Parameter> parameters = Lists.newArrayList();
+  protected final List<Expression> statements = Lists.newArrayList();
 
-  private Block(String name, Clazz returnType, boolean isTest, boolean instance) {
+  public Block(String name, Clazz returnType) {
     this.name = name;
     this.returnType = returnType;
-    this.test = isTest;
-    this.instance = instance;
   }
 
   @Override
@@ -56,22 +48,8 @@ public class Block extends LanguageElement<Block> {
     return super.adoptChild(child);
   }
 
-  public static Block unitTest(String name) {
-    return new Block(name, null, true, false);
-  }
-
-  public static Block function(String name, Clazz returnType) {
-    return new Block(name, returnType, false, false);
-  }
-
-  public static Block method(String name, Clazz returnType) {
-    // TODO: should hold a reference to the instance clazz?
-    return new Block(name, returnType, false, true);
-  }
-
   @Override
   public void accept(ModelVisitor v) {
-    v.visit(this);
     for (Parameter parameter : parameters) {
       v.enter(parameter);
       parameter.accept(v);
@@ -82,18 +60,11 @@ public class Block extends LanguageElement<Block> {
       statement.accept(v);
       v.leave(statement);
     }
-  }
-
-  @Override
-  public String toString() {
-    return "Block " + name;
-  }
-
-  public boolean isFunction() {
-    return !instance;
-  }
-
-  public boolean isTest() {
-    return test;
+    for (UnitTest unitTest : unitTests) {
+      v.enter(unitTest);
+      unitTest.accept(v);
+      v.leave(unitTest);
+    }
+    super.accept(v);
   }
 }
