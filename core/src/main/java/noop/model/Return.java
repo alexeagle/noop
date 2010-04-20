@@ -22,15 +22,12 @@ import noop.graph.ModelVisitor;
  * @author alexeagle@google.com (Alex Eagle)
  */
 public class Return extends Expression {
-  public final Expression returned;
-
-  public Return(Expression returned) {
-    this.returned = returned;
+  public Return() {
   }
 
   @Override
   public void accept(ModelVisitor v) {
     v.visit(this);
-    returned.accept(v);
+    super.accept(v);
   }
 }

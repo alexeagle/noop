@@ -43,8 +43,18 @@ public class OutlinePrintingVisitor extends PrintingVisitor {
   }
 
   @Override
-  public void visit(Block block) {
-    print(block, "%s{}", block.name);
+  public void visit(Method method) {
+    print(method, "Method %s{}", method.name);
+  }
+
+  @Override
+  public void visit(Function function) {
+    print(function, "Function %s{}", function.name);
+  }
+
+  @Override
+  public void visit(UnitTest unitTest) {
+    print(unitTest, "Unit test %s", unitTest.name);
   }
 
   @Override
@@ -80,6 +90,11 @@ public class OutlinePrintingVisitor extends PrintingVisitor {
   @Override
   public void visit(StringLiteral stringLiteral) {
     print(stringLiteral, "literal \"%s\"", stringLiteral.value);
+  }
+
+  @Override
+  public void visit(Return aReturn) {
+    print(aReturn, "return");
   }
 
   private void print(LanguageElement element, String message, String... params) {

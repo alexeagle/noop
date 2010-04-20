@@ -30,7 +30,11 @@ public abstract class ModelVisitor {
 
   public void visit(Workspace workspace) {}
 
-  public void visit(Block block) {}
+  public void visit(Method method) {}
+
+  public void visit(Function function) {}
+
+  public void visit(UnitTest unitTest) {}
 
   public void visit(Project project) {}
 

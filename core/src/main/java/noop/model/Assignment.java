@@ -25,5 +25,6 @@ public class Assignment extends Expression<Assignment> {
   @Override
   public void accept(ModelVisitor v) {
     v.visit(this);
+    super.accept(v);
   }
 }

@@ -3,12 +3,12 @@ package noop.stdlib;
 import com.google.common.collect.Lists;
 import noop.model.*;
 import noop.operations.MutationOperation;
+import noop.operations.NewEdgeOperation;
 import noop.operations.NewNodeOperation;
 
 import java.util.List;
 
 import static noop.graph.Edge.EdgeType.TYPEOF;
-import static noop.model.Block.method;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -41,11 +41,12 @@ public class StandardLibraryBuilder {
     consoleClazz = new Clazz("Console");
     result.add(new NewNodeOperation(consoleClazz, io));
 
-    printMethod = method("print", voidClazz);
+    printMethod = new Method("print", voidClazz);
     result.add(new NewNodeOperation(printMethod, consoleClazz));
 
     Parameter printArg = new Parameter("s");
-    result.add(new NewNodeOperation(printArg, printMethod, TYPEOF, stringClazz));
+    result.add(new NewNodeOperation(printArg, printMethod));
+    result.add(new NewEdgeOperation(printArg, TYPEOF, stringClazz));
 
     intClazz = new Clazz("Integer");
     result.add(new NewNodeOperation(intClazz, lang));

@@ -17,6 +17,7 @@
 package noop.graph;
 
 import noop.model.*;
+import noop.operations.NewEdgeOperation;
 import noop.operations.NewNodeOperation;
 import noop.stdlib.StandardLibraryBuilder;
 
@@ -24,11 +25,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
-import java.util.Arrays;
 
+import static java.util.Arrays.asList;
 import static noop.graph.Edge.EdgeType.*;
-import static noop.model.Block.function;
-import static noop.model.Block.unitTest;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -83,32 +82,47 @@ public class HelloWorldExampleMain {
 
     Parameter consoleDep = new Parameter("console");
 
-    Block sayHello = function("Say hello", stdLib.intClazz);
-    controller.applyAll(Arrays.asList(
+    Block sayHello = new Function("Say hello", stdLib.intClazz);
+    controller.applyAll(asList(
         new NewNodeOperation(sayHello, library),
-        new NewNodeOperation(consoleDep, sayHello, TYPEOF, stdLib.consoleClazz)));
+        new NewNodeOperation(consoleDep, sayHello),
+        new NewEdgeOperation(consoleDep, TYPEOF, stdLib.consoleClazz)));
 
     Documentation sayHelloDoc = new Documentation("This is the entry point for the Hello World app");
     controller.apply(new NewNodeOperation(sayHelloDoc, sayHello));
 
     StringLiteral helloWorld = new StringLiteral("Hello, World!");
-    controller.apply(new NewNodeOperation(helloWorld, sayHello, TYPEOF, stdLib.stringClazz));
+    controller.applyAll(asList(
+        new NewNodeOperation(helloWorld, sayHello),
+        new NewEdgeOperation(helloWorld, TYPEOF, stdLib.stringClazz)));
 
-    Expression printHello = new MethodInvocation(helloWorld);
-    controller.apply(new NewNodeOperation(printHello, sayHello,  TARGET, consoleDep, INVOKE, stdLib.printMethod));
+    Expression printHello = new MethodInvocation();
+    controller.applyAll(asList(
+        new NewNodeOperation(printHello, sayHello),
+        new NewEdgeOperation(printHello, TARGET, consoleDep),
+        new NewEdgeOperation(printHello, INVOKE, stdLib.printMethod)));
+    controller.apply(new NewEdgeOperation(printHello, ARG, helloWorld));
 
     IntegerLiteral zero = new IntegerLiteral(0);
-    controller.applyAll(Arrays.asList(new NewNodeOperation(zero, sayHello, TYPEOF, stdLib.intClazz),
-                        new NewNodeOperation(new Return(zero), sayHello)));
+    Return aReturn = new Return();
+    controller.applyAll(asList(
+        new NewNodeOperation(zero, sayHello),
+        new NewEdgeOperation(zero, TYPEOF, stdLib.intClazz),
+        new NewNodeOperation(aReturn, sayHello),
+        new NewEdgeOperation(aReturn, ARG, zero)));
 
-    Block unitTest = unitTest("Should say hello");
+    Block unitTest = new UnitTest("Should say hello");
     controller.apply(new NewNodeOperation(unitTest, sayHello));
 
     IdentifierDeclaration resultDecl = new IdentifierDeclaration("result");
-    controller.apply(new NewNodeOperation(resultDecl, unitTest, TYPEOF, stdLib.intClazz));
+    controller.applyAll(asList(
+        new NewNodeOperation(resultDecl, unitTest),
+        new NewEdgeOperation(resultDecl, TYPEOF, stdLib.intClazz)));
 
     Expression callMain = new MethodInvocation();
-    controller.apply(new NewNodeOperation(callMain, resultDecl, INVOKE, sayHello));
+    controller.applyAll(asList(
+        new NewNodeOperation(callMain, resultDecl),
+        new NewEdgeOperation(callMain, INVOKE, sayHello)));
 
     Expression assertion = new MethodInvocation();
     controller.apply(new NewNodeOperation(assertion, unitTest));

@@ -41,5 +41,11 @@ public class IdentifierDeclaration extends Expression<IdentifierDeclaration> {
   @Override
   public void accept(ModelVisitor v) {
     v.visit(this);
+    if (initialValue != null) {
+      v.enter(initialValue);
+      initialValue.accept(v);
+      v.leave(initialValue);
+    }
+    super.accept(v);
   }
 }

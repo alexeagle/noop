@@ -16,16 +16,12 @@
 
 package noop.graph;
 
-import noop.graph.Edge;
 import noop.graph.Edge.EdgeType;
-import noop.model.Clazz;
 import noop.model.LanguageElement;
-import noop.graph.Workspace;
 import noop.operations.EditNodeOperation;
 import noop.operations.MutationOperation;
+import noop.operations.NewEdgeOperation;
 import noop.operations.NewNodeOperation;
-
-import java.util.Map.Entry;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -37,16 +33,6 @@ public class Controller {
     this.workspace = workspace;
   }
 
-  private void addEdge(int newNodeId, LanguageElement destElement, EdgeType edgeType, boolean backwards) {
-    int destId = workspace.elements.indexOf(destElement);
-    if (destId < 0) {
-      throw new IllegalStateException(String.format("Cannot add edge [%s -> %s] due to non-existant dest %s",
-          newNodeId, destId, destElement));
-    }
-    Edge newEdge = backwards ? new Edge(destId, edgeType, newNodeId) : new Edge(newNodeId, edgeType, destId);
-    workspace.edges.add(newEdge);
-  }
-
   public void apply(NewNodeOperation operation) {
     int nextNodeId = workspace.elements.size();
     LanguageElement container = operation.container == null ? workspace : operation.container;
@@ -55,13 +41,14 @@ public class Controller {
       throw new IllegalArgumentException("Element " + operation.newElement
           + " not allowed as child of " + container);
     }
-    addEdge(nextNodeId, container, EdgeType.CONTAIN, true);
-    workspace.elements.add(operation.newElement);
-    for (Entry<EdgeType, LanguageElement> edgeTypeLanguageNodeEntry : operation.edges.entries()) {
-      LanguageElement destElement = edgeTypeLanguageNodeEntry.getValue();
-      EdgeType edgeType = edgeTypeLanguageNodeEntry.getKey();
-      addEdge(nextNodeId, destElement, edgeType, false);
+    int destId = workspace.elements.indexOf(container);
+    if (destId < 0) {
+      throw new IllegalStateException(String.format("Cannot add edge [%s -> %s] due to non-existant dest %s",
+          nextNodeId, destId, container));
     }
+    Edge newEdge = new Edge(destId, EdgeType.CONTAIN, nextNodeId);
+    workspace.edges.add(newEdge);
+    workspace.elements.add(operation.newElement);
   }
 
   public void apply(EditNodeOperation operation) {
@@ -75,6 +62,11 @@ public class Controller {
     workspace.elements.set(operation.id, operation.newValue);
   }
 
+  public void apply(NewEdgeOperation operation) {
+    workspace.edges.add(new Edge(workspace.elements.indexOf(operation.src),
+        operation.type, workspace.elements.indexOf(operation.dest)));
+  }
+
   public void applyAll(Iterable<? extends MutationOperation> operations) {
     for (MutationOperation operation : operations) {
       apply(operation);
@@ -86,7 +78,8 @@ public class Controller {
       apply((NewNodeOperation)operation);
     } else if (operation instanceof EditNodeOperation) {
       apply((EditNodeOperation)operation);
+    } else if (operation instanceof NewEdgeOperation) {
+      apply((NewEdgeOperation)operation);
     }
-
   }
 }

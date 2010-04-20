@@ -27,9 +27,17 @@ import java.util.Set;
  */
 public abstract class LanguageElement<T> implements Serializable {
   protected Documentation documentation;
-  protected Set<Block> unitTests = Sets.newHashSet();
+  protected Set<UnitTest> unitTests = Sets.newHashSet();
   protected T previousVersion;
-  public abstract void accept(ModelVisitor v);
+
+  public void accept(ModelVisitor v) {
+    if (documentation != null) {
+      v.enter(documentation);
+      documentation.accept(v);
+      v.leave(documentation);
+    }
+  }
+
   public T getPreviousVersion() {
     return previousVersion;
   }
@@ -41,12 +49,10 @@ public abstract class LanguageElement<T> implements Serializable {
       this.documentation = (Documentation) child;
       return true;
     }
-    if (child instanceof Block) {
-      Block block = (Block) child;
-      if (block.isTest()) {
-        unitTests.add(block);
-        return true;
-      }
+    if (child instanceof UnitTest) {
+      UnitTest block = (UnitTest) child;
+      unitTests.add(block);
+      return true;
     }
     return false;
   }

@@ -11,13 +11,11 @@ public class PrintingVisitor extends ModelVisitor {
 
   @Override
   public void enter(LanguageElement element) {
-    System.out.println("Enter " + element);
     currentDepth++;
   }
 
   @Override
   public void leave(LanguageElement element) {
-    System.out.println("Leave " + element);
     currentDepth--;
   }
 
