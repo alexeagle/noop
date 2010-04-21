@@ -1,19 +1,3 @@
-/*
- * Copyright 2010 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package noop.graph;
 
 import noop.model.*;
@@ -21,59 +5,19 @@ import noop.operations.NewEdgeOperation;
 import noop.operations.NewNodeOperation;
 import noop.stdlib.StandardLibraryBuilder;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-
 import static java.util.Arrays.asList;
 import static noop.graph.Edge.EdgeType.*;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-public class HelloWorldExampleMain {
-  private Controller controller;
-  private Workspace workspace;
-  private StandardLibraryBuilder stdLib;
-  private final Output output;
-  private final PrintStream out;
-
-  public HelloWorldExampleMain(Output output, PrintStream out) {
-    this.output = output;
-    this.out = out;
+public class HelloWorldExample extends Example {
+  public HelloWorldExample(StandardLibraryBuilder stdLib) {
+    super(stdLib);
   }
 
-  public enum Output {
-    OUTLINE, DOT
-  }
-
-  public static void main(String[] args) throws FileNotFoundException {
-    new HelloWorldExampleMain(Output.valueOf(args[0].toUpperCase()),
-        new PrintStream(new FileOutputStream(new File(args[1])))).run();
-  }
-
-  public void run() {
-    workspace = new Workspace();
-    controller = new Controller(workspace);
-    stdLib = new StandardLibraryBuilder();
-    controller.applyAll(stdLib.build());
-    createHelloWorldProgram();
-    PrintingVisitor graphPrintingVisitor;
-    switch (output) {
-      case DOT:
-        graphPrintingVisitor = new DotGraphPrintingVisitor(out);
-        break;
-      case OUTLINE:
-        graphPrintingVisitor = new OutlinePrintingVisitor(out);
-        break;
-      default:
-        throw new RuntimeException("unknown output type " + output);
-    }
-    workspace.accept(graphPrintingVisitor);
-  }
-
-  public void createHelloWorldProgram() {
+  @Override
+  public void createProgram(Controller controller) {
     Project project = new Project("Hello World", "com.example", "Copyright 2010\nExample Co.");
     controller.apply(new NewNodeOperation(project));
 
@@ -82,9 +26,10 @@ public class HelloWorldExampleMain {
 
     Parameter consoleDep = new Parameter("console");
 
-    Block sayHello = new Function("Say hello", stdLib.intClazz);
+    Block sayHello = new Function("Say hello");
     controller.applyAll(asList(
         new NewNodeOperation(sayHello, library),
+        new NewEdgeOperation(sayHello, TYPEOF, stdLib.intClazz),
         new NewNodeOperation(consoleDep, sayHello),
         new NewEdgeOperation(consoleDep, TYPEOF, stdLib.consoleClazz)));
 

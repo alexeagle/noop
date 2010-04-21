@@ -26,13 +26,11 @@ import java.util.List;
  */
 public abstract class Block<T> extends LanguageElement<T> {
   public final String name;
-  public final Clazz returnType;
   protected final List<Parameter> parameters = Lists.newArrayList();
   protected final List<Expression> statements = Lists.newArrayList();
 
-  public Block(String name, Clazz returnType) {
+  public Block(String name) {
     this.name = name;
-    this.returnType = returnType;
   }
 
   @Override

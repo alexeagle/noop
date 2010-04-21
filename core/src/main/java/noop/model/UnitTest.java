@@ -7,7 +7,7 @@ import noop.graph.ModelVisitor;
  */
 public class UnitTest extends Block<UnitTest> {
   public UnitTest(String name) {
-    super(name, null);
+    super(name);
   }
 
   @Override

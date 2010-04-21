@@ -19,6 +19,7 @@ public class StandardLibraryBuilder {
   public Clazz stringClazz;
   public Clazz voidClazz;
   public Block printMethod;
+  public Method integerPlus;
 
   public List<MutationOperation> build() {
     List<MutationOperation> result = Lists.newArrayList();
@@ -41,8 +42,9 @@ public class StandardLibraryBuilder {
     consoleClazz = new Clazz("Console");
     result.add(new NewNodeOperation(consoleClazz, io));
 
-    printMethod = new Method("print", voidClazz);
+    printMethod = new Method("print");
     result.add(new NewNodeOperation(printMethod, consoleClazz));
+    result.add(new NewEdgeOperation(printMethod, TYPEOF, voidClazz));
 
     Parameter printArg = new Parameter("s");
     result.add(new NewNodeOperation(printArg, printMethod));
@@ -50,6 +52,14 @@ public class StandardLibraryBuilder {
 
     intClazz = new Clazz("Integer");
     result.add(new NewNodeOperation(intClazz, lang));
+
+    integerPlus = new Method("+");
+    result.add(new NewNodeOperation(integerPlus, intClazz));
+    result.add(new NewEdgeOperation(integerPlus, TYPEOF, intClazz));
+
+    Parameter integerPlusArg = new Parameter("i");
+    result.add(new NewNodeOperation(integerPlusArg, integerPlus));
+    result.add(new NewEdgeOperation(integerPlusArg, TYPEOF, intClazz));
 
     return result;
   }
