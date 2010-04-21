@@ -16,10 +16,12 @@
 
 package noop.model;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import noop.graph.ModelVisitor;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,6 +29,7 @@ import java.util.Set;
  */
 public abstract class LanguageElement<T> implements Serializable {
   protected Documentation documentation;
+  protected List<Comment> comments = Lists.newArrayList();  
   protected Set<UnitTest> unitTests = Sets.newHashSet();
   protected T previousVersion;
 
@@ -36,19 +39,31 @@ public abstract class LanguageElement<T> implements Serializable {
       documentation.accept(v);
       v.leave(documentation);
     }
+    for (Comment comment : comments) {
+      v.enter(comment);
+      comment.accept(v);
+      v.leave(comment);
+    }
   }
 
   public T getPreviousVersion() {
     return previousVersion;
   }
+
   public void setPreviousVersion(T previousVersion) {
     this.previousVersion = previousVersion;
   }
+
   public boolean adoptChild(LanguageElement child) {
     if (child instanceof Documentation) {
       this.documentation = (Documentation) child;
       return true;
     }
+    if (child instanceof Comment) {
+      this.comments.add((Comment) child);
+      return true;
+    }
+    // TODO: not sure that unit tests can be attached literally anywhere
     if (child instanceof UnitTest) {
       UnitTest block = (UnitTest) child;
       unitTests.add(block);

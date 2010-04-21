@@ -57,6 +57,10 @@ public class StandardLibraryBuilder {
     result.add(new NewNodeOperation(integerPlus, intClazz));
     result.add(new NewEdgeOperation(integerPlus, TYPEOF, intClazz));
 
+    result.add(new NewNodeOperation(new Comment("Elements may have symbols in their names." +
+        " Tools may choose to render this as infix",
+        System.getProperty("user.name")), integerPlus));
+
     Parameter integerPlusArg = new Parameter("i");
     result.add(new NewNodeOperation(integerPlusArg, integerPlus));
     result.add(new NewEdgeOperation(integerPlusArg, TYPEOF, intClazz));

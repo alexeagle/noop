@@ -59,4 +59,6 @@ public abstract class ModelVisitor {
   public void visit(IdentifierDeclaration identifierDeclaration) {}
 
   public void visit(Binding binding) {}
+
+  public void visit(Comment comment) {}
 }
