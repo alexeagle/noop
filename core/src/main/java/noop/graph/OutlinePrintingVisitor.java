@@ -97,6 +97,11 @@ public class OutlinePrintingVisitor extends PrintingVisitor {
     print(aReturn, "return");
   }
 
+  @Override
+  public void visit(Comment comment) {
+    print(comment, "// %s --%s %s", comment.text, comment.user, comment.timestamp.toString());
+  }
+
   private void print(LanguageElement element, String message, String... params) {
     out.format("%s%s [#%d]", indent(), String.format(message, params), idFor(element));
     for (Edge edge : filter(workspace.edgesFrom(idFor(element)), notContain())) {
