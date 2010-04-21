@@ -7,8 +7,8 @@ import noop.graph.ModelVisitor;
  */
 public class Function extends Block<Function> {
 
-  public Function(String name, Clazz returnType) {
-    super(name, returnType);
+  public Function(String name) {
+    super(name);
   }
   
   @Override
