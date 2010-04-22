@@ -11,6 +11,7 @@ import java.util.List;
 import static noop.graph.Edge.EdgeType.TYPEOF;
 
 /**
+ * TODO: when we have a way to share serialized noop code, remove this class
  * @author alexeagle@google.com (Alex Eagle)
  */
 public class StandardLibraryBuilder {
@@ -18,8 +19,10 @@ public class StandardLibraryBuilder {
   public Clazz consoleClazz;
   public Clazz stringClazz;
   public Clazz voidClazz;
+  public Clazz booleanClazz;
   public Block printMethod;
   public Method integerPlus;
+  public Method integerEquals;
 
   public List<MutationOperation> build() {
     List<MutationOperation> result = Lists.newArrayList();
@@ -50,16 +53,22 @@ public class StandardLibraryBuilder {
     result.add(new NewNodeOperation(printArg, printMethod));
     result.add(new NewEdgeOperation(printArg, TYPEOF, stringClazz));
 
+    booleanClazz = new Clazz("Boolean");
+    result.add(new NewNodeOperation(booleanClazz, lang));
+
     intClazz = new Clazz("Integer");
     result.add(new NewNodeOperation(intClazz, lang));
 
     integerPlus = new Method("+");
     result.add(new NewNodeOperation(integerPlus, intClazz));
     result.add(new NewEdgeOperation(integerPlus, TYPEOF, intClazz));
-
     result.add(new NewNodeOperation(new Comment("Elements may have symbols in their names." +
         " Tools may choose to render this as infix",
         System.getProperty("user.name")), integerPlus));
+
+    integerEquals = new Method("==");
+    result.add(new NewNodeOperation(integerEquals, intClazz));
+    result.add(new NewEdgeOperation(integerEquals, TYPEOF, booleanClazz));
 
     Parameter integerPlusArg = new Parameter("i");
     result.add(new NewNodeOperation(integerPlusArg, integerPlus));

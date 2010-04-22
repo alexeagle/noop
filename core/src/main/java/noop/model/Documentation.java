@@ -23,9 +23,11 @@ import noop.graph.ModelVisitor;
  */
 public class Documentation extends LanguageElement<Documentation> {
   public final String summary;
+  public final String author;
 
-  public Documentation(String summary) {
+  public Documentation(String summary, String author) {
     this.summary = summary;
+    this.author = author;
   }
 
   @Override

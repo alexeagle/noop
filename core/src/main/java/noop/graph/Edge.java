@@ -46,7 +46,7 @@ public class Edge {
   public enum EdgeType {
     INVOKE,
     CONTAIN,
-    OVERRIDE,
+    IMPLEMENT,
     TYPEOF,
     TARGET,
     ARG

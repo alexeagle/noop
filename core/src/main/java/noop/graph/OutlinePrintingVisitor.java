@@ -78,6 +78,16 @@ public class OutlinePrintingVisitor extends PrintingVisitor {
   }
 
   @Override
+  public void visit(Loop loop) {
+    print(loop, "Loop until");
+  }
+
+  @Override
+  public void visit(AnonymousBlock block) {
+    print(block, "{}");
+  }
+
+  @Override
   public void visit(Assignment assignment) {
     print(assignment, "Assign");
   }
