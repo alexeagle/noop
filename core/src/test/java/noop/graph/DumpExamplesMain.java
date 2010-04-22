@@ -47,7 +47,8 @@ public class DumpExamplesMain {
 
     for (Example example : Arrays.asList(
         new ArithmeticExample(stdLib),
-        new HelloWorldExample(stdLib))) {
+        new HelloWorldExample(stdLib),
+        new ControlFlowExample(stdLib))) {
       Workspace workspace = new Workspace();
 
       Controller controller = new Controller(workspace);

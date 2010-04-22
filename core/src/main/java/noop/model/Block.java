@@ -24,9 +24,8 @@ import java.util.List;
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-public abstract class Block<T> extends LanguageElement<T> {
+public class Block<T> extends LanguageElement<T> {
   public final String name;
-  protected final List<Parameter> parameters = Lists.newArrayList();
   protected final List<Expression> statements = Lists.newArrayList();
 
   public Block(String name) {
@@ -35,10 +34,6 @@ public abstract class Block<T> extends LanguageElement<T> {
 
   @Override
   public boolean adoptChild(LanguageElement child) {
-    if (child instanceof Parameter) {
-      parameters.add((Parameter) child);
-      return true;
-    }
     if (child instanceof Expression) {
       statements.add((Expression) child);
       return true;
@@ -48,11 +43,6 @@ public abstract class Block<T> extends LanguageElement<T> {
 
   @Override
   public void accept(ModelVisitor v) {
-    for (Parameter parameter : parameters) {
-      v.enter(parameter);
-      parameter.accept(v);
-      v.leave(parameter);
-    }
     for (Expression statement : statements) {
       v.enter(statement);
       statement.accept(v);

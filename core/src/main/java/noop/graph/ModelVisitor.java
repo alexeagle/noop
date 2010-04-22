@@ -61,4 +61,8 @@ public abstract class ModelVisitor {
   public void visit(Binding binding) {}
 
   public void visit(Comment comment) {}
+
+  public void visit(Loop loop) {}
+
+  public void visit(AnonymousBlock block) {}
 }

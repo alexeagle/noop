@@ -33,7 +33,8 @@ public class HelloWorldExample extends Example {
         new NewNodeOperation(consoleDep, sayHello),
         new NewEdgeOperation(consoleDep, TYPEOF, stdLib.consoleClazz)));
 
-    Documentation sayHelloDoc = new Documentation("This is the entry point for the Hello World app");
+    Documentation sayHelloDoc = new Documentation("This is the entry point for the Hello World app",
+        "alexeagle@google.com (Alex Eagle)");
     controller.apply(new NewNodeOperation(sayHelloDoc, sayHello));
 
     StringLiteral helloWorld = new StringLiteral("Hello, World!");

@@ -46,4 +46,15 @@ public class DumpExamplesTest {
     new WorkspaceDumper(Output.TXT, System.out).dump(workspace);
   }
 
+  @Test
+  public void shouldCreateControlFlowDot() {
+    new ControlFlowExample(stdLib).createProgram(controller);
+    new WorkspaceDumper(Output.DOT, System.out).dump(workspace);
+  }
+
+  @Test
+  public void shouldCreateControlFlowOutline() {
+    new ControlFlowExample(stdLib).createProgram(controller);
+    new WorkspaceDumper(Output.TXT, System.out).dump(workspace);
+  }
 }
