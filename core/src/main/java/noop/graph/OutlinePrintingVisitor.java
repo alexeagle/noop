@@ -113,9 +113,9 @@ public class OutlinePrintingVisitor extends PrintingVisitor {
   }
 
   private void print(LanguageElement element, String message, String... params) {
-    out.format("%s%s [#%d]", indent(), String.format(message, params), idFor(element));
-    for (Edge edge : filter(workspace.edgesFrom(idFor(element)), notContain())) {
-      out.format(" %s -> #%d", edge.type.name(), edge.dest);
+    out.format("%s%s [#%s]", indent(), String.format(message, params), element.vertex);
+    for (Edge edge : filter(workspace.edgesFrom(element.vertex), notContain())) {
+      out.format(" %s -> #%s", edge.type.name(), edge.dest);
     }
     out.println();
   }
