@@ -21,9 +21,4 @@ public class Comment extends LanguageElement<Comment> {
   public void accept(ModelVisitor v) {
     v.visit(this);
   }
-
-  @Override
-  public boolean adoptChild(LanguageElement child) {
-    return false;
-  }
 }

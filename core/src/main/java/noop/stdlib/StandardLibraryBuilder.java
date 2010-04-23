@@ -20,7 +20,7 @@ public class StandardLibraryBuilder {
   public Clazz stringClazz;
   public Clazz voidClazz;
   public Clazz booleanClazz;
-  public Block printMethod;
+  public Method printMethod;
   public Method integerPlus;
   public Method integerEquals;
 
@@ -31,47 +31,47 @@ public class StandardLibraryBuilder {
     result.add(new NewNodeOperation(project));
 
     Library lang = new Library("lang");
-    result.add(new NewNodeOperation(lang, project));
+    project.addLibrary(lang);
 
     stringClazz = new Clazz("String");
-    result.add(new NewNodeOperation(stringClazz, lang));
+    lang.addClazz(stringClazz);
 
     voidClazz = new Clazz("Void");
-    result.add(new NewNodeOperation(voidClazz, lang));
+    lang.addClazz(voidClazz);
 
     Library io = new Library("io");
-    result.add(new NewNodeOperation(io, project));
+    project.addLibrary(io);
 
     consoleClazz = new Clazz("Console");
-    result.add(new NewNodeOperation(consoleClazz, io));
+    io.addClazz(consoleClazz);
 
     printMethod = new Method("print");
-    result.add(new NewNodeOperation(printMethod, consoleClazz));
+    consoleClazz.addBlock(printMethod);
     result.add(new NewEdgeOperation(printMethod, TYPEOF, voidClazz));
 
     Parameter printArg = new Parameter("s");
-    result.add(new NewNodeOperation(printArg, printMethod));
+    printMethod.addParameter(printArg);
     result.add(new NewEdgeOperation(printArg, TYPEOF, stringClazz));
 
     booleanClazz = new Clazz("Boolean");
-    result.add(new NewNodeOperation(booleanClazz, lang));
+    lang.addClazz(booleanClazz);
 
     intClazz = new Clazz("Integer");
-    result.add(new NewNodeOperation(intClazz, lang));
+    lang.addClazz(intClazz);
 
     integerPlus = new Method("+");
-    result.add(new NewNodeOperation(integerPlus, intClazz));
-    result.add(new NewEdgeOperation(integerPlus, TYPEOF, intClazz));
-    result.add(new NewNodeOperation(new Comment("Elements may have symbols in their names." +
+    intClazz.addBlock(integerPlus);
+    intClazz.addComment(new Comment("Elements may have symbols in their names." +
         " Tools may choose to render this as infix",
-        System.getProperty("user.name")), integerPlus));
+        System.getProperty("user.name")));
+    result.add(new NewEdgeOperation(integerPlus, TYPEOF, intClazz));
 
     integerEquals = new Method("==");
-    result.add(new NewNodeOperation(integerEquals, intClazz));
+    intClazz.addBlock(integerEquals);
     result.add(new NewEdgeOperation(integerEquals, TYPEOF, booleanClazz));
 
     Parameter integerPlusArg = new Parameter("i");
-    result.add(new NewNodeOperation(integerPlusArg, integerPlus));
+    integerPlus.addParameter(integerPlusArg);
     result.add(new NewEdgeOperation(integerPlusArg, TYPEOF, intClazz));
 
     return result;

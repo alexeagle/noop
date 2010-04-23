@@ -33,18 +33,12 @@ public class Library extends LanguageElement<Library> {
     this.name = name;
   }
 
-  @Override
-  public boolean adoptChild(LanguageElement child) {
-    if (child instanceof Clazz) {
-      classes.add((Clazz) child);
-      return true;
-    }
-    if (child instanceof Function) {
-      Function block = (Function) child;
-      functions.add(block);
-      return true;
-    }
-    return super.adoptChild(child);
+  public void addClazz(Clazz clazz) {
+    this.classes.add(clazz);
+  }
+
+  public void addFunction(Function function) {
+    this.functions.add(function);
   }
 
   @Override

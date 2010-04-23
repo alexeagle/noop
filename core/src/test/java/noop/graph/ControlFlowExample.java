@@ -22,44 +22,43 @@ public class ControlFlowExample extends Example {
     controller.apply(new NewNodeOperation(project));
 
     Library library = new Library("Testing loops");
-    controller.apply(new NewNodeOperation(library, project));
+    project.addLibrary(library);
 
     Clazz clazz = new Clazz("Iterating Printer");
-    controller.apply(new NewNodeOperation(clazz, library));
+    library.addClazz(clazz);
 
     Method method = new Method("Print 1 through 10");
-    controller.apply(new NewNodeOperation(method, clazz));
+    clazz.addBlock(method);
 
     Parameter consoleDep = new Parameter("console");
-    controller.apply(new NewNodeOperation(consoleDep, method));
-    
+    method.addParameter(consoleDep);
+
     IdentifierDeclaration b = new IdentifierDeclaration("count");
-    controller.applyAll(asList(
-        new NewNodeOperation(b, method),
-        new NewEdgeOperation(b, TYPEOF, stdLib.booleanClazz)));
-    IntegerLiteral initValue = new IntegerLiteral(0);
-    controller.apply(new NewNodeOperation(initValue, b));
+    method.addStatement(b);
+    controller.apply(new NewEdgeOperation(b, TYPEOF, stdLib.booleanClazz));
+
+    b.setInitialValue(new IntegerLiteral(0));
 
     Loop loop = new Loop();
-    controller.apply(new NewNodeOperation(loop, method));
+    method.addStatement(loop);
 
     IntegerLiteral ten = new IntegerLiteral(10);
-    controller.apply(new NewNodeOperation(ten, method));
+    method.addStatement(ten);
 
     Expression terminateWhen = new MethodInvocation();
+    loop.setTerminationCondition(terminateWhen);
     controller.applyAll(asList(
-        new NewNodeOperation(terminateWhen, loop),
         new NewEdgeOperation(terminateWhen, TARGET, b),
         new NewEdgeOperation(terminateWhen, INVOKE, stdLib.integerEquals),
         new NewEdgeOperation(terminateWhen, ARG, ten)
     ));
 
     Block body = new AnonymousBlock();
-    controller.apply(new NewNodeOperation(body, loop));
+    loop.setBody(body);
 
     Expression printValue = new MethodInvocation();
+    body.addStatement(printValue);
     controller.applyAll(asList(
-        new NewNodeOperation(printValue, body),
         new NewEdgeOperation(printValue, TARGET, consoleDep),
         new NewEdgeOperation(printValue, INVOKE, stdLib.printMethod),
         new NewEdgeOperation(printValue, ARG, b)

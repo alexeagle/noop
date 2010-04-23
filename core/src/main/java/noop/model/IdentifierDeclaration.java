@@ -29,13 +29,8 @@ public class IdentifierDeclaration extends Expression<IdentifierDeclaration> {
     this.name = name;
   }
 
-  @Override
-  public boolean adoptChild(LanguageElement child) {
-    if (child instanceof Expression) {
-      initialValue = (Expression) child;
-      return true;
-    }
-    return false;
+  public void setInitialValue(Expression expression) {
+    this.initialValue = expression;
   }
 
   @Override

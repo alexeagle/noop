@@ -23,53 +23,52 @@ public class ArithmeticExample extends Example {
     controller.apply(new NewNodeOperation(project));
 
     Library library = new Library("adding stuff");
-    controller.apply(new NewNodeOperation(library, project));
+    project.addLibrary(library);
 
+    Function entryPoint = new Function("start here");
+    library.addFunction(entryPoint);
     Parameter consoleDep = new Parameter("console");
-
-    Block entryPoint = new Function("start here");
+    entryPoint.addParameter(consoleDep);
     controller.applyAll(asList(
-        new NewNodeOperation(entryPoint, library),
         new NewEdgeOperation(entryPoint, TYPEOF, stdLib.intClazz),
-        new NewNodeOperation(consoleDep, entryPoint),
         new NewEdgeOperation(consoleDep, TYPEOF, stdLib.consoleClazz)));
 
     IdentifierDeclaration i = new IdentifierDeclaration("i");
-    controller.apply(new NewNodeOperation(i, entryPoint));
+    entryPoint.addStatement(i);
 
     IntegerLiteral one = new IntegerLiteral(1);
-    controller.apply(new NewNodeOperation(one, i));
+    i.setInitialValue(one);
 
     IdentifierDeclaration j = new IdentifierDeclaration("j");
-    controller.apply(new NewNodeOperation(j, entryPoint));
+    entryPoint.addStatement(j);
 
     IntegerLiteral two = new IntegerLiteral(2);
-    controller.apply(new NewNodeOperation(two, j));
+    entryPoint.addStatement(two);
 
     IdentifierDeclaration k = new IdentifierDeclaration("k");
-    controller.apply(new NewNodeOperation(k, entryPoint));
+    entryPoint.addStatement(k);
 
     Expression sum = new MethodInvocation();
     controller.applyAll(asList(
-        new NewNodeOperation(sum, k),
         new NewEdgeOperation(sum, INVOKE, stdLib.integerPlus),
         new NewEdgeOperation(sum, TARGET, i),
         new NewEdgeOperation(sum, ARG, j)
     ));
+    k.setInitialValue(sum);
 
     Expression printResult = new MethodInvocation();
+    entryPoint.addStatement(printResult);
     controller.applyAll(asList(
-        new NewNodeOperation(printResult, entryPoint),
         new NewEdgeOperation(printResult, INVOKE, stdLib.printMethod),
         new NewEdgeOperation(printResult, TARGET, consoleDep),
         new NewEdgeOperation(printResult, ARG, k)
     ));
 
     IntegerLiteral zero = new IntegerLiteral(0);
-    controller.apply(new NewNodeOperation(zero, entryPoint));
+    entryPoint.addStatement(zero);
 
     Expression returnVal = new Return();
-    controller.applyAll(asList(new NewNodeOperation(returnVal, entryPoint),
-        new NewEdgeOperation(returnVal, ARG, zero)));
+    entryPoint.addStatement(returnVal);
+    controller.apply(new NewEdgeOperation(returnVal, ARG, zero));
   }
 }
