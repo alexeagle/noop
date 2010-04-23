@@ -69,7 +69,7 @@ public class OutlinePrintingVisitor extends PrintingVisitor {
 
   @Override
   public void visit(Documentation documentation) {
-    print(documentation, "Documentation: %s", documentation.summary);
+    out.format("%s%s\n", indent(), String.format("Documentation: %s", documentation.summary));
   }
 
   @Override

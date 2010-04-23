@@ -27,12 +27,13 @@ import java.util.Set;
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-public abstract class LanguageElement<T> implements Serializable {
+public abstract class LanguageElement<T> implements Serializable, Visitable {
   protected Documentation documentation = new EmptyDocumentation();
   protected List<Comment> comments = Lists.newArrayList();  
   protected Set<UnitTest> unitTests = Sets.newHashSet();
   protected T previousVersion;
 
+  @Override
   public void accept(ModelVisitor v) {
     v.enter(documentation);
     documentation.accept(v);

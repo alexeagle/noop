@@ -116,7 +116,7 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
 
   @Override
   public void visit(Documentation documentation) {
-    print(documentation, escape(documentation.summary), "shape=none");
+    out.format("%s [label=\"%s\"%s]\n", identityHashCode(documentation), escape(documentation.summary), "shape=none");
   }
 
   protected String escape(String value) {
@@ -138,7 +138,7 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
   }
 
   @Override
-  public void leave(LanguageElement element) {
+  public void leave(Visitable element) {
     super.leave(element);
     if (currentDepth == 0) {
       out.println("}");

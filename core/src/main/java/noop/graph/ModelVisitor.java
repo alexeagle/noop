@@ -22,9 +22,9 @@ import noop.model.*;
  * @author alexeagle@google.com (Alex Eagle)
  */
 public abstract class ModelVisitor {
-  public void enter(LanguageElement element) {}
+  public void enter(Visitable element) {}
   
-  public void leave(LanguageElement element) {}
+  public void leave(Visitable element) {}
 
   public void visit(Edge edge) {}
 

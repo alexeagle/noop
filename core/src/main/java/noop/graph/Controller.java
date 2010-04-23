@@ -56,8 +56,15 @@ public class Controller {
   }
 
   public void addEdge(NewEdgeOperation operation) {
-    workspace.edges.add(new Edge(workspace.elements.indexOf(operation.src),
-        operation.type, workspace.elements.indexOf(operation.dest)));
+    int src = workspace.elements.indexOf(operation.src);
+    if (src < 0) {
+      throw new IllegalArgumentException("Src node doesn't exist: " + operation.src);
+    }
+    int dest = workspace.elements.indexOf(operation.dest);
+    if (dest < 0) {
+      throw new IllegalArgumentException("Dest node doesn't exist: " + operation.dest);
+    }
+    workspace.edges.add(new Edge(src, operation.type, dest));
   }
 
   public void addProject(NewProjectOperation operation) {
