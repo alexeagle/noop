@@ -50,15 +50,10 @@ public class Project extends LanguageElement<Project> {
     this.copyright = copyright;
   }
 
-  @Override
-  public boolean adoptChild(LanguageElement child) {
-    if (child instanceof Library) {
-      libraries.add((Library) child);
-      return true;
-    }
-    return super.adoptChild(child);
+  public void addLibrary(Library library) {
+    this.libraries.add(library);
   }
-
+  
   @Override
   public int hashCode() {
     return new HashCodeBuilder()

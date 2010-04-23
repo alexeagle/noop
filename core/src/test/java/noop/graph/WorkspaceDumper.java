@@ -1,5 +1,7 @@
 package noop.graph;
 
+import com.thoughtworks.xstream.XStream;
+
 import java.io.PrintStream;
 
 /**
@@ -16,21 +18,23 @@ public class WorkspaceDumper {
   }
 
   public enum Output {
-    TXT, DOT
+    TXT, XML, DOT
   }
 
   public void dump(Workspace workspace) {
-    PrintingVisitor graphPrintingVisitor;
     switch (output) {
       case DOT:
-        graphPrintingVisitor = new DotGraphPrintingVisitor(out);
+        workspace.accept(new DotGraphPrintingVisitor(out));
         break;
       case TXT:
-        graphPrintingVisitor = new OutlinePrintingVisitor(out);
+        workspace.accept(new OutlinePrintingVisitor(out));
+        break;
+      case XML:
+        XStream xStream = new XStream();
+        out.append(xStream.toXML(workspace));
         break;
       default:
         throw new RuntimeException("unknown output type " + output);
     }
-    workspace.accept(graphPrintingVisitor);
   }
 }

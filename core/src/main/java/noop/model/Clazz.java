@@ -33,15 +33,6 @@ public class Clazz extends LanguageElement<Clazz> {
   }
 
   @Override
-  public boolean adoptChild(LanguageElement child) {
-    if (child instanceof Block) {
-      blocks.add((Block) child);
-      return true;
-    }
-    return super.adoptChild(child);
-  }
-
-  @Override
   public void accept(ModelVisitor v) {
     v.visit(this);
     for (Block block : blocks) {
@@ -50,5 +41,9 @@ public class Clazz extends LanguageElement<Clazz> {
       v.leave(block);
     }
     super.accept(v);
+  }
+
+  public void addBlock(Block block) {
+    blocks.add(block);
   }
 }

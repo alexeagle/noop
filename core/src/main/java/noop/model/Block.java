@@ -32,13 +32,8 @@ public class Block<T> extends LanguageElement<T> {
     this.name = name;
   }
 
-  @Override
-  public boolean adoptChild(LanguageElement child) {
-    if (child instanceof Expression) {
-      statements.add((Expression) child);
-      return true;
-    }
-    return super.adoptChild(child);
+  public void addStatement(Expression statement) {
+    statements.add(statement);
   }
 
   @Override

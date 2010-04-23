@@ -15,13 +15,8 @@ public class Method extends Block<Method> {
     super(name);
   }
 
-  @Override
-  public boolean adoptChild(LanguageElement child) {
-    if (child instanceof Parameter) {
-      parameters.add((Parameter) child);
-      return true;
-    }
-    return super.adoptChild(child);
+  public void addParameter(Parameter parameter) {
+    this.parameters.add(parameter);
   }
 
   @Override

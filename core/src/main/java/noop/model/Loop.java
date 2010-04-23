@@ -8,18 +8,13 @@ import noop.graph.ModelVisitor;
 public class Loop extends Expression<Loop> {
   public Expression terminationCondition;
   public Block body;
-  
-  @Override
-  public boolean adoptChild(LanguageElement child) {
-    if (child instanceof Expression) {
-      terminationCondition = (Expression) child;
-      return true;
-    }
-    if (child instanceof Block) {
-      body = (Block) child;
-      return true;
-    }
-    return false;
+
+  public void setTerminationCondition(Expression condition) {
+    this.terminationCondition = condition;
+  }
+
+  public void setBody(Block body) {
+    this.body = body;
   }
 
   @Override

@@ -36,14 +36,12 @@ public class Workspace extends LanguageElement<Workspace> {
   private List<Project> projects = Lists.newArrayList();
   private List<LanguageElement> orphans = Lists.newArrayList();
 
-  @Override
-  public boolean adoptChild(LanguageElement child) {
-    if (child instanceof Project) {
-      projects.add((Project) child);
-    } else {
-      orphans.add(child);
-    }
-    return true;
+  public void addProject(Project project) {
+    projects.add(project);
+  }
+
+  public void addOrphan(LanguageElement orphan) {
+    orphans.add(orphan);
   }
 
   @Override

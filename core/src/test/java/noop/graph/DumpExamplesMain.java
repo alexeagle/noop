@@ -40,12 +40,17 @@ public class DumpExamplesMain {
   public static void main(String[] args) throws FileNotFoundException {
     new DumpExamplesMain(Output.DOT, new File(args[0])).run();
     new DumpExamplesMain(Output.TXT, new File(args[0])).run();
+    new DumpExamplesMain(Output.XML, new File(args[0])).run();
   }
 
   public void run() throws FileNotFoundException {
     StandardLibraryBuilder stdLib = new StandardLibraryBuilder();
 
     for (Example example : Arrays.asList(
+        new Example(stdLib) {
+          @Override
+          public void createProgram(Controller controller) {}
+        },
         new ArithmeticExample(stdLib),
         new HelloWorldExample(stdLib),
         new ControlFlowExample(stdLib))) {
@@ -55,7 +60,7 @@ public class DumpExamplesMain {
       controller.applyAll(stdLib.build());
 
       example.createProgram(controller);
-      File outFile = new File(outDir, example.getClass().getSimpleName() + "." + output.name().toLowerCase());
+      File outFile = new File(outDir, example.getClass().getName() + "." + output.name().toLowerCase());
       new WorkspaceDumper(output, new PrintStream(new FileOutputStream(outFile))).dump(workspace);
     }
   }

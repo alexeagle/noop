@@ -37,10 +37,10 @@ public class Controller {
     int nextNodeId = workspace.elements.size();
     LanguageElement container = operation.container == null ? workspace : operation.container;
 
-    if (!container.adoptChild(operation.newElement)) {
-      throw new IllegalArgumentException("Element " + operation.newElement
-          + " not allowed as child of " + container);
-    }
+//    if (!container.adoptChild(operation.newElement)) {
+//      throw new IllegalArgumentException("Element " + operation.newElement
+//          + " not allowed as child of " + container);
+//    }
     int destId = workspace.elements.indexOf(container);
     if (destId < 0) {
       throw new IllegalStateException(String.format("Cannot add edge [%s -> %s] due to non-existant dest %s",

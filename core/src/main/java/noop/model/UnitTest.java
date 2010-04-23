@@ -11,14 +11,6 @@ public class UnitTest extends Block<UnitTest> {
   }
 
   @Override
-  public boolean adoptChild(LanguageElement child) {
-    if (child instanceof Parameter) {
-      return false;
-    }
-    return super.adoptChild(child);
-  }
-
-  @Override
   public void accept(ModelVisitor v) {
     v.visit(this);
     super.accept(v);

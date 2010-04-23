@@ -54,21 +54,16 @@ public abstract class LanguageElement<T> implements Serializable {
     this.previousVersion = previousVersion;
   }
 
-  public boolean adoptChild(LanguageElement child) {
-    if (child instanceof Documentation) {
-      this.documentation = (Documentation) child;
-      return true;
-    }
-    if (child instanceof Comment) {
-      this.comments.add((Comment) child);
-      return true;
-    }
-    // TODO: not sure that unit tests can be attached literally anywhere
-    if (child instanceof UnitTest) {
-      UnitTest block = (UnitTest) child;
-      unitTests.add(block);
-      return true;
-    }
-    return false;
+  public void setDocumentation(Documentation documentation) {
+    this.documentation = documentation;
+  }
+
+  public void addComment(Comment comment) {
+    this.comments.add(comment);
+  }
+
+  // TODO: not sure that unit tests can be attached literally anywhere
+  public void addUnitTest(UnitTest unitTest) {
+    unitTests.add(unitTest);
   }
 }
