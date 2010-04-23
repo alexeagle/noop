@@ -21,7 +21,7 @@ import noop.graph.ModelVisitor;
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-public class Documentation extends LanguageElement<Documentation> {
+public class Documentation implements Visitable {
   public final String summary;
   public final String author;
 
@@ -33,6 +33,5 @@ public class Documentation extends LanguageElement<Documentation> {
   @Override
   public void accept(ModelVisitor v) {
     v.visit(this);
-    super.accept(v);
   }
 }
