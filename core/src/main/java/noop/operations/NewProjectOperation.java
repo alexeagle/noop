@@ -17,24 +17,20 @@
 package noop.operations;
 
 import noop.graph.Controller;
-import noop.model.LanguageElement;
-
-import java.io.Serializable;
+import noop.model.Project;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-public class EditNodeOperation implements MutationOperation, Serializable {
-  public final int id;
-  public final LanguageElement newValue;
+public class NewProjectOperation implements MutationOperation {
+  public final Project project;
 
-  public EditNodeOperation(int id, LanguageElement newValue) {
-    this.id = id;
-    this.newValue = newValue;
+  public NewProjectOperation(Project project) {
+    this.project = project;
   }
 
   @Override
   public void execute(Controller controller) {
-    controller.editNode(this);
+    controller.addProject(this);
   }
 }

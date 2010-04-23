@@ -1,5 +1,6 @@
 package noop.operations;
 
+import noop.graph.Controller;
 import noop.graph.Edge.EdgeType;
 import noop.model.LanguageElement;
 
@@ -15,5 +16,10 @@ public class NewEdgeOperation implements MutationOperation {
     this.src = src;
     this.type = type;
     this.dest = dest;
+  }
+
+  @Override
+  public void execute(Controller controller) {
+    controller.addEdge(this);
   }
 }

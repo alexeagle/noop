@@ -28,17 +28,15 @@ import java.util.Set;
  * @author alexeagle@google.com (Alex Eagle)
  */
 public abstract class LanguageElement<T> implements Serializable {
-  protected Documentation documentation;
+  protected Documentation documentation = new EmptyDocumentation();
   protected List<Comment> comments = Lists.newArrayList();  
   protected Set<UnitTest> unitTests = Sets.newHashSet();
   protected T previousVersion;
 
   public void accept(ModelVisitor v) {
-    if (documentation != null) {
-      v.enter(documentation);
-      documentation.accept(v);
-      v.leave(documentation);
-    }
+    v.enter(documentation);
+    documentation.accept(v);
+    v.leave(documentation);
     for (Comment comment : comments) {
       v.enter(comment);
       comment.accept(v);

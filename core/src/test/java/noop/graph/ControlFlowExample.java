@@ -2,7 +2,7 @@ package noop.graph;
 
 import noop.model.*;
 import noop.operations.NewEdgeOperation;
-import noop.operations.NewNodeOperation;
+import noop.operations.NewProjectOperation;
 import noop.stdlib.StandardLibraryBuilder;
 
 import static java.util.Arrays.asList;
@@ -19,7 +19,7 @@ public class ControlFlowExample extends Example {
   @Override
   public void createProgram(Controller controller) {
     Project project = new Project("Control Flow", "com.example", "Copyright 2010\nExample Co.");
-    controller.apply(new NewNodeOperation(project));
+    controller.apply(new NewProjectOperation(project));
 
     Library library = new Library("Testing loops");
     project.addLibrary(library);
@@ -33,11 +33,11 @@ public class ControlFlowExample extends Example {
     Parameter consoleDep = new Parameter("console");
     method.addParameter(consoleDep);
 
-    IdentifierDeclaration b = new IdentifierDeclaration("count");
-    method.addStatement(b);
-    controller.apply(new NewEdgeOperation(b, TYPEOF, stdLib.booleanClazz));
+    IdentifierDeclaration i = new IdentifierDeclaration("count");
+    method.addStatement(i);
+    controller.apply(new NewEdgeOperation(i, TYPEOF, stdLib.intClazz));
 
-    b.setInitialValue(new IntegerLiteral(0));
+    i.setInitialValue(new IntegerLiteral(0));
 
     Loop loop = new Loop();
     method.addStatement(loop);
@@ -48,7 +48,7 @@ public class ControlFlowExample extends Example {
     Expression terminateWhen = new MethodInvocation();
     loop.setTerminationCondition(terminateWhen);
     controller.applyAll(asList(
-        new NewEdgeOperation(terminateWhen, TARGET, b),
+        new NewEdgeOperation(terminateWhen, TARGET, i),
         new NewEdgeOperation(terminateWhen, INVOKE, stdLib.integerEquals),
         new NewEdgeOperation(terminateWhen, ARG, ten)
     ));
@@ -61,7 +61,7 @@ public class ControlFlowExample extends Example {
     controller.applyAll(asList(
         new NewEdgeOperation(printValue, TARGET, consoleDep),
         new NewEdgeOperation(printValue, INVOKE, stdLib.printMethod),
-        new NewEdgeOperation(printValue, ARG, b)
+        new NewEdgeOperation(printValue, ARG, i)
     ));
   }
 }

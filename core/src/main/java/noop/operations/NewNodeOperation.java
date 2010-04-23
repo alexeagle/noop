@@ -16,6 +16,7 @@
 
 package noop.operations;
 
+import noop.graph.Controller;
 import noop.model.LanguageElement;
 
 /**
@@ -35,12 +36,8 @@ public class NewNodeOperation implements MutationOperation {
     this.container = container;
   }
 
-  /**
-   * Create a new node whose parent is the workspace.
-   * This may create orphaned elements, but is appropriate for projects
-   * @param newElement the element
-   */
-  public NewNodeOperation(LanguageElement newElement) {
-    this(newElement, null);
+  @Override
+  public void execute(Controller controller) {
+    controller.addNode(this);
   }
 }
