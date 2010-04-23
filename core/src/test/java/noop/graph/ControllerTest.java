@@ -37,7 +37,7 @@ public class ControllerTest {
   @Before
   public void setUp() {
     workspace = new Workspace();
-    controller = new Controller(workspace);
+    controller = new Controller(workspace, new VertexCreatingVisitor());
   }
 
   @Test public void shouldMakeNewProject() {
@@ -45,7 +45,7 @@ public class ControllerTest {
     controller.apply(new NewNodeOperation(newNode, workspace));
     assertTrue(workspace.elements.contains(newNode));
     assertEquals(1, workspace.edges.size());
-    assertEquals(new Edge(0, CONTAIN, 1), workspace.edges.iterator().next());
+    assertEquals(new Edge(new Vertex(null, 0), CONTAIN, new Vertex(null, 1)), workspace.edges.iterator().next());
   }
 
   @Test public void shouldCreateAdditionalEdges() {
@@ -56,9 +56,9 @@ public class ControllerTest {
     controller.apply(new NewNodeOperation(newNode, workspace));
     controller.apply(new NewEdgeOperation(newNode, TYPEOF, stringType));
     assertEquals(3, workspace.edges.size());
-    assertTrue(workspace.edges.contains(new Edge(0, CONTAIN, 1)));
-    assertTrue(workspace.edges.contains(new Edge(0, CONTAIN, 2)));
-    assertTrue(workspace.edges.contains(new Edge(2, TYPEOF, 1)));
+    assertTrue(workspace.edges.contains(new Edge(new Vertex(null, 0), CONTAIN, new Vertex(null, 1))));
+    assertTrue(workspace.edges.contains(new Edge(new Vertex(null, 0), CONTAIN, new Vertex(null, 2))));
+    assertTrue(workspace.edges.contains(new Edge(new Vertex(null, 2), TYPEOF, new Vertex(null, 1))));
   }
 
   @Test public void shouldAllowEditingAStringLiteral() {

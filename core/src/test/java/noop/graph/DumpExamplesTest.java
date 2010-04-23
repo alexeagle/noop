@@ -18,8 +18,8 @@ public class DumpExamplesTest {
   public void setUp() {
     workspace = new Workspace();
     stdLib = new StandardLibraryBuilder();
-    controller = new Controller(workspace);
-    controller.applyAll(stdLib.build());
+    controller = new Controller(workspace, new VertexCreatingVisitor());
+    stdLib.build(controller);
   }
 
   @Test

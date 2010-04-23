@@ -16,7 +16,6 @@
 
 package noop.graph;
 
-import noop.graph.Edge.EdgeType;
 import noop.model.LanguageElement;
 import noop.operations.*;
 
@@ -25,9 +24,11 @@ import noop.operations.*;
  */
 public class Controller {
   private Workspace workspace;
+  private final ModelVisitor addVertices;
 
-  public Controller(Workspace workspace) {
+  public Controller(Workspace workspace, ModelVisitor addVertices) {
     this.workspace = workspace;
+    this.addVertices = addVertices;
   }
 
   public void addNode(NewNodeOperation operation) {
@@ -39,8 +40,6 @@ public class Controller {
       throw new IllegalStateException(String.format("Cannot add edge [%s -> %s] due to non-existant dest %s",
           nextNodeId, destId, container));
     }
-    Edge newEdge = new Edge(destId, EdgeType.CONTAIN, nextNodeId);
-    workspace.edges.add(newEdge);
     workspace.elements.add(operation.newElement);
   }
 
@@ -56,19 +55,18 @@ public class Controller {
   }
 
   public void addEdge(NewEdgeOperation operation) {
-    int src = workspace.elements.indexOf(operation.src);
-    if (src < 0) {
-      throw new IllegalArgumentException("Src node doesn't exist: " + operation.src);
+    if (operation.src.vertex == Vertex.NONE) {
+      throw new IllegalArgumentException("src element has no vertex");
     }
-    int dest = workspace.elements.indexOf(operation.dest);
-    if (dest < 0) {
-      throw new IllegalArgumentException("Dest node doesn't exist: " + operation.dest);
+    if (operation.dest.vertex == Vertex.NONE) {
+      throw new IllegalArgumentException("dest element has no vertex");
     }
-    workspace.edges.add(new Edge(src, operation.type, dest));
+    workspace.edges.add(new Edge(operation.src.vertex, operation.type, operation.dest.vertex));
   }
 
   public void addProject(NewProjectOperation operation) {
     workspace.addProject(operation.project);
+    operation.project.accept(addVertices);
   }
 
   public void apply(MutationOperation operation) {

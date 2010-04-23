@@ -19,6 +19,7 @@ package noop.model;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import noop.graph.ModelVisitor;
+import noop.graph.Vertex;
 
 import java.io.Serializable;
 import java.util.List;
@@ -28,6 +29,7 @@ import java.util.Set;
  * @author alexeagle@google.com (Alex Eagle)
  */
 public abstract class LanguageElement<T> implements Serializable, Visitable {
+  public Vertex vertex = Vertex.NONE;
   protected Documentation documentation = new EmptyDocumentation();
   protected List<Comment> comments = Lists.newArrayList();  
   protected Set<UnitTest> unitTests = Sets.newHashSet();

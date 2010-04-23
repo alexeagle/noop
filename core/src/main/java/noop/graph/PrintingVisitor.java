@@ -1,6 +1,5 @@
 package noop.graph;
 
-import noop.model.LanguageElement;
 import noop.model.Visitable;
 
 /**
@@ -18,10 +17,6 @@ public class PrintingVisitor extends ModelVisitor {
   @Override
   public void leave(Visitable element) {
     currentDepth--;
-  }
-
-  protected int idFor(LanguageElement element) {
-    return workspace.elements.indexOf(element);
   }
 
   protected String escape(String value) {

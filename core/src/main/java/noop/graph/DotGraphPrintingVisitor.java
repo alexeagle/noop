@@ -48,9 +48,9 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
     if (additional.length > 0) {
       attrs = ", " + attrs;
     }
-    out.format("%s [label=\"%s\"%s]\n", idFor(element), label, attrs);
-    for (Edge edge : filter(workspace.edgesFrom(idFor(element)), notContain())) {
-      out.format("%d -> %d ", edge.src, edge.dest);
+    out.format("%s [label=\"%s\"%s]\n", element.vertex, label, attrs);
+    for (Edge edge : filter(workspace.edgesFrom(element.vertex), notContain())) {
+      out.format("%s -> %s ", edge.src, edge.dest);
       out.println("[label=\"" + edge.type.name().toLowerCase() + "\", style=dashed]");
     }
   }
@@ -60,7 +60,7 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
     print(project, String.format("%s -> %s", project.getNamespace(), project.getName()), "shape=box");
     out.format("%s [label=\"%s\", shape=none]\n", identityHashCode(project.getCopyright()),
         escape(project.getCopyright()));
-    out.format("%s -> %s\n", idFor(project), identityHashCode(project.getCopyright()));
+    out.format("%s -> %s\n", project.vertex, identityHashCode(project.getCopyright()));
   }
 
   @Override

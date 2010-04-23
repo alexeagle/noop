@@ -1,13 +1,12 @@
 package noop.stdlib;
 
-import com.google.common.collect.Lists;
+import noop.graph.Controller;
 import noop.model.*;
-import noop.operations.MutationOperation;
 import noop.operations.NewEdgeOperation;
 import noop.operations.NewProjectOperation;
 import org.joda.time.Instant;
 
-import java.util.List;
+import java.util.UUID;
 
 import static noop.graph.Edge.EdgeType.TYPEOF;
 
@@ -25,13 +24,11 @@ public class StandardLibraryBuilder {
   public Method integerPlus;
   public Method integerEquals;
 
-  public List<MutationOperation> build() {
-    List<MutationOperation> result = Lists.newArrayList();
+  public void build(Controller controller) {
 
     Project project = new Project("Noop", "com.google.noop", "Apache 2");
-    result.add(new NewProjectOperation(project));
 
-    Library lang = new Library("lang");
+    Library lang = new Library(UUID.randomUUID(), "lang");
     project.addLibrary(lang);
 
     stringClazz = new Clazz("String");
@@ -40,7 +37,7 @@ public class StandardLibraryBuilder {
     voidClazz = new Clazz("Void");
     lang.addClazz(voidClazz);
 
-    Library io = new Library("io");
+    Library io = new Library(UUID.randomUUID(), "io");
     project.addLibrary(io);
 
     consoleClazz = new Clazz("Console");
@@ -48,11 +45,9 @@ public class StandardLibraryBuilder {
 
     printMethod = new Method("print");
     consoleClazz.addBlock(printMethod);
-    result.add(new NewEdgeOperation(printMethod, TYPEOF, voidClazz));
 
     Parameter printArg = new Parameter("s");
     printMethod.addParameter(printArg);
-    result.add(new NewEdgeOperation(printArg, TYPEOF, stringClazz));
 
     booleanClazz = new Clazz("Boolean");
     lang.addClazz(booleanClazz);
@@ -65,16 +60,18 @@ public class StandardLibraryBuilder {
     intClazz.addComment(new Comment("Elements may have symbols in their names." +
         " Tools may choose to render this as infix",
         System.getProperty("user.name"), new Instant()));
-    result.add(new NewEdgeOperation(integerPlus, TYPEOF, intClazz));
 
     integerEquals = new Method("==");
     intClazz.addBlock(integerEquals);
-    result.add(new NewEdgeOperation(integerEquals, TYPEOF, booleanClazz));
 
     Parameter integerPlusArg = new Parameter("i");
     integerPlus.addParameter(integerPlusArg);
-    result.add(new NewEdgeOperation(integerPlusArg, TYPEOF, intClazz));
 
-    return result;
+    controller.apply(new NewProjectOperation(project));
+    controller.apply(new NewEdgeOperation(printMethod, TYPEOF, voidClazz));
+    controller.apply(new NewEdgeOperation(printArg, TYPEOF, stringClazz));
+    controller.apply(new NewEdgeOperation(integerPlus, TYPEOF, intClazz));
+    controller.apply(new NewEdgeOperation(integerEquals, TYPEOF, booleanClazz));
+    controller.apply(new NewEdgeOperation(integerPlusArg, TYPEOF, intClazz));
   }
 }

@@ -5,6 +5,8 @@ import noop.operations.NewEdgeOperation;
 import noop.operations.NewProjectOperation;
 import noop.stdlib.StandardLibraryBuilder;
 
+import java.util.UUID;
+
 import static java.util.Arrays.asList;
 import static noop.graph.Edge.EdgeType.*;
 
@@ -22,7 +24,7 @@ public class ArithmeticExample extends Example {
     Project project = new Project("Arithmetic", "com.example", "Copyright 2010\nExample Co.");
     controller.apply(new NewProjectOperation(project));
 
-    Library library = new Library("adding stuff");
+    Library library = new Library(UUID.randomUUID(), "adding stuff");
     project.addLibrary(library);
 
     Function entryPoint = new Function("start here");

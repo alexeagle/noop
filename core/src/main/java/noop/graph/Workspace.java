@@ -59,11 +59,11 @@ public class Workspace extends LanguageElement<Workspace> {
     v.leave(this);
   }
 
-  public Iterable<Edge> edgesFrom(final int id) {
+  public Iterable<Edge> edgesFrom(final Vertex src) {
     return Iterables.filter(edges, new Predicate<Edge>() {
       @Override
       public boolean apply(@Nullable Edge input) {
-        return input.src == id;
+        return input.src == src;
       }
     });
   }

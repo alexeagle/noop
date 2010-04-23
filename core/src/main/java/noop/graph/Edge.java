@@ -24,7 +24,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * @author alexeagle@google.com (Alex Eagle)
  */
 public class Edge {
-  public Edge(int src, EdgeType type, int dest) {
+  public Edge(Vertex src, EdgeType type, Vertex dest) {
     this.type = type;
     this.src = src;
     this.dest = dest;
@@ -53,8 +53,8 @@ public class Edge {
   }
 
   public final EdgeType type;
-  public final int src;
-  public final int dest;
+  public final Vertex src;
+  public final Vertex dest;
 
   @Override
   public String toString() {

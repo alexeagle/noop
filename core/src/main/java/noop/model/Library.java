@@ -16,20 +16,25 @@
 
 package noop.model;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import noop.graph.ModelVisitor;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
 public class Library extends LanguageElement<Library> {
+  public final UUID uid;
   public final String name;
+  private final List<LanguageElement> elements = Lists.<LanguageElement>newArrayList(this);
   private final List<Clazz> classes = Lists.newArrayList();
   private final List<Block> functions = Lists.newArrayList();
 
-  public Library(String name) {
+  public Library(UUID uid, String name) {
+    this.uid = uid;
     this.name = name;
   }
 
@@ -55,5 +60,14 @@ public class Library extends LanguageElement<Library> {
       v.leave(clazz);
     }
     super.accept(v);
+  }
+
+  public List<LanguageElement> getElements() {
+    return ImmutableList.copyOf(elements);
+  }
+
+  public int add(LanguageElement languageElement) {
+    elements.add(languageElement);
+    return elements.size() - 1;
   }
 }
