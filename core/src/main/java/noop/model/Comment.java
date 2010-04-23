@@ -11,10 +11,10 @@ public class Comment extends LanguageElement<Comment> {
   public final String user;
   public final Instant timestamp;
 
-  public Comment(String text, String user) {
+  public Comment(String text, String user, Instant timestamp) {
     this.text = text;
     this.user = user;
-    this.timestamp = new Instant();
+    this.timestamp = timestamp;
   }
 
   @Override

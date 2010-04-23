@@ -18,10 +18,7 @@ package noop.graph;
 
 import noop.graph.Edge.EdgeType;
 import noop.model.LanguageElement;
-import noop.operations.EditNodeOperation;
-import noop.operations.MutationOperation;
-import noop.operations.NewEdgeOperation;
-import noop.operations.NewNodeOperation;
+import noop.operations.*;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -33,14 +30,10 @@ public class Controller {
     this.workspace = workspace;
   }
 
-  public void apply(NewNodeOperation operation) {
+  public void addNode(NewNodeOperation operation) {
     int nextNodeId = workspace.elements.size();
     LanguageElement container = operation.container == null ? workspace : operation.container;
 
-//    if (!container.adoptChild(operation.newElement)) {
-//      throw new IllegalArgumentException("Element " + operation.newElement
-//          + " not allowed as child of " + container);
-//    }
     int destId = workspace.elements.indexOf(container);
     if (destId < 0) {
       throw new IllegalStateException(String.format("Cannot add edge [%s -> %s] due to non-existant dest %s",
@@ -51,7 +44,7 @@ public class Controller {
     workspace.elements.add(operation.newElement);
   }
 
-  public void apply(EditNodeOperation operation) {
+  public void editNode(EditNodeOperation operation) {
     LanguageElement currentValue = workspace.elements.get(operation.id);
     if (currentValue.getClass() != operation.newValue.getClass()) {
       throw new IllegalArgumentException(String.format("Cannot edit node %d with %s because the current type is %s",
@@ -62,24 +55,22 @@ public class Controller {
     workspace.elements.set(operation.id, operation.newValue);
   }
 
-  public void apply(NewEdgeOperation operation) {
+  public void addEdge(NewEdgeOperation operation) {
     workspace.edges.add(new Edge(workspace.elements.indexOf(operation.src),
         operation.type, workspace.elements.indexOf(operation.dest)));
+  }
+
+  public void addProject(NewProjectOperation operation) {
+    workspace.addProject(operation.project);
+  }
+
+  public void apply(MutationOperation operation) {
+    operation.execute(this);    
   }
 
   public void applyAll(Iterable<? extends MutationOperation> operations) {
     for (MutationOperation operation : operations) {
       apply(operation);
-    }
-  }
-
-  private void apply(MutationOperation operation) {
-    if (operation instanceof NewNodeOperation) {
-      apply((NewNodeOperation)operation);
-    } else if (operation instanceof EditNodeOperation) {
-      apply((EditNodeOperation)operation);
-    } else if (operation instanceof NewEdgeOperation) {
-      apply((NewEdgeOperation)operation);
     }
   }
 }

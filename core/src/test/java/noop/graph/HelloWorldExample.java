@@ -2,7 +2,7 @@ package noop.graph;
 
 import noop.model.*;
 import noop.operations.NewEdgeOperation;
-import noop.operations.NewNodeOperation;
+import noop.operations.NewProjectOperation;
 import noop.stdlib.StandardLibraryBuilder;
 
 import static java.util.Arrays.asList;
@@ -19,7 +19,7 @@ public class HelloWorldExample extends Example {
   @Override
   public void createProgram(Controller controller) {
     Project project = new Project("Hello World", "com.example", "Copyright 2010\nExample Co.");
-    controller.apply(new NewNodeOperation(project));
+    controller.apply(new NewProjectOperation(project));
 
     Library library = new Library("hello");
     project.addLibrary(library);

@@ -16,10 +16,13 @@
 
 package noop.operations;
 
+import noop.graph.Controller;
+
 import java.io.Serializable;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
 public interface MutationOperation extends Serializable {
+  void execute(Controller controller);
 }

@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import noop.model.*;
 import noop.operations.MutationOperation;
 import noop.operations.NewEdgeOperation;
-import noop.operations.NewNodeOperation;
+import noop.operations.NewProjectOperation;
+import org.joda.time.Instant;
 
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class StandardLibraryBuilder {
     List<MutationOperation> result = Lists.newArrayList();
 
     Project project = new Project("Noop", "com.google.noop", "Apache 2");
-    result.add(new NewNodeOperation(project));
+    result.add(new NewProjectOperation(project));
 
     Library lang = new Library("lang");
     project.addLibrary(lang);
@@ -63,7 +64,7 @@ public class StandardLibraryBuilder {
     intClazz.addBlock(integerPlus);
     intClazz.addComment(new Comment("Elements may have symbols in their names." +
         " Tools may choose to render this as infix",
-        System.getProperty("user.name")));
+        System.getProperty("user.name"), new Instant()));
     result.add(new NewEdgeOperation(integerPlus, TYPEOF, intClazz));
 
     integerEquals = new Method("==");
