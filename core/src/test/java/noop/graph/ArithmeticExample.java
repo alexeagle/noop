@@ -21,7 +21,6 @@ public class ArithmeticExample extends Example {
   @Override
   public void createProgram(Controller controller) {
     Project project = new Project("Arithmetic", "com.example", "Copyright 2010\nExample Co.");
-    controller.apply(new NewProjectOperation(project));
 
     Library library = new Library(UUID.randomUUID(), "adding stuff");
     project.addLibrary(library);
@@ -30,9 +29,6 @@ public class ArithmeticExample extends Example {
     library.addFunction(entryPoint);
     Parameter consoleDep = new Parameter("console");
     entryPoint.addParameter(consoleDep);
-    controller.apply(
-        new NewEdgeOperation(entryPoint, TYPEOF, stdLib.intClazz),
-        new NewEdgeOperation(consoleDep, TYPEOF, stdLib.consoleClazz));
 
     IdentifierDeclaration i = new IdentifierDeclaration("i");
     entryPoint.addStatement(i);
@@ -45,29 +41,35 @@ public class ArithmeticExample extends Example {
 
     IntegerLiteral two = new IntegerLiteral(2);
     entryPoint.addStatement(two);
+    j.setInitialValue(two);
 
     IdentifierDeclaration k = new IdentifierDeclaration("k");
     entryPoint.addStatement(k);
 
     Expression sum = new MethodInvocation();
-    controller.apply(
-        new NewEdgeOperation(sum, INVOKE, stdLib.integerPlus),
-        new NewEdgeOperation(sum, TARGET, i),
-        new NewEdgeOperation(sum, ARG, j));
     k.setInitialValue(sum);
 
     Expression printResult = new MethodInvocation();
     entryPoint.addStatement(printResult);
-    controller.apply(
-        new NewEdgeOperation(printResult, INVOKE, stdLib.printMethod),
-        new NewEdgeOperation(printResult, TARGET, consoleDep),
-        new NewEdgeOperation(printResult, ARG, k));
 
     IntegerLiteral zero = new IntegerLiteral(0);
     entryPoint.addStatement(zero);
 
     Expression returnVal = new Return();
     entryPoint.addStatement(returnVal);
+    
+    controller.apply(new NewProjectOperation(project));
+    controller.apply(
+        new NewEdgeOperation(entryPoint, TYPEOF, stdLib.intClazz),
+        new NewEdgeOperation(consoleDep, TYPEOF, stdLib.consoleClazz));
+    controller.apply(
+        new NewEdgeOperation(sum, INVOKE, stdLib.integerPlus),
+        new NewEdgeOperation(sum, TARGET, i),
+        new NewEdgeOperation(sum, ARG, j));
+    controller.apply(
+        new NewEdgeOperation(printResult, INVOKE, stdLib.printMethod),
+        new NewEdgeOperation(printResult, TARGET, consoleDep),
+        new NewEdgeOperation(printResult, ARG, k));
     controller.apply(new NewEdgeOperation(returnVal, ARG, zero));
   }
 }

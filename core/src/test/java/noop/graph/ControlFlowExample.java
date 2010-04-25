@@ -20,7 +20,6 @@ public class ControlFlowExample extends Example {
   @Override
   public void createProgram(Controller controller) {
     Project project = new Project("Control Flow", "com.example", "Copyright 2010\nExample Co.");
-    controller.apply(new NewProjectOperation(project));
 
     Library library = new Library(UUID.randomUUID(), "Testing loops");
     project.addLibrary(library);
@@ -36,7 +35,6 @@ public class ControlFlowExample extends Example {
 
     IdentifierDeclaration i = new IdentifierDeclaration("count");
     method.addStatement(i);
-    controller.apply(new NewEdgeOperation(i, TYPEOF, stdLib.intClazz));
 
     i.setInitialValue(new IntegerLiteral(0));
 
@@ -48,16 +46,19 @@ public class ControlFlowExample extends Example {
 
     Expression terminateWhen = new MethodInvocation();
     loop.setTerminationCondition(terminateWhen);
-    controller.apply(
-        new NewEdgeOperation(terminateWhen, TARGET, i),
-        new NewEdgeOperation(terminateWhen, INVOKE, stdLib.integerEquals),
-        new NewEdgeOperation(terminateWhen, ARG, ten));
 
     Block body = new AnonymousBlock();
     loop.setBody(body);
 
     Expression printValue = new MethodInvocation();
     body.addStatement(printValue);
+
+    controller.apply(new NewProjectOperation(project));
+    controller.apply(new NewEdgeOperation(i, TYPEOF, stdLib.intClazz));
+    controller.apply(
+        new NewEdgeOperation(terminateWhen, TARGET, i),
+        new NewEdgeOperation(terminateWhen, INVOKE, stdLib.integerEquals),
+        new NewEdgeOperation(terminateWhen, ARG, ten));
     controller.apply(
         new NewEdgeOperation(printValue, TARGET, consoleDep),
         new NewEdgeOperation(printValue, INVOKE, stdLib.printMethod),

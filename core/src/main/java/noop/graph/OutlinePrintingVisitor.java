@@ -6,9 +6,6 @@ import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.google.common.collect.Iterables.filter;
-import static noop.graph.Edge.notContain;
-
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
@@ -115,7 +112,7 @@ public class OutlinePrintingVisitor extends PrintingVisitor {
 
   private void print(LanguageElement element, String message, String... params) {
     out.format("%s%s [#%s]", indent(), String.format(message, params), element.vertex);
-    for (Edge edge : filter(workspace.edgesFrom(element.vertex), notContain())) {
+    for (Edge edge : workspace.edgesFrom(element.vertex)) {
       out.format(" %s -> #%s", edge.type.name(), edge.dest);
     }
     out.println();
