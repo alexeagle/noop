@@ -29,7 +29,7 @@ import java.util.UUID;
 public class Library extends LanguageElement<Library> {
   public final UUID uid;
   public final String name;
-  private final List<LanguageElement> elements = Lists.<LanguageElement>newArrayList(this);
+  private final List<LanguageElement> elements = Lists.newArrayList();
   private final List<Clazz> classes = Lists.newArrayList();
   private final List<Block> functions = Lists.newArrayList();
 

@@ -18,6 +18,7 @@ package noop.graph;
 
 import com.google.common.base.Nullable;
 import com.google.common.base.Predicate;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -34,14 +35,9 @@ public class Workspace extends LanguageElement<Workspace> {
   public final Set<Edge> edges = Sets.newHashSet();
   public final List<LanguageElement> elements = Lists.<LanguageElement>newArrayList(this);
   private List<Project> projects = Lists.newArrayList();
-  private List<LanguageElement> orphans = Lists.newArrayList();
 
   public void addProject(Project project) {
     projects.add(project);
-  }
-
-  public void addOrphan(LanguageElement orphan) {
-    orphans.add(orphan);
   }
 
   @Override
@@ -66,5 +62,9 @@ public class Workspace extends LanguageElement<Workspace> {
         return input.src == src;
       }
     });
+  }
+
+  public List<Project> getProjects() {
+    return ImmutableList.copyOf(projects);
   }
 }

@@ -16,6 +16,7 @@
 
 package noop.model;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import noop.graph.ModelVisitor;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -85,5 +86,9 @@ public class Project extends LanguageElement<Project> {
       v.leave(library);
     }
     super.accept(v);
+  }
+
+  public List<Library> getLibraries() {
+    return ImmutableList.copyOf(libraries);
   }
 }
