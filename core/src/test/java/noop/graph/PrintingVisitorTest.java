@@ -27,6 +27,9 @@ public class PrintingVisitorTest {
 
     final PrintingVisitor visitor = new PrintingVisitor() {
       @Override
+      public void print(LanguageElement element, String label, String... params) {}
+
+      @Override
       public void visit(Clazz clazz) {
         if (clazz == c1) {
           assertEquals(l1, getParent());

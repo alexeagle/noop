@@ -20,7 +20,6 @@ import noop.model.*;
 
 import java.io.PrintStream;
 
-import static com.google.common.base.Join.join;
 import static java.lang.System.identityHashCode;
 
 /**
@@ -43,13 +42,17 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
     }
   }
 
-  private void print(LanguageElement element, String label, String... additional) {
-    String attrs = join(",", additional);
-    if (additional.length > 0) {
-      attrs = ", " + attrs;
+  public void print(LanguageElement element, String label, String... params) {
+    print(element, label, null, params);
+  }
+
+  public void print(LanguageElement element, String label, String additional, String... params) {
+    if (additional != null) {
+      additional = ", " + additional;
     }
-    out.format("%s [label=\"%s\"%s]\n", element.vertex.hashCode(), label, attrs);
-    for (Edge edge : workspace.edgesFrom(element.vertex)) {
+    out.format("%s [label=\"%s\"%s]\n", element.vertex.hashCode(), String.format(label, params), additional);
+    Library library = workspace.lookupLibrary(element.vertex.libraryUid);
+    for (Edge edge : library.edgesFrom(element.vertex)) {
       out.format("%s -> %s ", edge.src.hashCode(), edge.dest.hashCode());
       out.println("[label=\"" + edge.type.name().toLowerCase() + "\", style=dashed]");
     }
@@ -71,64 +74,8 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
   }
 
   @Override
-  public void visit(Library library) {
-    print(library, library.name, "shape=hexagon");
-
-  }
-
-  @Override
-  public void visit(Method method) {
-    print(method, method.name + "{}");
-  }
-
-  @Override
-  public void visit(Function function) {
-    print(function, function.name + "{}");
-  }
-
-  @Override
-  public void visit(UnitTest unitTest) {
-    print(unitTest, "test: " + unitTest.name);
-  }
-
-  @Override
-  public void visit(Assignment assignment) {
-    print(assignment, "assign");
-  }
-
-  @Override
   public void visit(IdentifierDeclaration identifierDeclaration) {
     print(identifierDeclaration, identifierDeclaration.name);
-  }
-
-  @Override
-  public void visit(Loop loop) {
-    print(loop, loop.toString());
-  }
-
-  @Override
-  public void visit(AnonymousBlock block) {
-    print(block, "{}");
-  }
-
-  @Override
-  public void visit(Return aReturn) {
-    print(aReturn, "[return]");
-  }
-
-  @Override
-  public void visit(IntegerLiteral integerLiteral) {
-    print(integerLiteral, String.valueOf(integerLiteral.value));
-  }
-
-  @Override
-  public void visit(Parameter parameter) {
-    print(parameter, parameter.name);
-  }
-
-  @Override
-  public void visit(MethodInvocation methodInvocation) {
-    print(methodInvocation, "[invoke]");
   }
 
   @Override
@@ -144,16 +91,6 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
       escaped = escaped.substring(0, 12) + "...";
     }
     return escaped;
-  }
-
-  @Override
-  public void visit(StringLiteral stringLiteral) {
-    print(stringLiteral, "\\\"" + stringLiteral.value + "\\\"");
-  }
-
-  @Override
-  public void visit(Clazz clazz) {
-    print(clazz, clazz.name);
   }
 
   @Override

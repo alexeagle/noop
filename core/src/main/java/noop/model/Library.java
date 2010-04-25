@@ -16,9 +16,14 @@
 
 package noop.model;
 
+import com.google.common.base.Nullable;
+import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import noop.graph.Edge;
 import noop.graph.ModelVisitor;
+import noop.graph.Vertex;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,6 +34,7 @@ import java.util.UUID;
 public class Library extends LanguageElement<Library> {
   public final UUID uid;
   public final String name;
+  private final List<Edge> edges = Lists.newArrayList();
   private final List<LanguageElement> elements = Lists.newArrayList();
   private final List<Clazz> classes = Lists.newArrayList();
   private final List<Block> functions = Lists.newArrayList();
@@ -62,6 +68,16 @@ public class Library extends LanguageElement<Library> {
     super.accept(v);
   }
 
+
+  public Iterable<Edge> edgesFrom(final Vertex src) {
+    return Iterables.filter(edges, new Predicate<Edge>() {
+      @Override
+      public boolean apply(@Nullable Edge input) {
+        return input.src == src;
+      }
+    });
+  }
+
   public List<LanguageElement> getElements() {
     return ImmutableList.copyOf(elements);
   }
@@ -69,5 +85,14 @@ public class Library extends LanguageElement<Library> {
   public int add(LanguageElement languageElement) {
     elements.add(languageElement);
     return elements.size() - 1;
+  }
+
+  public <T extends LanguageElement> void replace(int index, LanguageElement<T> newValue) {
+    elements.get(index).setPreviousVersion(newValue);
+    elements.set(index, newValue);
+  }
+
+  public void addEdge(Edge edge) {
+    edges.add(edge);
   }
 }

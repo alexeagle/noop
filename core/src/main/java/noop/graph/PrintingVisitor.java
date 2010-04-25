@@ -1,13 +1,13 @@
 package noop.graph;
 
-import noop.model.LanguageElement;
+import noop.model.*;
 
 import java.util.Stack;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-public class PrintingVisitor extends ModelVisitor {
+public abstract class PrintingVisitor extends ModelVisitor {
   protected Workspace workspace;
   protected int currentDepth;
   protected Stack<LanguageElement> parents = new Stack<LanguageElement>();
@@ -34,4 +34,73 @@ public class PrintingVisitor extends ModelVisitor {
   protected String escape(String value) {
     return value.replaceAll("\n", "\\\\n");
   }
+
+  public abstract void print(LanguageElement element, String label, String... params);
+
+  @Override
+  public void visit(Library library) {
+    print(library, "Library \"%s\"", library.name);
+  }
+
+  @Override
+  public void visit(Clazz clazz) {
+    print(clazz, "Class \"%s\"", clazz.name);
+  }
+
+  @Override
+  public void visit(Method method) {
+    print(method, "Method %s{}", method.name);
+  }
+
+  @Override
+  public void visit(Function function) {
+    print(function, "Function %s{}", function.name);
+  }
+
+  @Override
+  public void visit(UnitTest unitTest) {
+    print(unitTest, "Unit test %s", unitTest.name);
+  }
+
+  @Override
+  public void visit(MethodInvocation methodInvocation) {
+    print(methodInvocation, "invocation");
+  }
+
+  @Override
+  public void visit(Parameter parameter) {
+    print(parameter, "parameter %s", parameter.name);
+  }
+
+  @Override
+  public void visit(AnonymousBlock block) {
+    print(block, "{}");
+  }
+
+  @Override
+  public void visit(Return aReturn) {
+    print(aReturn, "[return]");
+  }
+
+  @Override
+  public void visit(IntegerLiteral integerLiteral) {
+    print(integerLiteral, "literal %s", String.valueOf(integerLiteral.value));
+  }
+
+  @Override
+  public void visit(Loop loop) {
+    print(loop, "Loop until");
+  }
+
+  @Override
+  public void visit(Assignment assignment) {
+    print(assignment, "Assign");
+  }
+
+  @Override
+  public void visit(StringLiteral stringLiteral) {
+    print(stringLiteral, "literal \\\"%s\\\"", stringLiteral.value);
+  }
+
+
 }

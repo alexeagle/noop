@@ -17,7 +17,11 @@
 package noop.graph;
 
 import noop.model.LanguageElement;
-import noop.operations.*;
+import noop.model.Library;
+import noop.operations.EditNodeOperation;
+import noop.operations.MutationOperation;
+import noop.operations.NewEdgeOperation;
+import noop.operations.NewProjectOperation;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -31,27 +35,14 @@ public class Controller {
     this.addVertices = addVertices;
   }
 
-  public void addNode(NewNodeOperation operation) {
-    int nextNodeId = workspace.elements.size();
-    LanguageElement container = operation.container == null ? workspace : operation.container;
-
-    int destId = workspace.elements.indexOf(container);
-    if (destId < 0) {
-      throw new IllegalStateException(String.format("Cannot add edge [%s -> %s] due to non-existant dest %s",
-          nextNodeId, destId, container));
-    }
-    workspace.elements.add(operation.newElement);
-  }
-
   public void editNode(EditNodeOperation operation) {
-    LanguageElement currentValue = workspace.elements.get(operation.id);
+    Library library = workspace.lookupLibrary(operation.vertex.libraryUid);
+    LanguageElement currentValue = library.getElements().get(operation.vertex.index);
     if (currentValue.getClass() != operation.newValue.getClass()) {
-      throw new IllegalArgumentException(String.format("Cannot edit node %d with %s because the current type is %s",
-          operation.id, operation.newValue, currentValue.getClass()));
+      throw new IllegalArgumentException(String.format("Cannot edit node %s with %s because the current type is %s",
+          operation.vertex, operation.newValue, currentValue.getClass()));
     }
-
-    operation.newValue.setPreviousVersion(currentValue);
-    workspace.elements.set(operation.id, operation.newValue);
+    library.replace(operation.vertex.index, operation.newValue);
   }
 
   public void addEdge(NewEdgeOperation operation) {
@@ -61,7 +52,8 @@ public class Controller {
     if (operation.dest.vertex == Vertex.NONE) {
       throw new IllegalArgumentException("dest element has no vertex");
     }
-    workspace.edges.add(new Edge(operation.src.vertex, operation.type, operation.dest.vertex));
+    Library srcLibrary = workspace.lookupLibrary(operation.src.vertex.libraryUid);
+    srcLibrary.addEdge(new Edge(operation.src.vertex, operation.type, operation.dest.vertex));
   }
 
   public void addProject(NewProjectOperation operation) {
