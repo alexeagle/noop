@@ -50,11 +50,10 @@ public class DumpExamplesMain {
         new Example(stdLib) {
           @Override
           public void createProgram(Controller controller) {}
-        }
-//        new ArithmeticExample(stdLib),
-//        new HelloWorldExample(stdLib),
-//        new ControlFlowExample(stdLib)
-    )) {
+        },
+        new ArithmeticExample(stdLib),
+        new HelloWorldExample(stdLib),
+        new ControlFlowExample(stdLib))) {
       Workspace workspace = new Workspace();
 
       Controller controller = new Controller(workspace, new VertexCreatingVisitor());

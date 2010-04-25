@@ -7,7 +7,6 @@ import noop.stdlib.StandardLibraryBuilder;
 
 import java.util.UUID;
 
-import static java.util.Arrays.asList;
 import static noop.graph.Edge.EdgeType.*;
 
 /**
@@ -31,9 +30,9 @@ public class ArithmeticExample extends Example {
     library.addFunction(entryPoint);
     Parameter consoleDep = new Parameter("console");
     entryPoint.addParameter(consoleDep);
-    controller.applyAll(asList(
+    controller.apply(
         new NewEdgeOperation(entryPoint, TYPEOF, stdLib.intClazz),
-        new NewEdgeOperation(consoleDep, TYPEOF, stdLib.consoleClazz)));
+        new NewEdgeOperation(consoleDep, TYPEOF, stdLib.consoleClazz));
 
     IdentifierDeclaration i = new IdentifierDeclaration("i");
     entryPoint.addStatement(i);
@@ -51,20 +50,18 @@ public class ArithmeticExample extends Example {
     entryPoint.addStatement(k);
 
     Expression sum = new MethodInvocation();
-    controller.applyAll(asList(
+    controller.apply(
         new NewEdgeOperation(sum, INVOKE, stdLib.integerPlus),
         new NewEdgeOperation(sum, TARGET, i),
-        new NewEdgeOperation(sum, ARG, j)
-    ));
+        new NewEdgeOperation(sum, ARG, j));
     k.setInitialValue(sum);
 
     Expression printResult = new MethodInvocation();
     entryPoint.addStatement(printResult);
-    controller.applyAll(asList(
+    controller.apply(
         new NewEdgeOperation(printResult, INVOKE, stdLib.printMethod),
         new NewEdgeOperation(printResult, TARGET, consoleDep),
-        new NewEdgeOperation(printResult, ARG, k)
-    ));
+        new NewEdgeOperation(printResult, ARG, k));
 
     IntegerLiteral zero = new IntegerLiteral(0);
     entryPoint.addStatement(zero);

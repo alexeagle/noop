@@ -69,13 +69,9 @@ public class Controller {
     operation.project.accept(addVertices);
   }
 
-  public void apply(MutationOperation operation) {
-    operation.execute(this);    
-  }
-
-  public void applyAll(Iterable<? extends MutationOperation> operations) {
+  public void apply(MutationOperation... operations) {
     for (MutationOperation operation : operations) {
-      apply(operation);
+      operation.execute(this);
     }
   }
 }
