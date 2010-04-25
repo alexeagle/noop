@@ -21,9 +21,10 @@ import noop.graph.ModelVisitor;
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-public class Documentation implements Visitable {
+public class Documentation extends LanguageElement<Documentation> {
   public final String summary;
   public final String author;
+  public static final Documentation NONE = new Documentation("", "");
 
   public Documentation(String summary, String author) {
     this.summary = summary;

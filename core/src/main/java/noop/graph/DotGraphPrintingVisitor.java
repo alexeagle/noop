@@ -22,9 +22,7 @@ import noop.model.*;
 import java.io.PrintStream;
 
 import static com.google.common.base.Join.join;
-import static com.google.common.collect.Iterables.filter;
 import static java.lang.System.identityHashCode;
-import static noop.graph.Edge.notContain;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -40,7 +38,10 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
   public void visit(Workspace workspace) {
     this.workspace = workspace;
     out.format("digraph workspace\n{\n");
-    print(workspace, "Workspace", "shape=house");
+    out.format("workspace [label=\"%s\" %s]\n", "Workspace", "shape=house");
+    for (Project project : workspace.getProjects()) {
+      out.format("workspace -> %s\n", project.vertex.hashCode());
+    }
   }
 
   private void print(LanguageElement element, String label, String... additional) {
@@ -48,10 +49,13 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
     if (additional.length > 0) {
       attrs = ", " + attrs;
     }
-    out.format("%s [label=\"%s\"%s]\n", element.vertex, label, attrs);
-    for (Edge edge : filter(workspace.edgesFrom(element.vertex), notContain())) {
-      out.format("%s -> %s ", edge.src, edge.dest);
+    out.format("%s [label=\"%s\"%s]\n", element.vertex.hashCode(), label, attrs);
+    for (Edge edge : workspace.edgesFrom(element.vertex)) {
+      out.format("%s -> %s ", edge.src.hashCode(), edge.dest.hashCode());
       out.println("[label=\"" + edge.type.name().toLowerCase() + "\", style=dashed]");
+    }
+    if (getParent().vertex != element.vertex) {
+      out.format("%s -> %s\n", getParent().vertex.hashCode(), element.vertex.hashCode());
     }
   }
 
@@ -60,12 +64,13 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
     print(project, String.format("%s -> %s", project.getNamespace(), project.getName()), "shape=box");
     out.format("%s [label=\"%s\", shape=none]\n", identityHashCode(project.getCopyright()),
         escape(project.getCopyright()));
-    out.format("%s -> %s\n", project.vertex, identityHashCode(project.getCopyright()));
+    out.format("%s -> %s\n", project.vertex.hashCode(), identityHashCode(project.getCopyright()));
   }
 
   @Override
   public void visit(Library library) {
     print(library, library.name, "shape=hexagon");
+
   }
 
   @Override
@@ -116,7 +121,9 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
 
   @Override
   public void visit(Documentation documentation) {
-    out.format("%s [label=\"%s\"%s]\n", identityHashCode(documentation), escape(documentation.summary), "shape=none");
+    if (documentation != Documentation.NONE) {
+      out.format("%s [label=\"%s\"%s]\n", identityHashCode(documentation), escape(documentation.summary), "shape=none");
+    }
   }
 
   protected String escape(String value) {
@@ -138,7 +145,7 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
   }
 
   @Override
-  public void leave(Visitable element) {
+  public void leave(LanguageElement element) {
     super.leave(element);
     if (currentDepth == 0) {
       out.println("}");

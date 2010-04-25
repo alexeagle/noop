@@ -30,7 +30,7 @@ import java.util.Set;
  */
 public abstract class LanguageElement<T> implements Serializable, Visitable {
   public Vertex vertex = Vertex.NONE;
-  protected Documentation documentation = new EmptyDocumentation();
+  protected Documentation documentation = Documentation.NONE;
   protected List<Comment> comments = Lists.newArrayList();  
   protected Set<UnitTest> unitTests = Sets.newHashSet();
   protected T previousVersion;
