@@ -13,6 +13,7 @@ import static noop.graph.Edge.EdgeType.*;
  * @author alexeagle@google.com (Alex Eagle)
  */
 public class ArithmeticExample extends Example {
+  public UUID uid;
 
   public ArithmeticExample(StandardLibraryBuilder stdLib) {
     super(stdLib);
@@ -22,7 +23,8 @@ public class ArithmeticExample extends Example {
   public void createProgram(Controller controller) {
     Project project = new Project("Arithmetic", "com.example", "Copyright 2010\nExample Co.");
 
-    Library library = new Library(UUID.randomUUID(), "adding stuff");
+    uid = UUID.randomUUID();
+    Library library = new Library(uid, "adding stuff");
     project.addLibrary(library);
 
     Function entryPoint = new Function("start here");

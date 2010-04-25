@@ -9,6 +9,7 @@ import java.util.Stack;
  */
 public abstract class PrintingVisitor extends ModelVisitor {
   protected Workspace workspace;
+  protected Library library;
   protected int currentDepth;
   protected Stack<LanguageElement> parents = new Stack<LanguageElement>();
 
@@ -39,6 +40,7 @@ public abstract class PrintingVisitor extends ModelVisitor {
 
   @Override
   public void visit(Library library) {
+    this.library = library;
     print(library, "Library \"%s\"", library.name);
   }
 
@@ -99,7 +101,7 @@ public abstract class PrintingVisitor extends ModelVisitor {
 
   @Override
   public void visit(StringLiteral stringLiteral) {
-    print(stringLiteral, "literal \\\"%s\\\"", stringLiteral.value);
+    print(stringLiteral, "literal \"%s\"", stringLiteral.value);
   }
 
 

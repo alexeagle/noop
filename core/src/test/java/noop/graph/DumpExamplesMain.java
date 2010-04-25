@@ -16,7 +16,9 @@
 
 package noop.graph;
 
-import noop.graph.WorkspaceDumper.Output;
+import noop.graph.ModelSerializer.Output;
+import noop.model.Library;
+import noop.model.Project;
 import noop.stdlib.StandardLibraryBuilder;
 
 import java.io.File;
@@ -29,18 +31,14 @@ import java.util.Arrays;
  * @author alexeagle@google.com (Alex Eagle)
  */
 public class DumpExamplesMain {
-  private final Output output;
   private final File outDir;
 
-  public DumpExamplesMain(Output output, File outDir) {
-    this.output = output;
+  public DumpExamplesMain(File outDir) {
     this.outDir = outDir;
   }
 
   public static void main(String[] args) throws FileNotFoundException {
-    new DumpExamplesMain(Output.DOT, new File(args[0])).run();
-    new DumpExamplesMain(Output.TXT, new File(args[0])).run();
-    new DumpExamplesMain(Output.XML, new File(args[0])).run();
+    new DumpExamplesMain(new File(args[0])).run();
   }
 
   public void run() throws FileNotFoundException {
@@ -60,8 +58,20 @@ public class DumpExamplesMain {
       stdLib.build(controller);
 
       example.createProgram(controller);
-      File outFile = new File(outDir, example.getClass().getName() + "." + output.name().toLowerCase());
-      new WorkspaceDumper(output, new PrintStream(new FileOutputStream(outFile))).dump(workspace);
+      for (Output output : Arrays.asList(Output.DOT, Output.TXT)) {
+        File outFile = new File(outDir, example.getClass().getName() + "." + output.name().toLowerCase());
+        new ModelSerializer(output, new PrintStream(new FileOutputStream(outFile))).dump(workspace);        
+      }
+
+      for (Project project : workspace.getProjects()) {
+        File projectDir = new File(new File(outDir, project.getNamespace()), project.getName());
+        projectDir.mkdirs();
+        for (Library library : project.getLibraries()) {
+          File outFile = new File(projectDir, library.name + ".xml");
+          PrintStream stream = new PrintStream(new FileOutputStream(outFile));
+          new ModelSerializer(Output.XML, stream).dump(library);
+        }
+      }
     }
   }
 }

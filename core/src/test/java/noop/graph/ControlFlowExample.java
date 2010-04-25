@@ -13,6 +13,8 @@ import static noop.graph.Edge.EdgeType.*;
  * @author alexeagle@google.com (Alex Eagle)
  */
 public class ControlFlowExample extends Example {
+  public UUID uid;
+
   public ControlFlowExample(StandardLibraryBuilder stdLib) {
     super(stdLib);
   }
@@ -20,8 +22,8 @@ public class ControlFlowExample extends Example {
   @Override
   public void createProgram(Controller controller) {
     Project project = new Project("Control Flow", "com.example", "Copyright 2010\nExample Co.");
-
-    Library library = new Library(UUID.randomUUID(), "Testing loops");
+    uid = UUID.randomUUID();
+    Library library = new Library(uid, "Testing loops");
     project.addLibrary(library);
 
     Clazz clazz = new Clazz("Iterating Printer");

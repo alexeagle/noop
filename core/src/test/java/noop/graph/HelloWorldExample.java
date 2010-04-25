@@ -13,6 +13,8 @@ import static noop.graph.Edge.EdgeType.*;
  * @author alexeagle@google.com (Alex Eagle)
  */
 public class HelloWorldExample extends Example {
+  public UUID uid;
+
   public HelloWorldExample(StandardLibraryBuilder stdLib) {
     super(stdLib);
   }
@@ -21,7 +23,8 @@ public class HelloWorldExample extends Example {
   public void createProgram(Controller controller) {
     Project project = new Project("Hello World", "com.example", "Copyright 2010\nExample Co.");
 
-    Library library = new Library(UUID.randomUUID(), "hello");
+    uid = UUID.randomUUID();
+    Library library = new Library(uid, "hello");
     project.addLibrary(library);
 
     Function sayHello = new Function("Say hello");
