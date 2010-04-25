@@ -16,7 +16,6 @@
 
 package noop.graph;
 
-import noop.graph.Edge.EdgeType;
 import noop.model.*;
 
 import java.io.PrintStream;
@@ -40,7 +39,7 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
     out.format("digraph workspace\n{\n");
     out.format("workspace [label=\"%s\" %s]\n", "Workspace", "shape=house");
     for (Project project : workspace.getProjects()) {
-      out.format("workspace -> %s\n", project.vertex.hashCode());
+      out.format("workspace -> %s\n", identityHashCode(project));
     }
   }
 
@@ -54,17 +53,21 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
       out.format("%s -> %s ", edge.src.hashCode(), edge.dest.hashCode());
       out.println("[label=\"" + edge.type.name().toLowerCase() + "\", style=dashed]");
     }
-    if (getParent().vertex != element.vertex) {
+    if (getParent().vertex != Vertex.NONE) {
       out.format("%s -> %s\n", getParent().vertex.hashCode(), element.vertex.hashCode());
     }
   }
 
   @Override
   public void visit(Project project) {
-    print(project, String.format("%s -> %s", project.getNamespace(), project.getName()), "shape=box");
+    out.format("%s [label=\"%s\"%s]\n", identityHashCode(project),
+        String.format("%s -> %s", project.getNamespace(), project.getName()), "shape=box");
+    for (Library library : project.getLibraries()) {
+      out.format("%s -> %s\n", identityHashCode(project), library.vertex.hashCode());
+    }
     out.format("%s [label=\"%s\", shape=none]\n", identityHashCode(project.getCopyright()),
         escape(project.getCopyright()));
-    out.format("%s -> %s\n", project.vertex.hashCode(), identityHashCode(project.getCopyright()));
+    out.format("%s -> %s\n", identityHashCode(project), identityHashCode(project.getCopyright()));
   }
 
   @Override
@@ -96,7 +99,16 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
   @Override
   public void visit(IdentifierDeclaration identifierDeclaration) {
     print(identifierDeclaration, identifierDeclaration.name);
+  }
 
+  @Override
+  public void visit(Loop loop) {
+    print(loop, loop.toString());
+  }
+
+  @Override
+  public void visit(AnonymousBlock block) {
+    print(block, "{}");
   }
 
   @Override
@@ -149,13 +161,6 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
     super.leave(element);
     if (currentDepth == 0) {
       out.println("}");
-    }
-  }
-
-  @Override
-  public void visit(Edge edge) {
-    if (edge.type == EdgeType.CONTAIN) {
-      out.format("%d -> %d\n", edge.src, edge.dest);
     }
   }
 }

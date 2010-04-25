@@ -16,7 +16,6 @@
 
 package noop.graph;
 
-import com.google.common.base.Predicate;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -34,18 +33,8 @@ public class Edge {
     v.visit(this);
   }
 
-  public static Predicate<? super Edge> notContain() {
-    return new Predicate<Edge>() {
-      @Override
-      public boolean apply(Edge input) {
-        return input.type != EdgeType.CONTAIN;
-      }
-    };
-  }
-
   public enum EdgeType {
     INVOKE,
-    CONTAIN,
     IMPLEMENT,
     TYPEOF,
     TARGET,

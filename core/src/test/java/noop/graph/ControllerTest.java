@@ -20,10 +20,10 @@ import noop.model.*;
 import noop.operations.EditNodeOperation;
 import noop.operations.NewEdgeOperation;
 import noop.operations.NewNodeOperation;
+import noop.operations.NewProjectOperation;
 import org.junit.Before;
 import org.junit.Test;
 
-import static noop.graph.Edge.EdgeType.CONTAIN;
 import static noop.graph.Edge.EdgeType.TYPEOF;
 import static org.junit.Assert.*;
 
@@ -41,11 +41,9 @@ public class ControllerTest {
   }
 
   @Test public void shouldMakeNewProject() {
-    LanguageElement newNode = new Project("helloWorld", "com.google", "");
-    controller.apply(new NewNodeOperation(newNode, workspace));
-    assertTrue(workspace.elements.contains(newNode));
-    assertEquals(1, workspace.edges.size());
-    assertEquals(new Edge(new Vertex(null, 0), CONTAIN, new Vertex(null, 1)), workspace.edges.iterator().next());
+    Project project = new Project("helloWorld", "com.google", "");
+    controller.apply(new NewProjectOperation(project));
+    assertTrue(workspace.getProjects().contains(project));
   }
 
   @Test public void shouldCreateAdditionalEdges() {
@@ -56,8 +54,6 @@ public class ControllerTest {
     controller.apply(new NewNodeOperation(newNode, workspace));
     controller.apply(new NewEdgeOperation(newNode, TYPEOF, stringType));
     assertEquals(3, workspace.edges.size());
-    assertTrue(workspace.edges.contains(new Edge(new Vertex(null, 0), CONTAIN, new Vertex(null, 1))));
-    assertTrue(workspace.edges.contains(new Edge(new Vertex(null, 0), CONTAIN, new Vertex(null, 2))));
     assertTrue(workspace.edges.contains(new Edge(new Vertex(null, 2), TYPEOF, new Vertex(null, 1))));
   }
 
