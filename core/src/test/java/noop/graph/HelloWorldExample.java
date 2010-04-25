@@ -7,7 +7,6 @@ import noop.stdlib.StandardLibraryBuilder;
 
 import java.util.UUID;
 
-import static java.util.Arrays.asList;
 import static noop.graph.Edge.EdgeType.*;
 
 /**
@@ -32,9 +31,9 @@ public class HelloWorldExample extends Example {
     Parameter consoleDep = new Parameter("console");
     sayHello.addParameter(consoleDep);
 
-    controller.applyAll(asList(
+    controller.apply(
         new NewEdgeOperation(sayHello, TYPEOF, stdLib.intClazz),
-        new NewEdgeOperation(consoleDep, TYPEOF, stdLib.consoleClazz)));
+        new NewEdgeOperation(consoleDep, TYPEOF, stdLib.consoleClazz));
 
     sayHello.setDocumentation(new Documentation("This is the entry point for the Hello World app",
         "alexeagle@google.com (Alex Eagle)"));
@@ -45,19 +44,19 @@ public class HelloWorldExample extends Example {
 
     Expression printHello = new MethodInvocation();
     sayHello.addStatement(printHello);
-    controller.applyAll(asList(
+    controller.apply(
         new NewEdgeOperation(printHello, TARGET, consoleDep),
         new NewEdgeOperation(printHello, INVOKE, stdLib.printMethod),
-        new NewEdgeOperation(printHello, ARG, helloWorld)));
+        new NewEdgeOperation(printHello, ARG, helloWorld));
 
     IntegerLiteral zero = new IntegerLiteral(0);
     sayHello.addStatement(zero);
 
     Return aReturn = new Return();
     sayHello.addStatement(aReturn);
-    controller.applyAll(asList(
+    controller.apply(
         new NewEdgeOperation(zero, TYPEOF, stdLib.intClazz),
-        new NewEdgeOperation(aReturn, ARG, zero)));
+        new NewEdgeOperation(aReturn, ARG, zero));
 
     UnitTest unitTest = new UnitTest("Should say hello");
     sayHello.addUnitTest(unitTest);

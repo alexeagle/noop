@@ -7,7 +7,6 @@ import noop.stdlib.StandardLibraryBuilder;
 
 import java.util.UUID;
 
-import static java.util.Arrays.asList;
 import static noop.graph.Edge.EdgeType.*;
 
 /**
@@ -49,21 +48,19 @@ public class ControlFlowExample extends Example {
 
     Expression terminateWhen = new MethodInvocation();
     loop.setTerminationCondition(terminateWhen);
-    controller.applyAll(asList(
+    controller.apply(
         new NewEdgeOperation(terminateWhen, TARGET, i),
         new NewEdgeOperation(terminateWhen, INVOKE, stdLib.integerEquals),
-        new NewEdgeOperation(terminateWhen, ARG, ten)
-    ));
+        new NewEdgeOperation(terminateWhen, ARG, ten));
 
     Block body = new AnonymousBlock();
     loop.setBody(body);
 
     Expression printValue = new MethodInvocation();
     body.addStatement(printValue);
-    controller.applyAll(asList(
+    controller.apply(
         new NewEdgeOperation(printValue, TARGET, consoleDep),
         new NewEdgeOperation(printValue, INVOKE, stdLib.printMethod),
-        new NewEdgeOperation(printValue, ARG, i)
-    ));
+        new NewEdgeOperation(printValue, ARG, i));
   }
 }
