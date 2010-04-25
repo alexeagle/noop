@@ -48,7 +48,6 @@ public class OutlinePrintingVisitor extends PrintingVisitor {
   public void print(LanguageElement element, String message, String... params) {
     out.format("%s%s [#%s]", indent(), String.format(message, params), element.vertex);
     if (element.vertex != Vertex.NONE) {
-      Library library = workspace.lookupLibrary(element.vertex.libraryUid);
       for (Edge edge : library.edgesFrom(element.vertex)) {
         out.format(" %s -> #%s", edge.type.name(), edge.dest);
       }

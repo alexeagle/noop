@@ -43,15 +43,7 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
   }
 
   public void print(LanguageElement element, String label, String... params) {
-    print(element, label, null, params);
-  }
-
-  public void print(LanguageElement element, String label, String additional, String... params) {
-    if (additional != null) {
-      additional = ", " + additional;
-    }
-    out.format("%s [label=\"%s\"%s]\n", element.vertex.hashCode(), String.format(label, params), additional);
-    Library library = workspace.lookupLibrary(element.vertex.libraryUid);
+    out.format("%s [label=\"%s\"]\n", element.vertex.hashCode(), escape(String.format(label, params)));
     for (Edge edge : library.edgesFrom(element.vertex)) {
       out.format("%s -> %s ", edge.src.hashCode(), edge.dest.hashCode());
       out.println("[label=\"" + edge.type.name().toLowerCase() + "\", style=dashed]");
@@ -87,9 +79,10 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
 
   protected String escape(String value) {
     String escaped = super.escape(value);
-    if (escaped.length() > 15) {
-      escaped = escaped.substring(0, 12) + "...";
+    if (escaped.length() > 30) {
+      escaped = escaped.substring(0, 27) + "...";
     }
+    escaped = escaped.replaceAll("\\\"", "\\\\\"");
     return escaped;
   }
 
