@@ -17,6 +17,7 @@
 package noop.operations;
 
 import noop.graph.Controller;
+import noop.graph.Vertex;
 import noop.model.LanguageElement;
 
 import java.io.Serializable;
@@ -25,11 +26,11 @@ import java.io.Serializable;
  * @author alexeagle@google.com (Alex Eagle)
  */
 public class EditNodeOperation implements MutationOperation, Serializable {
-  public final int id;
+  public final Vertex vertex;
   public final LanguageElement newValue;
 
-  public EditNodeOperation(int id, LanguageElement newValue) {
-    this.id = id;
+  public EditNodeOperation(Vertex vertex, LanguageElement newValue) {
+    this.vertex = vertex;
     this.newValue = newValue;
   }
 

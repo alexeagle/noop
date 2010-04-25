@@ -18,14 +18,14 @@ package noop.graph;
 
 import noop.model.*;
 import noop.operations.EditNodeOperation;
-import noop.operations.NewEdgeOperation;
-import noop.operations.NewNodeOperation;
 import noop.operations.NewProjectOperation;
 import org.junit.Before;
 import org.junit.Test;
 
-import static noop.graph.Edge.EdgeType.TYPEOF;
-import static org.junit.Assert.*;
+import java.util.UUID;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -33,9 +33,11 @@ import static org.junit.Assert.*;
 public class ControllerTest {
   private Controller controller;
   private Workspace workspace;
+  private Project p;
 
   @Before
   public void setUp() {
+    p = new Project("p", "ns", "copyright");
     workspace = new Workspace();
     controller = new Controller(workspace, new VertexCreatingVisitor());
   }
@@ -46,36 +48,34 @@ public class ControllerTest {
     assertTrue(workspace.getProjects().contains(project));
   }
 
-  @Test public void shouldCreateAdditionalEdges() {
-    LanguageElement stringType = new Clazz("String");
-    controller.apply(new NewNodeOperation(stringType, workspace));
+  @Test public void shouldAllowAddingAMethodToAClazz() {
+    Library l = new Library(UUID.randomUUID(), "l");
+    p.addLibrary(l);
+    Clazz c = new Clazz("c");
+    l.addClazz(c);
+    Method m = new Method("m");
+    c.addBlock(m);
+    controller.apply(new NewProjectOperation(p));
 
-    LanguageElement newNode = new StringLiteral("yes");
-    controller.apply(new NewNodeOperation(newNode, workspace));
-    controller.apply(new NewEdgeOperation(newNode, TYPEOF, stringType));
-    assertEquals(3, workspace.edges.size());
-    assertTrue(workspace.edges.contains(new Edge(new Vertex(null, 2), TYPEOF, new Vertex(null, 1))));
-  }
+    Clazz c2 = new Clazz("c2");
+    Method m2 = new Method("m2");
+    c2.addBlock(m);
+    c2.addBlock(m2);
 
-  @Test public void shouldAllowEditingAStringLiteral() {
-    StringLiteral aString = new StringLiteral("hello");
-    controller.apply(new NewNodeOperation(aString, workspace));
-
-    controller.apply(new EditNodeOperation(1, new StringLiteral("goodbye")));
-    assertEquals(2, workspace.elements.size());
-    assertEquals("goodbye", ((StringLiteral) workspace.elements.get(1)).value);
-    assertEquals("hello", ((StringLiteral) workspace.elements.get(1).getPreviousVersion()).value);
+    controller.apply(new EditNodeOperation(c.vertex, c2));
   }
 
   @Test public void shouldErrorWhenEditingWithWrongType() {
-    IntegerLiteral anInt = new IntegerLiteral(12);
-    controller.apply(new NewNodeOperation(anInt, workspace));
+    Library l = new Library(UUID.randomUUID(), "l");
+    p.addLibrary(l);
+    Clazz c = new Clazz("c");
+    l.addClazz(c);
 
     try {
-      controller.apply(new EditNodeOperation(1, new StringLiteral("String is not Int")));
+      controller.apply(new EditNodeOperation(c.vertex, new StringLiteral("String is not Clazz")));
       fail("should throw IllegalArgumentException");
     } catch (IllegalArgumentException e) {
-      assertTrue(e.getMessage(), e.getMessage().contains("IntegerLiteral"));
+      assertTrue(e.getMessage(), e.getMessage().contains("Clazz"));
     }
   }
 }

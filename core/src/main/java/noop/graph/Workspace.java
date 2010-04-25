@@ -16,24 +16,19 @@
 
 package noop.graph;
 
-import com.google.common.base.Nullable;
-import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import noop.model.LanguageElement;
+import noop.model.Library;
 import noop.model.Project;
 
 import java.util.List;
-import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
 public class Workspace extends LanguageElement<Workspace> {
-  public final Set<Edge> edges = Sets.newHashSet();
-  public final List<LanguageElement> elements = Lists.<LanguageElement>newArrayList(this);
   private List<Project> projects = Lists.newArrayList();
 
   public void addProject(Project project) {
@@ -49,22 +44,21 @@ public class Workspace extends LanguageElement<Workspace> {
       project.accept(v);
       v.leave(project);
     }
-    for (Edge edge : edges) {
-      edge.accept(v);
-    }
     v.leave(this);
-  }
-
-  public Iterable<Edge> edgesFrom(final Vertex src) {
-    return Iterables.filter(edges, new Predicate<Edge>() {
-      @Override
-      public boolean apply(@Nullable Edge input) {
-        return input.src == src;
-      }
-    });
   }
 
   public List<Project> getProjects() {
     return ImmutableList.copyOf(projects);
+  }
+
+  public Library lookupLibrary(UUID libraryUid) {
+    for (Project project : projects) {
+      for (Library library : project.getLibraries()) {
+        if (library.uid.equals(libraryUid)) {
+          return library;
+        }
+      }
+    }
+    return null;
   }
 }

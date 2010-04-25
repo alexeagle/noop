@@ -46,6 +46,6 @@ public class Vertex {
     if (this == NONE) {
       return "NO_VERTEX";
     }
-    return index + "(" + libraryUid.toString() + ")";
+    return index + "(" + libraryUid.toString().substring(0, libraryUid.toString().indexOf("-")) + ")";
   }
 }
