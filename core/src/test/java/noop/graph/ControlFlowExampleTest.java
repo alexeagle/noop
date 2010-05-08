@@ -44,12 +44,12 @@ public class ControlFlowExampleTest {
   }
 
   @Test
-  public void shouldCreateArithmeticDot() {
+  public void shouldCreateControlFlowDot() {
     new ModelSerializer(Output.DOT, System.out).dump(library);
   }
 
   @Test
-  public void shouldCreateArithmeticOutline() {
+  public void shouldCreateControlFlowOutline() {
     new ModelSerializer(Output.TXT, System.out).dump(library);
   }
 }

@@ -41,10 +41,16 @@ public class ModelSerializer {
   public void dump(LanguageElement element) {
     switch (output) {
       case DOT:
-        element.accept(new DotGraphPrintingVisitor(out));
+        DotGraphPrintingVisitor visitor = new DotGraphPrintingVisitor(out);
+        visitor.enter(element);
+        element.accept(visitor);
+        visitor.leave(element);
         break;
       case TXT:
-        element.accept(new OutlinePrintingVisitor(out));
+        OutlinePrintingVisitor v = new OutlinePrintingVisitor(out);
+        v.enter(element);
+        element.accept(v);
+        v.leave(element);
         break;
       case XML:
         XStream xStream = new XStream();

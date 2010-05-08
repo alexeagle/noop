@@ -48,7 +48,7 @@ public class DotGraphPrintingVisitor extends PrintingVisitor {
       out.format("%s -> %s ", edge.src.hashCode(), edge.dest.hashCode());
       out.println("[label=\"" + edge.type.name().toLowerCase() + "\", style=dashed]");
     }
-    if (getParent().vertex != Vertex.NONE) {
+    if (getParent() != null && getParent().vertex != Vertex.NONE) {
       out.format("%s -> %s\n", getParent().vertex.hashCode(), element.vertex.hashCode());
     }
   }

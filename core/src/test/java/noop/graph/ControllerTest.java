@@ -70,7 +70,8 @@ public class ControllerTest {
     p.addLibrary(l);
     Clazz c = new Clazz("c");
     l.addClazz(c);
-
+    controller.apply(new NewProjectOperation(p));
+    
     try {
       controller.apply(new EditNodeOperation(c.vertex, new StringLiteral("String is not Clazz")));
       fail("should throw IllegalArgumentException");
