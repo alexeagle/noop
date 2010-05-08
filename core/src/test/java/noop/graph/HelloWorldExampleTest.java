@@ -44,12 +44,12 @@ public class HelloWorldExampleTest {
   }
 
   @Test
-  public void shouldCreateArithmeticDot() {
+  public void shouldCreateHelloWorldDot() {
     new ModelSerializer(Output.DOT, System.out).dump(library);
   }
 
   @Test
-  public void shouldCreateArithmeticOutline() {
+  public void shouldCreateHelloWorldOutline() {
     new ModelSerializer(Output.TXT, System.out).dump(library);
   }
 }
