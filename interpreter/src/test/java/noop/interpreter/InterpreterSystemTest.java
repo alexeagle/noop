@@ -30,7 +30,13 @@ public class InterpreterSystemTest {
   }
 
   @Test public void shouldRunTheHelloWorldProgram() throws Exception {
-    InterpreterMain.main(new String[] {"Say Hello"});
+    InterpreterMain.main(new String[] {
+        // TODO: fix absolute paths on my machine!
+        "-lib", "/Users/alexeagle/IdeaProjects/noop/dumps/com.google.noop/Noop/io.xml",
+        "-lib", "/Users/alexeagle/IdeaProjects/noop/dumps/com.google.noop/Noop/lang.xml",
+        "-lib", "/Users/alexeagle/IdeaProjects/noop/dumps/com.example/Hello World/hello.xml",
+        "dcf83cb3-9457-4695-b4b6-94389fef5a5b", "1"
+        });
     assertEquals(0, InterpreterMain.exitCodeForTesting);
   }
 }

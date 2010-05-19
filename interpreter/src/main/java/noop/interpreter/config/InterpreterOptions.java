@@ -16,8 +16,15 @@
 
 package noop.interpreter.config;
 
+import java.util.List;
+
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
 public interface InterpreterOptions {
+  Integer getEntryPoint();
+
+  String getMainLib();
+
+  List<String> getLibraryPaths();
 }
