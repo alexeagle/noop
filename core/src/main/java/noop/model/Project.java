@@ -25,6 +25,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import java.util.List;
 
 /**
+ * TODO: seems like the library could be the top level entity.
  * @author alexeagle@google.com (Alex Eagle)
  */
 public class Project extends LanguageElement<Project> {
