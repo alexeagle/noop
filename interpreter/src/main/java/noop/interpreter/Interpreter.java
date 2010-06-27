@@ -19,6 +19,7 @@ package noop.interpreter;
 import com.google.inject.Inject;
 import com.thoughtworks.xstream.XStream;
 import noop.graph.Controller;
+import noop.graph.ModelVisitor;
 import noop.graph.VertexCreatingVisitor;
 import noop.graph.Workspace;
 import noop.interpreter.config.InterpreterOptions;
@@ -37,14 +38,17 @@ import java.util.UUID;
  */
 public class Interpreter {
   private final InterpreterOptions options;
+  private final ModelVisitor visitor;
+  private final Workspace workspace;
 
   @Inject
-  public Interpreter(InterpreterOptions options) {
+  public Interpreter(InterpreterOptions options, ModelVisitor visitor, Workspace workspace) {
     this.options = options;
+    this.visitor = visitor;
+    this.workspace = workspace;
   }
 
   public int run() throws FileNotFoundException {
-    Workspace workspace = new Workspace();
     Controller controller = new Controller(workspace, new VertexCreatingVisitor());
 
     Project project = new Project("runtime", "", "");

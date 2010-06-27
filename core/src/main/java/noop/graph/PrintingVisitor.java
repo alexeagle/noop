@@ -23,7 +23,7 @@ import java.util.Stack;
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-public abstract class PrintingVisitor extends ModelVisitor {
+public abstract class PrintingVisitor extends DefaultModelVisitor {
   protected Workspace workspace;
   protected Library library;
   protected int currentDepth;
@@ -119,6 +119,4 @@ public abstract class PrintingVisitor extends ModelVisitor {
   public void visit(StringLiteral stringLiteral) {
     print(stringLiteral, "literal \"%s\"", stringLiteral.value);
   }
-
-
 }

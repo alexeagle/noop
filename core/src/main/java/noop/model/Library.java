@@ -34,6 +34,7 @@ import java.util.UUID;
 public class Library extends LanguageElement<Library> {
   public final UUID uid;
   public final String name;
+  // TODO list of list of edges, first list indexed same as 'src' node
   private final List<Edge> edges = Lists.newArrayList();
   private final List<LanguageElement> elements = Lists.newArrayList();
   private final List<Clazz> classes = Lists.newArrayList();
