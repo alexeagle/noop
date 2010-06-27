@@ -19,12 +19,13 @@ package noop.graph;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.inject.Singleton;
-import noop.model.LanguageElement;
-import noop.model.Library;
-import noop.model.Project;
 
 import java.util.List;
 import java.util.UUID;
+
+import noop.model.LanguageElement;
+import noop.model.Library;
+import noop.model.Project;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -53,6 +54,7 @@ public class Workspace extends LanguageElement<Workspace> {
     return ImmutableList.copyOf(projects);
   }
 
+  // TODO: cache these lookups
   public Library lookupLibrary(UUID libraryUid) {
     for (Project project : projects) {
       for (Library library : project.getLibraries()) {

@@ -16,17 +16,17 @@
 
 package noop.model;
 
-import com.google.common.base.Nullable;
-import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import noop.graph.Edge;
-import noop.graph.ModelVisitor;
-import noop.graph.Vertex;
 
 import java.util.List;
 import java.util.UUID;
+
+import static com.google.common.collect.Iterables.emptyIterable;
+import static com.google.common.collect.Lists.newArrayList;
+import noop.graph.Edge;
+import noop.graph.ModelVisitor;
+import noop.graph.Vertex;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -34,11 +34,10 @@ import java.util.UUID;
 public class Library extends LanguageElement<Library> {
   public final UUID uid;
   public final String name;
-  // TODO list of list of edges, first list indexed same as 'src' node
-  private final List<Edge> edges = Lists.newArrayList();
-  private final List<LanguageElement> elements = Lists.newArrayList();
-  private final List<Clazz> classes = Lists.newArrayList();
-  private final List<Block> functions = Lists.newArrayList();
+  private final List<List<Edge>> edges = newArrayList();
+  private final List<LanguageElement> elements = newArrayList();
+  private final List<Clazz> classes = newArrayList();
+  private final List<Block> functions = newArrayList();
 
   public Library(UUID uid, String name) {
     this.uid = uid;
@@ -71,12 +70,10 @@ public class Library extends LanguageElement<Library> {
 
 
   public Iterable<Edge> edgesFrom(final Vertex src) {
-    return Iterables.filter(edges, new Predicate<Edge>() {
-      @Override
-      public boolean apply(@Nullable Edge input) {
-        return input.src == src;
-      }
-    });
+    if (src.index >= edges.size()) {
+      return emptyIterable();
+    }
+    return edges.get(src.index);
   }
 
   public List<LanguageElement> getElements() {
@@ -94,6 +91,10 @@ public class Library extends LanguageElement<Library> {
   }
 
   public void addEdge(Edge edge) {
-    edges.add(edge);
+    int index = edge.src.index;
+    while (edges.size() <= index) {
+      edges.add(Lists.<Edge>newLinkedList());
+    }
+    edges.get(index).add(edge);
   }
 }
