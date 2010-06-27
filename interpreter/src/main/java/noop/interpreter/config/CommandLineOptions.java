@@ -37,8 +37,12 @@ public class CommandLineOptions implements InterpreterOptions {
   private Integer entryPoint;
 
   @Option(name = "-lib", aliases = "--library",
-          usage = "A relative paths to a library to load. May be used multiple times.")
+          usage = "A relative path to a library to load. May be used multiple times.")
   private List<String> libraryPaths;
+
+  @Option(name = "-v", aliases = "--verbose",
+          usage = "Whether to print the graph as the interpreter visits it")
+  private boolean verbose;
 
   public static CommandLineOptions fromCmdLineArgs(String[] args) throws CmdLineException {
     CommandLineOptions options = new CommandLineOptions();
@@ -67,5 +71,10 @@ public class CommandLineOptions implements InterpreterOptions {
   @Override
   public List<String> getLibraryPaths() {
     return libraryPaths;
+  }
+
+  @Override
+  public boolean isVerbose() {
+    return verbose;
   }
 }

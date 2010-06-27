@@ -23,7 +23,7 @@ import noop.model.Library;
  * Creates the vertex in the element graph for each element encountered which doesn't have one already.
  * @author alexeagle@google.com (Alex Eagle)
  */
-public class VertexCreatingVisitor extends ModelVisitor {
+public class VertexCreatingVisitor extends DefaultModelVisitor {
   private Library currentLibrary;
 
   @Override

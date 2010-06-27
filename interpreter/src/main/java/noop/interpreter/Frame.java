@@ -14,19 +14,11 @@
  * limitations under the License.
  */
 
-package noop.interpreter.config;
-
-import java.util.List;
+package noop.interpreter;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
-public interface InterpreterOptions {
-  Integer getEntryPoint();
+public class Frame {
 
-  String getMainLib();
-
-  List<String> getLibraryPaths();
-
-  boolean isVerbose();
 }

@@ -35,6 +35,7 @@ public class InterpreterSystemTest {
         "-lib", "/Users/alexeagle/IdeaProjects/noop/dumps/com.google.noop/Noop/io.xml",
         "-lib", "/Users/alexeagle/IdeaProjects/noop/dumps/com.google.noop/Noop/lang.xml",
         "-lib", "/Users/alexeagle/IdeaProjects/noop/dumps/com.example/Hello World/hello.xml",
+        "-v",
         "dcf83cb3-9457-4695-b4b6-94389fef5a5b", "1"
         });
     assertEquals(0, InterpreterMain.exitCodeForTesting);

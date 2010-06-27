@@ -17,9 +17,8 @@
 package noop.interpreter;
 
 import com.google.inject.Guice;
-import com.google.inject.Injector;
 import noop.interpreter.config.CommandLineOptions;
-import noop.interpreter.config.ConfigModule;
+import noop.interpreter.config.InterpreterModule;
 import org.kohsuke.args4j.CmdLineException;
 
 /**
@@ -36,8 +35,9 @@ public class InterpreterMain {
   public static void main(String[] args) throws Exception {
     try {
       CommandLineOptions options = CommandLineOptions.fromCmdLineArgs(args);
-      Injector injector = Guice.createInjector(new ConfigModule(options));
-      exit(injector.getInstance(Interpreter.class).run());
+      exit(Guice.createInjector(new InterpreterModule(options))
+          .getInstance(Interpreter.class)
+          .run());
     } catch (CmdLineException e) {
       exit(1);
     }

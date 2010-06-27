@@ -18,6 +18,7 @@ package noop.graph;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+import com.google.inject.Singleton;
 import noop.model.LanguageElement;
 import noop.model.Library;
 import noop.model.Project;
@@ -28,6 +29,7 @@ import java.util.UUID;
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
+@Singleton
 public class Workspace extends LanguageElement<Workspace> {
   private List<Project> projects = Lists.newArrayList();
 
@@ -60,5 +62,10 @@ public class Workspace extends LanguageElement<Workspace> {
       }
     }
     return null;
+  }
+
+  // Look up the language element from the target pointer
+  public LanguageElement resolve(Vertex target) {
+    return lookupLibrary(target.libraryUid).getElements().get(target.index);
   }
 }

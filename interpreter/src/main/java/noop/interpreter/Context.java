@@ -14,27 +14,18 @@
  * limitations under the License.
  */
 
-package noop.interpreter.config;
+package noop.interpreter;
 
-import com.google.inject.AbstractModule;
-
-import java.io.PrintStream;
+import java.util.Stack;
 
 /**
+ * The execution context of the interpreter. A snapshot of the state of frames on the stack.
  * @author alexeagle@google.com (Alex Eagle)
  */
-public class ConfigModule extends AbstractModule {
+public class Context {
+  private Stack<Frame> stack;
 
-  private final InterpreterOptions options;
-
-  public ConfigModule(InterpreterOptions options) {
-    this.options = options;
-  }
-
-  @Override
-  protected void configure() {
-    bind(PrintStream.class).annotatedWith(Output.class).toInstance(System.out);
-    bind(PrintStream.class).annotatedWith(Error.class).toInstance(System.err);
-    bind(InterpreterOptions.class).toInstance(options);
+  public Frame currentFrame() {
+    return stack.peek();
   }
 }
