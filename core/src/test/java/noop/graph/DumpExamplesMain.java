@@ -16,16 +16,22 @@
 
 package noop.graph;
 
-import noop.graph.ModelSerializer.Output;
-import noop.model.Library;
-import noop.model.Project;
-import noop.stdlib.StandardLibraryBuilder;
+import com.thoughtworks.xstream.XStream;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
+
+import noop.model.Project;
+import noop.persistence.LibraryRepository;
+import noop.persistence.ModelSerializer;
+import noop.persistence.ModelSerializer.SerializationFormat;
+import static noop.persistence.ModelSerializer.SerializationFormat.DOT;
+import static noop.persistence.ModelSerializer.SerializationFormat.TXT;
+import static noop.persistence.ModelSerializer.SerializationFormat.XML;
+import noop.stdlib.StandardLibraryBuilder;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -58,19 +64,17 @@ public class DumpExamplesMain {
       stdLib.build(controller);
 
       example.createProgram(controller);
-      for (Output output : Arrays.asList(Output.DOT, Output.TXT)) {
-        File outFile = new File(outDir, example.getClass().getName() + "." + output.name().toLowerCase());
-        new ModelSerializer(output, new PrintStream(new FileOutputStream(outFile))).dump(workspace);        
+      for (SerializationFormat serializationFormat : Arrays.asList(DOT, TXT)) {
+        String outFileName = example.getClass().getName() + "."
+            + serializationFormat.name().toLowerCase();
+        PrintStream output = new PrintStream(new FileOutputStream(new File(outDir, outFileName)));
+        new ModelSerializer(serializationFormat, new XStream()).write(workspace, output);
       }
 
+      LibraryRepository repository = new LibraryRepository(outDir,
+          new ModelSerializer(XML, new XStream()));
       for (Project project : workspace.getProjects()) {
-        File projectDir = new File(new File(outDir, project.getNamespace()), project.getName());
-        projectDir.mkdirs();
-        for (Library library : project.getLibraries()) {
-          File outFile = new File(projectDir, library.name + ".xml");
-          PrintStream stream = new PrintStream(new FileOutputStream(outFile));
-          new ModelSerializer(Output.XML, stream).dump(library);
-        }
+        repository.save(project);
       }
     }
   }

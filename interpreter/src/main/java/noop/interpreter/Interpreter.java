@@ -17,7 +17,10 @@
 package noop.interpreter;
 
 import com.google.inject.Inject;
-import com.thoughtworks.xstream.XStream;
+
+import java.io.FileNotFoundException;
+import java.util.UUID;
+
 import noop.graph.Controller;
 import noop.graph.ModelVisitor;
 import noop.graph.VertexCreatingVisitor;
@@ -27,11 +30,7 @@ import noop.model.Block;
 import noop.model.Library;
 import noop.model.Project;
 import noop.operations.NewProjectOperation;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.UUID;
+import noop.persistence.LibraryRepository;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -40,23 +39,27 @@ public class Interpreter {
   private final InterpreterOptions options;
   private final ModelVisitor visitor;
   private final Workspace workspace;
+  private final LibraryRepository repository;
 
   @Inject
-  public Interpreter(InterpreterOptions options, ModelVisitor visitor, Workspace workspace) {
+  public Interpreter(InterpreterOptions options, ModelVisitor visitor, Workspace workspace,
+                     LibraryRepository repository) {
     this.options = options;
     this.visitor = visitor;
     this.workspace = workspace;
+    this.repository = repository;
   }
 
   public int run() throws FileNotFoundException {
     Controller controller = new Controller(workspace, new VertexCreatingVisitor());
 
-    Project project = new Project("runtime", "", "");
     for (String libraryPath : options.getLibraryPaths()) {
-      XStream xStream = new XStream();
-      project.addLibrary((Library) xStream.fromXML(new FileReader(new File(libraryPath))));
+      CommandLineLibraryNameParser parser = new CommandLineLibraryNameParser(libraryPath).invoke();
+      Project project = parser.getProject();
+      Library library = repository.load(project, parser.getLibraryName());
+      project.addLibrary(library);
+      controller.addProject(new NewProjectOperation(project));
     }
-    controller.addProject(new NewProjectOperation(project));
 
     Library mainLib = workspace.lookupLibrary(UUID.fromString(options.getMainLib()));
     if (mainLib == null) {

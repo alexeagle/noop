@@ -16,27 +16,54 @@
 
 package noop.interpreter;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.UUID;
+
+import noop.graph.Controller;
+import noop.interpreter.config.InterpreterModule;
+import noop.interpreter.config.OptionsBuilder;
+import noop.model.Function;
+import noop.model.Library;
+import noop.model.Project;
+import noop.operations.NewProjectOperation;
+import noop.persistence.LibraryRepository;
+import noop.stdlib.StandardLibraryBuilder;
 import static org.junit.Assert.assertEquals;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
  */
 public class InterpreterSystemTest {
+  private Controller controller;
+  private LibraryRepository repository;
+
   @Before public void setUp() {
     InterpreterMain.disableSystemExitForTesting();
+    Injector injector = Guice.createInjector(new InterpreterModule(new OptionsBuilder().build()));
+    controller = injector.getInstance(Controller.class);
+    repository = injector.getInstance(LibraryRepository.class);
   }
 
   @Test public void shouldRunTheHelloWorldProgram() throws Exception {
+    UUID uuid = UUID.randomUUID();    
+    Project project = new Project("Hello World", "com.example", "");
+    project.addLibrary(new Library(uuid, "hello")).addFunction(new Function("go"));
+    controller.addProject(new NewProjectOperation(project));
+    repository.save(project);
+    StandardLibraryBuilder stdLib = new StandardLibraryBuilder().build(controller);
+    repository.save(stdLib.noop);
+
     InterpreterMain.main(new String[] {
-        // TODO: fix absolute paths on my machine!
-        "-lib", "/Users/alexeagle/IdeaProjects/noop/dumps/com.google.noop/Noop/io.xml",
-        "-lib", "/Users/alexeagle/IdeaProjects/noop/dumps/com.google.noop/Noop/lang.xml",
-        "-lib", "/Users/alexeagle/IdeaProjects/noop/dumps/com.example/Hello World/hello.xml",
+        "-lib", "com.google.Noop/io",
+        "-lib", "com.google.Noop/lang",
+        "-lib", "com.example.Hello World/hello",
         "-v",
-        "dcf83cb3-9457-4695-b4b6-94389fef5a5b", "1"
+        uuid.toString(), "1"
         });
     assertEquals(0, InterpreterMain.exitCodeForTesting);
   }

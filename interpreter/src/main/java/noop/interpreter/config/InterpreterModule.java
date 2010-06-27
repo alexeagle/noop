@@ -18,11 +18,16 @@ package noop.interpreter.config;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.multibindings.Multibinder;
+
+import java.io.File;
+import java.io.PrintStream;
+
 import noop.graph.CompositeModelVisitor;
 import noop.graph.ModelVisitor;
 import noop.interpreter.InterpreterVisitor;
-
-import java.io.PrintStream;
+import noop.persistence.ModelSerializer.SerializationFormat;
+import static noop.persistence.ModelSerializer.SerializationFormat.XML;
+import noop.persistence.XmlDiskCache;
 
 /**
  * @author alexeagle@google.com (Alex Eagle)
@@ -40,6 +45,9 @@ public class InterpreterModule extends AbstractModule {
     bind(PrintStream.class).annotatedWith(Output.class).toInstance(System.out);
     bind(PrintStream.class).annotatedWith(Error.class).toInstance(System.err);
     bind(InterpreterOptions.class).toInstance(options);
+    bind(SerializationFormat.class).toInstance(XML);
+    bind(File.class).annotatedWith(XmlDiskCache.class)
+        .toInstance(new File(System.getProperty("java.io.tmpdir")));
     bind(ModelVisitor.class).to(CompositeModelVisitor.class);
     Multibinder<ModelVisitor> visitors = Multibinder.newSetBinder(binder(), ModelVisitor.class);
     visitors.addBinding().to(InterpreterVisitor.class);
