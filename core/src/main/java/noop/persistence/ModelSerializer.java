@@ -14,32 +14,41 @@
  * limitations under the License.
  */
 
-package noop.graph;
+package noop.persistence;
+
+import com.google.inject.Inject;
 
 import com.thoughtworks.xstream.XStream;
-import noop.model.LanguageElement;
 
 import java.io.PrintStream;
+import java.io.Reader;
+
+import noop.graph.DotGraphPrintingVisitor;
+import noop.graph.OutlinePrintingVisitor;
+import noop.model.LanguageElement;
+import noop.model.Library;
 
 /**
- * Dumps the content of a workspace in one of a few possible formats.
+ * Writes the content of a language element in one of a few possible formats.
+ * Reads a library back from the XML format only.
+ * TODO: a "SOURCE" format would allow text-based editing of noop programs
  * @author alexeagle@google.com (Alex Eagle)
  */
 public class ModelSerializer {
-  private final Output output;
-  private final PrintStream out;
+  private final SerializationFormat serializationFormat;
+  private final XStream xStream;
 
-  public ModelSerializer(Output output, PrintStream out) {
-    this.output = output;
-    this.out = out;
+  @Inject
+  public ModelSerializer(SerializationFormat serializationFormat, XStream xStream) {
+    this.serializationFormat = serializationFormat;
+    this.xStream = xStream;
   }
 
-  public enum Output {
-    TXT, XML, DOT
+  public enum SerializationFormat {
+    TXT, XML, DOT;
   }
-
-  public void dump(LanguageElement element) {
-    switch (output) {
+  public void write(LanguageElement element, PrintStream out) {
+    switch (serializationFormat) {
       case DOT:
         DotGraphPrintingVisitor visitor = new DotGraphPrintingVisitor(out);
         visitor.enter(element);
@@ -53,11 +62,14 @@ public class ModelSerializer {
         v.leave(element);
         break;
       case XML:
-        XStream xStream = new XStream();
         out.append(xStream.toXML(element));
         break;
       default:
-        throw new RuntimeException("unknown output type " + output);
+        throw new RuntimeException("unknown output type " + serializationFormat);
     }
+  }
+
+  public Library read(Reader libraryFile) {
+    return (Library) xStream.fromXML(libraryFile);    
   }
 }
