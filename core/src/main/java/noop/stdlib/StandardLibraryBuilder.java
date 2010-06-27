@@ -16,15 +16,20 @@
 
 package noop.stdlib;
 
-import noop.graph.Controller;
-import noop.model.*;
-import noop.operations.NewEdgeOperation;
-import noop.operations.NewProjectOperation;
 import org.joda.time.Instant;
 
 import java.util.UUID;
 
+import noop.graph.Controller;
 import static noop.graph.Edge.EdgeType.TYPEOF;
+import noop.model.Clazz;
+import noop.model.Comment;
+import noop.model.Library;
+import noop.model.Method;
+import noop.model.Parameter;
+import noop.model.Project;
+import noop.operations.NewEdgeOperation;
+import noop.operations.NewProjectOperation;
 
 /**
  * TODO: when we have a way to share serialized noop code, remove this class
@@ -39,13 +44,16 @@ public class StandardLibraryBuilder {
   public Method printMethod;
   public Method integerPlus;
   public Method integerEquals;
+  public Project noop;
+  public Library lang;
+  public Library io;
 
-  public void build(Controller controller) {
+  public StandardLibraryBuilder build(Controller controller) {
 
-    Project project = new Project("Noop", "com.google.noop", "Apache 2");
+    noop = new Project("Noop", "com.google", "Apache 2");
 
-    Library lang = new Library(UUID.randomUUID(), "lang");
-    project.addLibrary(lang);
+    lang = new Library(UUID.randomUUID(), "lang");
+    noop.addLibrary(lang);
 
     stringClazz = new Clazz("String");
     lang.addClazz(stringClazz);
@@ -53,8 +61,8 @@ public class StandardLibraryBuilder {
     voidClazz = new Clazz("Void");
     lang.addClazz(voidClazz);
 
-    Library io = new Library(UUID.randomUUID(), "io");
-    project.addLibrary(io);
+    io = new Library(UUID.randomUUID(), "io");
+    noop.addLibrary(io);
 
     consoleClazz = new Clazz("Console");
     io.addClazz(consoleClazz);
@@ -83,11 +91,13 @@ public class StandardLibraryBuilder {
     Parameter integerPlusArg = new Parameter("i");
     integerPlus.addParameter(integerPlusArg);
 
-    controller.apply(new NewProjectOperation(project));
+    controller.apply(new NewProjectOperation(noop));
     controller.apply(new NewEdgeOperation(printMethod, TYPEOF, voidClazz));
     controller.apply(new NewEdgeOperation(printArg, TYPEOF, stringClazz));
     controller.apply(new NewEdgeOperation(integerPlus, TYPEOF, intClazz));
     controller.apply(new NewEdgeOperation(integerEquals, TYPEOF, booleanClazz));
     controller.apply(new NewEdgeOperation(integerPlusArg, TYPEOF, intClazz));
+
+    return this;
   }
 }

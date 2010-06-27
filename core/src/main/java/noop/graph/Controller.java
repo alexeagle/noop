@@ -16,6 +16,8 @@
 
 package noop.graph;
 
+import com.google.inject.Inject;
+
 import noop.model.LanguageElement;
 import noop.model.Library;
 import noop.operations.EditNodeOperation;
@@ -30,7 +32,8 @@ public class Controller {
   private Workspace workspace;
   private final ModelVisitor addVertices;
 
-  public Controller(Workspace workspace, ModelVisitor addVertices) {
+  @Inject
+  public Controller(Workspace workspace, VertexCreatingVisitor addVertices) {
     this.workspace = workspace;
     this.addVertices = addVertices;
   }

@@ -22,8 +22,8 @@ import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.UUID;
 
-import static com.google.common.collect.Iterables.emptyIterable;
 import static com.google.common.collect.Lists.newArrayList;
+import static java.util.Collections.emptyList;
 import noop.graph.Edge;
 import noop.graph.ModelVisitor;
 import noop.graph.Vertex;
@@ -71,7 +71,7 @@ public class Library extends LanguageElement<Library> {
 
   public Iterable<Edge> edgesFrom(final Vertex src) {
     if (src.index >= edges.size()) {
-      return emptyIterable();
+      return emptyList();
     }
     return edges.get(src.index);
   }

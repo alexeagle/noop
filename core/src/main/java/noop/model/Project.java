@@ -18,11 +18,13 @@ package noop.model;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import noop.graph.ModelVisitor;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import java.util.List;
+
+import noop.graph.ModelVisitor;
 
 /**
  * TODO: seems like the library could be the top level entity.
@@ -52,8 +54,9 @@ public class Project extends LanguageElement<Project> {
     this.copyright = copyright;
   }
 
-  public void addLibrary(Library library) {
+  public Library addLibrary(Library library) {
     this.libraries.add(library);
+    return library;
   }
   
   @Override

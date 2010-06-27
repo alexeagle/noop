@@ -53,9 +53,9 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.google.collections</groupId>
-      <artifactId>google-collections</artifactId>
-      <version>0.9</version>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>r03</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
